@@ -1,0 +1,20 @@
+.default-enter {
+    opacity:0;
+    z-index:0;
+}
+.default-enter-active {
+    opacity:1;
+    transition:opacity 300ms linear;
+    z-index:3;
+}
+
+.default-exit {
+    opacity:1;
+    z-index:3;
+}
+
+.default-exit-active {
+    opacity:0;
+    transition: opacity 300ms linear;
+    z-index:0;
+}

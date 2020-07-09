@@ -1,0 +1,133 @@
+{
+  "name":"default",
+  "fontFamily": "Montserrat-Regular",
+  "fontFamilyBold": "Montserrat-Bold",
+  "textTransform": "uppercase",
+  "transition": "all 300ms linear",
+  "transitionDuration": "300",
+  "transitionEasing": "linear",
+  "transitionDelay": "300",
+  "bgOverlay": "rgba(8, 89, 89, 0.9)",
+  "bgOverlay2": "rgba(255,255,255, 0.8)",
+  "bgHover":  "rgb(137, 160, 159)",
+  "bgHover2":  "rgb(137, 160, 159)",
+  "bgChecked": "#022824",
+  "bgActive": "rgb(255,255,255)",
+  "bgRed": "#EB5757",
+  "bgGreen": "#022824",
+  "bgFocus": "#219653",
+  "bg1": "#022824",
+  "bg3": "rgb(8, 89, 89)",
+  "fontWeight": "bold",
+  "textHover": "#ffffff",
+  "textHover2": "rgba(8, 89, 89, 0.9)",
+  "textActive": "#ffffff",
+  "text": "#ffffff",
+  "text2": "rgb(8, 89, 89)",
+  "text3": "rgb(8, 89, 89)",
+  "stroke": "#ffffff",
+  "stroke2": "rgb(8, 89, 89)",
+  "textLight": "#ffffff",
+  "border": "0.07 rgba(255,255,255,0.5)",
+  "borderWidth": 2,
+  "borderColor": "rgba(255,255,255,0.5)",
+
+  "menu": {
+    "fontSize": 15,
+    "fontSizeLogin": 10,
+    "fontSizeHeader" : 30,
+    "fontSizeText": 10,
+    "fontWeight": "bold",
+    "bgBtn": "transparent"
+  },
+
+  "settings": {
+    "bgHover": "rgb(137, 160, 159)",
+    "bgActive": "#ffffff",
+    "textHeader": "#ffffff",
+    "textChecked": "#ffffff",
+    "textLabel": "#ffffff",
+    "fontSizeHeader":17.5,
+    "fontSizeButton": 13
+  },
+
+  "stats": {
+    "fontSize": 1
+  },
+
+  "game":{
+    "name": "default",
+    "transition": "all 300ms linear",
+    "fontSize": "1.2",
+    "text": "#ffffff",
+    "bgActive": "rgb(137, 160, 159)",
+    "bgOnCheckout": "#219653",
+    "p1Bg":"#f2f2f2",
+    "p2Bg": "rgb(2, 40, 36)",
+    "p1Overlay":"rgba(255,255,255,0.8)",
+    "p2Overlay":"rgba(2, 40, 36, 0.8)",
+    "p1Text":"rgb(8, 89, 89)",
+    "p2Text": "#ffffff",
+    "p1Border": "0.07 rgb(8, 89, 89) solid",
+    "p2Border":"0.07 rgba(255,255,255, 0.5) solid",
+    "text2": "rgb(8, 89, 89)",
+
+    "score": {
+      "fsPortrait": "0.5",
+      "fsLandscape": "0.65"
+    },
+    "stats":{
+      "classic": {
+        "fsPortrait": "0.1",
+        "fsLandscape": "0.115"
+      },
+      "asym": {
+        "fsPortrait": "0.1",
+        "fsLandscape": "0.11"
+      }
+    },
+    "nameFs": {
+      "classic": {
+        "fsPortrait1": "0.15",
+        "fsLandscape1": "0.25",
+        "fsPortrait2": "0.075",
+        "fsLandscape2": "0.075",
+        "fsPortrait3": "0.125",
+        "fsLandscape3": "0.15"
+      },
+      "asym": {
+        "fsPortrait1": "0.15",
+        "fsLandscape1": "0.25",
+        "fsPortrait2": "0.075",
+        "fsLandscape2": "0.075",
+        "fsPortrait3": "0.125",
+        "fsLandscape3": "0.15"
+      }
+    },
+    "middle": {
+      "bgMid":"rgb(137, 160, 159)",
+      "fwMiddle": 900,
+      "classic": {
+        "fsPortrait": "0.15",
+        "fsLandscape": "0.17"
+      },
+      "asym": {
+        "fsPortrait": "0.15",
+        "fsLandscape": "0.15"
+      }
+    },
+    "bottom": {
+      "fwBottom": 800,
+      "classic": {
+        "fsPortrait": "0.45",
+        "fsLandscape": "0.45"
+      },
+      "asym": {
+        "fsPortrait": "0.5",
+        "fsLandscape": "0.5"
+      }
+    }
+  }
+
+  }
+

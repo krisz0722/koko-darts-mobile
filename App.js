@@ -1,11 +1,11 @@
 import React from "react";
 import { SettingsContextProvider } from "./src/contexts/SettingsContext";
 import { GameContextProvider } from "./src/contexts/GameContext";
-import SCREENS from "./src/components/Screens";
+import ROUTER from "./src/screens/Router";
 import {
   AppContainer,
   AppBackground,
-} from "./src/components/Styled_ScreenContainer";
+} from "./src/components/containers/AppContainer";
 
 console.disableYellowBox = true;
 
@@ -18,9 +18,7 @@ const App = () => {
       />
       <SettingsContextProvider>
         <GameContextProvider>
-          <AppContainer>
-            <SCREENS />
-          </AppContainer>
+          <ROUTER />
         </GameContextProvider>
       </SettingsContextProvider>
     </>

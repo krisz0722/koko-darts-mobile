@@ -1,7 +1,7 @@
 import React, { useReducer, createContext } from "react";
-import Theme_Default from "../themes/theme-default.json"
-import Theme_Contrast from "../themes/theme-contrast.json";
-import {toggle_animation} from "./actions/ToggleAnimation";
+import Theme_Default from "../styles/theme-default.json";
+import Theme_Contrast from "../styles/theme-contrast.json";
+import { toggle_animation } from "./actions/ToggleAnimation";
 
 export const SettingsContext = createContext("default");
 

@@ -3,18 +3,28 @@ import { SettingsContext } from "../contexts/SettingsContext";
 import {
   View_Shape,
   View_Headers,
+} from "../components/containers/Styled_Welcome";
+import {
   Text_Title,
   Text_Subtitle,
   Text_Subtitle2,
-} from "../components/containers/Styled_Welcome";
+} from "../components/Headers";
 import ShapeThrow from "../../assets/svg/shape";
 import NavButton from "../components/NavButton";
 import NavBar from "../components/NavBar";
+import { NavigationContext } from "../contexts/NavigationContext";
 
 export const WELCOME = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
+  const { setScreen, setShowTab } = useContext(NavigationContext);
+
+  const enterGame = () => {
+    setScreen("settings");
+    setShowTab(true);
+    navigation.navigate("homenavigator");
+  };
 
   return (
     <>
@@ -36,11 +46,13 @@ export const WELCOME = ({ navigation }) => {
 
       <NavBar theme={selectedTheme}>
         <NavButton
+          length={2}
           action={() => navigation.navigate("register")}
           text={"let's do it now!"}
         />
         <NavButton
-          action={() => navigation.navigate("settings")}
+          length={2}
+          action={enterGame}
           text={"no thanks, let me play!"}
         />
       </NavBar>

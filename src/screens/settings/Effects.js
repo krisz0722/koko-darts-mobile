@@ -19,7 +19,6 @@ export const EFFECTS = () => {
   const toggleAnimation = () =>
     dispatchSettings({ type: "TOGGLE_ANIMATION", value: !animation });
   const toggleBlur = () => {
-    console.log(blur);
     dispatchSettings({ type: "TOGGLE_BLUR", value: !blur });
   };
 

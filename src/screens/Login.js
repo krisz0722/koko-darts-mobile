@@ -7,23 +7,19 @@ import LoginButton from "../components/LoginButton";
 import GhostButton from "../components/GhostButton";
 import LoginInput from "../components/LoginInput";
 
-export const REGISTER = ({ navigation }) => {
+export const LOGIN = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUsername] = useState("");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
 
   const enableSignUp =
-    [email, password, confirmPassword, userName].filter(
-      (item) => item.length < 6,
-    ).length === 0;
+    [password, userName].filter((item) => item.length < 6).length === 0;
 
   const keyboardDidShow = (e) => {
     let newSize = Dimensions.get("window").height - e.endCoordinates.height;
@@ -39,9 +35,7 @@ export const REGISTER = ({ navigation }) => {
   Keyboard.addListener("keyboardDidShow", keyboardDidShow);
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
-  const handleEmail = (val) => setEmail(val);
   const handlePassword = (val) => setPassword(val);
-  const handleConfirmPassword = (val) => setConfirmPassword(val);
   const handleUsername = (val) => setUsername(val);
   const handleFocus = (val) => {
     setFocus(val);
@@ -50,12 +44,12 @@ export const REGISTER = ({ navigation }) => {
 
   const INPUTS = [
     {
-      name: "email",
-      value: email,
-      placeholder: "Email",
-      type: "email",
-      action: handleEmail,
-      icon: "email",
+      name: "username",
+      value: userName,
+      placeholder: "Username",
+      type: "text",
+      action: handleUsername,
+      icon: "person",
     },
     {
       name: "password",
@@ -65,23 +59,6 @@ export const REGISTER = ({ navigation }) => {
       action: handlePassword,
       icon: passwordHidden ? "visibility" : "visibility-off",
       iconAction: toggleSecureEntry,
-    },
-    {
-      name: "confirm",
-      value: confirmPassword,
-      placeholder: "Confirm password",
-      type: "password",
-      action: handleConfirmPassword,
-      icon: passwordHidden ? "visibility" : "visibility-off",
-      iconAction: toggleSecureEntry,
-    },
-    {
-      name: "username",
-      value: userName,
-      placeholder: "Username",
-      type: "username",
-      action: handleUsername,
-      icon: "person",
     },
   ];
   return (
@@ -106,7 +83,7 @@ export const REGISTER = ({ navigation }) => {
 
           <GhostButton
             text={"Already have an account?\ntap here to log in!"}
-            action={() => navigation.navigate("login")}
+            action={() => navigation.navigate("welcome")}
           />
         </Form>
       </ScrollView>

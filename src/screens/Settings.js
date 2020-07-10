@@ -7,9 +7,8 @@ import { COLOR } from "./settings/Color";
 import { EFFECTS } from "./settings/Effects";
 import { GAMESETTINGS1 } from "./settings/GameSettings1";
 import { GAMESETTINGS2 } from "./settings/GameSettings2";
-import { NAVBAR } from "./settings/Navbar";
 
-export const SETTINGS = () => {
+export const SETTINGS = ({ navigation }) => {
   const {
     settings: {
       selectedTheme: { settings },
@@ -26,7 +25,6 @@ export const SETTINGS = () => {
         <GAMESETTINGS2 />
       </Styled_Options>
       {/*<GAME_SETTINGS_PREVIEW />*/}
-      <NAVBAR />
     </Styled_Settings>
   );
 };

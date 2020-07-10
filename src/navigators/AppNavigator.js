@@ -2,36 +2,34 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
-import { REGISTER } from "../screens/SignUp";
+import HomeNavigator from "./HomeNavigator";
 import { WELCOME } from "../screens/Welcome";
-import { SETTINGS } from "../screens/Settings";
 import { SettingsContext } from "../contexts/SettingsContext";
-const { Navigator, Screen } = createStackNavigator();
 import transitionContrast from "../styles/transitions-contrast";
 import transitionDefault from "../styles/transitions-default";
+import { NavigationContext } from "../contexts/NavigationContext";
+import { REGISTER } from "../screens/SignUp";
+import { LOGIN } from "../screens/Login";
+
+const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
     {
       component: REGISTER,
       name: "register",
-      icon: "home",
-      title: "Home",
-      headerShown: true,
     },
     {
-      component: SETTINGS,
-      name: "settings",
-      icon: "Home",
-      title: "Settings",
-      headerShown: true,
+      component: LOGIN,
+      name: "login",
     },
     {
       component: WELCOME,
       name: "welcome",
-      icon: "Home",
-      title: "Profile",
-      headerShown: false,
+    },
+    {
+      component: HomeNavigator,
+      name: "homenavigator",
     },
   ];
 
@@ -39,6 +37,8 @@ const AppNavigator = () => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
+
+  const { screen } = useContext(NavigationContext);
 
   const navigationTheme = {
     dark: false,
@@ -51,19 +51,6 @@ const AppNavigator = () => {
     },
   };
 
-  const headerStyle = {
-    headerStyle: {
-      backgroundColor: "transparent",
-    },
-    headerTintColor: "#fff",
-    headerTitleStyle: {
-      alignSelf: "center",
-      textTransform: "uppercase",
-      fontFamily: theme.fontFamily,
-      color: theme.text,
-    },
-  };
-
   const transition = (theme) =>
     theme === "default" ? transitionDefault : transitionContrast;
 
@@ -73,16 +60,12 @@ const AppNavigator = () => {
         <Navigator
           headerMode="none"
           screenOptions={{
-            headerStyle,
             ...transition(theme.name),
           }}
         >
           {SCREENS.map((item) => (
             <Screen
-              options={{
-                headerShown: item.headerShown,
-              }}
-              key={item.key}
+              key={item.name}
               name={item.name}
               component={item.component}
             />

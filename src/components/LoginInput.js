@@ -37,7 +37,6 @@ const LoginInput = ({ handleFocus, valid, focused, input }) => {
   const theme = selectedTheme;
   const { value, name, icon, iconAction, action, placeholder, type } = input;
 
-  console.log(iconAction);
   return (
     <Div valid={valid} focused={focused} theme={theme}>
       <TextInput_Login

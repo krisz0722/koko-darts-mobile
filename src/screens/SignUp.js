@@ -101,8 +101,8 @@ export const REGISTER = ({ navigation }) => {
                 focused={focus === item.name}
               />
             ))}
-            <LoginButton disabled={!enableSignUp} text={"Sign Up"} />
           </Inputs>
+          <LoginButton disabled={!enableSignUp} text={"Sign Up"} />
 
           <GhostButton
             text={"Already have an account?\ntap here to log in!"}

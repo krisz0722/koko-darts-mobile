@@ -17,6 +17,7 @@ export const SettingsContextProvider = (props) => {
     layout: "classic",
     animation: true,
     blur: true,
+    opacity: true,
   };
 
   const settingsReducer = (state, action) => {
@@ -29,6 +30,8 @@ export const SettingsContextProvider = (props) => {
         return toggle_animation(state, action.value);
       case "TOGGLE_BLUR":
         return { ...state, blur: action.value };
+      case "OPACITY":
+        return { ...state, opacity: action.value };
       case "RESET":
         return { ...DEFAULT_SETTINGS };
       default:

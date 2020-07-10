@@ -6,9 +6,12 @@ import {
   Header,
   Button_Settings,
   Text_Button,
-} from "../_styled/Styled_Settings";
+  HeaderContainer,
+} from "../containers/Settings";
+import SETTINGS_HEADER from "./SettingsHeader";
+import SETTINGS_BUTTON from "./SettingsButton";
 
-export const LAYOUT = () => {
+export const OptionsLayout = () => {
   const {
     settings: { layout, selectedTheme },
     dispatchSettings,
@@ -22,21 +25,17 @@ export const LAYOUT = () => {
 
   return (
     <Row theme={selectedTheme}>
-      <Header theme={selectedTheme}>layout</Header>
+      <SETTINGS_HEADER text={"layout"} />
 
       <Div theme={selectedTheme}>
         {DATA.map((item) => (
-          <Button_Settings
+          <SETTINGS_BUTTON
+            key={item.name}
+            value={item}
             active={layout === item}
             length={DATA.length}
-            key={`${item}input`}
-            theme={selectedTheme}
-            onPress={() => handlePress(item)}
-          >
-            <Text_Button active={layout === item} theme={selectedTheme}>
-              {item}
-            </Text_Button>
-          </Button_Settings>
+            action={() => handlePress(item)}
+          />
         ))}
       </Div>
     </Row>

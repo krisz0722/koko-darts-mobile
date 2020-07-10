@@ -21,10 +21,6 @@ const HomeNavigator = () => {
       component: SETTINGS,
       name: "settings",
     },
-    welcome: {
-      component: WELCOME,
-      name: "welcome",
-    },
     profile: {
       component: PROFILE,
       name: "profile",

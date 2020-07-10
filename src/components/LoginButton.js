@@ -7,8 +7,9 @@ import { SettingsContext } from "../contexts/SettingsContext";
 
 export const Button_Login = styled(TouchableOpacity)`
   text-decoration: none;
-  width: 100%;
-  height: 15%;
+  width: 80%;
+  height: 10%;
+  margin: auto;
   border-radius: 4px;
   background-color: ${({ disabled, theme }) =>
     !disabled ? theme.bgActive : "transparent"};

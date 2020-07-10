@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
-import { View_Headers } from "../components/containers/Styled_Welcome";
+import { View_Headers } from "../components/containers/Welcome";
 import {
   Text_Title,
   Text_Subtitle,

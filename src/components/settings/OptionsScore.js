@@ -1,15 +1,11 @@
 import React, { useContext } from "react";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import {
-  Row,
-  Div,
-  Header,
-  Button_Settings,
-  Text_Button,
-} from "../_styled/Styled_Settings";
+import { Row, Div, Button_Settings, Text_Button } from "../containers/Settings";
+import SETTINGS_HEADER from "./SettingsHeader";
+import SETTINGS_BUTTON from "./SettingsButton";
 
-export const GAMESETTINGS1 = () => {
+export const OptionsScore = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -29,21 +25,16 @@ export const GAMESETTINGS1 = () => {
 
   return (
     <Row theme={selectedTheme} id="gamesettings1">
-      <Header theme={selectedTheme}>starting score</Header>
+      <SETTINGS_HEADER text={"starting score"} />
       <Div theme={selectedTheme}>
         {DATA.map((item) => (
-          <Button_Settings
+          <SETTINGS_BUTTON
             active={score === item}
             length={DATA.length}
             key={`${item}input`}
-            theme={selectedTheme}
-            onPress={() => handlePress(item)}
+            action={() => handlePress(item)}
             value={item}
-          >
-            <Text_Button active={score === item} theme={selectedTheme}>
-              {item}
-            </Text_Button>
-          </Button_Settings>
+          />
         ))}
       </Div>
     </Row>

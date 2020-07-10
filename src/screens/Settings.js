@@ -1,30 +1,34 @@
 import React, { useContext } from "react";
-import { Styled_Options } from "./_styled/Styled_Settings";
+import {
+  BottomButtons,
+  Div2,
+  Options,
+} from "../components/containers/Settings";
 import { SettingsContext } from "../contexts/SettingsContext";
-import { Styled_Settings } from "./_styled/Styled_Settings";
-import { LAYOUT } from "./settings/Layout";
-import { COLOR } from "./settings/Color";
-import { EFFECTS } from "./settings/Effects";
-import { GAMESETTINGS1 } from "./settings/GameSettings1";
-import { GAMESETTINGS2 } from "./settings/GameSettings2";
+import { OptionsLayout } from "../components/settings/OptionsLayout";
+import { COLOR } from "../components/settings/OptionsColor";
+import { OptionsEffects } from "../components/settings/OptionsEffects";
+import { OptionsScore } from "../components/settings/OptionsScore";
+import { OptionsLegOrSet } from "../components/settings/OptionsLegOrSet";
+import SETTINGS_BUTTON_2 from "../components/settings/SettingsButton2";
 
-export const SETTINGS = ({ navigation }) => {
+export const SETTINGS = () => {
   const {
-    settings: {
-      selectedTheme: { settings },
-    },
+    settings: { selectedTheme },
   } = useContext(SettingsContext);
 
   return (
-    <Styled_Settings theme={settings}>
-      <Styled_Options>
-        <LAYOUT />
-        <COLOR />
-        <EFFECTS />
-        <GAMESETTINGS1 />
-        <GAMESETTINGS2 />
-      </Styled_Options>
+    <>
+      <OptionsLayout />
+      <COLOR />
+      <OptionsEffects />
+      <OptionsScore />
+      <OptionsLegOrSet />
+      <BottomButtons theme={selectedTheme}>
+        <SETTINGS_BUTTON_2 value={"preview"} />
+        <SETTINGS_BUTTON_2 value={"reset"} />
+      </BottomButtons>
       {/*<GAME_SETTINGS_PREVIEW />*/}
-    </Styled_Settings>
+    </>
   );
 };

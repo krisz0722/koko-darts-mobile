@@ -12,8 +12,8 @@ export const SettingsContextProvider = (props) => {
   };
 
   const DEFAULT_SETTINGS = {
-    // selectedTheme: THEMES.contrast,
-    selectedTheme: THEMES.default,
+    selectedTheme: THEMES.contrast,
+    // selectedTheme: THEMES.default,
     layout: "classic",
     animation: true,
     blur: true,

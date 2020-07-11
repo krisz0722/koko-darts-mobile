@@ -68,8 +68,8 @@
     "p2Overlay":"rgba(2, 40, 36, 0.8)",
     "p1Text":"rgb(8, 89, 89)",
     "p2Text": "#ffffff",
-    "p1Border": "0.07 rgb(8, 89, 89) solid",
-    "p2Border":"0.07 rgba(255,255,255, 0.5) solid",
+    "p1Border": "rgb(8, 89, 89)",
+    "p2Border":"rgb(255,255,255)",
     "text2": "rgb(8, 89, 89)",
 
     "score": {

@@ -39,19 +39,18 @@ const CLASSIC_FUNCTION = ({ value, action = null, icon, middle = false }) => {
   } = useContext(GameContext);
 
   const handleOnPress = (value, action) => {
+    console.log(value, action);
     if (action) {
       dispatchGameData({ type: action, value });
     } else {
       dispatchGameData({ type: "SUBMIT", value });
     }
   };
-  console.log(icon);
   return (
     <Button_Function_Classic
       ap={activePlayer}
       onPress={() => handleOnPress(value, action)}
       middle={middle}
-      theme={theme}
     >
       <>
         {icon ? (
@@ -62,7 +61,7 @@ const CLASSIC_FUNCTION = ({ value, action = null, icon, middle = false }) => {
             color={theme.text}
           />
         ) : null}
-        <Text_Function theme={theme}>{value}</Text_Function>
+        <Text_Function>{value}</Text_Function>
       </>
     </Button_Function_Classic>
   );

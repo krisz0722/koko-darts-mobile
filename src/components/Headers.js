@@ -6,7 +6,7 @@ export const Text_Title = styled(Text)`
   font-family: ${({ theme }) => theme.fontFamilyBold};
   text-transform: ${({ theme }) => theme.textTransform};
   width: 100%;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme, color }) => (color ? color : theme.text)};
   font-size: 25;
   ${JustifyText};
   padding: 0 5%;

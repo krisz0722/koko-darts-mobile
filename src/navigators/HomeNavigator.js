@@ -8,6 +8,7 @@ import transitionContrast from "../styles/transitions-contrast";
 import transitionDefault from "../styles/transitions-default";
 import { PROFILE } from "../screens/Profile";
 import { NavigationContext } from "../contexts/NavigationContext";
+import GAME_CLASSIC from "../screens/Classic";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -22,7 +23,7 @@ const HomeNavigator = () => {
       name: "settings",
     },
     profile: {
-      component: PROFILE,
+      component: GAME_CLASSIC,
       name: "profile",
     },
   };

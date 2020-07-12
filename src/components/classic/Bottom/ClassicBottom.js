@@ -1,17 +1,24 @@
 import React, { useContext } from "react";
-import { ClassicBottom } from "../containers/ClassicWindow";
-import { GameContext } from "../../contexts/GameContext";
-import CLASSIC_NUM from "../NumButton";
-import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import CLASSIC_FUNCTION from "../FunctionButton";
+import { Text, View } from "react-native";
+import CLASSIC_NUM from "../../NumButton";
+import CLASSIC_FUNCTION from "../../FunctionButton";
+import { GameContext } from "../../../contexts/GameContext";
+import styled from "styled-components/native/dist/styled-components.native.esm";
+import { FlexRow } from "../../../styles/css_mixins";
+
+export const ClassicBottom = styled(View)`
+  ${FlexRow};
+  flex-wrap: wrap;
+  position: absolute;
+  top: 63%;
+  width: 100%;
+  height: 37%;
+`;
 
 const CLASSIC_BOTTOM = () => {
   const {
-    dispatchGameData,
     gameData: {
-      showStats,
-      activePlayer,
       scoreInputArray: { defaultInput, manualInput },
     },
   } = useContext(GameContext);

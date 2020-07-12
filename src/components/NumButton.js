@@ -1,10 +1,8 @@
-import styled from "styled-components";
-import { TouchableOpacity, Text, TouchableHighlight } from "react-native";
-import { AlignText } from "../styles/css_mixins";
-
 import React, { useContext } from "react";
-import { SettingsContext } from "../contexts/SettingsContext";
+import styled from "styled-components";
+import { Text, TouchableHighlight } from "react-native";
 import { GameContext } from "../contexts/GameContext";
+import { AlignText } from "../styles/css_mixins";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
   text-decoration: none;
@@ -27,31 +25,17 @@ export const Text_Number = styled(Text)`
 
 const CLASSIC_NUM = ({ value }) => {
   const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-
-  const {
     dispatchGameData,
     gameData: { activePlayer },
   } = useContext(GameContext);
 
   const handleOnPress = (value) => {
-    console.log(value);
     dispatchGameData({ type: "TYPE", value });
   };
-  const theme = selectedTheme;
-
-  console.log(theme.game.p1Bg);
 
   return (
-    <Button_Num_Classic
-      ap={activePlayer}
-      onPress={() => handleOnPress(value)}
-      theme={theme}
-    >
-      <Text_Number ap={activePlayer} theme={theme}>
-        {value}
-      </Text_Number>
+    <Button_Num_Classic ap={activePlayer} onPress={() => handleOnPress(value)}>
+      <Text_Number ap={activePlayer}>{value}</Text_Number>
     </Button_Num_Classic>
   );
 };

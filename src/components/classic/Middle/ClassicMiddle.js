@@ -1,30 +1,19 @@
-import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { ClassicMiddle } from "../containers/ClassicWindow";
-import { GameContext } from "../../contexts/GameContext";
-import CLASSIC_FUNCTION from "../FunctionButton";
+import React from "react";
+import CLASSIC_FUNCTION from "../../FunctionButton";
+import styled from "styled-components/native/dist/styled-components.native.esm";
+import { View } from "react-native";
+import { FlexRow } from "../../../styles/css_mixins";
+
+export const ClassicMiddle = styled(View)`
+  ${FlexRow};
+  position: absolute;
+  flex-wrap: wrap;
+  top: 45%;
+  width: 100%;
+  height: 18%;
+`;
 
 const CLASSIC_MIDDLE = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-
-  const {
-    dispatchGameData,
-    gameData: {
-      showStats,
-      scoreInputArray: { defaultInput, manualInput },
-    },
-  } = useContext(GameContext);
-
-  const buttonText =
-    defaultInput[0] === "" && manualInput[0] === "" ? "BACK" : "CLEAR";
-
-  const handleOnClickStats = () => {
-    console.log(showStats);
-    dispatchGameData({ type: "SHOW_STATS" });
-  };
-
   const MIDDLE = [
     {
       name: "menu",

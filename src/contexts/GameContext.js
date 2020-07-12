@@ -20,10 +20,12 @@ export const GameContextProvider = (props) => {
       case "SWAP_PLAYERS":
         return { ...state, p1: action.p1, p2: action.p2 };
       case "SHOW_STATS":
+        console.log(state.showStats);
         return { ...state, showStats: !state.showStats };
       case "CHANGE_LEGORSET":
         return { ...state, legOrSet: action.value };
       case "CHANGE_TOWIN":
+        "" + "";
         return { ...state, toWin: parseInt(action.value) };
       case "CHANGE_STARTINGSCORE":
         return changeStartingScore(state, action.value);
@@ -66,8 +68,6 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
-
-  console.log(gameData.scoreInputArray);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

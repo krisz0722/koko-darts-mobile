@@ -10,13 +10,15 @@ import transitionDefault from "../styles/transitions-default";
 import { NavigationContext } from "../contexts/NavigationContext";
 import { REGISTER } from "../screens/SignUp";
 import { LOGIN } from "../screens/Login";
+import GAME_CLASSIC from "../screens/Classic";
+import { HOME } from "../screens/Home";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
     {
-      component: REGISTER,
+      component: HOME,
       name: "register",
     },
     {

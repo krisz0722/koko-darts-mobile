@@ -1,10 +1,25 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { Averages, Totals } from "../containers/ClassicPlayerStats";
-import { GameContext } from "../../contexts/GameContext";
+import { SettingsContext } from "../../../contexts/SettingsContext";
+import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Text, View } from "react-native";
-import { FlexRowBetween } from "../../styles/css_mixins";
+import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
+
+export const Averages = styled(View)`
+  width: 70%;
+  height: 100%;
+  ${FlexColAround};
+  border-width: ${({ theme }) => theme.borderWidth};
+  border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
+`;
+
+export const Totals = styled(View)`
+  width: 30%;
+  height: 100%;
+  ${FlexColAround};
+  border-width: ${({ theme }) => theme.borderWidth};
+  border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
+`;
 
 export const StatRow = styled(View)`
   ${FlexRowBetween};

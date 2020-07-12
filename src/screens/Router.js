@@ -7,6 +7,7 @@ import { SettingsContext } from "../contexts/SettingsContext";
 import HOMENAVIGATOR_TAB from "../components/HomeNavigatorTab";
 import { NavigationContext } from "../contexts/NavigationContext";
 import AppNavigator from "../navigators/AppNavigator";
+import { ThemeProvider } from "styled-components";
 
 const ROUTER = () => {
   const {
@@ -15,16 +16,22 @@ const ROUTER = () => {
 
   const { screen, showTab } = useContext(NavigationContext);
 
+  const theme = selectedTheme;
+
+  console.log("router", theme);
   return (
     <>
       <AppBackground
         source={require("../../assets/bgPortrait.jpeg")}
         resizeMode="cover"
-        theme={selectedTheme}
+        theme={theme}
       />
-      <ScreenContainer screen={screen} theme={selectedTheme}>
-        <AppNavigator />
-      </ScreenContainer>
+      <ThemeProvider theme={theme}>
+        <ScreenContainer screen={screen} theme={theme}>
+          <AppNavigator />
+        </ScreenContainer>
+      </ThemeProvider>
+
       {showTab ? <HOMENAVIGATOR_TAB /> : null}
     </>
   );

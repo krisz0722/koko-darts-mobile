@@ -25,7 +25,6 @@ const SETTINGS_HEADER = ({ text, action, icon = null }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
-  console.log(icon);
 
   return (
     <HeaderContainer>

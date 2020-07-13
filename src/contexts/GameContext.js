@@ -12,6 +12,10 @@ export const GameContext = createContext({});
 export const GameContextProvider = (props) => {
   const gameReducer = (state, action) => {
     switch (action.type) {
+      case "CHANGE_AP":
+        // console.log("TYPE AP");
+        // console.log(action);
+        return { ...state, activePlayer: action.value };
       case "CHANGE_P1":
         return { ...state, p1: action.value };
       case "CHANGE_P2":
@@ -31,7 +35,6 @@ export const GameContextProvider = (props) => {
       case "CHANGE_INPUT":
         return changeInput(state);
       case "TYPE":
-        console.log("TYPE");
         return type(state, action.value);
       case "SUBMIT":
         return submit(state, action.value);
@@ -68,6 +71,8 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
+
+  // console.log(gameData);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

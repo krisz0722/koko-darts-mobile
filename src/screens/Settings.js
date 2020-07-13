@@ -28,7 +28,6 @@ export const SETTINGS = () => {
         <SETTINGS_BUTTON_2 value={"preview"} />
         <SETTINGS_BUTTON_2 value={"reset"} />
       </BottomButtons>
-      {/*<GAME_SETTINGS_PREVIEW />*/}
     </>
   );
 };

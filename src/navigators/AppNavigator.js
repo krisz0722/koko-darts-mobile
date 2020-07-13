@@ -6,10 +6,10 @@ import { SettingsContext } from "../contexts/SettingsContext";
 import { NavigationContext } from "../contexts/NavigationContext";
 import HomeNavigator from "./HomeNavigator";
 import { LOGIN } from "../screens/Login";
-import { HOME } from "../screens/Home";
+import HOME from "../screens/Home";
 import { WELCOME } from "../screens/Welcome";
-import transitionContrast from "../styles/transitions-contrast";
-import transitionDefault from "../styles/transitions-default";
+import transitionContrast from "../styles/navTransitionContrast";
+import transitionDefault from "../styles/navTransitionDefault";
 import { REGISTER } from "../screens/SignUp";
 import GAME_CLASSIC from "../screens/Classic";
 

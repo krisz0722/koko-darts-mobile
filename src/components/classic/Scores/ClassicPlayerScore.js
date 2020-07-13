@@ -49,8 +49,8 @@ const PLAYER_SCORE = ({ player }) => {
 
   const { UIManager } = NativeModules;
 
-  UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
+  // UIManager.setLayoutAnimationEnabledExperimental &&
+  //   UIManager.setLayoutAnimationEnabledExperimental(true);
   // LayoutAnimation.linear();
 
   const theme = selectedTheme;

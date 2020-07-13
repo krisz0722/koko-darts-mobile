@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useRef } from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { Animated, Text, TouchableHighlight, View } from "react-native";
-import CLASSIC_NUM from "../../NumButton";
-import CLASSIC_FUNCTION from "../../FunctionButton";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { AlignText, FlexRow } from "../../../styles/css_mixins";
+import { AlignText, FlexCol, FlexRow } from "../../../styles/css_mixins";
 import { SettingsContext } from "../../../contexts/SettingsContext";
+import createAnimation from "../../../styles/playerSwitchTransition";
 
 export const ClassicBottom = styled(View)`
   ${FlexRow};
@@ -17,9 +15,30 @@ export const ClassicBottom = styled(View)`
   height: 37%;
 `;
 
+export const Button_Num_Classic = styled(TouchableHighlight)`
+  text-decoration: none;
+  width: ${() => 100 / 3 + "%"};
+  height: 25%;
+  ${FlexCol};
+`;
+
+export const Text_Number = styled(Text)`
+  ${AlignText};
+  height: 100%;
+  width: 100%;
+  font-family: ${({ disabled, theme }) =>
+    !disabled ? theme.fontFamilyBold : theme.fontFamily};
+  font-size: ${({ type }) => (type === "number" ? 35 : 12.5)};
+  background-color: ${({ theme }) => theme.game.middle.bgMid};
+  color: ${({ theme }) => theme.text};
+  border-width: ${({ theme }) => theme.borderWidth};
+`;
+
 const CLASSIC_BOTTOM = React.memo(() => {
   const {
+    dispatchGameData,
     gameData: {
+      activePlayer,
       scoreInputArray: { manualInput, defaultInput },
     },
   } = useContext(GameContext);
@@ -35,30 +54,57 @@ const CLASSIC_BOTTOM = React.memo(() => {
 
   const DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, buttonText, 0, "OK"];
 
+  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
+    .current;
+
+  const typeOfHandler = (item) => {
+    switch (item) {
+      case "OK":
+        dispatchGameData({ type: "SUBMIT", value: "OK" });
+        break;
+      case "CLEAR":
+        dispatchGameData({ type: "SUBMIT", value: "CLEAR" });
+        break;
+      case "BUTS":
+        dispatchGameData({ type: "SUBMIT", value: "BUST" });
+        break;
+      default:
+        dispatchGameData({ type: "TYPE", value: item });
+    }
+  };
+
+  useEffect(() => {
+    console.log("color", animation);
+    Animated.timing(animation, {
+      toValue: activePlayer === "p1" ? 1 : 0,
+      duration: 3000,
+    }).start();
+  }, [activePlayer]);
+
+  const AnimatedButton = Animated.createAnimatedComponent(Button_Num_Classic);
+  const AnimatedText = Animated.createAnimatedComponent(Text_Number);
+
+  const style1 = (item) => {
+    const type = typeof item === "number";
+    return createAnimation(theme, animation, type, type, true);
+  };
+
+  console.log(style1(1));
+
   return (
     <ClassicBottom>
       {DATA.map((item) => {
-        if (typeof item === "number") {
-          return (
-            <CLASSIC_NUM key={item} value={item}>
-              {item}
-            </CLASSIC_NUM>
-          );
-        }
-
         return (
-          <CLASSIC_FUNCTION key={item} value={item}>
-            <View>
-              {item === "BACK" ? (
-                <Icon name={"clear"} />
-              ) : item === "CLEAR" ? (
-                <Icon name={"clear"} />
-              ) : (
-                <Icon name={"clear"} />
-              )}
-              <Text>{item}</Text>
-            </View>
-          </CLASSIC_FUNCTION>
+          <AnimatedButton onPress={() => typeOfHandler(item)}>
+            <AnimatedText
+              style={style1(item)}
+              type={typeof item}
+              theme={theme}
+              ap={activePlayer}
+            >
+              {item}
+            </AnimatedText>
+          </AnimatedButton>
         );
       })}
     </ClassicBottom>

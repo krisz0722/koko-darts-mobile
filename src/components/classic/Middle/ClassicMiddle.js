@@ -18,69 +18,67 @@ export const ClassicMiddle = styled(View)`
 `;
 
 const CLASSIC_MIDDLE = () => {
-  const {
-    gameData,
-    gameData: { activePlayer },
-  } = useContext(GameContext);
-  console.log(gameData.scoreInputArray.defaultInput.join(""));
+  const { gameData } = useContext(GameContext);
+
   const MIDDLE = [
     {
       name: "menu",
+      value: "menu",
       icon: "menu",
       action: null,
+      disabled: false,
     },
     {
-      name: "show stats",
+      name: "showStats",
+      value: "show stats",
       icon: "show-chart",
       action: "SHOW_STATS",
+      disabled: false,
     },
     {
       name: "bust",
+      value: "bust",
       icon: "not-interested",
+      disabled: false,
     },
     {
-      name: "current:" + gameData.scoreInputArray.defaultInput.join(""),
+      name: "p1",
+      value: `${gameData.p1}`,
       icon: null,
       action: null,
+      disabled: true,
     },
     {
-      name: "input by dart",
+      name: "changeInput",
+      value: "input by dart",
       icon: "visibility",
       action: "CHANGE_INPUT",
+      disabled: false,
     },
     {
-      name: "last: 180",
+      name: "p2",
+      value: `${gameData.p2}`,
       icon: null,
       action: null,
+      disabled: true,
     },
   ];
 
   return (
     <ClassicMiddle>
-      {MIDDLE.map((item) =>
-        item.action === null ? (
-          <View_Function
-            key={item.name}
-            value={item.name}
-            middle={true}
-            icon={item.icon}
-            action={item.action}
-            ap={activePlayer}
-          >
-            <Text_Function>valami</Text_Function>
-          </View_Function>
-        ) : (
-          <CLASSIC_FUNCTION
-            key={item.name}
-            value={item.name}
-            middle={true}
-            icon={item.icon}
-            action={item.action}
-          >
-            {item.name}
-          </CLASSIC_FUNCTION>
-        ),
-      )}
+      {MIDDLE.map((item) => (
+        <CLASSIC_FUNCTION
+          key={item.name}
+          name={item.name}
+          value={item.value}
+          middle={true}
+          icon={item.icon}
+          action={item.action}
+          disabled={item.disabled}
+        >
+          {item.name}
+        </CLASSIC_FUNCTION>
+      ))}
     </ClassicMiddle>
   );
 };

@@ -4,7 +4,6 @@ import { GameContextProvider } from "./src/contexts/GameContext";
 import ROUTER from "./src/screens/Router";
 import { AppBackground } from "./src/components/containers/AppContainer";
 import { NavigationContextProvider } from "./src/contexts/NavigationContext";
-import GAME_CLASSIC from "./src/screens/Classic";
 
 console.disableYellowBox = true;
 

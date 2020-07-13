@@ -1,16 +1,8 @@
 import React, { useContext, useState } from "react";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import {
-  Div,
-  Button_DropDown,
-  Row2,
-  Button_Settings,
-  Row,
-  Text_Button,
-} from "../containers/Settings";
+import { Div, Row2, Row } from "../containers/Settings";
 import { Dimensions, Keyboard } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "./SettingsButton";
 

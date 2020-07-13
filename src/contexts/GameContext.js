@@ -1,4 +1,4 @@
-import React, { useReducer, createContext, useContext } from "react";
+import React, { useReducer, createContext } from "react";
 import GAME_DEFAULT_STATE from "./GameDefaultState";
 import { changeInput } from "./actions/ChangeInputMethod";
 import type from "./actions/Type";
@@ -12,6 +12,8 @@ export const GameContext = createContext({});
 export const GameContextProvider = (props) => {
   const gameReducer = (state, action) => {
     switch (action.type) {
+      case "CHANGE_AP":
+        return { ...state, activePlayer: action.value };
       case "CHANGE_P1":
         return { ...state, p1: action.value };
       case "CHANGE_P2":
@@ -31,7 +33,6 @@ export const GameContextProvider = (props) => {
       case "CHANGE_INPUT":
         return changeInput(state);
       case "TYPE":
-        console.log("TYPE");
         return type(state, action.value);
       case "SUBMIT":
         return submit(state, action.value);

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import CLASSIC_FUNCTION, {
-  Button_Function_Classic,
   Text_Function,
   View_Function,
 } from "../../FunctionButton";

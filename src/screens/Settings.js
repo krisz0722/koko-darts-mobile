@@ -1,9 +1,5 @@
 import React, { useContext } from "react";
-import {
-  BottomButtons,
-  Div2,
-  Options,
-} from "../components/containers/Settings";
+import { BottomButtons } from "../components/containers/Settings";
 import { SettingsContext } from "../contexts/SettingsContext";
 import { OptionsLayout } from "../components/settings/OptionsLayout";
 import { COLOR } from "../components/settings/OptionsColor";
@@ -28,7 +24,6 @@ export const SETTINGS = () => {
         <SETTINGS_BUTTON_2 value={"preview"} />
         <SETTINGS_BUTTON_2 value={"reset"} />
       </BottomButtons>
-      {/*<GAME_SETTINGS_PREVIEW />*/}
     </>
   );
 };

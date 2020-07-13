@@ -1,5 +1,5 @@
 import * as React from "react";
-import Svg, { Circle, Path, G } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 function ShapeThrow({ fill }) {
   return (

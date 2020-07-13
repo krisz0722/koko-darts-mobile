@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TouchableOpacity, Text, TouchableHighlight } from "react-native";
+import { Text, TouchableHighlight } from "react-native";
 import { FlexCol, AlignText } from "../../styles/css_mixins";
 
 import React, { useContext } from "react";

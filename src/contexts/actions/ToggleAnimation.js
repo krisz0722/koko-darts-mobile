@@ -18,4 +18,3 @@ export const toggle_animation = (state, bool) => {
     },
   };
 };
-

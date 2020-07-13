@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Text, TouchableHighlight, View } from "react-native";
 import { AlignText, FlexCol, FlexRowAround } from "../../styles/css_mixins";
 import { Checkbox } from "react-native-paper";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Button_Settings = styled(TouchableHighlight)`
   ${FlexCol};

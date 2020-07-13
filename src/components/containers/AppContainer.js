@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components/native";
 import { ImageBackground, View } from "react-native";
 import { Window, FlexRow } from "../../styles/css_mixins";

@@ -1,14 +1,8 @@
 import React, { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import styled from "styled-components";
 import { View, Text } from "react-native";
-import {
-  AlignText,
-  FlexCol,
-  FlexRow,
-  Window,
-} from "../../../styles/css_mixins";
+import { FlexCol, FlexRow, Window } from "../../../styles/css_mixins";
 
 const PLayerInfoLegSet = styled(View)`
   height: 100%;
@@ -21,12 +15,12 @@ const PLayerInfoLegSet = styled(View)`
 
 export const LegSet1 = styled(PLayerInfoLegSet)`
   right: 0;
-  border-left-width: ${({ theme, ap }) => theme.borderWidth};
+  border-left-width: ${({ theme }) => theme.borderWidth};
 `;
 
 export const LegSet2 = styled(PLayerInfoLegSet)`
   left: 0;
-  border-right-width: ${({ theme, ap }) => theme.borderWidth};
+  border-right-width: ${({ theme }) => theme.borderWidth};
 `;
 
 export const PlayerLegSet = styled(View)`
@@ -46,7 +40,7 @@ const Text_Sub = styled(Text_Main)`
 
 const LEGSET = ({ player }) => {
   const {
-    gameData: { showStats, legOrSet, activePlayer, p1_DATA, p2_DATA },
+    gameData: { showStats, legOrSet, activePlayer, p1_DATA },
   } = useContext(GameContext);
 
   const width = showStats

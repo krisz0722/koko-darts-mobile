@@ -39,7 +39,7 @@ export const PlayerInfoRow = styled(View)`
 
 const PLAYER_INFO = ({ player }) => {
   const {
-    gameData: { activePlayer, p1, p2, showStats },
+    gameData: { activePlayer },
   } = useContext(GameContext);
   const {
     settings: { selectedTheme },

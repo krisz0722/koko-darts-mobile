@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import PLAYER_STATS from "./ClassicPlayerStats";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { Animated, View } from "react-native";
-import { FlexRow, Window } from "../../../styles/css_mixins";
-import { View_Headers } from "../../containers/Welcome";
+import { View } from "react-native";
+import { FlexRow } from "../../../styles/css_mixins";
 
 export const ClassicStats = styled(View)`
   ${FlexRow};
@@ -35,27 +34,6 @@ const CLASSIC_STATS = () => {
   } = useContext(GameContext);
 
   const theme = selectedTheme;
-
-  const [top, setTop] = useState(0);
-
-  // useEffect(() => {
-  //   setTop(showStats ? Window.height * 0.1 : 0);
-  //   Animated.timing(transform, {
-  //     toValue: showStats ? 1 : 0,
-  //     duration: 1000,
-  //     useNativeDriver: true,
-  //   }).start();
-  // }, [showStats]);
-
-  const transform = useRef(new Animated.Value(0)).current;
-
-  const topPosition = transform.interpolate({
-    inputRange: [0, 1],
-    outputRange: [Window.height * 0.1, 0],
-  });
-
-  const AnimatedStat1 = Animated.createAnimatedComponent(ClassicStatsPlayer1);
-  const AnimatedStat2 = Animated.createAnimatedComponent(ClassicStatsPlayer2);
 
   return (
     <>

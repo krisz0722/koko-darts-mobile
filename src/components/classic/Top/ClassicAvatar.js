@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import styled from "styled-components";
 import { View } from "react-native";
 import { Window } from "../../../styles/css_mixins";

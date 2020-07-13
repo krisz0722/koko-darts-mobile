@@ -1,13 +1,6 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import {
-  Row,
-  Div,
-  Header,
-  Button_Settings,
-  Text_Button,
-  HeaderContainer,
-} from "../containers/Settings";
+import { Row, Div } from "../containers/Settings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "./SettingsButton";
 

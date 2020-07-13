@@ -26,12 +26,10 @@ export const REGISTER = ({ navigation }) => {
     ).length === 0;
 
   const keyboardDidShow = (e) => {
-    let newSize = Dimensions.get("window").height - e.endCoordinates.height;
     setIsKeyboardUp(true);
   };
 
   const keyboardDidHide = (e) => {
-    let newSize = Dimensions.get("window").height;
     setIsKeyboardUp(false);
     setFocus(undefined);
   };

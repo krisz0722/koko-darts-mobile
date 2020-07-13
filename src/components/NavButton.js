@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { Text, TouchableOpacity } from "react-native";
 import React, { useContext } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
-import { FlexCol, FlexColStart } from "styles/css_mixins";
-import { AlignText, FlexColAround, Window } from "../styles/css_mixins";
+import { FlexColAround, Window } from "../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { NavigationContext } from "../contexts/NavigationContext";
 
@@ -13,17 +12,16 @@ const Button_Nav = styled(TouchableOpacity)`
   height: 100%;
   background-color: ${({ theme, active }) =>
     active ? theme.bgActive : "transparent"};
-  transform: ${({ theme, active }) => (!active ? "scale(0.8,0.8)" : "")};
+  transform: ${({ active }) => (!active ? "scale(0.8,0.8)" : "")};
 `;
 
 const Text_Button = styled(Text)`
   text-align:center;
-  
-  width: 100%;\
+  width: 100%;
   padding: 0 5%;
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)};
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: ${({ theme }) => 10};
+  font-size:10};
   text-transform: ${({ theme }) => theme.textTransform};
   border-radius: 4px;
 `;
@@ -49,7 +47,6 @@ const NavButton = ({ text, length, action = null, icon = null }) => {
             name={icon}
             size={25}
             color={screen === text ? theme.text2 : theme.text}
-            // style={{ borderWidth: 2 }}
           />
         ) : null}
 

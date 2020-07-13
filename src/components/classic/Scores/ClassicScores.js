@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import CHECKOUTS from "./ClassicPlayersCheckout";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { Animated, LayoutAnimation, UIManager, View } from "react-native";
-import { FlexCol, FlexColStart, Window } from "../../../styles/css_mixins";
+import { View } from "react-native";
+import { FlexCol, FlexColStart } from "../../../styles/css_mixins";
 import PLAYER_SCORE from "./ClassicPlayerScore";
 
 export const ClassicScores = styled(View)`
@@ -39,7 +39,7 @@ const CLASSIC_SCORES = () => {
   } = useContext(SettingsContext);
 
   const {
-    gameData: { showStats, activePlayer },
+    gameData: { showStats },
   } = useContext(GameContext);
 
   const theme = selectedTheme;

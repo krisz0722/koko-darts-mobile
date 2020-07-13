@@ -1,13 +1,5 @@
 import styled from "styled-components";
-import {
-  TouchableOpacity,
-  Text,
-  TouchableHighlight,
-  UIManager,
-  LayoutAnimation,
-  TouchableWithoutFeedback,
-  TouchableHighlightBase,
-} from "react-native";
+import { Text, TouchableHighlight } from "react-native";
 import { FlexRowAround } from "../styles/css_mixins";
 import React, { useContext } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
@@ -40,11 +32,6 @@ const CLASSIC_FUNCTION = ({ value, action = null, icon, middle = false }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-
-  UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-
-  LayoutAnimation.linear();
 
   const theme = selectedTheme;
   const {

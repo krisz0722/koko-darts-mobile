@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import { GameContext } from "../contexts/GameContext";
+import React, { useContext } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
 import NavButton from "./NavButton";
 import NavBar from "./NavBar";
@@ -9,15 +8,9 @@ const HOMENAVIGATOR_TAB = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-  const {
-    gameData: { p1, p2 },
-  } = useContext(GameContext);
   const { screen, setScreen } = useContext(NavigationContext);
 
-  const [valami, setValami] = useState(screen);
-
   const navigate = (route) => {
-    setValami(route);
     setScreen(route);
   };
 

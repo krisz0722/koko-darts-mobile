@@ -3,14 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SettingsContext } from "../contexts/SettingsContext";
-import { NavigationContext } from "../contexts/NavigationContext";
-import HomeNavigator from "./HomeNavigator";
-import { LOGIN } from "../screens/Login";
-import { HOME } from "../screens/Home";
-import { WELCOME } from "../screens/Welcome";
-import transitionContrast from "../styles/transitions-contrast";
-import transitionDefault from "../styles/transitions-default";
-import { REGISTER } from "../screens/SignUp";
+import transitionContrast from "../styles/navTransitionContrast";
+import transitionDefault from "../styles/navTransitionDefault";
 import GAME_CLASSIC from "../screens/Classic";
 
 const { Navigator, Screen } = createStackNavigator();
@@ -47,8 +41,6 @@ const AppNavigator = () => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
-
-  const { screen } = useContext(NavigationContext);
 
   const navigationTheme = {
     dark: false,

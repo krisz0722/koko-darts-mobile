@@ -1,16 +1,7 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import {
-  Animated,
-  Platform,
-  UIManager,
-  LayoutAnimation,
-  Text,
-  TouchableHighlight,
-} from "react-native";
-import { GameContext } from "../contexts/GameContext";
+import { Animated, Text, TouchableHighlight } from "react-native";
 import { AlignText, FlexCol } from "../styles/css_mixins";
-import { SettingsContext } from "../contexts/SettingsContext";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
   text-decoration: none;
@@ -32,19 +23,33 @@ export const Text_Number = styled(Text)`
   font-size: 35;
   color: ${({ theme, ap }) => theme.game[ap + "Text"]};
 `;
-const CLASSIC_NUM = ({ value }) => {
-  const {
-    dispatchGameData,
-    gameData: { activePlayer },
-  } = useContext(GameContext);
+const CLASSIC_NUM = React.memo((props) => {
+  const { activePlayer, value } = props;
+  const width = useRef(new Animated.Value(100)).current;
 
-  const handleType = (value) => dispatchGameData({ type: "TYPE", value });
+  useEffect(() => {
+    console.log("color", width);
+    Animated.timing(width, {
+      toValue: activePlayer === "p1" ? 100 : 200,
+      duration: 5000,
+    }).start();
+  }, [width, activePlayer]);
+
+  let newWidth = width;
+
+  console.log("num");
+
+  const styles = {
+    width: { width: newWidth },
+  };
+
+  const AnimatedNum = Animated.createAnimatedComponent(Button_Num_Classic);
 
   return (
-    <Button_Num_Classic ap={activePlayer} onPress={() => handleType(value)}>
+    <AnimatedNum style={[styles.width]} ap={activePlayer}>
       <Text_Number ap={activePlayer}>{value}</Text_Number>
-    </Button_Num_Classic>
+    </AnimatedNum>
   );
-};
+});
 
 export default CLASSIC_NUM;

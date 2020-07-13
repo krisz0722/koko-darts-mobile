@@ -40,7 +40,6 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
       case "leg":
         return legsWon === toWin;
       default:
-        alert("ERROR");
         break;
     }
   };

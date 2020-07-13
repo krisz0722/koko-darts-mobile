@@ -1,16 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import {
-  Animated,
-  LayoutAnimation,
-  NativeModules,
-  Text,
-  View,
-} from "react-native";
+import { Animated, NativeModules, Text, View } from "react-native";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { AlignText, FlexCol } from "../../../styles/css_mixins";
-import { View_Headers } from "../../containers/Welcome";
 
 export const ClassicPlayerScore = styled(View)`
   ${FlexCol};
@@ -47,14 +40,7 @@ const PLAYER_SCORE = ({ player }) => {
     gameData: { activePlayer, showStats, p1_DATA, p2_DATA },
   } = useContext(GameContext);
 
-  const { UIManager } = NativeModules;
-
-  UIManager.setLayoutAnimationEnabledExperimental &&
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-  // LayoutAnimation.linear();
-
   const theme = selectedTheme;
-  const animation = useRef(new Animated.Value(0)).current;
 
   return (
     <>

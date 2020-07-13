@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components";
 import { Text, View } from "react-native";
-import { AlignText, FlexRow, Window } from "../../../styles/css_mixins";
-import { SettingsContext } from "../../../contexts/SettingsContext";
+import { FlexRow } from "../../../styles/css_mixins";
 
 export const PlayerInfoName = styled(View)`
   height: 50%;
@@ -27,7 +26,7 @@ export const Text_Name = styled(Text)`
 const NAME = ({ player }) => {
   const {
     gameData,
-    gameData: { p1, p2, activePlayer },
+    gameData: { activePlayer },
   } = useContext(GameContext);
 
   return (

@@ -6,6 +6,7 @@ import NAME from "./ClassicName";
 import styled from "styled-components";
 import { View } from "react-native";
 import { FlexCol, FlexRow } from "../../../styles/css_mixins";
+import LEGSET from "./ClassicLegSet";
 
 const PlayerInfoContainer = styled(View)`
   height: 100%;
@@ -46,14 +47,13 @@ const PLAYER_INFO = ({ player }) => {
 
   const theme = selectedTheme;
 
-  console.log("top", showStats);
-
   return (
     <>
       {player === "p1" ? (
         <PlayerInfo1 theme={theme}>
           <PlayerInfoRow ap={activePlayer} theme={theme}>
             <AVATAR player={"p1"} />
+            <LEGSET player={"p1"} />
           </PlayerInfoRow>
           <NAME player={"p1"} />
         </PlayerInfo1>
@@ -61,6 +61,7 @@ const PLAYER_INFO = ({ player }) => {
         <PlayerInfo2 theme={theme}>
           <PlayerInfoRow ap={activePlayer} theme={theme}>
             <AVATAR player={"p2"} />
+            <LEGSET player={"p2"} />
           </PlayerInfoRow>
           <NAME player={"p2"} />
         </PlayerInfo2>

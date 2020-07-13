@@ -1,8 +1,13 @@
-import React from "react";
-import CLASSIC_FUNCTION from "../../FunctionButton";
+import React, { useContext } from "react";
+import CLASSIC_FUNCTION, {
+  Button_Function_Classic,
+  Text_Function,
+  View_Function,
+} from "../../FunctionButton";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { View } from "react-native";
 import { FlexRow } from "../../../styles/css_mixins";
+import { GameContext } from "../../../contexts/GameContext";
 
 export const ClassicMiddle = styled(View)`
   ${FlexRow};
@@ -14,6 +19,11 @@ export const ClassicMiddle = styled(View)`
 `;
 
 const CLASSIC_MIDDLE = () => {
+  const {
+    gameData,
+    gameData: { activePlayer },
+  } = useContext(GameContext);
+  console.log(gameData.scoreInputArray.defaultInput.join(""));
   const MIDDLE = [
     {
       name: "menu",
@@ -22,16 +32,17 @@ const CLASSIC_MIDDLE = () => {
     },
     {
       name: "show stats",
-      icon: "show_chart",
+      icon: "show-chart",
       action: "SHOW_STATS",
     },
     {
       name: "bust",
-      icon: "not_interested",
+      icon: "not-interested",
     },
     {
-      name: "current: 170",
+      name: "current:" + gameData.scoreInputArray.defaultInput.join(""),
       icon: null,
+      action: null,
     },
     {
       name: "input by dart",
@@ -41,22 +52,36 @@ const CLASSIC_MIDDLE = () => {
     {
       name: "last: 180",
       icon: null,
+      action: null,
     },
   ];
 
   return (
     <ClassicMiddle>
-      {MIDDLE.map((item) => (
-        <CLASSIC_FUNCTION
-          key={item.name}
-          value={item.name}
-          middle={true}
-          icon={item.icon}
-          action={item.action}
-        >
-          {item.name}
-        </CLASSIC_FUNCTION>
-      ))}
+      {MIDDLE.map((item) =>
+        item.action === null ? (
+          <View_Function
+            key={item.name}
+            value={item.name}
+            middle={true}
+            icon={item.icon}
+            action={item.action}
+            ap={activePlayer}
+          >
+            <Text_Function>valami</Text_Function>
+          </View_Function>
+        ) : (
+          <CLASSIC_FUNCTION
+            key={item.name}
+            value={item.name}
+            middle={true}
+            icon={item.icon}
+            action={item.action}
+          >
+            {item.name}
+          </CLASSIC_FUNCTION>
+        ),
+      )}
     </ClassicMiddle>
   );
 };

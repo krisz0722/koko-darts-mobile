@@ -11,6 +11,7 @@ const PlayerInfoAvatar = styled(View)`
   top: 0;
   width: ${({ width }) => width};
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
+  background-color: red;
 `;
 
 export const Avatar1 = styled(PlayerInfoAvatar)`

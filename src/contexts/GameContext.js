@@ -20,7 +20,6 @@ export const GameContextProvider = (props) => {
       case "SWAP_PLAYERS":
         return { ...state, p1: action.p1, p2: action.p2 };
       case "SHOW_STATS":
-        console.log(state.showStats);
         return { ...state, showStats: !state.showStats };
       case "CHANGE_LEGORSET":
         return { ...state, legOrSet: action.value };
@@ -32,6 +31,7 @@ export const GameContextProvider = (props) => {
       case "CHANGE_INPUT":
         return changeInput(state);
       case "TYPE":
+        console.log("TYPE");
         return type(state, action.value);
       case "SUBMIT":
         return submit(state, action.value);

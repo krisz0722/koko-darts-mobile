@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View } from "react-native";
+import { Animated, Text, TouchableHighlight, View } from "react-native";
 import CLASSIC_NUM from "../../NumButton";
 import CLASSIC_FUNCTION from "../../FunctionButton";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { FlexRow } from "../../../styles/css_mixins";
+import { AlignText, FlexRow } from "../../../styles/css_mixins";
+import { SettingsContext } from "../../../contexts/SettingsContext";
 
 export const ClassicBottom = styled(View)`
   ${FlexRow};
@@ -16,12 +17,19 @@ export const ClassicBottom = styled(View)`
   height: 37%;
 `;
 
-const CLASSIC_BOTTOM = () => {
+const CLASSIC_BOTTOM = React.memo(() => {
   const {
     gameData: {
-      scoreInputArray: { defaultInput, manualInput },
+      scoreInputArray: { manualInput, defaultInput },
     },
   } = useContext(GameContext);
+
+  const {
+    settings: { selectedTheme },
+  } = useContext(SettingsContext);
+
+  const theme = selectedTheme;
+
   const buttonText =
     defaultInput[0] === "" && manualInput[0] === "" ? "BACK" : "CLEAR";
 
@@ -55,6 +63,6 @@ const CLASSIC_BOTTOM = () => {
       })}
     </ClassicBottom>
   );
-};
+});
 
 export default CLASSIC_BOTTOM;

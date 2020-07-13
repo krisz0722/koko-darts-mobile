@@ -2,37 +2,45 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeNavigator from "./HomeNavigator";
-import { WELCOME } from "../screens/Welcome";
 import { SettingsContext } from "../contexts/SettingsContext";
+import { NavigationContext } from "../contexts/NavigationContext";
+import HomeNavigator from "./HomeNavigator";
+import { LOGIN } from "../screens/Login";
+import { HOME } from "../screens/Home";
+import { WELCOME } from "../screens/Welcome";
 import transitionContrast from "../styles/transitions-contrast";
 import transitionDefault from "../styles/transitions-default";
-import { NavigationContext } from "../contexts/NavigationContext";
 import { REGISTER } from "../screens/SignUp";
-import { LOGIN } from "../screens/Login";
 import GAME_CLASSIC from "../screens/Classic";
-import { HOME } from "../screens/Home";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
+    // {
+    //   component: HOME,
+    //   name: "login",
+    // },
     {
-      component: HOME,
-      name: "register",
+      component: GAME_CLASSIC,
+      name: "game",
     },
-    {
-      component: LOGIN,
-      name: "login",
-    },
-    {
-      component: WELCOME,
-      name: "welcome",
-    },
-    {
-      component: HomeNavigator,
-      name: "homenavigator",
-    },
+    // {
+    //   component: REGISTER,
+    //   name: "register",
+    // },
+    // {
+    //   component: LOGIN,
+    //   name: "login",
+    // },
+    // {
+    //   component: WELCOME,
+    //   name: "welcome",
+    // },
+    // {
+    //   component: HomeNavigator,
+    //   name: "homenavigator",
+    // },
   ];
 
   const {

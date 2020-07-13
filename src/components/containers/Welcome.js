@@ -8,9 +8,8 @@ export const View_Headers = styled(View)`
   position: absolute;
   top: 20%;
   ${FlexColAround};
-  border: 2px white solid;
-  opacity: ${({ isEditing }) => (isEditing ? 1 : 0)};
   background-color: ${({ bg }) => bg};
+  border: 2px white solid;
 `;
 
 export const View_Shape = styled(View)`

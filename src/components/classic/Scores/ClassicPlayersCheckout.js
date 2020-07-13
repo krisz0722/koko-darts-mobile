@@ -9,6 +9,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 export const ClassicCheckoutsPlayer = styled(View)`
   position: absolute;
   width: 50%;
+  bottom: 0;
   height: 100%;
   ${FlexColAround};
   background-color: ${({ theme }) => theme.game.bgOnCheckout};

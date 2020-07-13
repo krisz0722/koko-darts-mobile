@@ -18,7 +18,6 @@ const ROUTER = () => {
 
   const theme = selectedTheme;
 
-  console.log("router", theme);
   return (
     <>
       <AppBackground

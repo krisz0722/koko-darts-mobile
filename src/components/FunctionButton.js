@@ -1,5 +1,13 @@
 import styled from "styled-components";
-import { TouchableOpacity, Text, TouchableHighlight } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  TouchableHighlight,
+  UIManager,
+  LayoutAnimation,
+  TouchableWithoutFeedback,
+  TouchableHighlightBase,
+} from "react-native";
 import { FlexRowAround } from "../styles/css_mixins";
 import React, { useContext } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
@@ -15,6 +23,7 @@ export const Button_Function_Classic = styled(TouchableHighlight)`
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
   border-width: ${({ theme }) => theme.borderWidth};
 `;
+export const View_Function = styled(Button_Function_Classic)``;
 
 export const Text_Function = styled(Text)`
   text-align-vertical: center;
@@ -32,6 +41,11 @@ const CLASSIC_FUNCTION = ({ value, action = null, icon, middle = false }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
+  UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+
+  LayoutAnimation.linear();
+
   const theme = selectedTheme;
   const {
     dispatchGameData,
@@ -39,13 +53,14 @@ const CLASSIC_FUNCTION = ({ value, action = null, icon, middle = false }) => {
   } = useContext(GameContext);
 
   const handleOnPress = (value, action) => {
-    console.log(value, action);
     if (action) {
       dispatchGameData({ type: action, value });
     } else {
+      console.log("submit" + "");
       dispatchGameData({ type: "SUBMIT", value });
     }
   };
+
   return (
     <Button_Function_Classic
       ap={activePlayer}
@@ -68,3 +83,5 @@ const CLASSIC_FUNCTION = ({ value, action = null, icon, middle = false }) => {
 };
 
 export default CLASSIC_FUNCTION;
+
+//TODO Icon.Button component!

@@ -10,10 +10,10 @@ console.disableYellowBox = true;
 const App = () => {
   return (
     <>
-      <AppBackground
-        source={require("./assets/bgPortrait.jpeg")}
-        resizeMode="cover"
-      />
+      {/*<AppBackground*/}
+      {/*  source={require("./assets/bgPortrait.jpeg")}*/}
+      {/*  resizeMode="cover"*/}
+      {/*/>*/}
       <NavigationContextProvider>
         <SettingsContextProvider>
           <GameContextProvider>

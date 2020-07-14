@@ -9,13 +9,8 @@ import {
   FlexRowBetween,
 } from "../../../styles/css_mixins";
 import createAnimation from "../../../styles/playerSwitchTransition";
-import {
-  Button_Function_Classic,
-  Text_Function,
-  View_Function,
-} from "../../FunctionButton";
 
-export const ClassicStats = styled(View)`
+export const ClassicStats = styled(Animated.View)`
   ${FlexRow};
   width: 50%;
   position: absolute;
@@ -33,7 +28,7 @@ export const ClassicStatsPlayer2 = styled(ClassicStats)`
   background-color: ${({ theme }) => theme.game.p2Bg};
 `;
 
-export const Averages = styled(View)`
+export const Averages = styled(Animated.View)`
   width: 70%;
   height: 100%;
   ${FlexColAround};
@@ -41,7 +36,7 @@ export const Averages = styled(View)`
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
 `;
 
-export const Totals = styled(View)`
+export const Totals = styled(Animated.View)`
   width: 30%;
   height: 100%;
   ${FlexColAround};
@@ -109,16 +104,6 @@ const CLASSIC_STATS = ({ player }) => {
     }).start();
   }, [drawerAnimation, showStats]);
 
-  const AnimatedAverages = Animated.createAnimatedComponent(Averages);
-  const AnimatedTotals = Animated.createAnimatedComponent(Totals);
-
-  const AnimatedContainer1 = Animated.createAnimatedComponent(
-    ClassicStatsPlayer1,
-  );
-  const AnimatedContainer2 = Animated.createAnimatedComponent(
-    ClassicStatsPlayer2,
-  );
-
   const style1 = () => {
     return createAnimation(theme, animation, false, false, true);
   };
@@ -167,14 +152,14 @@ const CLASSIC_STATS = ({ player }) => {
 
   return (
     <>
-      <AnimatedContainer1
+      <ClassicStatsPlayer1
         style={{ top }}
         ap={activePlayer}
         player={"p1"}
         theme={theme}
         showStats={showStats}
       >
-        <AnimatedAverages
+        <Averages
           style={style1()}
           ap={activePlayer}
           player={"p1"}
@@ -190,13 +175,8 @@ const CLASSIC_STATS = ({ player }) => {
               </StatText2>
             </StatRow>
           ))}
-        </AnimatedAverages>
-        <AnimatedTotals
-          style={style1()}
-          ap={activePlayer}
-          player={"p1"}
-          theme={theme}
-        >
+        </Averages>
+        <Totals style={style1()} ap={activePlayer} player={"p1"} theme={theme}>
           {TOTALS.map((item) => (
             <StatRow>
               <StatText3 player={"p1"} theme={theme}>
@@ -207,16 +187,16 @@ const CLASSIC_STATS = ({ player }) => {
               </StatText4>
             </StatRow>
           ))}
-        </AnimatedTotals>
-      </AnimatedContainer1>
-      <AnimatedContainer2
+        </Totals>
+      </ClassicStatsPlayer1>
+      <ClassicStatsPlayer2
         style={{ top }}
         showStats={showStats}
         ap={activePlayer}
         player={"p2"}
         theme={theme}
       >
-        <AnimatedAverages
+        <Averages
           style={style1()}
           ap={activePlayer}
           player={"p2"}
@@ -232,13 +212,8 @@ const CLASSIC_STATS = ({ player }) => {
               </StatText2>
             </StatRow>
           ))}
-        </AnimatedAverages>
-        <AnimatedTotals
-          style={style1()}
-          ap={activePlayer}
-          player={"p2"}
-          theme={theme}
-        >
+        </Averages>
+        <Totals style={style1()} ap={activePlayer} player={"p2"} theme={theme}>
           {TOTALS.map((item) => (
             <StatRow>
               <StatText3 player={"p2"} theme={theme}>
@@ -249,8 +224,8 @@ const CLASSIC_STATS = ({ player }) => {
               </StatText4>
             </StatRow>
           ))}
-        </AnimatedTotals>
-      </AnimatedContainer2>
+        </Totals>
+      </ClassicStatsPlayer2>
     </>
   );
 };

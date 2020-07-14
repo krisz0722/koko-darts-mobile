@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useRef } from "react";
-import styled from "styled-components/native/dist/styled-components.native.esm";
-import { Animated, Text, View } from "react-native";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
+import styled from "styled-components/native/dist/styled-components.native.esm";
+import { Animated, View } from "react-native";
 import { AlignText, FlexCol } from "../../../styles/css_mixins";
 import createAnimation from "../../../styles/playerSwitchTransition";
 
-export const ClassicPlayerScore = styled(View)`
+export const ClassicPlayerScore = styled(Animated.View)`
   ${FlexCol};
   position: absolute;
   width: 50%;
   height: 100%;
   margin: auto;
+  top: 0%;
   background-color: ${({ player, theme }) => theme.game[player + "Bg"]};
   border-width: ${({ theme }) => theme.borderWidth};
 `;
@@ -23,18 +24,26 @@ export const ClassicPlayer2Score = styled(ClassicPlayerScore)`
   right: 0;
 `;
 
-export const Text_Score = styled(Text)`
+export const Text_Score = styled(Animated.Text)`
+  position: absolute;
+  top: 0;
+  border-width: ${({ theme }) => theme.borderWidth};
   color: ${({ player, theme }) => theme.game[player + "Text"]};
-  font-size: 40;
   font-family: ${({ theme }) => theme.fontFamily};
   background-color: ${({ player, theme }) => theme.game[player + "Bg"]};
-  width: 100%;
-  height: 100%;
+  width: 50%;
   margin: auto;
   ${AlignText};
 `;
 
-const PLAYER_SCORE = ({ player }) => {
+const Text_Score1 = styled(Text_Score)`
+  left: 0;
+`;
+
+const Text_Score2 = styled(Text_Score)`
+  right: 0;
+`;
+const PLAYER_SCORE = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -45,53 +54,92 @@ const PLAYER_SCORE = ({ player }) => {
 
   const theme = selectedTheme;
 
+  const p1Checkout = p1_DATA.onCheckout;
+  const p2Checkout = p2_DATA.onCheckout;
+
   const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
     .current;
+  const animationP1 = useRef(new Animated.Value(p1Checkout ? 1 : 0)).current;
+  const animationP2 = useRef(new Animated.Value(p2Checkout ? 1 : 0)).current;
+  const fontP1 = useRef(new Animated.Value(p1Checkout ? 1 : 0)).current;
+  const fontP2 = useRef(new Animated.Value(p2Checkout ? 1 : 0)).current;
 
   useEffect(() => {
     Animated.timing(animation, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 3000,
     }).start();
-  }, [animation, activePlayer]);
+    Animated.timing(animationP1, {
+      toValue: p1Checkout ? 1 : 0,
+      duration: 3000,
+    }).start();
+    Animated.timing(animationP2, {
+      toValue: p2Checkout ? 1 : 0,
+      duration: 3000,
+    }).start();
+    Animated.timing(fontP1, {
+      toValue: showStats && p1Checkout ? 1 : p1Checkout ? 0.5 : 0,
+      duration: 3000,
+    }).start();
+    Animated.timing(fontP2, {
+      toValue: showStats && p2Checkout ? 1 : p2Checkout ? 0.5 : 0,
+      duration: 3000,
+    }).start();
+  }, [
+    activePlayer,
+    animation,
+    animationP1,
+    animationP2,
+    fontP1,
+    fontP2,
+    showStats,
+    p1Checkout,
+    p2Checkout,
+  ]);
 
-  const AnimatedView1 = Animated.createAnimatedComponent(ClassicPlayer1Score);
-  const AnimatedView2 = Animated.createAnimatedComponent(ClassicPlayer2Score);
-  const AnimatedText = Animated.createAnimatedComponent(Text_Score);
-
-  const style1 = () => {
+  const style = () => {
     return createAnimation(theme, animation, false, false, true);
   };
 
-  console.log(style1());
+  const p1Height = animationP1.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["100%", "50%"],
+  });
 
+  const p2Height = animationP2.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["100%", "50%"],
+  });
+
+  const fontSizeP1 = fontP1.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [80, 60, 50],
+  });
+
+  const fontSizeP2 = fontP2.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [80, 60, 50],
+  });
+
+  const style1 = {
+    ...style(),
+    fontSize: fontSizeP1,
+    height: p1Height,
+  };
+
+  const style2 = {
+    ...style(),
+    fontSize: fontSizeP2,
+    height: p2Height,
+  };
   return (
     <>
-      {player === "p1" ? (
-        <AnimatedView1
-          showStats={showStats}
-          checkout={p1_DATA.onCheckout}
-          ap={activePlayer}
-          theme={theme}
-          player={"p1"}
-        >
-          <AnimatedText ap={activePlayer} theme={theme} player={"p1"}>
-            {p1_DATA.score}
-          </AnimatedText>
-        </AnimatedView1>
-      ) : (
-        <AnimatedView2
-          showStats={showStats}
-          checkout={p2_DATA.onCheckout}
-          ap={activePlayer}
-          theme={theme}
-          player={"p2"}
-        >
-          <AnimatedText ap={activePlayer} theme={theme} player={"p2"}>
-            {p2_DATA.score}
-          </AnimatedText>
-        </AnimatedView2>
-      )}
+      <Text_Score1 style={style1} ap={activePlayer} theme={theme} player={"p1"}>
+        {p1_DATA.score}
+      </Text_Score1>
+      <Text_Score2 style={style2} ap={activePlayer} theme={theme} player={"p2"}>
+        {p2_DATA.score}
+      </Text_Score2>
     </>
   );
 };

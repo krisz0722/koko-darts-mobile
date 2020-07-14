@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
+import { Text, View } from "react-native";
 import { GameContext } from "../../../contexts/GameContext";
 import { CHECKOUTS } from "../../../calc/scores";
-import { Text, View } from "react-native";
+
 import styled from "styled-components";
 import { FlexRowAround, AlignText } from "../../../styles/css_mixins";
 

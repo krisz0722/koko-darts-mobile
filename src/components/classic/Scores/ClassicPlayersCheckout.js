@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from "react";
-import PLAYER_CHECKOUTS from "./ClassicCheckouts";
+import PLAYER_CHECKOUTS from "./ClassicCheckoutsDiv";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, View } from "react-native";
 import { FlexColAround } from "../../../styles/css_mixins";

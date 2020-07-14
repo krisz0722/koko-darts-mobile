@@ -26,6 +26,11 @@ export const BasicText = () => css`
   font-family: ${({ theme }) => theme.fontFamilyBold};
 `;
 
+export const Border = (color) => css`
+  border-color: ${({}) => color};
+  border-width: ${({ theme }) => theme.borderWidth};
+`;
+
 export const BorderHorizontal = (color) => css`
   border-top-width: ${({ theme }) => theme.borderWidth};
   border-bottom-width: ${({ theme }) => theme.borderWidth};

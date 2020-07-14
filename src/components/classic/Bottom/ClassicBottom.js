@@ -74,7 +74,6 @@ const CLASSIC_BOTTOM = React.memo(() => {
   };
 
   useEffect(() => {
-    console.log("color", animation);
     Animated.timing(animation, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 3000,
@@ -88,8 +87,6 @@ const CLASSIC_BOTTOM = React.memo(() => {
     const type = typeof item === "number";
     return createAnimation(theme, animation, type, type, true);
   };
-
-  console.log(style1(1));
 
   return (
     <ClassicBottom>

@@ -1,9 +1,9 @@
 import React from "react";
 import CLASSIC_SCORES from "../components/classic/Scores/ClassicScores";
-import CLASSIC_STATS from "../components/classic/Stats/ClassicStats";
 import CLASSIC_MIDDLE from "../components/classic/Middle/ClassicMiddle";
 import CLASSIC_BOTTOM from "../components/classic/Bottom/ClassicBottom";
 import CLASSIC_TOP from "../components/classic/Top/ClassicTop";
+import CLASSIC_STATS from "../components/classic/Stats/ClassicStats";
 
 const GAME_CLASSIC = () => {
   return (

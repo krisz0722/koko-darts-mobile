@@ -93,14 +93,14 @@ const CLASSIC_STATS = ({ player }) => {
   useEffect(() => {
     Animated.timing(animation, {
       toValue: activePlayer === "p1" ? 1 : 0,
-      duration: 3000,
+      duration: 300,
     }).start();
   }, [animation, activePlayer]);
 
   useEffect(() => {
     Animated.timing(drawerAnimation, {
       toValue: showStats ? 1 : 0,
-      duration: 3000,
+      duration: 300,
     }).start();
   }, [drawerAnimation, showStats]);
 

@@ -68,11 +68,11 @@ const CLASSIC_SCORES = () => {
   useEffect(() => {
     Animated.timing(animation, {
       toValue: activePlayer === "p1" ? 1 : 0,
-      duration: 3000,
+      duration: 300,
     }).start();
     Animated.timing(animation2, {
       toValue: showStats ? 1 : 0,
-      duration: 3000,
+      duration: 300,
     }).start();
   }, [animation, animation2, showStats, activePlayer]);
 

@@ -76,7 +76,7 @@ const CLASSIC_BOTTOM = React.memo(() => {
   useEffect(() => {
     Animated.timing(animation, {
       toValue: activePlayer === "p1" ? 1 : 0,
-      duration: 3000,
+      duration: 300,
     }).start();
   }, [animation, activePlayer]);
 

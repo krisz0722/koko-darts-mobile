@@ -61,7 +61,7 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
   useEffect(() => {
     Animated.timing(animation, {
       toValue: activePlayer === "p1" ? 1 : 0,
-      duration: 3000,
+      duration: 300,
     }).start();
   }, [animation, activePlayer]);
 

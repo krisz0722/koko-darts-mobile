@@ -14,7 +14,7 @@ export const ClassicMiddle = styled(View)`
   height: 18%;
 `;
 
-const CLASSIC_MIDDLE = () => {
+const CLASSIC_MIDDLE = ({ navigation }) => {
   const { gameData } = useContext(GameContext);
 
   const MIDDLE = [
@@ -22,7 +22,7 @@ const CLASSIC_MIDDLE = () => {
       name: "menu",
       value: "menu",
       icon: "menu",
-      action: null,
+      action: () => navigation,
       disabled: false,
     },
     {

@@ -19,6 +19,19 @@ export const Screen = {
   width: Dimensions.get("screen").width,
 };
 
+export const BasicText = () => css`
+  text-align-vertical: center;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: ${({ theme }) => theme.fontFamilyBold};
+`;
+
+export const BorderHorizontal = (color) => css`
+  border-top-width: ${({ theme }) => theme.borderWidth};
+  border-bottom-width: ${({ theme }) => theme.borderWidth};
+  border-color: ${({ theme }) => color};
+`;
+
 export const AlignText = css`
   text-align-vertical: center;
   text-align: center;

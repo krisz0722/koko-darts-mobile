@@ -7,7 +7,7 @@ import LoginButton from "../components/LoginButton";
 import GhostButton from "../components/GhostButton";
 import LoginInput from "../components/LoginInput";
 
-export const LOGIN = ({ navigation }) => {
+const LOGIN = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -58,6 +58,7 @@ export const LOGIN = ({ navigation }) => {
       icon: passwordHidden ? "visibility" : "visibility-off",
       iconAction: toggleSecureEntry,
     },
+    <LoginButton disabled={!enableSignUp} text={"Sign Up"} />,
   ];
   return (
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
@@ -88,3 +89,4 @@ export const LOGIN = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+export default LOGIN;

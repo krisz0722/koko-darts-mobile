@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SETTINGS } from "../screens/Settings";
-import { HOME } from "../screens/Home";
 import { SettingsContext } from "../contexts/SettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
-import { PROFILE } from "../screens/Profile";
 import { NavigationContext } from "../contexts/NavigationContext";
 import GAME_CLASSIC from "../screens/Classic";
+import HOME from "../screens/Home";
 
 const { Navigator, Screen } = createStackNavigator();
 

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
-import { View_Headers } from "../components/containers/Welcome";
-import { Text_Title } from "../components/Headers";
+import { Text, View } from "react-native";
 
 export const PROFILE = () => {
   const {
@@ -10,9 +9,9 @@ export const PROFILE = () => {
 
   return (
     <>
-      <View_Headers>
-        <Text_Title theme={selectedTheme}>PROFILE</Text_Title>
-      </View_Headers>
+      <View>
+        <Text theme={selectedTheme}>PROFILE</Text>
+      </View>
     </>
   );
 };

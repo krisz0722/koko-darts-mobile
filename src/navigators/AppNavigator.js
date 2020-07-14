@@ -6,7 +6,10 @@ import { SettingsContext } from "../contexts/SettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
 import GAME_CLASSIC from "../screens/Classic";
-
+import REGISTER from "../screens/SignUp";
+import LOGIN from "../screens/Login";
+import WELCOME from "../screens/Welcome";
+import HomeNavigator from "./HomeNavigator";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
@@ -19,22 +22,22 @@ const AppNavigator = () => {
       component: GAME_CLASSIC,
       name: "game",
     },
-    // {
-    //   component: REGISTER,
-    //   name: "register",
-    // },
-    // {
-    //   component: LOGIN,
-    //   name: "login",
-    // },
-    // {
-    //   component: WELCOME,
-    //   name: "welcome",
-    // },
-    // {
-    //   component: HomeNavigator,
-    //   name: "homenavigator",
-    // },
+    {
+      component: REGISTER,
+      name: "register",
+    },
+    {
+      component: LOGIN,
+      name: "login",
+    },
+    {
+      component: WELCOME,
+      name: "welcome",
+    },
+    {
+      component: HomeNavigator,
+      name: "homenavigator",
+    },
   ];
 
   const {

@@ -32,7 +32,7 @@ export const Text_Button_Login = styled(Text)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
-const LoginButton = ({ text, action, disabled }) => {
+const LoginButton = ({ text, action, disabled = false }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);

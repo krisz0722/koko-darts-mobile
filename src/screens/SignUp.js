@@ -7,7 +7,7 @@ import LoginButton from "../components/LoginButton";
 import GhostButton from "../components/GhostButton";
 import LoginInput from "../components/LoginInput";
 
-export const REGISTER = ({ navigation }) => {
+const REGISTER = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -111,3 +111,5 @@ export const REGISTER = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+export default REGISTER;

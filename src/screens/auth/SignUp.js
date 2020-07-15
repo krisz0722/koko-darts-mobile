@@ -106,7 +106,7 @@ const REGISTER = ({ navigation }) => {
 
           <THEMED_BUTTON
             text={"Already have an account?\ntap here to log in!"}
-            action={() => navigation.navigate("auth")}
+            action={() => navigation.navigate("login")}
             type={"ghost"}
           />
         </Form>

@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import {
   Info,
-  HeaderWelcome,
+  HeaderText,
   InfoTitle,
   InfoRow,
   InfoText,
   InfoText2,
   InfoStats,
+  Header,
+  Buttons,
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 
@@ -16,7 +18,7 @@ const HOME = ({ navigation }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const [unfinished, setUnfinished] = useState(false);
+  const [unfinished, setUnfinished] = useState(true);
 
   const infoUnfinished = {
     title: "You have an unfinished game!",
@@ -66,7 +68,10 @@ const HOME = ({ navigation }) => {
 
   return (
     <>
-      <HeaderWelcome theme={selectedTheme}>welcome valaki</HeaderWelcome>
+      <Header>
+        <HeaderText theme={selectedTheme}>welcome</HeaderText>
+        <HeaderText theme={selectedTheme}>valaki</HeaderText>
+      </Header>
       <InfoTitle unfinished={unfinished}>{renderContent.title}</InfoTitle>
       <Info unfinished={unfinished}>
         <InfoStats theme={selectedTheme}>
@@ -80,20 +85,22 @@ const HOME = ({ navigation }) => {
           ))}
         </InfoStats>
       </Info>
-      {unfinished ? (
+      <Buttons>
+        {unfinished ? (
+          <THEMED_BUTTON
+            type={"success"}
+            theme={selectedTheme}
+            text={"continue game"}
+          />
+        ) : null}
         <THEMED_BUTTON
-          type={"success"}
+          valami={1}
+          type={"active"}
           theme={selectedTheme}
-          text={"continue game"}
+          text={"new game"}
+          action={() => navigation.navigate("pregame")}
         />
-      ) : null}
-      <THEMED_BUTTON
-        valami={1}
-        type={"success"}
-        theme={selectedTheme}
-        text={"new game"}
-        action={() => navigation.navigate("pregame")}
-      />
+      </Buttons>
     </>
   );
 };

@@ -3,22 +3,41 @@ import {
   BasicTextBold,
   BorderHorizontal,
   FlexCol,
+  FlexColAround,
+  FlexColBetween,
   FlexColStart,
   FlexRow,
 } from "../../styles/css_mixins";
 import { Text, View } from "react-native";
 
-export const HeaderWelcome = styled(Text)`
+export const Header = styled(View)`
+  top: 10%;
+  height: 15%;
+  width: 100%;
+  ${FlexCol};
+`;
+
+export const HeaderText = styled(Text)`
   ${BasicTextBold}
   text-align-vertical: bottom;
   width: 100%;
-  height: 20%;
-  padding-bottom:5%;
-  color: ${({ theme }) => theme.text}
-  font-size: 30;
+  color: ${({ theme }) => theme.text};
+  font-size: ${({ theme }) => theme.home.fontSize1};
+`;
+export const InfoTitle = styled(Text)`
+  top: 20%;
+  ${BasicTextBold}
+  width: 100%;
+  height: 10%;
+  ${FlexRow};
+  color: ${({ theme }) => theme.text};
+  font-size: ${({ theme }) => theme.home.fontSize2};
+  background-color: ${({ theme, unfinished }) =>
+    unfinished ? theme.bgRed : "transparent"};
 `;
 
 export const Info = styled(View)`
+  top: 15%;
   width: 100%;
   height: 20%;
   ${FlexColStart};
@@ -29,17 +48,6 @@ export const InfoStats = styled(View)`
   width: 100%;
   height: 100%;
   ${BorderHorizontal(({ theme }) => theme.borderColor)}
-`;
-
-export const InfoTitle = styled(Text)`
-  ${BasicTextBold}
-  width: 100%;
-  height: 10%;
-  ${FlexRow};
-  color: ${({ theme }) => theme.text};
-  font-size: 20;
-  background-color: ${({ theme, unfinished }) =>
-    unfinished ? theme.bgRed : "transparent"};
 `;
 
 export const InfoRow = styled(View)`
@@ -54,7 +62,7 @@ export const InfoText = styled(Text)`
   width: 40%;
   ${FlexRow};
   color: white;
-  font-size: 15;
+  font-size: ${({ theme }) => theme.home.fontSize3};
 `;
 
 export const InfoText2 = styled(InfoText)`
@@ -62,10 +70,10 @@ export const InfoText2 = styled(InfoText)`
 `;
 
 export const Buttons = styled(View)`
-  ${FlexCol};
-  padding: ${({ unfinished }) => (unfinished ? "5% 0%" : "10% 0")};
-  height: 42%;
+  ${FlexColBetween};
   width: 100%;
+  top: 15%;
+  height: 32%;
 `;
 
 // border: 2px green solid;

@@ -88,7 +88,7 @@ const LOGIN = ({ navigation }) => {
 
           <THEMED_BUTTON
             text={"forgotten password"}
-            action={() => navigation.navigate("auth")}
+            action={() => navigation.navigate("home")}
             type={"ghost"}
           />
         </Form>

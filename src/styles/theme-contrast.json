@@ -9,8 +9,6 @@
   "transitionDelay": "300",
   "bgOverlay": "rgba(0,15,10,0.9)",
   "bgOverlay2": "rgba(0,15,10, 0.9)",
-  "bgHover":  "rgb(242, 242, 242)",
-  "bgHover2":  "rgb(235, 87, 87)",
   "bgChecked": "rgb(235, 87, 87)",
   "bgActive": "rgb(255, 255, 255)",
   "bgRed": "rgb(235, 87, 87)",
@@ -60,7 +58,11 @@
     "large": 0.2
   },
   "buttonFontSize": 15,
-
+  "home": {
+    "fontSize1": 25,
+    "fontSize2": 20,
+    "fontSize3": 15
+  },
   "welcome": {
     "fontSize1": 25,
     "fontSize2": 12.5,
@@ -85,7 +87,6 @@
   },
 
   "settings": {
-    "bgHover": "rgb(235, 87, 87)",
     "bgActive": "rgb(33, 150, 83)",
     "textHeader": "rgb(255, 255, 255)",
     "textChecked": "rgb(242, 242, 242)",

@@ -33,7 +33,7 @@ export const Text_Button_Login = styled(Text)`
   ${BasicTextBold};
   height: 100%;
   width: 70%;
-  font-size: ${({ theme, type }) => theme.buttonFontSize};
+  font-size: ${({ theme }) => theme.buttonFontSize};
   color: ${({ theme, type }) => theme.buttonType[type].color};
 `;
 

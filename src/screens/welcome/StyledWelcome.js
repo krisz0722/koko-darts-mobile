@@ -34,7 +34,6 @@ export const Text_Title = styled(Text)`
   margin: 2% 0;
   color: ${({ theme, color }) => (color ? color : theme.text)};
   font-size: ${({ theme }) => theme.welcome.fontSize1};
-  font-size: 20;
 `;
 
 export const Text_Subtitle = styled(Text_Title)`

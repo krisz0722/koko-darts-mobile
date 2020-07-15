@@ -9,25 +9,14 @@
   "transitionDelay": "300",
   "bgOverlay": "rgba(8, 89, 89, 0.9)",
   "bgOverlay2": "rgba(255,255,255, 0.8)",
-  "bgHover":  "rgb(137, 160, 159)",
-  "bgHover2":  "rgb(137, 160, 159)",
-  "bgChecked": "rgb(2, 40, 36)",
   "bgActive": "rgb(255,255,255)",
   "bgRed": "rgb(235, 87, 87)",
   "bgGreen": "rgb(33, 150, 83)",
   "bgFocus":  "rgb(33, 150, 83)",
   "bg1": "rgb(2, 40, 36)",
   "bg3": "rgb(8, 89, 89)",
-  "fontWeight": "bold",
-  "textHover": "rgb(255, 255, 255)",
-  "textHover2": "rgba(8, 89, 89, 0.9)",
-  "textActive": "rgb(255, 255, 255)",
   "text": "rgb(255, 255, 255)",
   "text2": "rgb(8, 89, 89)",
-  "text3": "rgb(8, 89, 89)",
-  "stroke": "rgb(255, 255, 255)",
-  "stroke2": "rgb(8, 89, 89)",
-  "textLight": "rgb(255, 255, 255)",
   "border": "0.07 rgba(255,255,255,0.5)",
   "borderWidth": 2,
   "borderColor": "rgba(255,255,255,0.5)",
@@ -42,7 +31,7 @@
     },
     "ghost":{
       "bg":"transparent",
-      "color": "rgb(235, 87, 87)"
+      "color":"rgba(255,255,255,0.5)"
     },
     "success": {
       "bg": "rgb(33, 150, 83)",
@@ -65,7 +54,11 @@
     "large": 0.2
   },
   "buttonFontSize": 12.5,
-
+  "home": {
+    "fontSize1": 20,
+    "fontSize2": 15,
+    "fontSize3": 10
+  },
   "welcome": {
     "fontSize1": 22,
     "fontSize2": 12.5,
@@ -89,17 +82,12 @@
   },
 
   "settings": {
-    "bgHover": "rgb(137, 160, 159)",
     "bgActive": "rgb(255, 255, 255)",
-    "textHeader": "rgb(255, 255, 255)",
-    "textChecked": "rgb(255, 255, 255)",
-    "textLabel": "rgb(255, 255, 255)",
     "fontSizeHeader":17.5,
     "fontSizeButton": 13,
     "fontSizeButton2": 10
 
   },
-
   "stats": {
     "fontSize": 1
   },
@@ -127,53 +115,27 @@
     },
     "stats":{
       "classic": {
-        "fsPortrait": "0.1",
-        "fsLandscape": "0.115"
       },
       "asym": {
-        "fsPortrait": "0.1",
-        "fsLandscape": "0.11"
       }
     },
     "nameFs": {
       "classic": {
-        "fsPortrait1": "0.15",
-        "fsLandscape1": "0.25",
-        "fsPortrait2": "0.075",
-        "fsLandscape2": "0.075",
-        "fsPortrait3": "0.125",
-        "fsLandscape3": "0.15"
       },
       "asym": {
-        "fsPortrait1": "0.15",
-        "fsLandscape1": "0.25",
-        "fsPortrait2": "0.075",
-        "fsLandscape2": "0.075",
-        "fsPortrait3": "0.125",
-        "fsLandscape3": "0.15"
       }
     },
     "middle": {
       "bgMid":"rgb(137, 160, 159)",
-      "fwMiddle": 900,
       "classic": {
-        "fsPortrait": "0.15",
-        "fsLandscape": "0.17"
       },
       "asym": {
-        "fsPortrait": "0.15",
-        "fsLandscape": "0.15"
       }
     },
     "bottom": {
-      "fwBottom": 800,
       "classic": {
-        "fsPortrait": "0.45",
-        "fsLandscape": "0.45"
       },
       "asym": {
-        "fsPortrait": "0.5",
-        "fsLandscape": "0.5"
       }
     }
   }

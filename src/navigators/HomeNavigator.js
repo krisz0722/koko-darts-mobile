@@ -8,6 +8,7 @@ import { NavigationContext } from "../contexts/NavigationContext";
 import GAME_CLASSIC from "../screens/Classic";
 import HOME from "../screens/Home";
 import { PROFILE } from "../screens/Profile";
+import HOMENAVIGATOR_TAB from "../components/HomeTabNavigator";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -46,17 +47,20 @@ const HomeNavigator = () => {
   console.log(homeTabScreen);
 
   return (
-    <Navigator
-      headerMode="none"
-      screenOptions={{
-        ...transition(theme.name),
-      }}
-    >
-      <Screen
-        name={SCREENS[homeTabScreen].name}
-        component={SCREENS[homeTabScreen].component}
-      />
-    </Navigator>
+    <>
+      <Navigator
+        headerMode="none"
+        screenOptions={{
+          ...transition(theme.name),
+        }}
+      >
+        <Screen
+          name={SCREENS[homeTabScreen].name}
+          component={SCREENS[homeTabScreen].component}
+        />
+      </Navigator>
+      <HOMENAVIGATOR_TAB />
+    </>
   );
 };
 

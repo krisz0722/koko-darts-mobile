@@ -12,6 +12,7 @@ const Button_Settings = styled(TouchableHighlight)`
     active ? theme.bgActive : "transparent"};
   flex-basis: ${({ length }) => 100 / length + "%"};
   height: 100%;
+  padding: ${({ icon }) => (icon ? "0 5%" : 0)};
 `;
 
 const Text_Button = styled(Text)`
@@ -23,7 +24,10 @@ const Text_Button = styled(Text)`
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)};
   font-family: ${({ theme, active }) =>
     active ? theme.fontFamilyBold : theme.fontFamily};
-  font-size: ${({ theme }) => theme.settings.fontSizeButton};
+  font-size: ${({ size, theme }) =>
+    size === "small"
+      ? theme.settings.fontSizeButton2
+      : theme.settings.fontSizeButton};
   text-transform: ${({ theme }) => theme.textTransform};
 `;
 
@@ -32,7 +36,8 @@ const SETTINGS_BUTTON = ({
   value = "",
   action = null,
   active = false,
-  icon = "",
+  icon = null,
+  size = null,
 }) => {
   const {
     settings: { selectedTheme },
@@ -41,16 +46,17 @@ const SETTINGS_BUTTON = ({
 
   return (
     <Button_Settings
+      icon={icon}
       active={active}
       length={length}
       onPress={action}
       theme={theme}
     >
       <Div>
-        <Text_Button active={active} theme={theme}>
+        <Text_Button size={size} active={active} theme={theme}>
           {value}
         </Text_Button>
-        {icon ? <Icon name={icon} size={50} color={theme.text2} /> : null}
+        {icon ? <Icon name={icon} size={35} color={theme.text2} /> : null}
       </Div>
     </Button_Settings>
   );

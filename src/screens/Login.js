@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Keyboard, Dimensions, SafeAreaView, ScrollView } from "react-native";
+import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import { SettingsContext } from "../contexts/SettingsContext";
 import { Form, Inputs } from "../components/containers/Register";
 
-import LoginButton from "../components/LoginButton";
-import GhostButton from "../components/GhostButton";
+import THEMED_BUTTON from "../components/ThemedButton";
 import LoginInput from "../components/LoginInput";
 
 const LOGIN = ({ navigation }) => {
@@ -58,7 +57,6 @@ const LOGIN = ({ navigation }) => {
       icon: passwordHidden ? "visibility" : "visibility-off",
       iconAction: toggleSecureEntry,
     },
-    <LoginButton disabled={!enableSignUp} text={"Sign Up"} />,
   ];
   return (
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
@@ -68,21 +66,30 @@ const LOGIN = ({ navigation }) => {
       >
         <Form theme={selectedTheme} isKeyboardUp={isKeyboardUp}>
           <Inputs>
-            {INPUTS.map((item) => (
-              <LoginInput
-                key={item.name}
-                valid={item.value.length > 5}
-                input={item}
-                handleFocus={handleFocus}
-                focused={focus === item.name}
-              />
-            ))}
-            <LoginButton disabled={!enableSignUp} text={"Sign Up"} />
+            {INPUTS.map((item) => {
+              console.log("ITEM", item);
+              return (
+                <LoginInput
+                  key={item.name}
+                  valid={item.value.length > 5}
+                  value={item.value}
+                  input={item}
+                  handleFocus={handleFocus}
+                  focused={focus === item.name}
+                />
+              );
+            })}
+            <THEMED_BUTTON
+              type={enableSignUp ? "active" : "basic"}
+              disabled={!enableSignUp}
+              text={"log in"}
+            />
           </Inputs>
 
-          <GhostButton
-            text={"Already have an account?\ntap here to log in!"}
-            action={() => navigation.navigate("welcome")}
+          <THEMED_BUTTON
+            text={"forgotten password"}
+            action={() => navigation.navigate("login")}
+            type={"ghost"}
           />
         </Form>
       </ScrollView>

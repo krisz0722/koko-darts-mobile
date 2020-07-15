@@ -11,8 +11,7 @@ import {
   InfoText2,
   InfoStats,
 } from "../components/containers/Home";
-import HomeButton from "../components/HomeButton";
-import GhostButton from "../components/GhostButton";
+import THEMED_BUTTON from "../components/ThemedButton";
 import { NavigationContext } from "../contexts/NavigationContext";
 
 const HOME = ({ navigation }) => {
@@ -89,16 +88,20 @@ const HOME = ({ navigation }) => {
           ))}
         </InfoStats>
       </Info>
-      <Buttons unfinished={unfinished}>
-        {unfinished ? (
-          <HomeButton theme={selectedTheme} text={"continue game"} />
-        ) : null}
-        <HomeButton
+      {unfinished ? (
+        <THEMED_BUTTON
+          type={"success"}
           theme={selectedTheme}
-          text={"new game"}
-          action={handlerNewGame}
+          text={"continue game"}
         />
-      </Buttons>
+      ) : null}
+      <THEMED_BUTTON
+        valami={1}
+        type={"success"}
+        theme={selectedTheme}
+        text={"new game"}
+        action={handlerNewGame}
+      />
     </>
   );
 };

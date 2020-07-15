@@ -32,6 +32,35 @@
   "borderWidth": 2,
   "borderColor": "rgb(235, 87, 87)",
 
+  "buttonType": {
+    "basic": {
+      "bg": "transparent",
+      "color": "rgb(255,255,255)"
+    },
+    "active": {
+      "bg":"rgb(255, 255, 255)",
+      "color": "rgb(0, 0, 0)"
+    },
+    "ghost":{
+      "bg":"transparent",
+      "color": "rgb(235, 87, 87)"
+    },
+    "success": {
+      "bg": "rgb(33, 150, 83)",
+      "color": "rgb(255,255,255)"
+    },
+    "danger": {
+      "bg":   "rgb(235, 87, 87)",
+      "color": "rgb(255,255,255)"
+    }
+  },
+  "buttonSize": {
+    "small": 0.075,
+    "medium": 0.1,
+    "large": 0.2
+  },
+  "buttonFontSize": 15,
+
   "menu": {
     "fontSize": 20,
     "fontSizeLogin": 10,
@@ -48,7 +77,8 @@
     "textChecked": "rgb(242, 242, 242)",
     "textLabel": "rgb(0, 0, 0)",
     "fontSizeHeader":25,
-    "fontSizeButton": 17.5
+    "fontSizeButton": 17.5,
+    "fontSizeButton2": 13.5
   },
 
   "stats": {

@@ -1,18 +1,6 @@
-import React, { useContext, useState } from "react";
-import { Text } from "react-native";
+import React, { useContext } from "react";
 import { SettingsContext } from "../contexts/SettingsContext";
-import {
-  Info,
-  Buttons,
-  HeaderWelcome,
-  InfoTitle,
-  InfoRow,
-  InfoText,
-  InfoText2,
-  InfoStats,
-} from "../components/containers/Home";
-import HomeButton from "../components/HomeButton";
-import GhostButton from "../components/GhostButton";
+import { HeaderWelcome } from "../components/containers/Home";
 
 const MATCHES = () => {
   const {

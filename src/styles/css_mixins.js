@@ -34,7 +34,7 @@ export const Border = (color) => css`
 export const BorderHorizontal = (color) => css`
   border-top-width: ${({ theme }) => theme.borderWidth};
   border-bottom-width: ${({ theme }) => theme.borderWidth};
-  border-color: ${({ theme }) => color};
+  border-color: ${() => color};
 `;
 
 export const AlignText = css`

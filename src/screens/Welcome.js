@@ -8,7 +8,7 @@ import {
   Text_Subtitle,
   Text_Subtitle2,
 } from "../components/Headers";
-import ShapeThrow from "../../assets/svg/shape";
+import ShapeThrow from "../../assets/shapeThrow";
 import NavButton from "../components/NavButton";
 import NavBar from "../components/NavBar";
 import { NavigationContext } from "../contexts/NavigationContext";

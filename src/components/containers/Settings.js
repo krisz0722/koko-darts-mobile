@@ -23,8 +23,7 @@ export const BottomButtons = styled(View)`
 `;
 
 export const Row = styled(View)`
-  height: ${({ header }) =>
-    header ? Window.height * 0.07 : Window.height * 0.14};
+  height: ${({ header }) => (header ? "7%" : "14%")};
   width: 100%;
   ${FlexColStart};
   border-top-width: ${({ theme }) => theme.borderWidth};
@@ -41,11 +40,4 @@ export const Div = styled(View)`
   ${FlexRowAround};
   width: 100%;
   height: 50%;
-`;
-
-export const Div2 = styled(View)`
-  ${FlexRowAround};
-  width: 100%;
-  height: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
 `;

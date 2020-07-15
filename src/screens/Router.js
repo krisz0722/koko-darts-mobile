@@ -28,8 +28,6 @@ const ROUTER = () => {
           <AppNavigator />
         </ScreenContainer>
       </ThemeProvider>
-
-      {showTab ? <HOMENAVIGATOR_TAB /> : null}
     </>
   );
 };

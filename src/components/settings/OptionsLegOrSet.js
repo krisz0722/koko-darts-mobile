@@ -63,23 +63,32 @@ export const OptionsLegOrSet = () => {
         </Div>
       </Row>
       <Row2 theme={selectedTheme}>
-        <SETTINGS_BUTTON length={length} value={"first to win"} />
+        <SETTINGS_BUTTON
+          size={"small"}
+          length={length}
+          value={"first to win"}
+        />
         <SETTINGS_BUTTON
           length={length}
           value={toWin}
           icon={"arrow-drop-up"}
           active={true}
         />
-        <SETTINGS_BUTTON length={length} value={legOrSet} />
+        <SETTINGS_BUTTON size={"small"} length={length} value={legOrSet} />
         {legOrSet === "set" ? (
           <>
             <SETTINGS_BUTTON
+              size={"small"}
               length={length}
               value={toWin}
               icon={"arrow-drop-up"}
               active={true}
             />
-            <SETTINGS_BUTTON length={length} value={"leg per set"} />
+            <SETTINGS_BUTTON
+              size={"small"}
+              length={length}
+              value={"leg per set"}
+            />
           </>
         ) : null}
       </Row2>

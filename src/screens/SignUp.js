@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Keyboard, Dimensions, SafeAreaView, ScrollView } from "react-native";
+import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import { SettingsContext } from "../contexts/SettingsContext";
 import { Form, Inputs } from "../components/containers/Register";
-
-import LoginButton from "../components/LoginButton";
-import GhostButton from "../components/GhostButton";
+import THEMED_BUTTON from "../components/ThemedButton";
 import LoginInput from "../components/LoginInput";
 
 const REGISTER = ({ navigation }) => {
@@ -100,11 +98,16 @@ const REGISTER = ({ navigation }) => {
               />
             ))}
           </Inputs>
-          <LoginButton disabled={!enableSignUp} text={"Sign Up"} />
+          <THEMED_BUTTON
+            type={enableSignUp ? "active" : "basic"}
+            disabled={!enableSignUp}
+            text={"Sign Up"}
+          />
 
-          <GhostButton
+          <THEMED_BUTTON
             text={"Already have an account?\ntap here to log in!"}
             action={() => navigation.navigate("login")}
+            type={"ghost"}
           />
         </Form>
       </ScrollView>

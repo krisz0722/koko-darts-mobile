@@ -25,6 +25,7 @@ const Text_Button = styled(Text)`
   ${FlexCol};
   height: 100%;
   width: 100%;
+
   padding: 0 10%;
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)};
   font-family: ${({ theme, active }) =>

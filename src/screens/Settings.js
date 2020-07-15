@@ -6,7 +6,7 @@ import { COLOR } from "../components/settings/OptionsColor";
 import { OptionsEffects } from "../components/settings/OptionsEffects";
 import { OptionsScore } from "../components/settings/OptionsScore";
 import { OptionsLegOrSet } from "../components/settings/OptionsLegOrSet";
-import SETTINGS_BUTTON_2 from "../components/settings/SettingsButton2";
+import THEMED_BUTTON from "../components/ThemedButton";
 
 export const SETTINGS = () => {
   const {
@@ -21,8 +21,13 @@ export const SETTINGS = () => {
       <OptionsScore />
       <OptionsLegOrSet />
       <BottomButtons theme={selectedTheme}>
-        <SETTINGS_BUTTON_2 icon={"visibility"} value={"show preview"} />
-        <SETTINGS_BUTTON_2 icon={"undo"} value={"reset"} />
+        <THEMED_BUTTON
+          size={"small"}
+          icon={"visibility"}
+          text={"show preview"}
+          length={2}
+        />
+        <THEMED_BUTTON size={"small"} icon={"undo"} text={"reset"} length={2} />
       </BottomButtons>
     </>
   );

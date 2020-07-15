@@ -3,15 +3,11 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, Text, View } from "react-native";
-import {
-  FlexColAround,
-  FlexRow,
-  FlexRowBetween,
-} from "../../../styles/css_mixins";
+import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
 import createAnimation from "../../../styles/playerSwitchTransition";
 
 export const ClassicStats = styled(Animated.View)`
-  ${FlexRow};
+  ${FlexRowBetween};
   width: 50%;
   position: absolute;
   height: 10%;
@@ -29,7 +25,7 @@ export const ClassicStatsPlayer2 = styled(ClassicStats)`
 `;
 
 export const Averages = styled(Animated.View)`
-  width: 70%;
+  width: ${() => (100 / 3) * 2 + "%"};
   height: 100%;
   ${FlexColAround};
   border-width: ${({ theme }) => theme.borderWidth};
@@ -37,7 +33,7 @@ export const Averages = styled(Animated.View)`
 `;
 
 export const Totals = styled(Animated.View)`
-  width: 30%;
+  width: ${() => 100 / 3 + "%"};
   height: 100%;
   ${FlexColAround};
   border-width: ${({ theme }) => theme.borderWidth};
@@ -54,7 +50,7 @@ export const StatText1 = styled(Text)`
   text-align: left;
   width: 80%;
   color: ${({ theme, player }) => theme.game[player + "Text"]};
-  font-size: 8;
+  font-size: ${({ theme }) => theme.game.stats.classic};
   font-family: ${({ theme }) => theme.fontFamilyBold};
   text-transform: uppercase;
 `;

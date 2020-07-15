@@ -88,9 +88,12 @@ const LEGSET = ({ player }) => {
     outputRange: [theme.game.p2Border, theme.game.p1Border],
   });
 
+  const fs1 = selectedTheme.game.legset.classic.fs1;
+  const fs2 = selectedTheme.game.legset.classic.fs2;
+
   const fontSize = resize.interpolate({
     inputRange: [0, 1],
-    outputRange: [25, 20],
+    outputRange: [fs1, fs2],
   });
 
   return (

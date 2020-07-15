@@ -8,7 +8,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 export const Text_Name = styled(Animated.Text)`
   color: ${({ theme, player }) => theme.game[player + "Text"]};
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 20;
+  font-size: ${({ theme }) => theme.game.name.classic};
   text-transform: uppercase;
   height: 50%;
   width: 100%;

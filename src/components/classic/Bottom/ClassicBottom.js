@@ -2,11 +2,16 @@ import React, { useContext, useEffect, useRef } from "react";
 import { Animated, Text, TouchableHighlight, View } from "react-native";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { AlignText, FlexCol, FlexRow } from "../../../styles/css_mixins";
+import {
+  AlignText,
+  FlexCol,
+  FlexRow,
+  FlexRowAround,
+} from "../../../styles/css_mixins";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import createAnimation from "../../../styles/playerSwitchTransition";
 
-export const ClassicBottom = styled(View)`
+export const ClassicBottom = styled(Animated.View)`
   ${FlexRow};
   flex-wrap: wrap;
   position: absolute;
@@ -19,16 +24,19 @@ export const Button_Num_Classic = styled(TouchableHighlight)`
   text-decoration: none;
   width: ${() => 100 / 3 + "%"};
   height: 25%;
-  ${FlexCol};
+  ${FlexRowAround};
 `;
 
-export const Text_Number = styled(Text)`
+export const Text_Number = styled(Animated.Text)`
   ${AlignText};
   height: 100%;
   width: 100%;
   font-family: ${({ disabled, theme }) =>
     !disabled ? theme.fontFamilyBold : theme.fontFamily};
-  font-size: ${({ type }) => (type === "number" ? 35 : 12.5)};
+  font-size: ${({ type, theme }) =>
+    type === "number"
+      ? theme.game.buttonFontSize.num
+      : theme.game.buttonFontSize.function};
   background-color: ${({ theme }) => theme.game.middle.bgMid};
   color: ${({ theme }) => theme.text};
   border-width: ${({ theme }) => theme.borderWidth};
@@ -65,7 +73,7 @@ const CLASSIC_BOTTOM = React.memo(() => {
       case "CLEAR":
         dispatchGameData({ type: "SUBMIT", value: "CLEAR" });
         break;
-      case "BUTS":
+      case "BUST":
         dispatchGameData({ type: "SUBMIT", value: "BUST" });
         break;
       default:
@@ -80,9 +88,6 @@ const CLASSIC_BOTTOM = React.memo(() => {
     }).start();
   }, [animation, activePlayer]);
 
-  const AnimatedButton = Animated.createAnimatedComponent(Button_Num_Classic);
-  const AnimatedText = Animated.createAnimatedComponent(Text_Number);
-
   const style1 = (item) => {
     const type = typeof item === "number";
     return createAnimation(theme, animation, type, type, true);
@@ -92,16 +97,19 @@ const CLASSIC_BOTTOM = React.memo(() => {
     <ClassicBottom>
       {DATA.map((item) => {
         return (
-          <AnimatedButton onPress={() => typeOfHandler(item)}>
-            <AnimatedText
+          <Button_Num_Classic
+            icon={"clear"}
+            onPress={() => typeOfHandler(item)}
+          >
+            <Text_Number
               style={style1(item)}
               type={typeof item}
               theme={theme}
               ap={activePlayer}
             >
               {item}
-            </AnimatedText>
-          </AnimatedButton>
+            </Text_Number>
+          </Button_Num_Classic>
         );
       })}
     </ClassicBottom>

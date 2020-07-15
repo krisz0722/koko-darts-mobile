@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { Form, Inputs } from "./StyledSignUp";
+import { Buttons, Form } from "./StyledSignUp";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/LoginInput";
 
@@ -87,29 +87,33 @@ const REGISTER = ({ navigation }) => {
         keyboardShouldPersistTaps={"always"}
       >
         <Form theme={selectedTheme} isKeyboardUp={isKeyboardUp}>
-          <Inputs>
-            {INPUTS.map((item) => (
-              <LoginInput
-                key={item.name}
-                valid={item.value.length > 5}
-                input={item}
-                handleFocus={handleFocus}
-                focused={focus === item.name}
-              />
-            ))}
-          </Inputs>
+          {INPUTS.map((item) => (
+            <LoginInput
+              key={item.name}
+              valid={item.value.length > 5}
+              input={item}
+              handleFocus={handleFocus}
+              focused={focus === item.name}
+            />
+          ))}
           <THEMED_BUTTON
-            type={enableSignUp ? "active" : "basic"}
+            type={enableSignUp ? "active" : "ghost"}
             disabled={!enableSignUp}
             text={"Sign Up"}
           />
-
+        </Form>
+        <Buttons>
           <THEMED_BUTTON
             text={"Already have an account?\ntap here to log in!"}
             action={() => navigation.navigate("login")}
             type={"ghost"}
           />
-        </Form>
+          <THEMED_BUTTON
+            text={"Already have an account?\ntap here to log in!"}
+            action={() => navigation.navigate("login")}
+            type={"ghost"}
+          />
+        </Buttons>
       </ScrollView>
     </SafeAreaView>
   );

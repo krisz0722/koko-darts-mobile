@@ -4,13 +4,13 @@ import { Animated, Text, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import { FlexCol, FlexRowAround } from "../../styles/css_mixins";
+import { BasicTextBold, FlexCol, FlexRowAround } from "../../styles/css_mixins";
 import createAnimation from "../../styles/playerSwitchTransition";
 
 export const Button_Function_Classic = styled(TouchableHighlight)`
   ${FlexRowAround}
   width: ${() => 100 / 3 + "%"};
-  padding:2%;
+  padding: ${({ icon }) => (icon ? "2%" : 0)};
   height:50%;  
   background-color: ${({ theme }) => theme.game.middle.bgMid};
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
@@ -21,13 +21,10 @@ export const View_Function = styled(Button_Function_Classic)`
 `;
 
 export const Text_Function = styled(Text)`
-  text-align-vertical: center;
-  text-align: center;
-  height: 50%;
-  width: 75%;
-  font-family: ${({ theme }) => theme.fontFamilyBold};
-  font-size: 12.5;
-  text-transform: uppercase;
+  ${BasicTextBold};
+  height: ${({ icon }) => (icon ? "100%" : "50%")};
+  width: ${({ icon }) => (icon ? "75%" : "100%")};
+  font-size: ${({ theme }) => theme.game.buttonFontSize.function};
   color: ${({ theme }) => theme.text};
 `;
 
@@ -77,7 +74,7 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
 
   const scoreDisplayText =
     name === activePlayer
-      ? "current: " + defaultInput.join("")
+      ? "current:" + defaultInput.join("")
       : "last:" + gameData[inactivePlayer + "_DATA"].lastScore;
 
   return (
@@ -90,8 +87,12 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
           name={name}
         >
           <>
-            <AnimatedText>{value}</AnimatedText>
-            <AnimatedText>{scoreDisplayText}</AnimatedText>
+            <AnimatedText theme={selectedTheme} icon={icon}>
+              {value}
+            </AnimatedText>
+            <AnimatedText theme={selectedTheme} icon={icon}>
+              {scoreDisplayText}
+            </AnimatedText>
           </>
         </AnimatedView>
       ) : (
@@ -101,6 +102,7 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
           onPress={() => handleOnPress(value, action)}
           disabled={disabled}
           name={name}
+          icon={icon}
         >
           <>
             {icon ? (
@@ -111,7 +113,9 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
                 color={theme.text}
               />
             ) : null}
-            <AnimatedText>{value}</AnimatedText>
+            <AnimatedText theme={selectedTheme} icon={icon}>
+              {value}
+            </AnimatedText>
           </>
         </AnimatedButton>
       )}

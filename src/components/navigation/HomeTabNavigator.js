@@ -49,3 +49,5 @@ const HOMENAVIGATOR_TAB = () => {
 };
 
 export default HOMENAVIGATOR_TAB;
+
+// TODO this is not real navigation! repalce this with navigation.navigate

@@ -2,27 +2,9 @@ import React, { useContext, useEffect, useRef } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { Animated, View } from "react-native";
-import { AlignText, FlexCol } from "../../../styles/css_mixins";
+import { Animated } from "react-native";
+import { AlignText } from "../../../styles/css_mixins";
 import createAnimation from "../../../styles/playerSwitchTransition";
-
-export const ClassicPlayerScore = styled(Animated.View)`
-  ${FlexCol};
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  margin: auto;
-  top: 0%;
-  background-color: ${({ player, theme }) => theme.game[player + "Bg"]};
-  border-width: ${({ theme }) => theme.borderWidth};
-`;
-
-export const ClassicPlayer1Score = styled(ClassicPlayerScore)`
-  left: 0;
-`;
-export const ClassicPlayer2Score = styled(ClassicPlayerScore)`
-  right: 0;
-`;
 
 export const Text_Score = styled(Animated.Text)`
   position: absolute;
@@ -111,14 +93,20 @@ const PLAYER_SCORE = () => {
     outputRange: ["100%", "50%"],
   });
 
+  const fs1 = selectedTheme.game.score.classic.fs1;
+  const fs2 = selectedTheme.game.score.classic.fs2;
+  const fs3 = selectedTheme.game.score.classic.fs3;
+
   const fontSizeP1 = fontP1.interpolate({
     inputRange: [0, 0.5, 1],
-    outputRange: [80, 60, 50],
+    outputRange: [fs1, fs2, fs3],
   });
+
+  console.log(fs1, fs2, fs3);
 
   const fontSizeP2 = fontP2.interpolate({
     inputRange: [0, 0.5, 1],
-    outputRange: [80, 60, 50],
+    outputRange: [fs1, fs2, fs3],
   });
 
   const style1 = {

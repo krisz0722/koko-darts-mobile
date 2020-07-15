@@ -24,7 +24,7 @@ const Container = styled(View)`
   height: 100%;
 `;
 
-const SubContainer = styled(View)`
+export const SubContainer = styled(View)`
   width: 75%;
   height: ${() => (Window.width / 2 / 4) * 3};
   border-radius: 4px;

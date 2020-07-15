@@ -10,17 +10,14 @@ import REGISTER from "../screens/SignUp";
 import LOGIN from "../screens/Login";
 import WELCOME from "../screens/Welcome";
 import HomeNavigator from "./HomeNavigator";
+import PREGAME_SETTINGS from "../screens/PreGameSettings";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
-    // {
-    //   component: LOGIN,
-    //   name: "login",
-    // },
     {
-      component: GAME_CLASSIC,
-      name: "game",
+      component: WELCOME,
+      name: "welcome",
     },
     {
       component: REGISTER,
@@ -31,12 +28,16 @@ const AppNavigator = () => {
       name: "login",
     },
     {
-      component: WELCOME,
-      name: "welcome",
+      component: GAME_CLASSIC,
+      name: "game",
     },
     {
       component: HomeNavigator,
       name: "homenavigator",
+    },
+    {
+      component: PREGAME_SETTINGS,
+      name: "pregame",
     },
   ];
 

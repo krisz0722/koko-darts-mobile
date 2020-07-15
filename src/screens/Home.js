@@ -13,11 +13,14 @@ import {
 } from "../components/containers/Home";
 import HomeButton from "../components/HomeButton";
 import GhostButton from "../components/GhostButton";
+import { NavigationContext } from "../contexts/NavigationContext";
 
-const HOME = () => {
+const HOME = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
+
+  const { setShowTab } = useContext(NavigationContext);
 
   const [unfinished, setUnfinished] = useState(false);
 
@@ -65,8 +68,11 @@ const HOME = () => {
     ],
   };
 
+  const handlerNewGame = () => {
+    setShowTab(false);
+    navigation.navigate("pregame");
+  };
   const renderContent = unfinished ? infoUnfinished : infoLastMatch;
-  console.log(unfinished);
   return (
     <>
       <HeaderWelcome theme={selectedTheme}>welcome valaki</HeaderWelcome>
@@ -90,7 +96,7 @@ const HOME = () => {
         <HomeButton
           theme={selectedTheme}
           text={"new game"}
-          action={() => setUnfinished(!unfinished)}
+          action={handlerNewGame}
         />
       </Buttons>
     </>

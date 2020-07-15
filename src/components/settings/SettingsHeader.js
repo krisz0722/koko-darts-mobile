@@ -3,12 +3,12 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
 import styled from "styled-components";
-import { AlignText, FlexRow } from "../../styles/css_mixins";
+import { AlignText, FlexRow, Window } from "../../styles/css_mixins";
 
 const HeaderContainer = styled(View)`
   ${FlexRow};
   width: 100%;
-  height: 50%;
+  height: ${({ header }) => (header ? "100%" : "50%")};
   background-color: rgba(255, 255, 255, 0.1);
 `;
 
@@ -20,14 +20,14 @@ const Header = styled(Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const SETTINGS_HEADER = ({ text, action, icon = null }) => {
+const SETTINGS_HEADER = ({ text, action, icon = null, header = false }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
   return (
-    <HeaderContainer>
+    <HeaderContainer header={header}>
       <Header theme={theme}>{text}</Header>
       {icon ? (
         <TouchableWithoutFeedback onPress={action}>

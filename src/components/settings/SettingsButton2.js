@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { Text, TouchableHighlight } from "react-native";
-import { FlexCol, AlignText } from "../../styles/css_mixins";
-
+import { FlexCol, AlignText, FlexRow } from "../../styles/css_mixins";
 import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import SvgIcon from "@material-ui/core/SvgIcon";
+
+import ICON_DART from "../../../assets/dart";
 
 export const Button_Login = styled(TouchableHighlight)`
   text-decoration: none;
@@ -11,24 +14,24 @@ export const Button_Login = styled(TouchableHighlight)`
   height: 50%;
   margin: auto;
   border-radius: 4px;
+  ${FlexRow};
+  border-width: ${({ theme }) => theme.borderWidth};
+  border-color: ${({ theme }) => theme.text};
 `;
 
 export const Text_Button_Login = styled(Text)`
   ${FlexCol};
   ${AlignText};
   height: 100%;
-  width: 100%;
   padding: 0 5%;
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 15;
+  font-size: 12;
   text-transform: ${({ theme }) => theme.textTransform};
   border-radius: 4px;
   color: ${({ theme }) => theme.text};
-  border-width: ${({ theme }) => theme.borderWidth};
-  border-color: ${({ theme }) => theme.text};
 `;
 
-const SETTINGS_BUTTON_2 = ({ value, action, disabled }) => {
+const SETTINGS_BUTTON_2 = ({ value, action, disabled, icon = null }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -42,7 +45,10 @@ const SETTINGS_BUTTON_2 = ({ value, action, disabled }) => {
       theme={theme}
       onPress={() => console.log("valami")}
     >
-      <Text_Button_Login theme={theme}>{value}</Text_Button_Login>
+      <>
+        {icon ? <Icon name={icon} size={25} color={theme.text} /> : null}
+        <Text_Button_Login theme={theme}>{value}</Text_Button_Login>
+      </>
     </Button_Login>
   );
 };

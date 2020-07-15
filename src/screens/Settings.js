@@ -21,8 +21,8 @@ export const SETTINGS = () => {
       <OptionsScore />
       <OptionsLegOrSet />
       <BottomButtons theme={selectedTheme}>
-        <SETTINGS_BUTTON_2 value={"preview"} />
-        <SETTINGS_BUTTON_2 value={"reset"} />
+        <SETTINGS_BUTTON_2 icon={"visibility"} value={"show preview"} />
+        <SETTINGS_BUTTON_2 icon={"undo"} value={"reset"} />
       </BottomButtons>
     </>
   );

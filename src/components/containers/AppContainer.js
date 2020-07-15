@@ -16,3 +16,5 @@ export const ScreenContainer = styled(View)`
   height: 100%;
   background-color: ${({ theme }) => theme.bgOverlay};
 `;
+
+// border: 2px green solid;

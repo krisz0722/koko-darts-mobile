@@ -27,7 +27,6 @@ const ROUTER = () => {
         <ScreenContainer screen={screen} theme={theme}>
           <AppNavigator />
         </ScreenContainer>
-        {/*<HOME />*/}
       </ThemeProvider>
 
       {showTab ? <HOMENAVIGATOR_TAB /> : null}

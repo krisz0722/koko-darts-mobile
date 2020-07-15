@@ -37,9 +37,11 @@ const WELCOME = ({ navigation }) => {
   const { setHomeTabScreen, setShowTab } = useContext(NavigationContext);
 
   const enterGame = () => {
-    setHomeTabScreen("settings");
-    setShowTab(true);
     navigation.navigate("homenavigator");
+
+    // setTimeout(() => {
+    //   setShowTab(true);
+    // }, 300);
   };
 
   return (

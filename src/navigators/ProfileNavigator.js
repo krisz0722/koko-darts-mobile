@@ -45,24 +45,6 @@ const ProfileNavigator = () => {
       screenOptions={{
         ...transition(theme.name),
       }}
-      tabBarIcon={({ tintColor }) => (
-        <Icon name="person" color={tintColor} size={25} />
-      )}
-      tabBarOptions={{
-        showIcon: true,
-        style: {
-          backgroundColor: "transparent",
-        },
-        labelStyle: {
-          fontFamily: selectedTheme.fontFamilyBold,
-          fontSize: 15,
-        },
-        indicatorStyle: {
-          backgroundColor: theme.text,
-        },
-        activeTintColor: theme.text,
-        inactiveTintColor: theme.borderColor,
-      }}
     >
       <Screen
         name={SCREENS[profileTabScreen].name}

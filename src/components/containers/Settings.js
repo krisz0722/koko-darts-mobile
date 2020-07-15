@@ -4,6 +4,7 @@ import {
   FlexColStart,
   FlexRowAround,
   FlexRowStart,
+  Window,
 } from "../../styles/css_mixins";
 import { View } from "react-native";
 
@@ -22,9 +23,10 @@ export const BottomButtons = styled(View)`
 `;
 
 export const Row = styled(View)`
-  height: 14%;
+  height: ${({ header }) =>
+    header ? Window.height * 0.07 : Window.height * 0.14};
   width: 100%;
-  ${FlexCol};
+  ${FlexColStart};
   border-top-width: ${({ theme }) => theme.borderWidth};
   border-color: ${({ theme }) => theme.borderColor};
 `;

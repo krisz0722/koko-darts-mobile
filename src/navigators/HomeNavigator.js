@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SETTINGS } from "../screens/Settings";
 import { SettingsContext } from "../contexts/SettingsContext";
@@ -17,7 +17,9 @@ const HomeNavigator = () => {
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
-  const { homeTabScreen } = useContext(NavigationContext);
+  const { homeTabScreen, setHomeTabScreen, setShowTab } = useContext(
+    NavigationContext,
+  );
 
   const SCREENS = {
     home: {
@@ -34,8 +36,14 @@ const HomeNavigator = () => {
     },
   };
 
+  useEffect(() => {
+    setShowTab(true);
+  }, []);
+
   const transition = (theme) =>
     theme === "default" ? transitionDefault : transitionContrast;
+
+  console.log(homeTabScreen);
 
   return (
     <Navigator

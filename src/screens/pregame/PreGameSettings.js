@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { BottomButtons } from "../components/containers/Settings";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { OptionsScore } from "../components/settings/OptionsScore";
-import { OptionsLegOrSet } from "../components/settings/OptionsLegOrSet";
-import HISTORY from "../components/settings/History";
-import PLAYERS from "../components/settings/Players";
-import THEMED_BUTTON from "../components/ThemedButton";
+import { BottomButtons } from "../settings/StyledSettings";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { OptionsScore } from "../../components/settings/OptionsScore";
+import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
+import HISTORY from "../../components/settings/History";
+import PLAYERS from "../../components/settings/Players";
+import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 
 const PREGAME_SETTINGS = () => {
   const {

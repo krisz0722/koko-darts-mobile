@@ -23,6 +23,13 @@ export const BasicText = () => css`
   text-align-vertical: center;
   text-align: center;
   text-transform: uppercase;
+  font-family: ${({ theme }) => theme.fontFamily};
+`;
+
+export const BasicTextBold = () => css`
+  text-align-vertical: center;
+  text-align: center;
+  text-transform: uppercase;
   font-family: ${({ theme }) => theme.fontFamilyBold};
 `;
 

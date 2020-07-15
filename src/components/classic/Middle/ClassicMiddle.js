@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import CLASSIC_FUNCTION from "../../FunctionButton";
+import CLASSIC_FUNCTION from "../../buttons/FunctionButton";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { View } from "react-native";
 import { FlexRow } from "../../../styles/css_mixins";

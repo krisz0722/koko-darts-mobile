@@ -1,15 +1,12 @@
 import React, { useContext } from "react";
+import { createStackNavigator } from "@react-navigation/stack";
 import { SettingsContext } from "../contexts/SettingsContext";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import GAME_CLASSIC from "../screens/Classic";
 import { NavigationContext } from "../contexts/NavigationContext";
-import { SETTINGS } from "../screens/Settings";
 import transitionDefault from "../styles/navTransitionDefault";
 import transitionContrast from "../styles/navTransitionContrast";
-import FRIENDS from "../screens/Friends";
-import { createStackNavigator } from "@react-navigation/stack";
-import MATCHES from "../screens/Matches";
-import TIMELINE from "../screens/Timeline";
+import FRIENDS from "../screens/profile/friends/Friends";
+import MATCHES from "../screens/profile/matches/Matches";
+import TIMELINE from "../screens/profile/timeline/Timeline";
 
 const { Navigator, Screen } = createStackNavigator();
 

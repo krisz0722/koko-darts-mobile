@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView } from "react-native";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { Form, Inputs } from "../components/containers/Register";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { Form, Inputs } from "./StyledSignUp";
 
-import THEMED_BUTTON from "../components/ThemedButton";
-import LoginInput from "../components/LoginInput";
+import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import LoginInput from "../../components/LoginInput";
 
 const LOGIN = ({ navigation }) => {
   const {
@@ -88,7 +88,7 @@ const LOGIN = ({ navigation }) => {
 
           <THEMED_BUTTON
             text={"forgotten password"}
-            action={() => navigation.navigate("login")}
+            action={() => navigation.navigate("auth")}
             type={"ghost"}
           />
         </Form>

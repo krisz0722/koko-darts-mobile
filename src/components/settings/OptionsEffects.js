@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { Row, Div } from "../containers/Settings";
-import SETTINGS_BUTTON_CHECKBOX from "./SettingsButtonCheckbox";
+import { Row, Div } from "../../screens/settings/StyledSettings";
+import SETTINGS_BUTTON from "./SettingsButton";
 import SETTINGS_HEADER from "./SettingsHeader";
 
 export const OptionsEffects = () => {
@@ -38,11 +38,13 @@ export const OptionsEffects = () => {
       />
       <Div theme={selectedTheme}>
         {EFFECTS.map((item) => (
-          <SETTINGS_BUTTON_CHECKBOX
+          <SETTINGS_BUTTON
             value={item.name}
             active={item.prop}
             length={EFFECTS.length}
             action={item.handler}
+            checkbox={true}
+            size={"small"}
           />
         ))}
       </Div>

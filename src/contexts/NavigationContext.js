@@ -4,14 +4,11 @@ export const NavigationContext = createContext("");
 
 export const NavigationContextProvider = (props) => {
   const [homeTabScreen, setHomeTabScreen] = useState("home");
-  const [profileTabScreen, setProfileTabScreen] = useState("matches");
-  const [showTab, setShowTab] = useState(false);
+  const [profileTabScreen, setProfileTabScreen] = useState("friends");
 
   return (
     <NavigationContext.Provider
       value={{
-        showTab,
-        setShowTab,
         profileTabScreen,
         setProfileTabScreen,
         homeTabScreen,

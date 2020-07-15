@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {
-  BasicText,
+  BasicTextBold,
   BorderHorizontal,
   FlexCol,
   FlexColStart,
@@ -9,7 +9,7 @@ import {
 import { Text, View } from "react-native";
 
 export const HeaderWelcome = styled(Text)`
-  ${BasicText}
+  ${BasicTextBold}
   text-align-vertical: bottom;
   width: 100%;
   height: 20%;
@@ -32,7 +32,7 @@ export const InfoStats = styled(View)`
 `;
 
 export const InfoTitle = styled(Text)`
-  ${BasicText}
+  ${BasicTextBold}
   width: 100%;
   height: 10%;
   ${FlexRow};
@@ -49,7 +49,7 @@ export const InfoRow = styled(View)`
 `;
 
 export const InfoText = styled(Text)`
-  ${BasicText};
+  ${BasicTextBold};
   text-align: left;
   width: 40%;
   ${FlexRow};

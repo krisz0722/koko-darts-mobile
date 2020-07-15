@@ -1,10 +1,10 @@
 import React from "react";
-import { Row } from "../containers/Settings";
+import { Row } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import styled from "styled-components";
 import { Text, View } from "react-native";
 import {
-  BasicText,
+  BasicTextBold,
   FlexColAround,
   FlexRow,
   Window,
@@ -24,7 +24,7 @@ const HistoryRow = styled(View)`
 const Data = styled(Text)`
   width: ${() => Window.width / 3};
   color: ${({ theme }) => theme.text};
-  ${BasicText}
+  ${BasicTextBold}
 `;
 
 const HISTORY_ROW = ({ p1, title, p2 }) => (

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { HeaderWelcome } from "../components/containers/Home";
+import { SettingsContext } from "../../../contexts/SettingsContext";
+import { HeaderWelcome } from "../../home/StyledHome";
 
 const TIMELINE = () => {
   const {

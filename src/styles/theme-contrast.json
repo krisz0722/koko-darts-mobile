@@ -61,6 +61,20 @@
   },
   "buttonFontSize": 15,
 
+  "welcome": {
+    "fontSize1": 25,
+    "fontSize2": 12.5,
+    "fontSize3": 12
+  },
+  "pregame": {
+    "fontSize":14
+  },
+  "nav": {
+    "fontSize1": 15,
+    "fontSize2": 12
+  },
+
+
   "menu": {
     "fontSize": 20,
     "fontSizeLogin": 10,

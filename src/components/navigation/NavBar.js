@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { View } from "react-native";
-import { FlexRowAround, Window } from "../styles/css_mixins";
+import {
+  BorderHorizontal,
+  FlexRowAround,
+  Window,
+} from "../../styles/css_mixins";
 
-const NavBar = styled(View)`
+export const NavBar = styled(View)`
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -12,4 +16,8 @@ const NavBar = styled(View)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
-export default NavBar;
+export const TopNavBar = styled(NavBar)`
+  position: relative;
+  top: 0;
+  ${BorderHorizontal(({ theme }) => theme.borderColor)};
+`;

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Text, TouchableHighlight, View } from "react-native";
 import {
-  BasicText,
+  BasicTextBold,
   Border,
   FlexCol,
   FlexColAround,
@@ -33,8 +33,8 @@ const Avatar = styled(View)`
 
 const Name = styled(Text)`
   color: white;
-  font-size: 20;
-  ${BasicText};
+  font-size: ${({ theme }) => theme.pregame.fontSize};
+  ${BasicTextBold};
 `;
 
 const Swap = styled(TouchableHighlight)`

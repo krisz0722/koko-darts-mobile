@@ -1,25 +1,20 @@
 import React, { useContext, useState } from "react";
-import { Text } from "react-native";
-import { SettingsContext } from "../contexts/SettingsContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
 import {
   Info,
-  Buttons,
   HeaderWelcome,
   InfoTitle,
   InfoRow,
   InfoText,
   InfoText2,
   InfoStats,
-} from "../components/containers/Home";
-import THEMED_BUTTON from "../components/ThemedButton";
-import { NavigationContext } from "../contexts/NavigationContext";
+} from "./StyledHome";
+import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 
 const HOME = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-
-  const { setShowTab } = useContext(NavigationContext);
 
   const [unfinished, setUnfinished] = useState(false);
 
@@ -67,11 +62,8 @@ const HOME = ({ navigation }) => {
     ],
   };
 
-  const handlerNewGame = () => {
-    setShowTab(false);
-    navigation.navigate("pregame");
-  };
   const renderContent = unfinished ? infoUnfinished : infoLastMatch;
+
   return (
     <>
       <HeaderWelcome theme={selectedTheme}>welcome valaki</HeaderWelcome>
@@ -100,7 +92,7 @@ const HOME = ({ navigation }) => {
         type={"success"}
         theme={selectedTheme}
         text={"new game"}
-        action={handlerNewGame}
+        action={() => navigation.navigate("pregame")}
       />
     </>
   );

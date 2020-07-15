@@ -5,12 +5,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { SettingsContext } from "../contexts/SettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
-import GAME_CLASSIC from "../screens/Classic";
-import REGISTER from "../screens/SignUp";
-import LOGIN from "../screens/Login";
-import WELCOME from "../screens/Welcome";
+import GAME_CLASSIC from "../screens/gamewindow/Classic";
+import REGISTER from "../screens/auth/SignUp";
+import LOGIN from "../screens/auth/Login";
+import WELCOME from "../screens/welcome/Welcome";
 import HomeNavigator from "./HomeNavigator";
-import PREGAME_SETTINGS from "../screens/PreGameSettings";
+import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {

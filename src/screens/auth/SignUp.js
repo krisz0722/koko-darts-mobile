@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView } from "react-native";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { Form, Inputs } from "../components/containers/Register";
-import THEMED_BUTTON from "../components/ThemedButton";
-import LoginInput from "../components/LoginInput";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { Form, Inputs } from "./StyledSignUp";
+import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import LoginInput from "../../components/LoginInput";
 
 const REGISTER = ({ navigation }) => {
   const {
@@ -106,7 +106,7 @@ const REGISTER = ({ navigation }) => {
 
           <THEMED_BUTTON
             text={"Already have an account?\ntap here to log in!"}
-            action={() => navigation.navigate("login")}
+            action={() => navigation.navigate("auth")}
             type={"ghost"}
           />
         </Form>

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import styled from "styled-components";
-import { Text, TouchableHighlight } from "react-native";
-import { AlignText, FlexCol } from "../../styles/css_mixins";
+import { Text, View, TouchableHighlight } from "react-native";
+import { FlexRowAround, BasicText, FlexCol } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Div } from "../containers/Settings";
+import { Checkbox } from "react-native-paper";
 
 const Button_Settings = styled(TouchableHighlight)`
   ${FlexCol};
@@ -14,10 +14,15 @@ const Button_Settings = styled(TouchableHighlight)`
   height: 100%;
   padding: ${({ icon }) => (icon ? "0 5%" : 0)};
 `;
+const TextAndIcon = styled(View)`
+  ${FlexRowAround};
+  width: 100%;
+  height: 100%;
+  padding: 0 5%;
+`;
 
 const Text_Button = styled(Text)`
-  ${AlignText};
-  ${FlexCol};
+  ${BasicText};
   height: 100%;
   width: 100%;
   padding: 0 10%;
@@ -28,7 +33,6 @@ const Text_Button = styled(Text)`
     size === "small"
       ? theme.settings.fontSizeButton2
       : theme.settings.fontSizeButton};
-  text-transform: ${({ theme }) => theme.textTransform};
 `;
 
 const SETTINGS_BUTTON = ({
@@ -38,6 +42,7 @@ const SETTINGS_BUTTON = ({
   active = false,
   icon = null,
   size = null,
+  checkbox = false,
 }) => {
   const {
     settings: { selectedTheme },
@@ -51,13 +56,21 @@ const SETTINGS_BUTTON = ({
       length={length}
       onPress={action}
       theme={theme}
+      checkbox={checkbox}
     >
-      <Div>
+      <TextAndIcon>
         <Text_Button size={size} active={active} theme={theme}>
           {value}
         </Text_Button>
         {icon ? <Icon name={icon} size={35} color={theme.text2} /> : null}
-      </Div>
+        {checkbox ? (
+          <Checkbox
+            uncheckedColor={theme.borderColor}
+            color={active ? theme.bg1 : "transparent"}
+            status={active ? "checked" : "unchecked"}
+          />
+        ) : null}
+      </TextAndIcon>
     </Button_Settings>
   );
 };

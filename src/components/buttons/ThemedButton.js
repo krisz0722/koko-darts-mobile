@@ -2,16 +2,16 @@ import styled from "styled-components";
 import { TouchableOpacity, Text, TouchableHighlight } from "react-native";
 import {
   Window,
-  BasicText,
+  BasicTextBold,
   FlexCol,
   AlignText,
   FlexRow,
   FlexRowAround,
-} from "../styles/css_mixins";
+} from "../../styles/css_mixins";
 
 import React, { useContext } from "react";
-import { SettingsContext } from "../contexts/SettingsContext";
-import IconThreeDart from "../../assets/iconThreeDart";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import IconThreeDart from "../../../assets/iconThreeDart";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export const Button_Login = styled(TouchableHighlight)`
@@ -24,13 +24,13 @@ export const Button_Login = styled(TouchableHighlight)`
   border-width: ${({ theme, type }) =>
     type !== "ghost" ? theme.borderWidth : 0};
   border-color: ${({ theme }) => theme.text};
-  padding: 0 5%;
+  padding: ${({ theme }) => (theme.name === "default" ? "0 2%" : "0 5%")};
   ${FlexRowAround};
 `;
 
 export const Text_Button_Login = styled(Text)`
   ${FlexCol};
-  ${BasicText};
+  ${BasicTextBold};
   height: 100%;
   width: 70%;
   font-size: ${({ theme, type }) => theme.buttonFontSize};
@@ -46,12 +46,12 @@ const THEMED_BUTTON = ({
   icon = null,
 }) => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, layout },
   } = useContext(SettingsContext);
 
-  console.log(typeof size);
   return (
     <Button_Login
+      layout={layout}
       size={size}
       length={length}
       type={type}

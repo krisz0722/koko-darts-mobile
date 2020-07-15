@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated, Text, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { GameContext } from "../contexts/GameContext";
-import { FlexCol, FlexRowAround } from "../styles/css_mixins";
-import createAnimation from "../styles/playerSwitchTransition";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { GameContext } from "../../contexts/GameContext";
+import { FlexCol, FlexRowAround } from "../../styles/css_mixins";
+import createAnimation from "../../styles/playerSwitchTransition";
 
 export const Button_Function_Classic = styled(TouchableHighlight)`
   ${FlexRowAround}

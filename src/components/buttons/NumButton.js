@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated, Text, TouchableHighlight } from "react-native";
-import { AlignText, FlexCol } from "../styles/css_mixins";
+import { AlignText, FlexCol } from "../../styles/css_mixins";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
   text-decoration: none;
@@ -28,7 +28,6 @@ const CLASSIC_NUM = React.memo((props) => {
   const width = useRef(new Animated.Value(100)).current;
 
   useEffect(() => {
-    console.log("color", width);
     Animated.timing(width, {
       toValue: activePlayer === "p1" ? 100 : 200,
       duration: 5000,
@@ -36,8 +35,6 @@ const CLASSIC_NUM = React.memo((props) => {
   }, [width, activePlayer]);
 
   let newWidth = width;
-
-  console.log("num");
 
   const styles = {
     width: { width: newWidth },

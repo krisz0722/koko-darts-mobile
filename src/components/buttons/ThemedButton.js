@@ -1,11 +1,9 @@
 import styled from "styled-components";
-import { TouchableOpacity, Text, TouchableHighlight } from "react-native";
+import { Text, TouchableHighlight } from "react-native";
 import {
   Window,
   BasicTextBold,
   FlexCol,
-  AlignText,
-  FlexRow,
   FlexRowAround,
 } from "../../styles/css_mixins";
 
@@ -32,7 +30,7 @@ export const Text_Button_Login = styled(Text)`
   ${FlexCol};
   ${BasicTextBold};
   height: 100%;
-  width: 70%;
+  width: ${({ icon }) => (icon ? "70%" : "100%")};
   font-size: ${({ theme }) => theme.buttonFontSize};
   color: ${({ theme, type }) => theme.buttonType[type].color};
 `;
@@ -68,7 +66,7 @@ const THEMED_BUTTON = ({
             <Icon name={icon} size={25} color={selectedTheme.text} />
           )
         ) : null}
-        <Text_Button_Login type={type} heme={selectedTheme}>
+        <Text_Button_Login icon={icon} type={type} heme={selectedTheme}>
           {text}
         </Text_Button_Login>
       </>

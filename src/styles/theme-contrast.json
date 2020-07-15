@@ -116,36 +116,30 @@
     "p1Border": "rgb(255,255,255)",
     "p2Border":"rgb(0,0,0)",
 
-    "score": {
-      "fsPortrait": "0.5",
-      "fsLandscape": "0.65"
+    "buttonFontSize": {
+      "num":45,
+      "function": 15
     },
     "stats":{
-      "classic": {
-        "fsPortrait": "0.1",
-        "fsLandscape": "0.115"
-      },
-      "asym": {
-        "fsPortrait": "0.1",
-        "fsLandscape": "0.11"
+      "classic": 10,
+      "asym": 10
+    },
+    "score": {
+      "classic":{
+        "fs1": 80,
+        "fs2": 60,
+        "fs3": 50
       }
     },
-    "nameFs": {
+
+    "name": {
+      "classic": 20,
+      "asym": 20
+    },
+    "legset": {
       "classic": {
-        "fsPortrait1": "0.15",
-        "fsLandscape1": "0.25",
-        "fsPortrait2": "0.075",
-        "fsLandscape2": "0.075",
-        "fsPortrait3": "0.125",
-        "fsLandscape3": "0.15"
-      },
-      "asym": {
-        "fsPortrait1": "0.15",
-        "fsLandscape1": "0.25",
-        "fsPortrait2": "0.075",
-        "fsLandscape2": "0.075",
-        "fsPortrait3": "0.125",
-        "fsLandscape3": "0.15"
+        "fs1": 25,
+        "fs2": 20
       }
     },
     "middle": {

@@ -42,11 +42,7 @@
       "color": "rgb(255,255,255)"
     }
   },
-  "buttonSize": {
-    "small": "40%",
-    "medium": "60%",
-    "large": "80%"
-  },
+
 
   "buttonSize": {
     "small": 0.075,
@@ -54,6 +50,7 @@
     "large": 0.2
   },
   "buttonFontSize": 12.5,
+
   "home": {
     "fontSize1": 20,
     "fontSize2": 15,
@@ -109,20 +106,30 @@
     "p2Border":"rgb(255,255,255)",
     "text2": "rgb(8, 89, 89)",
 
-    "score": {
-      "fsPortrait": "0.5",
-      "fsLandscape": "0.65"
+    "buttonFontSize": {
+      "num":45,
+      "function": 12
     },
     "stats":{
-      "classic": {
-      },
-      "asym": {
+      "classic": 8,
+      "asym": 10
+    },
+    "score": {
+      "classic":{
+        "fs1": 80,
+        "fs2": 60,
+        "fs3": 50
       }
     },
-    "nameFs": {
+
+    "name": {
+      "classic": 20,
+      "asym": 20
+    },
+    "legset": {
       "classic": {
-      },
-      "asym": {
+        "fs1": 25,
+        "fs2": 20
       }
     },
     "middle": {

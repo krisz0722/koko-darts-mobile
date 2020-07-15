@@ -1,20 +1,24 @@
 import styled from "styled-components";
 import { View } from "react-native";
-import { Window, FlexCol, FlexColBetween } from "../../styles/css_mixins";
+import { Window, FlexColAround } from "../../styles/css_mixins";
 
 export const Form = styled(View)`
-  ${FlexCol};
-  justify-content: ${({ isKeyboardUp }) =>
-    isKeyboardUp ? "flex-start" : "center"};
-
-  height: ${() => Window.height * 0.9};
   width: 100%;
-  background-color: transparent;
+  padding: 0 10%;
+  position: absolute;
+  margin: auto;
+  top: ${({ isKeyboardUp }) => (isKeyboardUp ? "0%" : "18%")};
+  margin: auto;
+  height: ${() => Window.height * 0.55};
+  border: 2px red solid;
 `;
 
-export const Inputs = styled(View)`
-  ${FlexColBetween};
-  width: 80%;
-  height: ${() => Window.height * 0.55};
-  padding-bottom: 5%;
+export const Buttons = styled(View)`
+  ${FlexColAround};
+  width: 100%;
+  position: absolute;
+  bottom: 5%;
+  margin: auto;
+  height: 20%;
+  border: 2px red solid;
 `;

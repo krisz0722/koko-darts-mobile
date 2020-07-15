@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
-import { HeaderWelcome } from "../../home/StyledHome";
+import { HeaderText } from "../../home/StyledHome";
 
 const MATCHES = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  return <HeaderWelcome theme={selectedTheme}>MATCHES</HeaderWelcome>;
+  return <HeaderText theme={selectedTheme}>MATCHES</HeaderText>;
 };
 
 export default MATCHES;

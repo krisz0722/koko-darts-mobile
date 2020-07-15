@@ -25,9 +25,16 @@ const SETTINGS = () => {
           size={"small"}
           icon={"visibility"}
           text={"show preview"}
+          type={"success"}
           length={2}
         />
-        <THEMED_BUTTON size={"small"} icon={"undo"} text={"reset"} length={2} />
+        <THEMED_BUTTON
+          type={"danger"}
+          size={"small"}
+          icon={"undo"}
+          text={"reset"}
+          length={2}
+        />
       </BottomButtons>
     </>
   );

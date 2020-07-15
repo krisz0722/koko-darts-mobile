@@ -8,15 +8,12 @@ import { FlexRowAround, Window } from "../styles/css_mixins";
 const Div = styled(View)`
   ${FlexRowAround};
   height: ${() => Window.height * 0.08};
-  border-bottom-width: ${({ theme, focused }) =>
-    !focused ? theme.borderWidth : 0};
-  border-color: ${({ theme, valid }) =>
-    valid ? theme.text : theme.borderColor};
   border-radius: 4px;
   margin: 2% 0;
   width: 100%;
-  background-color: ${({ focused, theme }) =>
-    focused == true ? theme.bgActive : "transparent"};
+  background-color: ${({ focused, theme, valid }) =>
+    focused ? theme.bgActive : valid ? "transparent" : theme.bg1};
+  border: 2px red solid;
 `;
 
 const TextInput_Login = styled(TextInput)`

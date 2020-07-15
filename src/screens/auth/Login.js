@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { Form, Inputs } from "./StyledSignUp";
+import { Buttons, Form } from "./StyledSignUp";
 
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/LoginInput";
@@ -65,33 +65,37 @@ const LOGIN = ({ navigation }) => {
         keyboardShouldPersistTaps={"always"}
       >
         <Form theme={selectedTheme} isKeyboardUp={isKeyboardUp}>
-          <Inputs>
-            {INPUTS.map((item) => {
-              console.log("ITEM", item);
-              return (
-                <LoginInput
-                  key={item.name}
-                  valid={item.value.length > 5}
-                  value={item.value}
-                  input={item}
-                  handleFocus={handleFocus}
-                  focused={focus === item.name}
-                />
-              );
-            })}
-            <THEMED_BUTTON
-              type={enableSignUp ? "active" : "basic"}
-              disabled={!enableSignUp}
-              text={"log in"}
-            />
-          </Inputs>
+          {INPUTS.map((item) => {
+            return (
+              <LoginInput
+                key={item.name}
+                valid={item.value.length > 5}
+                value={item.value}
+                input={item}
+                handleFocus={handleFocus}
+                focused={focus === item.name}
+              />
+            );
+          })}
 
+          <THEMED_BUTTON
+            type={enableSignUp ? "active" : "basic"}
+            disabled={!enableSignUp}
+            text={"log in"}
+          />
+        </Form>
+        <Buttons>
           <THEMED_BUTTON
             text={"forgotten password"}
             action={() => navigation.navigate("home")}
             type={"ghost"}
           />
-        </Form>
+          <THEMED_BUTTON
+            text={"forgotten password"}
+            action={() => navigation.navigate("home")}
+            type={"ghost"}
+          />
+        </Buttons>
       </ScrollView>
     </SafeAreaView>
   );

@@ -34,10 +34,10 @@ const WELCOME = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-  const { setScreen, setShowTab } = useContext(NavigationContext);
+  const { setHomeTabScreen, setShowTab } = useContext(NavigationContext);
 
   const enterGame = () => {
-    setScreen("settings");
+    setHomeTabScreen("settings");
     setShowTab(true);
     navigation.navigate("homenavigator");
   };

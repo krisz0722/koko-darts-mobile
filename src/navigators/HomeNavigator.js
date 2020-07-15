@@ -7,10 +7,18 @@ import transitionDefault from "../styles/navTransitionDefault";
 import { NavigationContext } from "../contexts/NavigationContext";
 import GAME_CLASSIC from "../screens/Classic";
 import HOME from "../screens/Home";
+import { PROFILE } from "../screens/Profile";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const HomeNavigator = () => {
+  const {
+    settings: { selectedTheme },
+  } = useContext(SettingsContext);
+  const theme = selectedTheme;
+
+  const { homeTabScreen } = useContext(NavigationContext);
+
   const SCREENS = {
     home: {
       component: HOME,
@@ -21,17 +29,10 @@ const HomeNavigator = () => {
       name: "settings",
     },
     profile: {
-      component: GAME_CLASSIC,
+      component: PROFILE,
       name: "profile",
     },
   };
-
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-  const theme = selectedTheme;
-
-  const { screen } = useContext(NavigationContext);
 
   const transition = (theme) =>
     theme === "default" ? transitionDefault : transitionContrast;
@@ -44,8 +45,8 @@ const HomeNavigator = () => {
       }}
     >
       <Screen
-        name={SCREENS[screen].name}
-        component={SCREENS[screen].component}
+        name={SCREENS[homeTabScreen].name}
+        component={SCREENS[homeTabScreen].component}
       />
     </Navigator>
   );

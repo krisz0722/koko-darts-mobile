@@ -8,10 +8,10 @@ const HOMENAVIGATOR_TAB = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-  const { screen, setScreen } = useContext(NavigationContext);
+  const { setHomeTabScreen } = useContext(NavigationContext);
 
   const navigate = (route) => {
-    setScreen(route);
+    setHomeTabScreen(route);
   };
 
   return (

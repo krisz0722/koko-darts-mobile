@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ScreenContainer } from "../components/containers/AppContainer";
 import { SettingsContext } from "../contexts/SettingsContext";
-import HOMENAVIGATOR_TAB from "../components/HomeNavigatorTab";
+import HOMENAVIGATOR_TAB from "../components/HomeTabNavigator";
 import { NavigationContext } from "../contexts/NavigationContext";
 import AppNavigator from "../navigators/AppNavigator";
 import { ThemeProvider } from "styled-components";

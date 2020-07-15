@@ -30,13 +30,13 @@ const NavButton = ({ text, length, action = null, icon = null }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-  const { screen } = useContext(NavigationContext);
+  const { homeTabScreen } = useContext(NavigationContext);
 
   const theme = selectedTheme;
 
   return (
     <Button_Nav
-      active={screen === text}
+      active={homeTabScreen === text}
       length={length}
       theme={selectedTheme}
       onPress={action}
@@ -46,11 +46,15 @@ const NavButton = ({ text, length, action = null, icon = null }) => {
           <Icon
             name={icon}
             size={25}
-            color={screen === text ? theme.text2 : theme.text}
+            color={homeTabScreen === text ? theme.text2 : theme.text}
           />
         ) : null}
 
-        <Text_Button active={screen === text} icon={icon} theme={selectedTheme}>
+        <Text_Button
+          active={homeTabScreen === text}
+          icon={icon}
+          theme={selectedTheme}
+        >
           {text}
         </Text_Button>
       </>

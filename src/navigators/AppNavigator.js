@@ -15,7 +15,7 @@ const { Navigator, Screen } = createStackNavigator();
 const AppNavigator = () => {
   const SCREENS = [
     // {
-    //   component: HOME,
+    //   component: LOGIN,
     //   name: "login",
     // },
     {

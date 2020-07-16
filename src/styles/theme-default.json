@@ -111,11 +111,11 @@
     "text2": "rgb(8, 89, 89)",
 
     "buttonFontSize": {
-      "num":45,
+      "num":35,
       "function": 12
     },
     "stats":{
-      "classic": 8,
+      "classic": 7,
       "asym": 10
     },
     "score": {

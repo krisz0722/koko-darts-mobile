@@ -28,12 +28,6 @@ export const LegSet2 = styled(PLayerInfoLegSet)`
   border-right-width: ${({ theme }) => theme.borderWidth};
 `;
 
-export const PlayerLegSet = styled(View)`
-  height: 100%;
-  width: 50%;
-  ${FlexCol};
-`;
-
 export const Text_Main = styled(Animated.Text)`
   height: 100%;
   width: 50%;
@@ -52,13 +46,14 @@ const LEGSET = ({ player }) => {
   } = useContext(GameContext);
 
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
 
-  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
-    .current;
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 1 : 0),
+  ).current;
   const resize = useRef(new Animated.Value(showStats ? 1 : 0)).current;
 
   useEffect(() => {
@@ -69,32 +64,42 @@ const LEGSET = ({ player }) => {
   }, [resize, showStats]);
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animationValue, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 300,
     }).start();
-  }, [animation, activePlayer]);
+  }, [animationValue, activePlayer]);
 
-  const width = resize.interpolate({
-    inputRange: [0, 1],
-    outputRange: [
-      Window.width / 2 - Window.height * 0.075,
-      Window.width / 2 - Window.height * 0.05,
-    ],
-  });
+  const width = animation
+    ? resize.interpolate({
+        inputRange: [0, 1],
+        outputRange: [
+          Window.width / 2 - Window.height * 0.075,
+          Window.width / 2 - Window.height * 0.05,
+        ],
+      })
+    : showStats
+    ? Window.width / 2 - Window.height * 0.05
+    : Window.width / 2 - Window.height * 0.075;
 
-  const borderColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [theme.game.p2Border, theme.game.p1Border],
-  });
+  const borderColor = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [theme.game.p2Border, theme.game.p1Border],
+      })
+    : theme.game[activePlayer + "Border"];
 
   const fs1 = selectedTheme.game.legset.classic.fs1;
   const fs2 = selectedTheme.game.legset.classic.fs2;
 
-  const fontSize = resize.interpolate({
-    inputRange: [0, 1],
-    outputRange: [fs1, fs2],
-  });
+  const fontSize = animation
+    ? resize.interpolate({
+        inputRange: [0, 1],
+        outputRange: [fs1, fs2],
+      })
+    : showStats
+    ? fs2
+    : fs1;
 
   return (
     <>

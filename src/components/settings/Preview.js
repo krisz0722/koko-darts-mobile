@@ -18,7 +18,7 @@ const PreviewContainer = styled(Animated.View)`
   ${FlexRow};
   height: 35%;
   width: 100%;
-  z-index: ${({ layer }) => (layer ? 1 : -1)};
+  z-index: ${({ visible }) => (visible ? 1 : -1)};
   background-color: ${({ theme }) => theme.bgOverlay};
 `;
 
@@ -27,41 +27,9 @@ export const PREVIEW = ({ preview }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const animation = useRef(
-    new Animated.Value(selectedTheme.name === "default" ? 0 : 1),
-  ).current;
-
-  const [layer, setLayer] = useState(false);
-
-  useEffect(() => {
-    if (preview) {
-      setLayer(true);
-      Animated.timing(animation, {
-        toValue: preview ? 1 : 0,
-        duration: 3000,
-      }).start();
-    } else {
-      setTimeout(() => {
-        setLayer(false);
-      }, 3000);
-    }
-  }, [animation, selectedTheme.name, preview]);
-
-  const opacity = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
-
   return (
-    <PreviewContainer
-      layer={layer}
-      visible={preview}
-      theme={selectedTheme}
-      style={{
-        opacity,
-      }}
-    >
-      <GAME_CLASSIC visible={preview} layer={layer} />
+    <PreviewContainer visible={preview} theme={selectedTheme}>
+      <GAME_CLASSIC preview={preview} />
     </PreviewContainer>
   );
 };

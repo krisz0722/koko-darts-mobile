@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Animated, View } from "react-native";
 import styled from "styled-components";
 import CLASSIC_SCORES from "../../components/classic/Scores/ClassicScores";
@@ -7,35 +7,83 @@ import CLASSIC_BOTTOM from "../../components/classic/Bottom/ClassicBottom";
 import CLASSIC_TOP from "../../components/classic/Top/ClassicTop";
 import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
 import { Window } from "../../styles/css_mixins";
+import { GameContext } from "../../contexts/GameContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 const GameWindow = styled(Animated.View)`
   position: absolute;
-  width: ${() => Window.width};
-  height: ${() => Window.height};
-  transform: ${({ layer }) => (layer ? "scale(0.32, 0.32)" : null)};
-  display: ${({ layer }) => (layer ? "flex" : "none")};
+  width: ${({ preview }) => (preview ? Window.width : "100%")};
+  height: ${({ preview }) => (preview ? Window.height : "100%")};
+  transform: ${({ preview }) => (preview ? "scale(0.32, 0.32)" : null)};
+  display: ${({ preview }) => (preview ? "flex" : "none")};
 `;
 
-const GAME_CLASSIC = ({ style, visible, layer }) => {
-  const animation = useRef(new Animated.Value(0)).current;
+const Overlay = styled(Animated.View)`
+  position: absolute;
+  top: 0;
+  height: 45%;
+  width: 50%;
+`;
+const Overlay1 = styled(Overlay)`
+  left: 0;
+  background-color: ${({ theme }) => theme.game.p1Overlay};
+`;
+
+const Overlay2 = styled(Overlay)`
+  right: 0;
+  background-color: ${({ theme }) => theme.game.p2Overlay};
+`;
+
+const GAME_CLASSIC = ({ preview }) => {
+  const {
+    gameData: { inactivePlayer },
+  } = useContext(GameContext);
+
+  const {
+    settings: { selectedTheme, animation, opacity },
+  } = useContext(SettingsContext);
+
+  const animationValue = useRef(
+    new Animated.Value(inactivePlayer === "p1" ? 1 : 0),
+  ).current;
 
   useEffect(() => {
-    Animated.timing(animation, {
-      toValue: visible ? 1 : 0,
+    Animated.timing(animationValue, {
+      toValue: inactivePlayer === "p1" ? 1 : 0,
       duration: 3000,
     }).start();
-  }, [animation, visible]);
+  }, [animation, animationValue, inactivePlayer, preview]);
 
-  const opacity = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
+  const opacity1 = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1, 0.9],
+      })
+    : inactivePlayer === "p1"
+    ? 0.9
+    : 1;
+
+  const opacity2 = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.9, 1],
+      })
+    : inactivePlayer === "p2"
+    ? 0.9
+    : 1;
 
   return (
-    <GameWindow style={{ opacity }} layer={layer}>
+    <GameWindow preview={preview}>
       <CLASSIC_TOP />
       <CLASSIC_SCORES />
       <CLASSIC_STATS />
+      {opacity ? (
+        inactivePlayer === "p1" ? (
+          <Overlay1 style={{ opacity: opacity1 }} theme={selectedTheme} />
+        ) : (
+          <Overlay2 style={{ opacity: opacity2 }} theme={selectedTheme} />
+        )
+      ) : null}
       <CLASSIC_MIDDLE />
       <CLASSIC_BOTTOM />
     </GameWindow>

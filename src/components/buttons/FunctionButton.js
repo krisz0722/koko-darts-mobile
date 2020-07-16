@@ -6,6 +6,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import { BasicTextBold, FlexCol, FlexRowAround } from "../../styles/css_mixins";
 import createAnimation from "../../styles/playerSwitchTransition";
+import { useRoute } from "@react-navigation/native";
 
 export const Button_Function_Classic = styled(TouchableHighlight)`
   ${FlexRowAround}
@@ -30,7 +31,7 @@ export const Text_Function = styled(Text)`
 
 const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
@@ -44,23 +45,30 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
     },
   } = useContext(GameContext);
 
+  const route = useRoute().name;
+
   const handleOnPress = (value, action) => {
-    if (action) {
-      dispatchGameData({ type: action, value });
+    if (route === "game") {
+      if (action) {
+        dispatchGameData({ type: action, value });
+      } else {
+        dispatchGameData({ type: "SUBMIT", value });
+      }
     } else {
-      dispatchGameData({ type: "SUBMIT", value });
+      return null;
     }
   };
 
-  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
-    .current;
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 1 : 0),
+  ).current;
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animationValue, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 300,
     }).start();
-  }, [animation, activePlayer]);
+  }, [animationValue, activePlayer]);
 
   const AnimatedButton = Animated.createAnimatedComponent(
     Button_Function_Classic,
@@ -68,9 +76,12 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
   const AnimatedView = Animated.createAnimatedComponent(View_Function);
   const AnimatedText = Animated.createAnimatedComponent(Text_Function);
 
-  const style1 = () => {
-    return createAnimation(theme, animation, false, false, true);
-  };
+  const borderColor = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [theme.game.p2Border, theme.game.p1Border],
+      })
+    : theme.game[activePlayer + "Border"];
 
   const scoreDisplayText =
     name === activePlayer
@@ -82,7 +93,7 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
       {name === "p2" || name === "p1" ? (
         <AnimatedView
           ap={activePlayer}
-          style={style1()}
+          style={{ borderColor }}
           disabled={disabled}
           name={name}
         >
@@ -98,9 +109,9 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
       ) : (
         <AnimatedButton
           ap={activePlayer}
-          style={style1()}
+          style={{ borderColor }}
           onPress={() => handleOnPress(value, action)}
-          disabled={disabled}
+          disabled={route !== "game"}
           name={name}
           icon={icon}
         >

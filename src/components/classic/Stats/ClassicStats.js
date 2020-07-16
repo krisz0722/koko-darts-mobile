@@ -68,30 +68,28 @@ export const StatText4 = styled(StatText2)`
   width: 50%;
 `;
 
-const CLASSIC_STATS = ({ player }) => {
+const CLASSIC_STATS = () => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
 
   const {
-    gameData,
     gameData: { activePlayer, showStats, p1_DATA, p2_DATA },
   } = useContext(GameContext);
 
-  const p = gameData[player + "_DATA"];
-
-  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
-    .current;
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 1 : 0),
+  ).current;
   const drawerAnimation = useRef(new Animated.Value(showStats ? 1 : 0)).current;
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animationValue, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 300,
     }).start();
-  }, [animation, activePlayer]);
+  }, [animationValue, activePlayer]);
 
   useEffect(() => {
     Animated.timing(drawerAnimation, {
@@ -100,14 +98,21 @@ const CLASSIC_STATS = ({ player }) => {
     }).start();
   }, [drawerAnimation, showStats]);
 
-  const style1 = () => {
-    return createAnimation(theme, animation, false, false, true);
-  };
+  const borderColor = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [theme.game.p2Border, theme.game.p1Border],
+      })
+    : theme.game[activePlayer + "Border"];
 
-  const top = drawerAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["45%", "35%"],
-  });
+  const top = animation
+    ? drawerAnimation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["45%", "35%"],
+      })
+    : showStats
+    ? "35%"
+    : "45%";
 
   const AVERAGES = [
     {
@@ -156,7 +161,7 @@ const CLASSIC_STATS = ({ player }) => {
         showStats={showStats}
       >
         <Averages
-          style={style1()}
+          style={{ borderColor }}
           ap={activePlayer}
           player={"p1"}
           theme={theme}
@@ -172,7 +177,12 @@ const CLASSIC_STATS = ({ player }) => {
             </StatRow>
           ))}
         </Averages>
-        <Totals style={style1()} ap={activePlayer} player={"p1"} theme={theme}>
+        <Totals
+          style={{ borderColor }}
+          ap={activePlayer}
+          player={"p1"}
+          theme={theme}
+        >
           {TOTALS.map((item) => (
             <StatRow>
               <StatText3 player={"p1"} theme={theme}>
@@ -193,7 +203,7 @@ const CLASSIC_STATS = ({ player }) => {
         theme={theme}
       >
         <Averages
-          style={style1()}
+          style={{ borderColor }}
           ap={activePlayer}
           player={"p2"}
           theme={theme}
@@ -209,7 +219,12 @@ const CLASSIC_STATS = ({ player }) => {
             </StatRow>
           ))}
         </Averages>
-        <Totals style={style1()} ap={activePlayer} player={"p2"} theme={theme}>
+        <Totals
+          style={{ borderColor }}
+          ap={activePlayer}
+          player={"p2"}
+          theme={theme}
+        >
           {TOTALS.map((item) => (
             <StatRow>
               <StatText3 player={"p2"} theme={theme}>

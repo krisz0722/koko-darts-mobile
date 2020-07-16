@@ -29,25 +29,28 @@ const NAME = ({ player }) => {
   } = useContext(GameContext);
 
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
 
-  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
-    .current;
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 1 : 0),
+  ).current;
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animationValue, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 300,
     }).start();
-  }, [animation, activePlayer]);
+  }, [animationValue, activePlayer]);
 
-  const borderColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [theme.game.p2Border, theme.game.p1Border],
-  });
+  const borderColor = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [theme.game.p2Border, theme.game.p1Border],
+      })
+    : theme.game[activePlayer + "Border"];
 
   return (
     <Text_Name style={{ borderColor }} player={player} ap={activePlayer}>

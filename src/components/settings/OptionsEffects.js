@@ -22,11 +22,6 @@ export const OptionsEffects = () => {
       prop: opacity,
       handler: () => dispatchSettings({ type: "OPACITY", value: !opacity }),
     },
-    {
-      name: "blur",
-      prop: blur,
-      handler: () => dispatchSettings({ type: "TOGGLE_BLUR", value: !blur }),
-    },
   ];
 
   return (

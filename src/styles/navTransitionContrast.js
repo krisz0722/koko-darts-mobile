@@ -1,4 +1,3 @@
-import React from "react";
 import { Easing } from "react-native";
 import { HeaderStyleInterpolators } from "@react-navigation/stack";
 

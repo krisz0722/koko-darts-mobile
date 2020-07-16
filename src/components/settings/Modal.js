@@ -1,20 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
+import { View, Modal, Text, TouchableOpacity } from "react-native";
 import {
-  SectionList,
-  Alert,
-  View,
-  Modal,
-  Text,
-  Button,
-  TouchableOpacity,
-} from "react-native";
-import {
-  BasicText,
   BasicTextBold,
-  FlexCol,
   FlexColAround,
   FlexRowBetween,
   Window,
@@ -72,7 +62,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
   const {
-    gameData: { toWin },
+    gameData: { toWin, legsPerSet },
     dispatchGameData,
   } = useContext(GameContext);
 
@@ -80,8 +70,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
 
   const OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  const handleFirstToWin = (type, val) => {
-    alert(type, val);
+  const handleFirstToWin = (val) => {
     if (type === "main") {
       dispatchGameData({ type: "CHANGE_TOWIN", value: val });
     } else {
@@ -93,9 +82,6 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
     <Modal
       animationType={selectedTheme.name === "default" ? "fade" : "slide"}
       transparent={true}
-      onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-      }}
       presentationStyle={"pageSheet"}
       visible={visible}
     >
@@ -113,8 +99,8 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
               <Label>{item}</Label>
               <Radio
                 onPress={() => handleFirstToWin(type, item)}
-                active={item === toWin}
-              ></Radio>
+                active={type === "main" ? item === toWin : item === legsPerSet}
+              />
             </Option>
           ))}
         </Options>

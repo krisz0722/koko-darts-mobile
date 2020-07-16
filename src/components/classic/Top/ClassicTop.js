@@ -51,21 +51,22 @@ const CLASSIC_TOP = () => {
     gameData: { activePlayer, showStats },
   } = useContext(GameContext);
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
 
-  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
-    .current;
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 1 : 0),
+  ).current;
   const resize = useRef(new Animated.Value(showStats ? 1 : 0)).current;
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animationValue, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 300,
     }).start();
-  }, [animation, activePlayer]);
+  }, [animationValue, activePlayer]);
 
   useEffect(() => {
     Animated.timing(resize, {
@@ -74,15 +75,21 @@ const CLASSIC_TOP = () => {
     }).start();
   }, [resize, showStats]);
 
-  const height = resize.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["15%", "10%"],
-  });
+  const height = animation
+    ? resize.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["15%", "10%"],
+      })
+    : showStats
+    ? "10%"
+    : "15%";
 
-  const borderColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [theme.game.p2Border, theme.game.p1Border],
-  });
+  const borderColor = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [theme.game.p2Border, theme.game.p1Border],
+      })
+    : theme.game[activePlayer + "Border"];
 
   return (
     <ClassicTop style={{ height }} showStats={showStats}>

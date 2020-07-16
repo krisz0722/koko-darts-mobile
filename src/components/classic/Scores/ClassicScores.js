@@ -51,7 +51,7 @@ export const ClassicPlayerScore = styled(Animated.View)`
 
 const CLASSIC_SCORES = () => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const {
@@ -60,47 +60,59 @@ const CLASSIC_SCORES = () => {
 
   const theme = selectedTheme;
 
-  const animation = useRef(new Animated.Value(activePlayer === "p1" ? 1 : 0))
-    .current;
-  const animation2 = useRef(new Animated.Value(0)).current;
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 1 : 0),
+  ).current;
+  const animationValue2 = useRef(new Animated.Value(0)).current;
   const checkoutAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animationValue, {
       toValue: activePlayer === "p1" ? 1 : 0,
       duration: 300,
     }).start();
-    Animated.timing(animation2, {
+    Animated.timing(animationValue2, {
       toValue: showStats ? 1 : 0,
       duration: 300,
     }).start();
-  }, [animation, animation2, showStats, activePlayer]);
+  }, [animationValue, animationValue2, showStats, activePlayer]);
 
-  const style = () => {
-    return createAnimation(theme, animation, false, false, true);
-  };
+  const borderColor = animation
+    ? animationValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [theme.game.p2Border, theme.game.p1Border],
+      })
+    : theme.game[activePlayer + "Border"];
 
-  const top = animation2.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["15%", "10%"],
-  });
+  const top = animation
+    ? animationValue2.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["15%", "10%"],
+      })
+    : showStats
+    ? "10%"
+    : "15%";
 
-  const height = animation2.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["30%", "25%"],
-  });
+  const height = animation
+    ? animationValue2.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["30%", "25%"],
+      })
+    : showStats
+    ? "25%"
+    : "30%";
 
   return (
     <ClassicScores style={{ top, height }} showStats={showStats}>
       <ClassicCheckoutsP1
-        style={style()}
+        style={{ borderColor }}
         theme={selectedTheme}
         ap={activePlayer}
       >
         <PLAYER_CHECKOUTS player={"p1"} />
       </ClassicCheckoutsP1>
       <ClassicCheckoutsP2
-        style={style()}
+        style={{ borderColor }}
         theme={selectedTheme}
         ap={activePlayer}
       >

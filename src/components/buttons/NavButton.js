@@ -38,7 +38,6 @@ const NavButton = ({
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-  const { homeTabScreen } = useContext(NavigationContext);
 
   const theme = selectedTheme;
 

@@ -14,7 +14,7 @@ export const ClassicMiddle = styled(View)`
   height: 18%;
 `;
 
-const CLASSIC_MIDDLE = ({ navigation }) => {
+const CLASSIC_MIDDLE = () => {
   const { gameData } = useContext(GameContext);
 
   const MIDDLE = [
@@ -22,42 +22,36 @@ const CLASSIC_MIDDLE = ({ navigation }) => {
       name: "menu",
       value: "menu",
       icon: "menu",
-      action: () => navigation,
-      disabled: false,
+      action: () => null,
     },
     {
       name: "showStats",
       value: "show stats",
       icon: "show-chart",
       action: "SHOW_STATS",
-      disabled: false,
     },
     {
       name: "bust",
       value: "bust",
       icon: "not-interested",
-      disabled: false,
     },
     {
       name: "p1",
       value: `${gameData.p1}`,
       icon: null,
       action: null,
-      disabled: true,
     },
     {
       name: "changeInput",
       value: "input by dart",
       icon: "visibility",
       action: "CHANGE_INPUT",
-      disabled: false,
     },
     {
       name: "p2",
       value: `${gameData.p2}`,
       icon: null,
       action: null,
-      disabled: true,
     },
   ];
 
@@ -71,7 +65,6 @@ const CLASSIC_MIDDLE = ({ navigation }) => {
           middle={true}
           icon={item.icon}
           action={item.action}
-          disabled={item.disabled}
         >
           {item.name}
         </CLASSIC_FUNCTION>

@@ -11,6 +11,7 @@ import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/welcome/Welcome";
 import HomeNavigator from "./HomeNavigator";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
+import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
@@ -26,6 +27,10 @@ const AppNavigator = () => {
     {
       component: LOGIN,
       name: "login",
+    },
+    {
+      component: FORGOT_PASSWORD,
+      name: "forgotpassword",
     },
     {
       component: GAME_CLASSIC,

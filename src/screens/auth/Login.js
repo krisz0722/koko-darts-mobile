@@ -92,7 +92,7 @@ const LOGIN = ({ navigation }) => {
           />
           <THEMED_BUTTON
             text={"forgotten password"}
-            action={() => navigation.navigate("home")}
+            action={() => navigation.navigate("forgotpassword")}
             type={"ghost"}
           />
         </Buttons>

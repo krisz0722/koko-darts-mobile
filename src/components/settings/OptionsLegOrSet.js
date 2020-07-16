@@ -7,17 +7,14 @@ import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "./SettingsButton";
 import MODAL_SELECT from "./Modal";
 
-export const OptionsLegOrSet = ({ modalHandler }) => {
+export const OptionsLegOrSet = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
   const {
-    gameData: { legOrSet, toWin },
+    gameData: { legOrSet, toWin, legsPerSet },
     dispatchGameData,
   } = useContext(GameContext);
-
-  const [focus, setFocus] = useState(undefined);
-  const [isKeyboardUp, setIsKeyboardUp] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState({
@@ -35,29 +32,13 @@ export const OptionsLegOrSet = ({ modalHandler }) => {
     }
   };
 
-  const NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const length = legOrSet === "leg" ? 3 : 5;
-  const handleFirstToWin = (val) => {
-    dispatchGameData({ type: "CHANGE_TOWIN", value: val });
-  };
 
   const handleLegOrSet = (val) => {
     dispatchGameData({ type: "CHANGE_LEGORSET", value: val });
   };
 
-  const keyboardDidShow = (e) => {
-    let newSize = Dimensions.get("window").height - e.endCoordinates.height;
-    setIsKeyboardUp(true);
-  };
   const data = ["leg", "set"];
-  const keyboardDidHide = (e) => {
-    let newSize = Dimensions.get("window").height;
-    setIsKeyboardUp(false);
-    setFocus(undefined);
-  };
-
-  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
-  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   return (
     <>
@@ -94,7 +75,7 @@ export const OptionsLegOrSet = ({ modalHandler }) => {
             <SETTINGS_BUTTON
               size={"small"}
               length={length}
-              value={toWin}
+              value={legsPerSet}
               icon={"arrow-drop-up"}
               active={true}
               action={() => displayModal("sub", "leg")}

@@ -80,8 +80,13 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
 
   const OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  const handleFirstToWin = (val) => {
-    dispatchGameData({ type: "CHANGE_TOWIN", value: val });
+  const handleFirstToWin = (type, val) => {
+    alert(type, val);
+    if (type === "main") {
+      dispatchGameData({ type: "CHANGE_TOWIN", value: val });
+    } else {
+      dispatchGameData({ type: "CHANGE_LEGSPERSET", value: val });
+    }
   };
 
   return (
@@ -107,7 +112,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
             <Option>
               <Label>{item}</Label>
               <Radio
-                onPress={() => handleFirstToWin(item)}
+                onPress={() => handleFirstToWin(type, item)}
                 active={item === toWin}
               ></Radio>
             </Option>

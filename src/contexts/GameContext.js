@@ -18,7 +18,6 @@ export const GameContextProvider = (props) => {
         return { ...state, p1: action.value };
       case "CHANGE_P2":
         return { ...state, p2: action.value };
-
       case "SWAP_PLAYERS":
         return { ...state, p1: action.p1, p2: action.p2 };
       case "SHOW_STATS":
@@ -26,8 +25,9 @@ export const GameContextProvider = (props) => {
       case "CHANGE_LEGORSET":
         return { ...state, legOrSet: action.value };
       case "CHANGE_TOWIN":
-        "" + "";
         return { ...state, toWin: parseInt(action.value) };
+      case "CHANGE_LEGSPERSET":
+        return { ...state, legsPerSet: parseInt(action.value) };
       case "CHANGE_STARTINGSCORE":
         return changeStartingScore(state, action.value);
       case "CHANGE_INPUT":
@@ -69,6 +69,10 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
+
+  console.log(gameData.legOrSet);
+  console.log(gameData.toWin);
+  console.log(gameData.legsPerSet);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

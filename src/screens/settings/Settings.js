@@ -7,28 +7,13 @@ import { OptionsEffects } from "../../components/settings/OptionsEffects";
 import { OptionsScore } from "../../components/settings/OptionsScore";
 import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { GameContext } from "../../contexts/GameContext";
-import MODAL_SELECT from "../../components/settings/Modal";
-
+import PREVIEW from "../../components/settings/Preview";
 const SETTINGS = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const {
-    gameData: { legOrSet, toWin },
-    dispatchGameData,
-  } = useContext(GameContext);
-
-  // const [modalVisible, setModalVisible] = useState(false);
-  // const [modalType, setModalType] = useState(legOrSet);
-  //
-  // const displayModal = (type = null, legOrSet = null) => {
-  //   setModalVisible(!modalVisible);
-  //   if (legOrSet) {
-  //     setModalType(type);
-  //   }
-  // };
+  const [preview, setPreview] = useState(false);
 
   return (
     <>
@@ -44,6 +29,7 @@ const SETTINGS = () => {
           text={"show preview"}
           type={"success"}
           length={2}
+          action={() => setPreview(!preview)}
         />
         <THEMED_BUTTON
           type={"danger"}
@@ -53,11 +39,7 @@ const SETTINGS = () => {
           length={2}
         />
       </BottomButtons>
-      {/*<MODAL_SELECT*/}
-      {/*  type={modalType}*/}
-      {/*  visible={modalVisible}*/}
-      {/*  modalHandler={displayModal}*/}
-      {/*/>*/}
+      {preview ? <PREVIEW preview={preview} /> : null}
     </>
   );
 };

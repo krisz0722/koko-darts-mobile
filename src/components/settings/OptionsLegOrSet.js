@@ -5,8 +5,9 @@ import { Div, Row2, Row } from "../../screens/settings/StyledSettings";
 import { Dimensions, Keyboard } from "react-native";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "./SettingsButton";
+import MODAL_SELECT from "./Modal";
 
-export const OptionsLegOrSet = () => {
+export const OptionsLegOrSet = ({ modalHandler }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -17,6 +18,22 @@ export const OptionsLegOrSet = () => {
 
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalType, setModalType] = useState({
+    type: "main",
+    legOrSet: "leg",
+  });
+
+  const displayModal = (type = null, legOrSet = null) => {
+    setModalVisible(!modalVisible);
+    if (legOrSet) {
+      setModalType({
+        type,
+        legOrSet,
+      });
+    }
+  };
 
   const NUMBERS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   const length = legOrSet === "leg" ? 3 : 5;
@@ -41,10 +58,6 @@ export const OptionsLegOrSet = () => {
 
   Keyboard.addListener("keyboardDidShow", keyboardDidShow);
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
-
-  const handleFocus = (e) => {
-    setFocus(e);
-  };
 
   return (
     <>
@@ -73,6 +86,7 @@ export const OptionsLegOrSet = () => {
           value={toWin}
           icon={"arrow-drop-up"}
           active={true}
+          action={() => displayModal("main", legOrSet)}
         />
         <SETTINGS_BUTTON size={"small"} length={length} value={legOrSet} />
         {legOrSet === "set" ? (
@@ -83,6 +97,7 @@ export const OptionsLegOrSet = () => {
               value={toWin}
               icon={"arrow-drop-up"}
               active={true}
+              action={() => displayModal("sub", "leg")}
             />
             <SETTINGS_BUTTON
               size={"small"}
@@ -92,6 +107,11 @@ export const OptionsLegOrSet = () => {
           </>
         ) : null}
       </Row2>
+      <MODAL_SELECT
+        modalType={modalType}
+        visible={modalVisible}
+        modalHandler={displayModal}
+      />
     </>
   );
 };

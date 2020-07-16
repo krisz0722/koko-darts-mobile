@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BottomButtons } from "./StyledSettings";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { OptionsLayout } from "../../components/settings/OptionsLayout";
@@ -7,11 +7,28 @@ import { OptionsEffects } from "../../components/settings/OptionsEffects";
 import { OptionsScore } from "../../components/settings/OptionsScore";
 import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import { GameContext } from "../../contexts/GameContext";
+import MODAL_SELECT from "../../components/settings/Modal";
 
 const SETTINGS = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
+
+  const {
+    gameData: { legOrSet, toWin },
+    dispatchGameData,
+  } = useContext(GameContext);
+
+  // const [modalVisible, setModalVisible] = useState(false);
+  // const [modalType, setModalType] = useState(legOrSet);
+  //
+  // const displayModal = (type = null, legOrSet = null) => {
+  //   setModalVisible(!modalVisible);
+  //   if (legOrSet) {
+  //     setModalType(type);
+  //   }
+  // };
 
   return (
     <>
@@ -36,6 +53,11 @@ const SETTINGS = () => {
           length={2}
         />
       </BottomButtons>
+      {/*<MODAL_SELECT*/}
+      {/*  type={modalType}*/}
+      {/*  visible={modalVisible}*/}
+      {/*  modalHandler={displayModal}*/}
+      {/*/>*/}
     </>
   );
 };

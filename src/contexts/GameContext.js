@@ -70,9 +70,9 @@ export const GameContextProvider = (props) => {
     initialGameState,
   );
 
-  console.log(gameData.legOrSet);
-  console.log(gameData.toWin);
-  console.log(gameData.legsPerSet);
+  console.log(gameData.p1_DATA.score);
+  console.log(gameData.p2_DATA.score);
+  console.log(gameData.p2_DATA.score);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

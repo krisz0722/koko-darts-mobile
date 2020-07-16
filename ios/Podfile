@@ -81,6 +81,8 @@ target 'kokodarts' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
+
   target 'kokodartsTests' do
     inherit! :complete
     # Pods for testing

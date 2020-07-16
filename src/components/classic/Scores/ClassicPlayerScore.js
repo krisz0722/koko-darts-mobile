@@ -102,8 +102,6 @@ const PLAYER_SCORE = () => {
     outputRange: [fs1, fs2, fs3],
   });
 
-  console.log(fs1, fs2, fs3);
-
   const fontSizeP2 = fontP2.interpolate({
     inputRange: [0, 0.5, 1],
     outputRange: [fs1, fs2, fs3],

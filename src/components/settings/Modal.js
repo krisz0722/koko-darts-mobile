@@ -2,14 +2,10 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { View, Modal, Text, TouchableOpacity } from "react-native";
-import {
-  BasicTextBold,
-  FlexColAround,
-  FlexRowBetween,
-  Window,
-} from "../../styles/css_mixins";
+import { View, Modal, Text } from "react-native";
+import { BasicTextBold, FlexColAround } from "../../styles/css_mixins";
 import THEMED_BUTTON from "../buttons/ThemedButton";
+import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 
 const ModalContainer = styled(View)`
   height: 100%;
@@ -18,13 +14,6 @@ const ModalContainer = styled(View)`
   ${FlexColAround};
   background-color: rgba(255, 255, 255, 0.95);
 `;
-
-const Options = styled(View)`
-  width: 50%;
-  height: 70%;
-  ${FlexColAround}
-`;
-
 const Header = styled(Text)`
 ${BasicTextBold}
 height:10%;
@@ -33,28 +22,6 @@ margin:auto;
 background-color: ${({ theme }) => theme.bg1};
 color: ${({ theme }) => theme.text}
 font-size:20;
-`;
-
-const Option = styled(View)`
-  height: 6%;
-  width: 30%;
-  ${FlexRowBetween};
-`;
-
-const Label = styled(Text)`
-  ${BasicTextBold}
-  height: 100%;
-  width: 50%;
-`;
-
-const Radio = styled(TouchableOpacity)`
-  border-radius: ${() => (Window.height * 0.075) / 3};
-  background-color: ${({ active, theme }) =>
-    active ? theme.bg3 : "transparent"};
-  border-color: ${({ theme }) => theme.bg1};
-  border-width: ${({ theme }) => theme.borderWidth};
-  height: ${() => (Window.height * 0.075) / 3};
-  width: ${() => (Window.height * 0.075) / 3};
 `;
 
 const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
@@ -93,17 +60,11 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
               : "legs to win"
             : "legs per set to win"}
         </Header>
-        <Options>
-          {OPTIONS.map((item) => (
-            <Option>
-              <Label>{item}</Label>
-              <Radio
-                onPress={() => handleFirstToWin(type, item)}
-                active={type === "main" ? item === toWin : item === legsPerSet}
-              />
-            </Option>
-          ))}
-        </Options>
+        <RADIO_BUTTON_SET
+          OPTIONS={OPTIONS}
+          action={handleFirstToWin}
+          activeValue={type === "main" ? toWin : legsPerSet}
+        />
         <THEMED_BUTTON
           action={() => modalHandler()}
           text={"ok"}

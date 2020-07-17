@@ -1,9 +1,9 @@
 import { SCORINGDARTS } from "calc/const";
 
-const typeUpdateScore = (state, manualInput, apKey, apData, inputIndex) => {
-  const first = parseInt(manualInput.slice(0, 2).join(""));
-  const second = parseInt(manualInput.slice(2, 4).join(""));
-  const third = parseInt(manualInput.slice(4, 6).join(""));
+const typeUpdateScore = (state, inputByDart, apKey, apData, inputIndex) => {
+  const first = parseInt(inputByDart.slice(0, 2).join(""));
+  const second = parseInt(inputByDart.slice(2, 4).join(""));
+  const third = parseInt(inputByDart.slice(4, 6).join(""));
 
   const typedScore = [first, second, third];
   const check = (input) => SCORINGDARTS.some((score) => score.value === input);
@@ -52,8 +52,8 @@ const typeUpdateScore = (state, manualInput, apKey, apData, inputIndex) => {
       ...state,
       inputIndex: 0,
       scoreInputArray: {
-        defaultInput: ["", "", ""],
-        manualInput: [`${invalidScore} IS INVALID`],
+        inputByRound: ["", "", ""],
+        inputByDart: [`${invalidScore} IS INVALID`],
       },
       [apKey]: {
         ...apData,

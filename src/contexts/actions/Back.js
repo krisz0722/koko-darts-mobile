@@ -12,8 +12,8 @@ const back = (state, inapKey, inapData) => {
       return {
         ...state,
         scoreInputArray: {
-          defaultInput: ["CAN'T GO BACK!"],
-          manualInput: ["CAN'T GO BACK!"],
+          inputByRound: ["CAN'T GO BACK!"],
+          inputByDart: ["CAN'T GO BACK!"],
         },
       };
     default:

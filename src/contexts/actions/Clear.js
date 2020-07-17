@@ -7,13 +7,17 @@ const clear = (state) => {
     inputIndex: 0,
 
     scoreInputArray: {
-      defaultInput: ["", "", ""],
-      manualInput: ["", "", "", "", "", ""],
+      inputByRound: ["", "", ""],
+      inputByDart: {
+        "1": ["", ""],
+        "2": ["", ""],
+        "3": ["", ""],
+      },
     },
-    isInputManual: false,
+    isInputByDart: false,
     [apKey]: {
       ...apData,
-      score: state.isInputManual
+      score: state.isInputByDart
         ? apData.score + apData.lastScore
         : apData.score,
     },

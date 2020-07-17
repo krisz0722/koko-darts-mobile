@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components";
-import { NavigationContext } from "../../contexts/NavigationContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { BasicText, FlexCol, Window } from "../../styles/css_mixins";
 

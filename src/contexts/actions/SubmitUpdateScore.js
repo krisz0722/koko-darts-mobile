@@ -11,56 +11,41 @@ const submitUpdateScore = (
 ) => {
   let {
     score,
-    legTotalScore,
-    matchTotalScore,
-    numOfRoundsInLeg,
-    numOfRoundsInMatch,
-    firstNineDartTotalScore,
-    scoringDartsTotalScore,
-    numOfRoundsFirstNineDart,
-    numOfRoundsScoringDarts,
+    tsLeg,
+    tsMatch,
+    norLeg,
+    norMatch,
+    tsFirstNine,
+    tsScoring,
+    norFirstNine,
+    norScoring,
     dartsUsedInLeg,
     numOfCoDarts,
   } = playerData;
+
   const prevScore = score;
   const wasOnCheckout = CHECKOUTS.some((co) => co.value === prevScore);
   const prevScoreNumOfDarts = wasOnCheckout
     ? CHECKOUTS.find((co) => co.value === prevScore).checkouts[0].nod
     : 0;
-  const isOnCheckout = CHECKOUTS.some((co) => co.value === newScore);
 
-  legTotalScore += scoreToSubmit * num;
-  matchTotalScore += scoreToSubmit * num;
-  numOfRoundsInLeg += num;
-  numOfRoundsInMatch += num;
+  const onCheckout = CHECKOUTS.some((co) => co.value === newScore);
 
-  firstNineDartTotalScore =
-    numOfRoundsInLeg <= 3
-      ? firstNineDartTotalScore + scoreToSubmit * num
-      : firstNineDartTotalScore;
-  scoringDartsTotalScore = !wasOnCheckout
-    ? scoringDartsTotalScore + scoreToSubmit * num
-    : scoringDartsTotalScore;
-  numOfRoundsFirstNineDart =
-    numOfRoundsInLeg <= 3
-      ? numOfRoundsFirstNineDart + num
-      : numOfRoundsFirstNineDart;
-  numOfRoundsScoringDarts = !wasOnCheckout
-    ? numOfRoundsScoringDarts + num
-    : numOfRoundsScoringDarts;
+  tsLeg += scoreToSubmit * num;
+  tsMatch += scoreToSubmit * num;
+  norLeg += num;
+  norMatch += num;
 
-  const legAverage =
-    numOfRoundsInLeg === 0 ? 0 : legTotalScore / numOfRoundsInLeg;
-  const matchAverage =
-    numOfRoundsInMatch === 0 ? 0 : matchTotalScore / numOfRoundsInMatch;
-  const firstNineDartAverage =
-    numOfRoundsFirstNineDart === 0
-      ? 0
-      : firstNineDartTotalScore / numOfRoundsFirstNineDart;
-  const scoringDartsAverage =
-    numOfRoundsScoringDarts === 0
-      ? 0
-      : scoringDartsTotalScore / numOfRoundsScoringDarts;
+  tsFirstNine = norLeg <= 3 ? tsFirstNine + scoreToSubmit * num : tsFirstNine;
+  tsScoring = !wasOnCheckout ? tsScoring + scoreToSubmit * num : tsScoring;
+  norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
+  norScoring = !wasOnCheckout ? norScoring + num : norScoring;
+
+  const avgLeg = norLeg === 0 ? 0 : (tsLeg / norLeg).toFixed(1);
+  const avgMatch = norMatch === 0 ? 0 : (tsMatch / norMatch).toFixed(1);
+  const avgFirstNine =
+    norFirstNine === 0 ? 0 : (tsFirstNine / norFirstNine).toFixed(1);
+  const avgScoring = norScoring === 0 ? 0 : (tsScoring / norScoring).toFixed(1);
 
   const isLegOver = newScore === 0;
 
@@ -77,7 +62,7 @@ const submitUpdateScore = (
     }
   };
 
-  dartsUsedInLeg = !isLegOver ? numOfRoundsInLeg * 3 : dartsUsedInLeg;
+  dartsUsedInLeg = !isLegOver ? norLeg * 3 : dartsUsedInLeg;
   numOfCoDarts = !isLegOver ? numOfCoDarts + missedDoubles() : numOfCoDarts;
 
   const lastScore = (type) => {
@@ -93,27 +78,30 @@ const submitUpdateScore = (
     }
   };
 
+  //TS = total score
+  // NOR = num of rounds
+
   return {
     ...state,
     [playerKey]: {
       ...playerData,
-      lastScore: lastScore(type),
+      tsLeg,
+      tsMatch,
+      tsFirstNine,
+      tsScoring,
+      norLeg,
+      norMatch,
+      norFirstNine,
+      norScoring,
+      avgLeg,
+      avgMatch,
+      avgFirstNine,
+      avgScoring,
+      dartsUsedInLeg,
+      onCheckout,
+      numOfCoDarts,
       score: newScore,
-      legTotalScore: legTotalScore,
-      matchTotalScore: matchTotalScore,
-      firstNineDartTotalScore: firstNineDartTotalScore,
-      scoringDartsTotalScore: scoringDartsTotalScore,
-      numOfRoundsInLeg: numOfRoundsInLeg,
-      numOfRoundsInMatch: numOfRoundsInMatch,
-      numOfRoundsFirstNineDart: numOfRoundsFirstNineDart,
-      numOfRoundsScoringDarts: numOfRoundsScoringDarts,
-      legAverage: legAverage.toFixed(1),
-      matchAverage: matchAverage.toFixed(1),
-      firstNineDartAverage: firstNineDartAverage.toFixed(1),
-      scoringDartsAverage: scoringDartsAverage.toFixed(1),
-      onCheckout: isOnCheckout,
-      dartsUsedInLeg: dartsUsedInLeg,
-      numOfCoDarts: numOfCoDarts,
+      lastScore: lastScore(type),
       canGoBack: type !== "BACK",
       60:
         scoreToSubmit >= 60 && scoreToSubmit < 80
@@ -133,14 +121,14 @@ const submitUpdateScore = (
           : playerData["140"],
       180: scoreToSubmit === 180 ? playerData["180"] + num : playerData["180"],
     },
-    isInputManual: false,
+    isInputByDart: false,
     inputIndex: 0,
     scoreToSubmit: 0,
     activePlayer: state.inactivePlayer,
     inactivePlayer: state.activePlayer,
     scoreInputArray: {
-      defaultInput: ["", "", ""],
-      manualInput: ["", "", "", "", "", ""],
+      inputByRound: ["", "", ""],
+      inputByDart: ["", "", "", "", "", ""],
     },
     isLegOver: isLegOver,
   };

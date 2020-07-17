@@ -1,38 +1,32 @@
-import typeInputMethodManual from "./TypeInputMethodManual";
-import typeInputMethodDefault from "./TypeInputMethodDefault";
+import typeByDart from "./TypeInputMethodManual";
+import typeByRound from "./TypeInputMethodDefault";
 
 const type = (state, val) => {
   const {
     activePlayer,
     inputIndex,
-    isInputManual,
-    scoreInputArray: { manualInput },
+    isInputByDart,
+    scoreInputArray: { inputByDart, inputByDartArray, whichDart },
   } = state;
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
-  const inputMethodType =
-    isInputManual && manualInput.length !== 1
-      ? inputIndex < 6
-        ? "MANUAL"
-        : "NO_ACTION"
-      : "DEFAULT";
 
-  switch (inputMethodType) {
-    case "MANUAL":
-      return typeInputMethodManual(
+  switch (isInputByDart) {
+    case true:
+      return typeByDart(
         state,
         val,
         apKey,
         apData,
         inputIndex,
-        manualInput,
+        inputByDart,
+        inputByDartArray,
+        whichDart,
       );
-    case "DEFAULT":
-      return typeInputMethodDefault(state, val, apKey, apData, inputIndex);
-    case "NO_ACTION":
-      return state;
+    case false:
+      return typeByRound(state, val, apKey, apData, inputIndex);
     default:
-      return null;
+      return state;
   }
 };
 

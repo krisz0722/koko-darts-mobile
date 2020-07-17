@@ -5,24 +5,24 @@ const DEFAULT_PLAYER_DATA = {
   setsWon: 0,
 
   // TOTAL AGGREGATED SCORES
-  legTotalScore: 0,
-  matchTotalScore: 0,
-  firstNineDartTotalScore: 0,
-  scoringDartsTotalScore: 0,
+  tsLeg: 0,
+  tsMatch: 0,
+  tsFirstNine: 0,
+  tsScoring: 0,
 
   // NUMBER OF ROUNDS AND DARTS USED
-  numOfRoundsInLeg: 0,
-  numOfRoundsInMatch: 0,
+  norLeg: 0,
+  norMatch: 0,
   dartsUsedInLeg: 0,
   dartsUsedInMatch: 0,
-  numOfRoundsFirstNineDart: 0,
-  numOfRoundsScoringDarts: 0,
+  norFirstNine: 0,
+  norScoring: 0,
 
   // AVERAGES
-  legAverage: 0,
-  matchAverage: 0,
-  firstNineDartAverage: 0,
-  scoringDartsAverage: 0,
+  avgLeg: 0,
+  avgMatch: 0,
+  avgFirstNine: 0,
+  avgScoring: 0,
 
   // CHECKOUT DATA
   missedDoubles: 0,
@@ -30,7 +30,7 @@ const DEFAULT_PLAYER_DATA = {
 
   //  NOTABLE STATS
   highestCheckout: 0,
-  bestLegAverage: 0,
+  bestavgLeg: 0,
   bestLegByDartsUsed: 0,
   doublePercentage: 0,
 
@@ -59,12 +59,18 @@ export const GAME_DEFAULT_STATE = {
   activePlayer: "p1",
   inactivePlayer: "p2",
   scoreInputArray: {
-    defaultInput: ["", "", ""],
-    manualInput: ["", "", "", "", "", ""],
+    inputByRound: ["", "", ""],
+    inputByDartArray: ["", "", "", "", "", ""],
+    inputByDart: {
+      "1": [],
+      "2": [],
+      "3": [],
+    },
+    whichDart: 1,
   },
   inputIndex: 0,
   scoreToSubmit: [],
-  isInputManual: false,
+  isInputByDart: false,
   showStats: false,
   isLegOver: false,
   isMatchOver: false,

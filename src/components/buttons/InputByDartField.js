@@ -4,9 +4,14 @@ import { Animated, Text, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
-import { useRoute } from "@react-navigation/native";
-import PLAYER_INPUT_INFO from "./PlayerInputInfo";
+import {
+  BasicTextBold,
+  FlexRow,
+  FlexCol,
+  FlexRowAround,
+} from "../../styles/css_mixins";
+import IconDart from "../../../assets/iconDart";
+import IconThreeDart from "../../../assets/iconThreeDart";
 
 export const Button_Function_Classic = styled(TouchableHighlight)`
   ${FlexRowAround}
@@ -17,38 +22,28 @@ export const Button_Function_Classic = styled(TouchableHighlight)`
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
   border-width: ${({ theme }) => theme.borderWidth};
 `;
+export const View_Function = styled(Button_Function_Classic)`
+  ${FlexRowAround};
+`;
+
 export const Text_Function = styled(Text)`
   ${BasicTextBold};
-  height: ${({ icon }) => (icon ? "100%" : "50%")};
-  width: ${({ icon }) => (icon ? "75%" : "100%")};
   font-size: ${({ theme }) => theme.game.buttonFontSize.function};
   color: ${({ theme }) => theme.text};
 `;
 
-const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
+const INPUT_BY_DART_FIELD = () => {
   const {
     settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
   const {
-    dispatchGameData,
-    gameData: { activePlayer },
+    gameData: {
+      activePlayer,
+      scoreInputArray: { inputByDart },
+    },
   } = useContext(GameContext);
-
-  const route = useRoute().name;
-
-  const handleOnPress = (value, action) => {
-    if (route === "game") {
-      if (action) {
-        dispatchGameData({ type: action, value });
-      } else {
-        dispatchGameData({ type: "SUBMIT", value });
-      }
-    } else {
-      return null;
-    }
-  };
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -61,9 +56,7 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
     }).start();
   }, [animationValue, activePlayer]);
 
-  const AnimatedButton = Animated.createAnimatedComponent(
-    Button_Function_Classic,
-  );
+  const AnimatedView = Animated.createAnimatedComponent(View_Function);
   const AnimatedText = Animated.createAnimatedComponent(Text_Function);
 
   const borderColor = animation
@@ -73,41 +66,43 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
       })
     : theme.game[activePlayer + "Border"];
 
+  console.log("inputByDart", inputByDart);
+  console.log("first", inputByDart["1"]);
+
+  const DATA = [
+    {
+      key: 1,
+      showIcon: inputByDart["1"].length === 0,
+      value: inputByDart["1"],
+    },
+    {
+      key: 2,
+      showIcon: inputByDart["2"].length === 0,
+      value: inputByDart["2"],
+    },
+    {
+      key: 3,
+      showIcon: inputByDart["3"].length === 0,
+      value: inputByDart["3"],
+    },
+  ];
+
   return (
-    <>
-      {name === "p2" || name === "p1" ? (
-        <PLAYER_INPUT_INFO
-          value={value}
-          name={name}
-          action={action}
-          icon={icon}
-        />
-      ) : (
-        <AnimatedButton
-          ap={activePlayer}
-          style={{ borderColor }}
-          onPress={() => handleOnPress(value, action)}
-          disabled={route !== "game"}
-          name={name}
-          icon={icon}
-        >
+    <AnimatedView ap={activePlayer} style={{ borderColor }}>
+      <>
+        {DATA.map((item) => (
           <>
-            {icon ? (
-              <Icon
-                style={{ marginHorizontal: "2%" }}
-                name={icon}
-                size={25}
-                color={theme.text}
-              />
-            ) : null}
-            <AnimatedText theme={selectedTheme} icon={icon}>
-              {value}
-            </AnimatedText>
+            {item.showIcon ? (
+              <IconDart fill={selectedTheme.text} size={15} />
+            ) : (
+              <Text_Function icon={true}>{item.value}</Text_Function>
+            )}
+            {item.key < 3 ? <Text_Function icon={true}>+</Text_Function> : null}
           </>
-        </AnimatedButton>
-      )}
-    </>
+        ))}
+      </>
+    </AnimatedView>
   );
 };
 
-export default CLASSIC_FUNCTION;
+export default INPUT_BY_DART_FIELD;

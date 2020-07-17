@@ -10,8 +10,8 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
     setsWon,
     dartsUsedInLeg,
     bestLegByDartsUsed,
-    legAverage,
-    bestLegAverage,
+    avgLeg,
+    bestavgLeg,
     numOfCoDarts,
     lastScore,
     highestCheckout,
@@ -25,10 +25,7 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
     dartsUsedInLeg < bestLegByDartsUsed || bestLegByDartsUsed === 0
       ? dartsUsedInLeg
       : bestLegByDartsUsed;
-  bestLegAverage =
-    legAverage < bestLegAverage || bestLegAverage === 0
-      ? legAverage
-      : bestLegAverage;
+  bestavgLeg = avgLeg < bestavgLeg || bestavgLeg === 0 ? avgLeg : bestavgLeg;
   highestCheckout = lastScore > highestCheckout ? lastScore : highestCheckout;
 
   const doublePercentage = `${((legsWon / numOfCoDarts) * 100).toFixed(1)}%`;
@@ -51,25 +48,25 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
       legsWon: legsWon,
       setsWon: setsWon,
       score: state.startingScore,
-      legTotalScore: 0,
-      numOfRoundsInLeg: 0,
-      legAverage: 0,
+      tsLeg: 0,
+      norLeg: 0,
+      avgLeg: 0,
       dartsUsedInLeg: 0,
       onCheckout: false,
       numOfCoDarts: numOfCoDarts,
       doublePercentage: doublePercentage,
       bestLegByDartsUsed: bestLegByDartsUsed,
-      bestLegAverage: bestLegAverage,
+      bestavgLeg: bestavgLeg,
       highestCheckout: highestCheckout,
       canGoBack: false,
     },
     [apKey]: {
       ...apData,
       score: state.startingScore,
-      legTotalScore: 0,
-      numOfRoundsInLeg: 0,
+      tsLeg: 0,
+      norLeg: 0,
       dartsUsedInLeg: 0,
-      legAverage: 0,
+      avgLeg: 0,
       onCheckout: false,
       canGoBack: false,
     },

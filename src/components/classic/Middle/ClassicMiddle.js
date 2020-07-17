@@ -15,7 +15,10 @@ export const ClassicMiddle = styled(View)`
 `;
 
 const CLASSIC_MIDDLE = () => {
-  const { gameData } = useContext(GameContext);
+  const {
+    gameData,
+    gameData: { activePlayer, isInputByDart },
+  } = useContext(GameContext);
 
   const MIDDLE = [
     {
@@ -43,8 +46,8 @@ const CLASSIC_MIDDLE = () => {
     },
     {
       name: "changeInput",
-      value: "input by dart",
-      icon: "visibility",
+      value: isInputByDart ? "input by round" : "input by dart",
+      icon: isInputByDart ? "visibility" : "clear",
       action: "CHANGE_INPUT",
     },
     {

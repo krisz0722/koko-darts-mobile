@@ -10,7 +10,7 @@ import changeStartingScore from "./actions/ChangeStartingScore";
 export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
-  const gameReducer = (state, action) => {
+  const gameReducer = (state, action = null) => {
     switch (action.type) {
       case "CHANGE_AP":
         return { ...state, activePlayer: action.value };
@@ -32,6 +32,14 @@ export const GameContextProvider = (props) => {
         return changeStartingScore(state, action.value);
       case "CHANGE_INPUT":
         return changeInput(state);
+      case "NEXT_DART":
+        return {
+          ...state,
+          scoreInputArray: {
+            ...state.scoreInputArray,
+            whichDart: action.value,
+          },
+        };
       case "TYPE":
         return type(state, action.value);
       case "SUBMIT":
@@ -69,10 +77,6 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
-
-  console.log(gameData.p1_DATA.score);
-  console.log(gameData.p2_DATA.score);
-  console.log(gameData.p2_DATA.score);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

@@ -1,21 +1,26 @@
-const typeInputMethodDefault = (state, val, apKey, apData, inputIndex) => {
+const typeByRound = (state, val, apKey, apData, inputIndex) => {
   const {
-    scoreInputArray: { defaultInput },
+    scoreInputArray: { inputByRound },
   } = state;
 
   if (inputIndex < 3) {
-    defaultInput[inputIndex] = val;
+    inputByRound[inputIndex] = val;
   }
 
-  const typedScore = parseInt(defaultInput.join(""));
+  const typedScore = parseInt(inputByRound.join(""));
 
+  // alert("default");
   return {
     ...state,
-    isInputManual: false,
+    isInputByDart: false,
     inputIndex: inputIndex + 1,
     scoreInputArray: {
-      defaultInput: defaultInput,
-      manualInput: ["", "", "", "", "", ""],
+      inputByRound,
+      inputByDart: {
+        "1": ["", ""],
+        "2": ["", ""],
+        "3": ["", ""],
+      },
     },
     [apKey]: {
       ...apData,
@@ -25,4 +30,4 @@ const typeInputMethodDefault = (state, val, apKey, apData, inputIndex) => {
   };
 };
 
-export default typeInputMethodDefault;
+export default typeByRound;

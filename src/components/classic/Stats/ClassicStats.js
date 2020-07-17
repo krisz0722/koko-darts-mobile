@@ -117,19 +117,19 @@ const CLASSIC_STATS = () => {
   const AVERAGES = [
     {
       name: "leg",
-      value: "legAverage",
+      value: "avgLeg",
     },
     {
       name: "match",
-      value: "matchAverage",
+      value: "avgMatch",
     },
     {
       name: "first 9",
-      value: "firstNineDartAverage",
+      value: "avgFirstNine",
     },
     {
       name: "scoring",
-      value: "scoringDartsAverage",
+      value: "avgScoring",
     },
   ];
   const TOTALS = [

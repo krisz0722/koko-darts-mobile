@@ -4,9 +4,8 @@ import { Animated, Text, TouchableHighlight } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
-import { useRoute } from "@react-navigation/native";
-import PLAYER_INPUT_INFO from "./PlayerInputInfo";
+import { BasicTextBold, FlexCol, FlexRowAround } from "../../styles/css_mixins";
+import INPUT_BY_DART_FIELD from "./InputByDartField";
 
 export const Button_Function_Classic = styled(TouchableHighlight)`
   ${FlexRowAround}
@@ -17,6 +16,10 @@ export const Button_Function_Classic = styled(TouchableHighlight)`
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
   border-width: ${({ theme }) => theme.borderWidth};
 `;
+export const View_Function = styled(Button_Function_Classic)`
+  ${FlexCol};
+`;
+
 export const Text_Function = styled(Text)`
   ${BasicTextBold};
   height: ${({ icon }) => (icon ? "100%" : "50%")};
@@ -25,30 +28,21 @@ export const Text_Function = styled(Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
+const PLAYER_INPUT_INFO = ({ disabled, value, name, action = null, icon }) => {
   const {
     settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
   const {
-    dispatchGameData,
-    gameData: { activePlayer },
+    gameData,
+    gameData: {
+      activePlayer,
+      inactivePlayer,
+      isInputByDart,
+      scoreInputArray: { inputByRound },
+    },
   } = useContext(GameContext);
-
-  const route = useRoute().name;
-
-  const handleOnPress = (value, action) => {
-    if (route === "game") {
-      if (action) {
-        dispatchGameData({ type: action, value });
-      } else {
-        dispatchGameData({ type: "SUBMIT", value });
-      }
-    } else {
-      return null;
-    }
-  };
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -61,9 +55,7 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
     }).start();
   }, [animationValue, activePlayer]);
 
-  const AnimatedButton = Animated.createAnimatedComponent(
-    Button_Function_Classic,
-  );
+  const AnimatedView = Animated.createAnimatedComponent(View_Function);
   const AnimatedText = Animated.createAnimatedComponent(Text_Function);
 
   const borderColor = animation
@@ -73,41 +65,39 @@ const CLASSIC_FUNCTION = ({ disabled, value, name, action = null, icon }) => {
       })
     : theme.game[activePlayer + "Border"];
 
+  const scoreDisplayText =
+    name === activePlayer
+      ? "current:" + inputByRound.join("")
+      : "last:" + gameData[inactivePlayer + "_DATA"].lastScore;
+
+  console.log("isinputbydart", isInputByDart);
+  console.log("activeplayewr", activePlayer);
+  console.log("name", name);
+  console.log("inputbyround", inputByRound);
+
   return (
     <>
-      {name === "p2" || name === "p1" ? (
-        <PLAYER_INPUT_INFO
-          value={value}
-          name={name}
-          action={action}
-          icon={icon}
-        />
+      {isInputByDart && activePlayer === name ? (
+        <INPUT_BY_DART_FIELD />
       ) : (
-        <AnimatedButton
+        <AnimatedView
           ap={activePlayer}
           style={{ borderColor }}
-          onPress={() => handleOnPress(value, action)}
-          disabled={route !== "game"}
+          disabled={disabled}
           name={name}
-          icon={icon}
         >
           <>
-            {icon ? (
-              <Icon
-                style={{ marginHorizontal: "2%" }}
-                name={icon}
-                size={25}
-                color={theme.text}
-              />
-            ) : null}
             <AnimatedText theme={selectedTheme} icon={icon}>
               {value}
             </AnimatedText>
+            <AnimatedText theme={selectedTheme} icon={icon}>
+              {scoreDisplayText}
+            </AnimatedText>
           </>
-        </AnimatedButton>
+        </AnimatedView>
       )}
     </>
   );
 };
 
-export default CLASSIC_FUNCTION;
+export default PLAYER_INPUT_INFO;

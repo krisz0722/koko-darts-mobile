@@ -83,7 +83,7 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
-  console.log(gameData.scoreToSubmit);
+
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>
       {props.children}

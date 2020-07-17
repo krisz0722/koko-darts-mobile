@@ -24,6 +24,8 @@ const submitUpdateScore = (
     numOfCoDarts,
   } = playerData;
 
+  alert("UPDATE", scoreToSubmit);
+
   const prevScore = score;
   const wasOnCheckout = CHECKOUTS.some((co) => co.value === prevScore);
   const prevScoreNumOfDarts = wasOnCheckout
@@ -37,8 +39,6 @@ const submitUpdateScore = (
   norLeg += num;
   norMatch += num;
 
-  alert(state.inactivePlayer);
-
   tsFirstNine = norLeg <= 3 ? tsFirstNine + scoreToSubmit * num : tsFirstNine;
   tsScoring = !wasOnCheckout ? tsScoring + scoreToSubmit * num : tsScoring;
   norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
@@ -51,7 +51,7 @@ const submitUpdateScore = (
   const avgScoring = norScoring === 0 ? 0 : (tsScoring / norScoring).toFixed(1);
 
   const isLegOver = newScore === 0;
-  alert(score);
+
   const missedDoubles = () => {
     switch (prevScoreNumOfDarts) {
       case 3:
@@ -69,6 +69,7 @@ const submitUpdateScore = (
   numOfCoDarts = !isLegOver ? numOfCoDarts + missedDoubles() : numOfCoDarts;
 
   const lastScore = (type) => {
+    alert("LASTSCORE:" + scoreToSubmit);
     switch (type) {
       case "BUST":
         return "BUST";

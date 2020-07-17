@@ -1,5 +1,4 @@
 import { SCORINGDARTS } from "calc/const";
-import submitUpdateScore from "./SubmitUpdateScore";
 const typeNextDart = (state) => {
   let { activePlayer, inputByDart, whichDart } = state;
 
@@ -79,6 +78,7 @@ const typeNextDart = (state) => {
       ...state,
       inputByDart,
       whichDart: whichDart + 1,
+      inputIndex: whichDart + 1 === 2 ? 2 : 4,
       [apKey]: {
         ...apData,
         score: updateRemainder(),

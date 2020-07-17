@@ -2,15 +2,36 @@ import { VALIDSCORES } from "calc/scores";
 import submitUpdateScore from "./SubmitUpdateScore";
 
 const submitValidation = (state) => {
-  const { activePlayer, scoreToSubmit, inputByRound } = state;
+  const { activePlayer, inputByRound, isInputByDart, inputByDart } = state;
+
+  let { scoreToSubmit } = state;
 
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
-  console.log("SCORETOSUMIT", scoreToSubmit);
-  const newScore = apData.score - scoreToSubmit;
-  const isEmpty = inputByRound[0] === "";
+
+  const newScore = () => {
+    const score = apData.score;
+    if (isInputByDart) {
+      const third = parseInt(inputByDart.third.join(""));
+      if (third) {
+        scoreToSubmit = scoreToSubmit + third;
+        console.log(scoreToSubmit);
+        return score - third;
+      } else {
+        return score;
+      }
+    } else {
+      return score - scoreToSubmit;
+    }
+  };
+
+  const score = newScore();
+
+  alert(scoreToSubmit);
+
+  const isEmpty = !isInputByDart ? inputByRound[0] === "" : false;
   const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;
-  const isNewScoreValid = newScore !== 1 && newScore >= 0;
+  const isNewScoreValid = score !== 1 && score >= 0;
 
   const proceed = !isEmpty && isValid && isNewScoreValid;
 
@@ -28,7 +49,7 @@ const submitValidation = (state) => {
         apKey,
         apData,
         scoreToSubmit,
-        newScore,
+        newScore(),
         "OK",
         1,
       );

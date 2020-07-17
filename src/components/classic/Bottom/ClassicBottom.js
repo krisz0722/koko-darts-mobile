@@ -17,23 +17,115 @@ export const ClassicBottom = styled(Animated.View)`
 
 const CLASSIC_BOTTOM = React.memo(() => {
   const {
+    gameData,
     gameData: {
+      inactivePlayer,
       isInputByDart,
-      scoreInputArray: { inputByDart, inputByRound, inputByDartArray },
+      inputByDart,
+      inputByRound,
+      inputByDartArray,
+      whichDart,
     },
   } = useContext(GameContext);
 
+  const canGoBack = gameData[inactivePlayer + "_DATA"].canGoBack;
+
   const backOrClear =
-    inputByRound[0] === "" && inputByDart[0] === "" ? "BACK" : "CLEAR";
+    inputByRound[0] === "" && inputByDart.first.length === 0 && canGoBack
+      ? "BACK"
+      : "CLEAR";
 
-  const okOrNext = isInputByDart && inputByDartArray[0] !== "" ? "NEXT" : "OK";
+  const okOrNext =
+    isInputByDart && inputByDartArray[0] !== "" && whichDart !== 3
+      ? "NEXT"
+      : "OK";
 
-  const DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, backOrClear, 0, okOrNext];
+  const DATA = [
+    {
+      type: "num",
+      value: 1,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 2,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 3,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 4,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 5,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 6,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 7,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 8,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "num",
+      value: 9,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "function",
+      value: backOrClear,
+      action: backOrClear,
+      icon: backOrClear === "CLEAR" ? "clear" : "show-chart",
+    },
+    {
+      type: "num",
+      value: 0,
+      action: "type",
+      icon: null,
+    },
+    {
+      type: "function",
+      value: okOrNext,
+      action: okOrNext,
+      icon: okOrNext === "OK" ? "check" : "dart",
+    },
+  ];
 
   return (
     <ClassicBottom>
       {DATA.map((item) => {
-        return <NUM_BUTTON item={item} />;
+        return (
+          <NUM_BUTTON
+            type={item.type}
+            value={item.value}
+            action={item.action}
+            icon={item.icon}
+          />
+        );
       })}
     </ClassicBottom>
   );

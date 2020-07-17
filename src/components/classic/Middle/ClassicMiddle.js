@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import CLASSIC_FUNCTION from "../../buttons/FunctionButton";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { View } from "react-native";
 import { FlexRow } from "../../../styles/css_mixins";
 import { GameContext } from "../../../contexts/GameContext";
+import NUM_BUTTON from "../../buttons/NumButton";
+import PLAYER_INPUT_INFO from "../../buttons/PlayerInputInfo";
 
 export const ClassicMiddle = styled(View)`
   ${FlexRow};
@@ -16,61 +17,64 @@ export const ClassicMiddle = styled(View)`
 
 const CLASSIC_MIDDLE = () => {
   const {
-    gameData,
-    gameData: { activePlayer, isInputByDart },
+    gameData: { isInputByDart },
   } = useContext(GameContext);
 
   const MIDDLE = [
     {
-      name: "menu",
-      value: "menu",
+      type: "function",
+      value: "MENU",
+      action: "TOGGLE_DRAWER",
       icon: "menu",
-      action: () => null,
     },
     {
-      name: "showStats",
-      value: "show stats",
-      icon: "show-chart",
+      type: "function",
+      value: "SHOW STATS",
       action: "SHOW_STATS",
+      icon: "show-chart",
     },
     {
-      name: "bust",
-      value: "bust",
+      type: "function",
+      value: "BUST",
+      action: "BUST",
       icon: "not-interested",
     },
     {
-      name: "p1",
-      value: `${gameData.p1}`,
-      icon: null,
+      type: "info",
+      value: "p1",
       action: null,
+      icon: null,
     },
     {
-      name: "changeInput",
-      value: isInputByDart ? "input by round" : "input by dart",
-      icon: isInputByDart ? "visibility" : "clear",
+      type: "function",
+      value: isInputByDart ? "INPUT BY ROUND" : "INPUT BY DART",
       action: "CHANGE_INPUT",
+      icon: isInputByDart ? "donut-large" : "dart",
     },
     {
-      name: "p2",
-      value: `${gameData.p2}`,
-      icon: null,
+      type: "info",
+      value: "p2",
       action: null,
+      icon: null,
     },
   ];
 
   return (
     <ClassicMiddle>
       {MIDDLE.map((item) => (
-        <CLASSIC_FUNCTION
-          key={item.name}
-          name={item.name}
-          value={item.value}
-          middle={true}
-          icon={item.icon}
-          action={item.action}
-        >
-          {item.name}
-        </CLASSIC_FUNCTION>
+        <>
+          {item.value === "p2" || item.value === "p1" ? (
+            <PLAYER_INPUT_INFO value={item.value} name={item.value} />
+          ) : (
+            <NUM_BUTTON
+              middle={true}
+              type={item.type}
+              value={item.value}
+              action={item.action}
+              icon={item.icon}
+            />
+          )}
+        </>
       ))}
     </ClassicMiddle>
   );

@@ -2,10 +2,14 @@ import React, { useReducer, createContext } from "react";
 import GAME_DEFAULT_STATE from "./GameDefaultState";
 import { changeInput } from "./actions/ChangeInputMethod";
 import type from "./actions/Type";
-import submit from "./actions/Submit";
 import finishLeg from "./actions/FinishLeg";
 import rematch from "./actions/Rematch";
 import changeStartingScore from "./actions/ChangeStartingScore";
+import submitValidation from "./actions/SubmitValidation";
+import back from "./actions/Back";
+import clear from "./actions/Clear";
+import bust from "./actions/Bust";
+import typeNextDart from "./actions/TypeNextDart";
 
 export const GameContext = createContext({});
 
@@ -20,8 +24,6 @@ export const GameContextProvider = (props) => {
         return { ...state, p2: action.value };
       case "SWAP_PLAYERS":
         return { ...state, p1: action.p1, p2: action.p2 };
-      case "SHOW_STATS":
-        return { ...state, showStats: !state.showStats };
       case "CHANGE_LEGORSET":
         return { ...state, legOrSet: action.value };
       case "CHANGE_TOWIN":
@@ -30,20 +32,28 @@ export const GameContextProvider = (props) => {
         return { ...state, legsPerSet: parseInt(action.value) };
       case "CHANGE_STARTINGSCORE":
         return changeStartingScore(state, action.value);
+      case "RESET":
+        return GAME_DEFAULT_STATE;
+
+      //in-game actions
+
+      case "SHOW_STATS":
+        return { ...state, showStats: !state.showStats };
       case "CHANGE_INPUT":
         return changeInput(state);
-      case "NEXT_DART":
-        return {
-          ...state,
-          scoreInputArray: {
-            ...state.scoreInputArray,
-            whichDart: action.value,
-          },
-        };
       case "TYPE":
         return type(state, action.value);
-      case "SUBMIT":
-        return submit(state, action.value);
+      case "OK":
+        return submitValidation(state);
+      case "NEXT":
+        return typeNextDart(state);
+      case "BACK":
+        return back(state);
+      case "CLEAR":
+        return clear(state);
+      case "BUST":
+        return bust(state);
+
       case "FINISH_LEG":
         return finishLeg(
           state,
@@ -62,10 +72,6 @@ export const GameContextProvider = (props) => {
           p1: action.value,
           userName: action.value,
         };
-      case "LAST_MATCH":
-        return action.value;
-      case "RESET":
-        return GAME_DEFAULT_STATE;
       default:
         return state;
     }
@@ -77,7 +83,7 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
-
+  console.log(gameData.scoreToSubmit);
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>
       {props.children}

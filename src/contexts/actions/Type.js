@@ -1,30 +1,16 @@
-import typeByDart from "./TypeInputMethodManual";
-import typeByRound from "./TypeInputMethodDefault";
+import typeByDart from "./TypeByDart";
+import typeByRound from "./TypeByRound";
 
 const type = (state, val) => {
-  const {
-    activePlayer,
-    inputIndex,
-    isInputByDart,
-    scoreInputArray: { inputByDart, inputByDartArray, whichDart },
-  } = state;
-  const apKey = `${activePlayer}_DATA`;
-  const apData = state[apKey];
+  const { isInputByDart, inputByRound, inputByDart } = state;
+
+  console.log(inputByRound);
 
   switch (isInputByDart) {
     case true:
-      return typeByDart(
-        state,
-        val,
-        apKey,
-        apData,
-        inputIndex,
-        inputByDart,
-        inputByDartArray,
-        whichDart,
-      );
+      return typeByDart(state, val);
     case false:
-      return typeByRound(state, val, apKey, apData, inputIndex);
+      return typeByRound(state, val);
     default:
       return state;
   }

@@ -8,6 +8,7 @@ const submitUpdateScore = (
   newScore,
   type,
   num,
+  whichDart = 3,
 ) => {
   let {
     score,
@@ -36,6 +37,8 @@ const submitUpdateScore = (
   norLeg += num;
   norMatch += num;
 
+  alert(state.inactivePlayer);
+
   tsFirstNine = norLeg <= 3 ? tsFirstNine + scoreToSubmit * num : tsFirstNine;
   tsScoring = !wasOnCheckout ? tsScoring + scoreToSubmit * num : tsScoring;
   norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
@@ -48,7 +51,7 @@ const submitUpdateScore = (
   const avgScoring = norScoring === 0 ? 0 : (tsScoring / norScoring).toFixed(1);
 
   const isLegOver = newScore === 0;
-
+  alert(score);
   const missedDoubles = () => {
     switch (prevScoreNumOfDarts) {
       case 3:
@@ -122,14 +125,19 @@ const submitUpdateScore = (
       180: scoreToSubmit === 180 ? playerData["180"] + num : playerData["180"],
     },
     isInputByDart: false,
-    inputIndex: 0,
+
     scoreToSubmit: 0,
     activePlayer: state.inactivePlayer,
     inactivePlayer: state.activePlayer,
-    scoreInputArray: {
-      inputByRound: ["", "", ""],
-      inputByDart: ["", "", "", "", "", ""],
+    inputByRound: ["", "", ""],
+    inputByDartArray: ["", "", "", "", "", ""],
+    inputByDart: {
+      first: [],
+      second: [],
+      third: [],
     },
+    whichDart: 1,
+    inputIndex: 0,
     isLegOver: isLegOver,
   };
 };

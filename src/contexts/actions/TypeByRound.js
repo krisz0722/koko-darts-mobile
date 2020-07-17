@@ -1,7 +1,10 @@
-const typeByRound = (state, val, apKey, apData, inputIndex) => {
-  const {
-    scoreInputArray: { inputByRound },
-  } = state;
+const typeByRound = (state, val) => {
+  const { inputIndex, inputByRound, activePlayer } = state;
+
+  const apKey = activePlayer["+DATA"];
+  const apData = state[apKey];
+
+  console.log(inputIndex);
 
   if (inputIndex < 3) {
     inputByRound[inputIndex] = val;
@@ -9,18 +12,15 @@ const typeByRound = (state, val, apKey, apData, inputIndex) => {
 
   const typedScore = parseInt(inputByRound.join(""));
 
-  // alert("default");
   return {
     ...state,
     isInputByDart: false,
     inputIndex: inputIndex + 1,
-    scoreInputArray: {
-      inputByRound,
-      inputByDart: {
-        "1": ["", ""],
-        "2": ["", ""],
-        "3": ["", ""],
-      },
+    inputByRound,
+    inputByDart: {
+      first: [],
+      second: [],
+      third: [],
     },
     [apKey]: {
       ...apData,

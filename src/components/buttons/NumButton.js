@@ -2,128 +2,142 @@ import React, { useContext, useEffect, useRef } from "react";
 import { Animated, TouchableHighlight } from "react-native";
 import { GameContext } from "../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { AlignText, FlexRowAround } from "../../styles/css_mixins";
+import {
+  AlignText,
+  BasicTextBold,
+  FlexRowAround,
+} from "../../styles/css_mixins";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { useRoute } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import IconDart from "../../../assets/iconDart";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
-  text-decoration: none;
   width: ${() => 100 / 3 + "%"};
-  height: 25%;
+  height: ${({ middle }) => (middle ? "50%" : "25%")};
   ${FlexRowAround};
+  border-width: ${({ theme }) => theme.borderWidth};
+  padding: 0 3%;
 `;
 
 export const Text_Number = styled(Animated.Text)`
-  ${AlignText};
+  ${BasicTextBold};
   height: 100%;
-  width: 100%;
-  font-family: ${({ disabled, theme }) =>
-    !disabled ? theme.fontFamilyBold : theme.fontFamily};
+  width: ${({ icon }) => (icon ? "70%" : "100%")}
   font-size: ${({ type, theme }) =>
-    type === "number"
+    type === "num"
       ? theme.game.buttonFontSize.num
       : theme.game.buttonFontSize.function};
-  background-color: ${({ theme }) => theme.game.middle.bgMid};
-  color: ${({ theme }) => theme.text};
-  border-width: ${({ theme }) => theme.borderWidth};
 `;
 
-const NUM_BUTTON = React.memo(({ item }) => {
-  const {
-    dispatchGameData,
-    gameData: {
-      activePlayer,
-      scoreInputArray: { whichDart },
-    },
-  } = useContext(GameContext);
+const NUM_BUTTON = React.memo(
+  ({ type, value, action, icon, middle = false }) => {
+    const {
+      dispatchGameData,
+      gameData: { activePlayer },
+    } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+    const {
+      settings: { selectedTheme, animation },
+    } = useContext(SettingsContext);
 
-  const theme = selectedTheme;
+    const theme = selectedTheme;
 
-  const animationValue = useRef(
-    new Animated.Value(activePlayer === "p1" ? 1 : 0),
-  ).current;
+    const animationValue = useRef(
+      new Animated.Value(activePlayer === "p1" ? 1 : 0),
+    ).current;
 
-  const route = useRoute().name;
+    const route = useRoute().name;
 
-  const typeOfHandler = (item) => {
-    switch (item) {
-      case "OK":
-        dispatchGameData({ type: "SUBMIT", value: "OK" });
-        break;
-      case "NEXT":
-        dispatchGameData({ type: "NEXT_DART", value: whichDart + 1 });
-        dispatchGameData({ type: "SUBMIT", value: "OK" });
-        break;
-      case "CLEAR":
-        dispatchGameData({ type: "SUBMIT", value: "CLEAR" });
-        break;
-      case "BACK":
-        dispatchGameData({ type: "SUBMIT", value: "BACK" });
-        break;
-      case "BUST":
-        dispatchGameData({ type: "SUBMIT", value: "BUST" });
-        break;
-      default: {
-        dispatchGameData({ type: "TYPE", value: item });
+    const typeOfHandler = (type, action, value) => {
+      switch (type) {
+        case "num":
+          dispatchGameData({ type: "TYPE", value });
+          break;
+        case "function":
+          dispatchGameData({ type: action, value });
+          break;
+        case "info":
+          return null;
       }
-    }
-  };
+    };
 
-  useEffect(() => {
-    Animated.timing(animationValue, {
-      toValue: activePlayer === "p1" ? 1 : 0,
-      duration: 300,
-    }).start();
-  }, [animationValue, activePlayer]);
+    useEffect(() => {
+      Animated.timing(animationValue, {
+        toValue: activePlayer === "p1" ? 1 : 0,
+        duration: 300,
+      }).start();
+    }, [animationValue, activePlayer]);
 
-  const borderColor = animation
-    ? animationValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [theme.game.p2Border, theme.game.p1Border],
-      })
-    : theme.game[activePlayer + "Border"];
+    const borderColor = animation
+      ? animationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: [theme.game.p2Border, theme.game.p1Border],
+        })
+      : theme.game[activePlayer + "Border"];
 
-  const backgroundColor = animation
-    ? animationValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [theme.game.p2Bg, theme.game.p1Bg],
-      })
-    : theme.game[activePlayer + "Bg"];
+    const animatedBg = animation
+      ? animationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: [theme.game.p2Bg, theme.game.p1Bg],
+        })
+      : theme.game[activePlayer + "Bg"];
 
-  const color = animation
-    ? animationValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [theme.game.p2Text, theme.game.p1Text],
-      })
-    : theme.game[activePlayer + "Text"];
+    const animatedColor = animation
+      ? animationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: [theme.game.p2Text, theme.game.p1Text],
+        })
+      : theme.game[activePlayer + "Text"];
 
-  return (
-    <Button_Num_Classic
-      icon={"clear"}
-      onPress={() => typeOfHandler(item)}
-      disabled={route !== "game"}
-    >
-      <Text_Number
+    const backgroundColor =
+      type === "num"
+        ? animatedBg
+        : icon === "dart"
+        ? theme.bgGreen
+        : theme.game.middle.bgMid;
+
+    const color = type === "num" ? animatedColor : theme.text;
+
+    const AnimatedButton = Animated.createAnimatedComponent(Button_Num_Classic);
+
+    return (
+      <AnimatedButton
+        icon={"clear"}
+        middle={middle}
+        onPress={() => typeOfHandler(type, action, value)}
+        disabled={route !== "game"}
+        theme={selectedTheme}
         style={{
           borderColor,
-          backgroundColor:
-            typeof item === "number"
-              ? backgroundColor
-              : theme.game.middle.bgMid,
-          color: typeof item === "number" ? color : theme.text,
+          backgroundColor,
+          color,
         }}
-        type={typeof item}
-        theme={theme}
-        ap={activePlayer}
       >
-        {item}
-      </Text_Number>
-    </Button_Num_Classic>
-  );
-});
+        <>
+          {icon ? (
+            icon === "dart" ? (
+              <IconDart fill={selectedTheme.text} size={15} />
+            ) : (
+              <Icon name={icon} size={25} color={theme.text} />
+            )
+          ) : null}
+          <Text_Number
+            icon={icon}
+            style={{
+              borderColor,
+              color: type === "num" ? color : theme.text,
+            }}
+            type={type}
+            theme={theme}
+            ap={activePlayer}
+          >
+            {value}
+          </Text_Number>
+        </>
+      </AnimatedButton>
+    );
+  },
+);
 
 export default NUM_BUTTON;

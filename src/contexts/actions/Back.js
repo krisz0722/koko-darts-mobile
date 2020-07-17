@@ -1,9 +1,12 @@
 import submitUpdateScore from "./SubmitUpdateScore";
 
-const back = (state, inapKey, inapData) => {
+const back = (state) => {
+  const { inactivePlayer, startingScore } = state;
+  const inapKey = `${inactivePlayer}_DATA`;
+  const inapData = state[inapKey];
   const { canGoBack, score, lastScore } = inapData;
-  const isValid = score && canGoBack;
 
+  const isValid = score && lastScore !== "" && canGoBack;
   const scoreToSubmit = lastScore === "BUST" ? 0 : lastScore;
   const newScore = score + scoreToSubmit;
 
@@ -11,10 +14,8 @@ const back = (state, inapKey, inapData) => {
     case false:
       return {
         ...state,
-        scoreInputArray: {
-          inputByRound: ["CAN'T GO BACK!"],
-          inputByDart: ["CAN'T GO BACK!"],
-        },
+        inputByRound: ["CAN'T GO BACK!"],
+        inputByDart: ["CAN'T GO BACK!"],
       };
     default:
       return submitUpdateScore(

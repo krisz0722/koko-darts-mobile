@@ -1,6 +1,6 @@
 const DEFAULT_PLAYER_DATA = {
   score: 301,
-  lastScore: 301,
+  lastScore: "",
   legsWon: 0,
   setsWon: 0,
 
@@ -58,16 +58,16 @@ export const GAME_DEFAULT_STATE = {
   playerToStartLeg: "p1",
   activePlayer: "p1",
   inactivePlayer: "p2",
-  scoreInputArray: {
-    inputByRound: ["", "", ""],
-    inputByDartArray: ["", "", "", "", "", ""],
-    inputByDart: {
-      "1": [],
-      "2": [],
-      "3": [],
-    },
-    whichDart: 1,
+
+  inputByRound: ["", "", ""],
+  inputByDartArray: ["", "", "", "", "", ""],
+  inputByDart: {
+    first: [],
+    second: [],
+    third: [],
   },
+  whichDart: 1,
+
   inputIndex: 0,
   scoreToSubmit: [],
   isInputByDart: false,

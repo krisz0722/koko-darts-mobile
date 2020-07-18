@@ -6,36 +6,44 @@ const typeNextDart = (state) => {
   const apData = state[apKey];
   const score = apData.score;
 
-  let { first, second, third } = inputByDart;
-
-  const dartValue = (dart, whichDart) => {
-    const val = parseInt(dart.join(""));
-    if (val) {
-      return val;
-    } else {
-      switch (whichDart) {
-        case 2:
-          inputByDartArray[2] = 0;
-          inputByDartArray[3] = "";
-          break;
-        case 3:
-          inputByDartArray[4] = 0;
-          inputByDartArray[5] = "";
-          break;
-      }
-      return 0;
+  const updateInputDisplay = (dart) => {
+    switch (dart) {
+      case first:
+        inputByDartArray[0] = 0;
+        break;
+      case second:
+        inputByDartArray[2] = 0;
+        break;
+      case third:
+        inputByDartArray[5] = 0;
+        break;
     }
   };
 
-  first = dartValue(first, whichDart);
-  second = dartValue(second, whichDart);
-  third = dartValue(third, whichDart);
+  const dartValue = (dart, which) => {
+    if (dart[0] === "") {
+      if (whichDart === which) {
+        updateInputDisplay(dart);
+      }
+      return 0;
+    } else if (dart[1] === "") {
+      return dart[0];
+    } else {
+      return parseInt(dart.join(""));
+    }
+  };
+
+  let { first, second, third } = inputByDart;
+
+  first = dartValue(first, 1);
+  second = dartValue(second, 2);
+  third = dartValue(third, 3);
 
   const typedScore = [first, second, third];
 
-  const check = (input) => SCORINGDARTS.some((item) => item.value === input);
+  const check = (input) => SCORINGDARTS.every((item) => item.value !== input);
   const invalidScore = typedScore.find(
-    (input) => !check(input) || input > score,
+    (input) => check(input) || input > score,
   );
 
   const resetScore = (invalidScore) => {
@@ -80,11 +88,14 @@ const typeNextDart = (state) => {
   if (invalidScore) {
     return {
       ...state,
+      isInputByDart: false,
       inputIndex: 0,
-      inputByRound: ["", "", ""],
+      inputByRound: ["INVALID SCORE"],
       inputByDartArray: ["", "", "", "", "", ""],
       inputByDart: {
-        first: ["INVALID"],
+        first: ["", ""],
+        second: ["", ""],
+        third: ["", ""],
       },
       whichDart: 1,
       [apKey]: {
@@ -96,6 +107,7 @@ const typeNextDart = (state) => {
     state = {
       ...state,
       inputByDart,
+      inputByDartArray,
       whichDart: whichDart + 1,
       inputIndex: whichDart + 1 === 2 ? 2 : 4,
       [apKey]: {

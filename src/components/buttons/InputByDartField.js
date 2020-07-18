@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { Animated, View } from "react-native";
+import { Animated } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
@@ -28,7 +28,7 @@ const INPUT_BY_DART_FIELD = () => {
 
   const theme = selectedTheme;
   const {
-    gameData: { activePlayer, inputByDart, inputByDartArray },
+    gameData: { activePlayer, inputByDartArray },
   } = useContext(GameContext);
 
   const animationValue = useRef(
@@ -71,29 +71,19 @@ const INPUT_BY_DART_FIELD = () => {
     },
   ];
 
-  const isInvalid = /INVALID/.test(inputByDart.first);
-
   return (
-    <Container isInvalid={isInvalid} ap={activePlayer} style={{ borderColor }}>
+    <Container ap={activePlayer} style={{ borderColor }}>
       <>
-        {isInvalid ? (
-          <Text_Function icon={false}>{"INVALID SCORE!"}</Text_Function>
-        ) : (
-          <>
-            {DATA.map((item) => (
-              <React.Fragment key={item.key}>
-                {item.showIcon ? (
-                  <IconDart fill={selectedTheme.text} size={15} />
-                ) : (
-                  <Text_Function icon={true}>{item.value}</Text_Function>
-                )}
-                {item.key < 3 ? (
-                  <Text_Function icon={true}>+</Text_Function>
-                ) : null}
-              </React.Fragment>
-            ))}
-          </>
-        )}
+        {DATA.map((item) => (
+          <React.Fragment key={item.key}>
+            {item.showIcon ? (
+              <IconDart fill={selectedTheme.text} size={15} />
+            ) : (
+              <Text_Function icon={true}>{item.value}</Text_Function>
+            )}
+            {item.key < 3 ? <Text_Function icon={true}>+</Text_Function> : null}
+          </React.Fragment>
+        ))}
       </>
     </Container>
   );

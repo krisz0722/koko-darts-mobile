@@ -62,9 +62,9 @@ export const GAME_DEFAULT_STATE = {
   inputByRound: ["", "", ""],
   inputByDartArray: ["", "", "", "", "", ""],
   inputByDart: {
-    first: [],
-    second: [],
-    third: [],
+    first: ["", ""],
+    second: ["", ""],
+    third: ["", ""],
   },
   whichDart: 1,
 

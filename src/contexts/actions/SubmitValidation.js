@@ -1,55 +1,101 @@
 import { VALIDSCORES } from "calc/scores";
 import submitUpdateScore from "./SubmitUpdateScore";
+import { SCORINGDARTS } from "../../calc/const";
 
 const submitValidation = (state) => {
   const { activePlayer, inputByRound, isInputByDart, inputByDart } = state;
-
-  let { scoreToSubmit } = state;
-
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
 
-  const newScore = () => {
-    const score = apData.score;
-    if (isInputByDart) {
-      const third = parseInt(inputByDart.third.join(""));
-      if (third) {
-        scoreToSubmit = scoreToSubmit + third;
-        return score - third;
-      } else {
-        return score;
-      }
+  let score = apData.score;
+  let { scoreToSubmit } = state;
+
+  let { first, second, third } = inputByDart;
+
+  const dartValue = (dart) => {
+    if (dart[0] === "") {
+      return 0;
+    } else if (dart[1] === "") {
+      return dart[0];
     } else {
-      return score - scoreToSubmit;
+      return parseInt(dart.join(""));
     }
   };
 
-  const score = newScore();
+  first = dartValue(first, 1);
+  second = dartValue(second, 2);
+  third = dartValue(third, 3);
 
-  const isEmpty = !isInputByDart ? inputByRound[0] === "" : false;
-  const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;
-  const isNewScoreValid = score !== 1 && score >= 0;
+  const proceedDefault = () => {
+    const isEmpty = !isInputByDart ? inputByRound[0] === "" : false;
+    const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;
+    const isNewScoreValid = newScoreDefault() !== 1 && newScoreDefault() >= 0;
+    return !isEmpty && isValid && isNewScoreValid;
+  };
 
-  const proceed = !isEmpty && isValid && isNewScoreValid;
+  const proceedByDart = () => {
+    const isThirdValid =
+      SCORINGDARTS.find((item) => third === item.value) !== undefined;
+    const newScore = score - third;
+    const isNewScoreValid = newScore !== 1 && newScore >= 0;
+
+    return isThirdValid && isNewScoreValid;
+  };
+
+  const newScoreDefault = (proceed) => {
+    if (proceed) {
+      return score - scoreToSubmit;
+    }
+    return score;
+  };
+
+  const newScoreByDart = (proceed) => {
+    if (proceed) {
+      return score - third;
+    }
+    return score + first + second;
+  };
+
+  const proceed = isInputByDart ? proceedByDart() : proceedDefault();
+
+  const newScore = () =>
+    isInputByDart ? newScoreByDart(proceed) : newScoreDefault(proceed);
+  const newScoreToSubmit = isInputByDart
+    ? scoreToSubmit + third
+    : scoreToSubmit;
 
   switch (proceed) {
-    case false:
-      return {
-        ...state,
-        scoreToSubmit: "",
-        inputIndex: 0,
-        inputByRound: ["INVALID SCORE"],
-      };
-    default:
+    case true:
       return submitUpdateScore(
         state,
         apKey,
         apData,
-        scoreToSubmit,
+        newScoreToSubmit,
         newScore(),
         "OK",
         1,
       );
+    case false:
+      return {
+        ...state,
+        [apKey]: {
+          ...apData,
+          score: newScore(),
+        },
+        scoreToSubmit: "",
+        inputIndex: 0,
+        isInputByDart: false,
+        inputByRound: ["INVALID SCORE"],
+        inputByDart: {
+          first: ["", ""],
+          second: ["", ""],
+          third: ["", ""],
+        },
+      };
+
+    default:
+      alert("ERROR");
+      return null;
   }
 };
 

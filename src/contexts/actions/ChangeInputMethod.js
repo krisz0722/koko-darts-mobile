@@ -1,13 +1,15 @@
 export const changeInput = (state) => {
   const { inputByDart, isInputByDart, scoreToSubmit, activePlayer } = state;
 
+  const { first, second, third } = inputByDart;
+
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
   let { score } = apData;
-  const isInvalid = /INVALID/.test(inputByDart);
+  const isInvalid =
+    /INVALID/.test(first) && /INVALID/.test(second) && /INVALID/.test(third);
 
   score = isInputByDart && !isInvalid ? score + scoreToSubmit : score;
-  const lastScore = isInputByDart && !isInvalid ? 0 : scoreToSubmit;
 
   return {
     ...state,
@@ -17,15 +19,14 @@ export const changeInput = (state) => {
     inputByRound: ["", "", ""],
     inputByDartArray: ["", "", "", "", "", ""],
     inputByDart: {
-      first: [],
-      second: [],
-      third: [],
+      first: ["", ""],
+      second: ["", ""],
+      third: ["", ""],
     },
     whichDart: 1,
     [apKey]: {
       ...apData,
       score,
-      lastScore,
     },
   };
 };

@@ -23,7 +23,6 @@ const CLASSIC_BOTTOM = React.memo(() => {
       isInputByDart,
       inputByDart,
       inputByRound,
-      inputByDartArray,
       whichDart,
     },
   } = useContext(GameContext);
@@ -35,10 +34,7 @@ const CLASSIC_BOTTOM = React.memo(() => {
       ? "BACK"
       : "CLEAR";
 
-  const okOrNext =
-    isInputByDart && inputByDartArray[0] !== "" && whichDart !== 3
-      ? "NEXT"
-      : "OK";
+  const okOrNext = isInputByDart && whichDart !== 3 ? "NEXT" : "OK";
 
   const DATA = [
     {

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components";
-import { View, Text, Animated } from "react-native";
+import { Animated } from "react-native";
 import {
   AlignText,
   FlexCol,

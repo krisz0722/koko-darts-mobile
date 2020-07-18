@@ -46,7 +46,7 @@ const typeNextDart = (state) => {
     (input) => check(input) || input > score,
   );
 
-  const resetScore = (invalidScore) => {
+  const resetScore = () => {
     switch (invalidScore) {
       case first:
         return score;

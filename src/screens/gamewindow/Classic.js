@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { Animated, View } from "react-native";
+import React, { useEffect, useRef, useContext } from "react";
+import { Animated } from "react-native";
 import styled from "styled-components";
 import CLASSIC_SCORES from "../../components/classic/Scores/ClassicScores";
 import CLASSIC_MIDDLE from "../../components/classic/Middle/ClassicMiddle";

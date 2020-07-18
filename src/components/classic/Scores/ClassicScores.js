@@ -2,15 +2,9 @@ import React, { useContext, useEffect, useRef } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { Animated, View } from "react-native";
-import {
-  AlignText,
-  FlexCol,
-  FlexColAround,
-  FlexColStart,
-} from "../../../styles/css_mixins";
+import { Animated } from "react-native";
+import { FlexColAround } from "../../../styles/css_mixins";
 import PLAYER_CHECKOUTS from "./ClassicCheckoutsDiv";
-import createAnimation from "../../../styles/playerSwitchTransition";
 import PLAYER_SCORE from "./ClassicPlayerScore";
 
 export const ClassicScores = styled(Animated.View)`
@@ -38,24 +32,13 @@ export const ClassicCheckoutsP2 = styled(ClassicCheckoutsPlayer)`
   right: 0;
 `;
 
-export const ClassicPlayerScore = styled(Animated.View)`
-  ${FlexCol};
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  margin: auto;
-  top: 0%;
-  background-color: ${({ player, theme }) => theme.game[player + "Bg"]};
-  border-width: ${({ theme }) => theme.borderWidth};
-`;
-
 const CLASSIC_SCORES = () => {
   const {
     settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const {
-    gameData: { activePlayer, showStats, p1_DATA, p2_DATA },
+    gameData: { activePlayer, showStats },
   } = useContext(GameContext);
 
   const theme = selectedTheme;
@@ -64,7 +47,6 @@ const CLASSIC_SCORES = () => {
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
   ).current;
   const animationValue2 = useRef(new Animated.Value(0)).current;
-  const checkoutAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(animationValue, {

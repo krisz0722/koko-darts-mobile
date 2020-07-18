@@ -62,7 +62,7 @@ const AppNavigator = () => {
     },
   };
 
-  const transition = (theme) =>
+  const transition = () =>
     theme === "default" ? transitionDefault : transitionContrast;
 
   return (

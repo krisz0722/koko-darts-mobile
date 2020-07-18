@@ -1,14 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Row } from "../../screens/settings/StyledSettings";
-import SETTINGS_HEADER from "./SettingsHeader";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { Animated, Text, View } from "react-native";
-import {
-  BasicTextBold,
-  FlexColAround,
-  FlexRow,
-  Window,
-} from "../../styles/css_mixins";
+import { Animated } from "react-native";
+import { FlexRow } from "../../styles/css_mixins";
 import GAME_CLASSIC from "../../screens/gamewindow/Classic";
 import { SettingsContext } from "../../contexts/SettingsContext";
 

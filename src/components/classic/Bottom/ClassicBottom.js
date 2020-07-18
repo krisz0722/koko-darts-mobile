@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Animated } from "react-native";
-import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { FlexRow } from "../../../styles/css_mixins";
-
+import DATA_BOTTOM from "./DataBottom";
 import NUM_BUTTON from "../../buttons/NumButton";
 
 export const ClassicBottom = styled(Animated.View)`
@@ -16,104 +15,9 @@ export const ClassicBottom = styled(Animated.View)`
 `;
 
 const CLASSIC_BOTTOM = React.memo(() => {
-  const {
-    gameData,
-    gameData: {
-      inactivePlayer,
-      isInputByDart,
-      inputByDart,
-      inputByRound,
-      whichDart,
-    },
-  } = useContext(GameContext);
-
-  const canGoBack = gameData[inactivePlayer + "_DATA"].canGoBack;
-
-  const backOrClear =
-    inputByRound[0] === "" && inputByDart.first.length === 0 && canGoBack
-      ? "BACK"
-      : "CLEAR";
-
-  const okOrNext = isInputByDart && whichDart !== 3 ? "NEXT" : "OK";
-
-  const DATA = [
-    {
-      type: "num",
-      value: 1,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 2,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 3,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 4,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 5,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 6,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 7,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 8,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "num",
-      value: 9,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "function",
-      value: backOrClear,
-      action: backOrClear,
-      icon: backOrClear === "CLEAR" ? "clear" : "show-chart",
-    },
-    {
-      type: "num",
-      value: 0,
-      action: "type",
-      icon: null,
-    },
-    {
-      type: "function",
-      value: okOrNext,
-      action: okOrNext,
-      icon: okOrNext === "OK" ? "check" : "dart",
-    },
-  ];
-
   return (
     <ClassicBottom>
-      {DATA.map((item) => {
+      {DATA_BOTTOM().map((item) => {
         return (
           <NUM_BUTTON
             key={item.value}

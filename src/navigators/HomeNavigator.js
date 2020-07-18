@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContext } from "../contexts/NavigationContext";
 import { SettingsContext } from "../contexts/SettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
@@ -8,8 +7,6 @@ import SETTINGS from "../screens/settings/Settings";
 import HOME from "../screens/home/Home";
 import PROFILE from "../screens/profile/Profile";
 import HOMENAVIGATOR_TAB from "../components/navigation/HomeTabNavigator";
-
-import { Alert, BackHandler } from "react-native";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -34,7 +31,7 @@ const HomeNavigator = () => {
     },
   ];
 
-  const transition = (theme) =>
+  const transition = () =>
     theme === "default" ? transitionDefault : transitionContrast;
 
   return (

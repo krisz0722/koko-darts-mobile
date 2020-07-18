@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import styled from "styled-components";
 import { Text, View } from "react-native";
 import {
@@ -7,10 +6,6 @@ import {
   BorderHorizontal,
   BasicTextBold,
 } from "../../styles/css_mixins";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import ShapeThrow from "../../../assets/shapeThrow";
-import NavButton from "../../components/buttons/NavButton";
-import { NavBar } from "../../components/navigation/NavBar";
 
 export const View_Headers = styled(View)`
   width: 100%;

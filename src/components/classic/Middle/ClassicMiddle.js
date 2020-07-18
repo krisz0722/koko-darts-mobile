@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { View } from "react-native";
 import { FlexRow } from "../../../styles/css_mixins";
-import { GameContext } from "../../../contexts/GameContext";
 import NUM_BUTTON from "../../buttons/NumButton";
 import PLAYER_INPUT_INFO from "../../buttons/PlayerInputInfo";
+import DATA_MIDDLE from "./DataMiddle";
 
 export const ClassicMiddle = styled(View)`
   ${FlexRow};
@@ -16,52 +16,9 @@ export const ClassicMiddle = styled(View)`
 `;
 
 const CLASSIC_MIDDLE = () => {
-  const {
-    gameData: { isInputByDart },
-  } = useContext(GameContext);
-
-  const MIDDLE = [
-    {
-      type: "function",
-      value: "MENU",
-      action: "TOGGLE_DRAWER",
-      icon: "menu",
-    },
-    {
-      type: "function",
-      value: "SHOW STATS",
-      action: "SHOW_STATS",
-      icon: "show-chart",
-    },
-    {
-      type: "function",
-      value: "BUST",
-      action: "BUST",
-      icon: "not-interested",
-    },
-    {
-      type: "info",
-      value: "p1",
-      action: null,
-      icon: null,
-    },
-    {
-      type: "function",
-      value: isInputByDart ? "INPUT BY ROUND" : "INPUT BY DART",
-      action: "CHANGE_INPUT",
-      icon: isInputByDart ? "donut-large" : "dart",
-    },
-    {
-      type: "info",
-      value: "p2",
-      action: null,
-      icon: null,
-    },
-  ];
-
   return (
     <ClassicMiddle>
-      {MIDDLE.map((item) => (
+      {DATA_MIDDLE().map((item) => (
         <React.Fragment key={item.value}>
           {item.value === "p2" || item.value === "p1" ? (
             <PLAYER_INPUT_INFO value={item.value} name={item.value} />

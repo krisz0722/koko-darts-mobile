@@ -3,8 +3,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated } from "react-native";
-import { AlignText, Window } from "../../../styles/css_mixins";
-import createAnimation from "../../../styles/playerSwitchTransition";
+import { AlignText } from "../../../styles/css_mixins";
 
 export const Text_Score = styled(Animated.Text)`
   position: absolute;

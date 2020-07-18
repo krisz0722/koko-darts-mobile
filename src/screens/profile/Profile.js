@@ -9,7 +9,6 @@ import {
   SubContainer,
 } from "./StyledProfile";
 import { BackHandler } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
 import { NavigationContext } from "../../contexts/NavigationContext";
 
 const PROFILE = ({ route, navigation }) => {
@@ -26,7 +25,7 @@ const PROFILE = ({ route, navigation }) => {
       backAction,
     );
     return () => backHandler.remove();
-  }, []);
+  }, [navigation, setHomeTabScreen]);
 
   return (
     <>

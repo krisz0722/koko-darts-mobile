@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import {
   Info,
@@ -22,8 +21,6 @@ const HOME = ({ route, navigation }) => {
   } = useContext(SettingsContext);
 
   const [unfinished, setUnfinished] = useState(true);
-
-  const { setHomeTabScreen } = useContext(NavigationContext);
 
   useEffect(() => {
     const backAction = () => {

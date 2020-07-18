@@ -2,11 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { Animated, TouchableHighlight } from "react-native";
 import { GameContext } from "../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import {
-  AlignText,
-  BasicTextBold,
-  FlexRowAround,
-} from "../../styles/css_mixins";
+import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";

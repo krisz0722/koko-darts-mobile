@@ -13,8 +13,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const { setHomeTabScreen } = useContext(NavigationContext);
-
   return (
     <>
       <PLAYERS />

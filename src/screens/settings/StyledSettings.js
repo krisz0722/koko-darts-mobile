@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import {
-  FlexCol,
   FlexColStart,
   FlexRowAround,
   FlexRowStart,
-  Window,
 } from "../../styles/css_mixins";
 import { View } from "react-native";
 

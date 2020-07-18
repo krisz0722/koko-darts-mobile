@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Div, Row2, Row } from "../../screens/settings/StyledSettings";
-import { Dimensions, Keyboard } from "react-native";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "./SettingsButton";
 import MODAL_SELECT from "./Modal";

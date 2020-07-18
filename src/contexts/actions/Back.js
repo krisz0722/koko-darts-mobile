@@ -1,7 +1,7 @@
 import submitUpdateScore from "./SubmitUpdateScore";
 
 const back = (state) => {
-  const { inactivePlayer, startingScore } = state;
+  const { inactivePlayer } = state;
   const inapKey = `${inactivePlayer}_DATA`;
   const inapData = state[inapKey];
   const { canGoBack, score, lastScore } = inapData;

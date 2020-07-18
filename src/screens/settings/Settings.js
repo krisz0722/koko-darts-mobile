@@ -31,7 +31,7 @@ const SETTINGS = ({ route, navigation }) => {
       backAction,
     );
     return () => backHandler.remove();
-  }, []);
+  }, [navigation, setHomeTabScreen]);
 
   return (
     <>

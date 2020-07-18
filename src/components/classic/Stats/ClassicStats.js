@@ -4,6 +4,7 @@ import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, Text, View } from "react-native";
 import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
+import DATA_STATS from "./DataStats";
 
 export const ClassicStats = styled(Animated.View)`
   ${FlexRowBetween};
@@ -113,43 +114,6 @@ const CLASSIC_STATS = () => {
     ? "35%"
     : "45%";
 
-  const AVERAGES = [
-    {
-      name: "leg",
-      value: "avgLeg",
-    },
-    {
-      name: "match",
-      value: "avgMatch",
-    },
-    {
-      name: "first 9",
-      value: "avgFirstNine",
-    },
-    {
-      name: "scoring",
-      value: "avgScoring",
-    },
-  ];
-  const TOTALS = [
-    {
-      name: "60+",
-      value: "60",
-    },
-    {
-      name: "100+",
-      value: "100",
-    },
-    {
-      name: "140+",
-      value: "140",
-    },
-    {
-      name: "180",
-      value: "180",
-    },
-  ];
-
   return (
     <>
       <ClassicStatsPlayer1
@@ -165,7 +129,7 @@ const CLASSIC_STATS = () => {
           player={"p1"}
           theme={theme}
         >
-          {AVERAGES.map((item) => (
+          {DATA_STATS().averages.map((item) => (
             <StatRow key={item.name}>
               <StatText1 player={"p1"} theme={theme}>
                 {item.name + " average"}
@@ -182,7 +146,7 @@ const CLASSIC_STATS = () => {
           player={"p1"}
           theme={theme}
         >
-          {TOTALS.map((item) => (
+          {DATA_STATS().totals.map((item) => (
             <StatRow key={item.name}>
               <StatText3 player={"p1"} theme={theme}>
                 {item.name}
@@ -207,7 +171,7 @@ const CLASSIC_STATS = () => {
           player={"p2"}
           theme={theme}
         >
-          {AVERAGES.map((item) => (
+          {DATA_STATS().averages.map((item) => (
             <StatRow key={item.name}>
               <StatText1 player={"p2"} theme={theme}>
                 {item.name + " average"}
@@ -224,7 +188,7 @@ const CLASSIC_STATS = () => {
           player={"p2"}
           theme={theme}
         >
-          {TOTALS.map((item) => (
+          {DATA_STATS().totals.map((item) => (
             <StatRow key={item.name}>
               <StatText3 player={"p2"} theme={theme}>
                 {item.name}

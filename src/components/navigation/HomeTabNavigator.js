@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BackHandler, Alert } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import React, { useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import NavButton from "../buttons/NavButton";
 import { NavBar } from "./NavBar";

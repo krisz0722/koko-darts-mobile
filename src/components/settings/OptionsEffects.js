@@ -6,7 +6,7 @@ import SETTINGS_HEADER from "./SettingsHeader";
 
 export const OptionsEffects = () => {
   const {
-    settings: { selectedTheme, animation, opacity, blur },
+    settings: { selectedTheme, animation, opacity },
     dispatchSettings,
   } = useContext(SettingsContext);
 

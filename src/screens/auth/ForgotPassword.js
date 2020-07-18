@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { Buttons, Form } from "./StyledSignUp";
+import { Form } from "./StyledSignUp";
 
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/LoginInput";

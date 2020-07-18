@@ -1,56 +1,32 @@
-import React, { useContext, useState } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { NavigationContext } from "../../contexts/NavigationContext";
-import { TopNavBar } from "./NavBar";
-import NavButton from "../buttons/NavButton";
+import React from "react";
+import TABNAVIGATOR from "./TabNavigator";
 
 const PROFILE_NAVIGATOR_TAB = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-  const { setProfileTabScreen } = useContext(NavigationContext);
-
-  const [active, setActive] = useState("friends");
-
-  const handler = (value) => {
-    setActive(value);
-    setProfileTabScreen(value);
-  };
-
-  const DATA = [
+  const TABS = [
     {
-      name: "friends",
+      route: "friends",
       icon: "person",
+      text: "friends",
     },
     {
-      name: "matches",
+      route: "matches",
       icon: "list",
+      text: "matches",
     },
     {
-      name: "timeline",
+      route: "timeline",
       icon: "show-chart",
+      text: "timeline",
     },
   ];
-
   return (
-    <TopNavBar theme={selectedTheme}>
-      {DATA.map((item) => (
-        <NavButton
-          key={item.name}
-          active={active === item.name}
-          icon={item.icon}
-          iconDir={true}
-          action={() => handler(item.name)}
-          text={item.name}
-          length={3}
-        >
-          friends
-        </NavButton>
-      ))}
-    </TopNavBar>
+    <TABNAVIGATOR
+      direction={"horizontal"}
+      position={"top"}
+      tabs={TABS}
+      length={3}
+    />
   );
 };
 
 export default PROFILE_NAVIGATOR_TAB;
-
-// TODO this is not real navigation! repalce this with navigation.navigate

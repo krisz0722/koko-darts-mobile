@@ -6,7 +6,7 @@ import transitionDefault from "../styles/navTransitionDefault";
 import SETTINGS from "../screens/settings/Settings";
 import HOME from "../screens/home/Home";
 import PROFILE from "../screens/profile/Profile";
-import HOMENAVIGATOR_TAB from "../components/navigation/HomeTabNavigator";
+import HOME_TAB_NAVIGATOR from "../components/navigation/HomeTabNavigator";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -31,7 +31,7 @@ const HomeNavigator = () => {
     },
   ];
 
-  const transition = () =>
+  const transition = (theme) =>
     theme === "default" ? transitionDefault : transitionContrast;
 
   return (
@@ -52,7 +52,7 @@ const HomeNavigator = () => {
           ))}
         </>
       </Navigator>
-      <HOMENAVIGATOR_TAB />
+      <HOME_TAB_NAVIGATOR />
     </>
   );
 };

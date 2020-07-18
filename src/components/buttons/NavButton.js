@@ -3,14 +3,15 @@ import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { BasicText, FlexCol, Window } from "../../styles/css_mixins";
+import { BasicText, Flex, FlexCol, Window } from "../../styles/css_mixins";
 
 const Button_Nav = styled(TouchableOpacity)`
-  ${FlexCol};
-  flex-direction: ${({ iconDir }) => (iconDir ? "row" : "column")};
+  ${Flex};
+  flex-direction: ${({ direction }) =>
+    direction === "horizontal" ? "row" : "column"};
   width: ${({ length }) => Window.width / length};
   height: 100%;
-  padding: ${({ iconDir }) => (iconDir ? "0 5%" : 0)};
+  padding: ${({ direction }) => (direction === "horizontal" ? "0 5%" : 0)};
   background-color: ${({ theme, active }) =>
     active ? theme.bgActive : "transparent"};
   transform: ${({ active }) => (!active ? "scale(0.8,0.8)" : "")};
@@ -18,11 +19,12 @@ const Button_Nav = styled(TouchableOpacity)`
 
 const Text_Button = styled(Text)`
   ${BasicText};
-  font-weight: ${({ iconDir }) => (iconDir ? "bold" : "normal")};
+  font-weight: ${({ direction }) =>
+    direction === "horizontal" ? "bold" : "normal"};
   width: 100%;
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)};
-  font-size: ${({ iconDir, theme }) =>
-    iconDir ? theme.nav.fontSize2 : theme.nav.fontSize1};
+  font-size: ${({ direction, theme }) =>
+    direction === "horizontal" ? theme.nav.fontSize2 : theme.nav.fontSize1};
   border-radius: 4px;
 `;
 
@@ -30,9 +32,9 @@ const NavButton = ({
   text,
   length,
   active,
+  direction,
   action = null,
   icon = null,
-  iconDir = null,
 }) => {
   const {
     settings: { selectedTheme },
@@ -42,11 +44,11 @@ const NavButton = ({
 
   return (
     <Button_Nav
+      direction={direction}
       active={active}
       length={length}
       theme={selectedTheme}
       onPress={action}
-      iconDir={iconDir}
     >
       <>
         {icon ? (

@@ -14,11 +14,6 @@ export const Window = {
   width: Dimensions.get("window").width,
 };
 
-export const Screen = {
-  height: Dimensions.get("screen").height,
-  width: Dimensions.get("screen").width,
-};
-
 export const BasicText = () => css`
   text-align-vertical: center;
   text-align: center;
@@ -49,9 +44,10 @@ export const AlignText = css`
   text-align: center;
 `;
 
-export const JustifyText = css`
-  text-align-vertical: center;
-  text-align: center;
+export const Flex = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const FlexCol = css`

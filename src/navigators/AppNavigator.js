@@ -9,29 +9,34 @@ import GAME_CLASSIC from "../screens/gamewindow/Classic";
 import REGISTER from "../screens/auth/SignUp";
 import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/welcome/Welcome";
-import HomeNavigator from "./HomeNavigator";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
+import HomeNavigator from "./HomeNavigator";
+import LEG_IS_FINISHED from "../screens/legisfinished/LegIsFinished";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
-    // {
-    //   component: WELCOME,
-    //   name: "welcome",
-    // },
-    // {
-    //   component: REGISTER,
-    //   name: "register",
-    // },
-    // {
-    //   component: LOGIN,
-    //   name: "login",
-    // },
-    // {
-    //   component: FORGOT_PASSWORD,
-    //   name: "forgotpassword",
-    // },
+    {
+      component: LEG_IS_FINISHED,
+      name: "legisfinished",
+    },
+    {
+      component: WELCOME,
+      name: "welcome",
+    },
+    {
+      component: REGISTER,
+      name: "register",
+    },
+    {
+      component: LOGIN,
+      name: "login",
+    },
+    {
+      component: FORGOT_PASSWORD,
+      name: "forgotpassword",
+    },
     {
       component: GAME_CLASSIC,
       name: "game",

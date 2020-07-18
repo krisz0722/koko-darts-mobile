@@ -1,55 +1,32 @@
-import React, { useContext } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import NavButton from "../buttons/NavButton";
-import { NavBar } from "./NavBar";
-import { NavigationContext } from "../../contexts/NavigationContext";
+import React from "react";
+import TABNAVIGATOR from "./TabNavigator";
 
-const HOMENAVIGATOR_TAB = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-
-  const { homeTabScreen, setHomeTabScreen } = useContext(NavigationContext);
-
-  const navigation = useNavigation();
-
-  const handler = (value) => {
-    navigation.navigate(value);
-    setHomeTabScreen(value);
-  };
-
-  const DATA = [
+const HOME_TAB_NAVIGATOR = () => {
+  const TABS = [
     {
-      name: "home",
+      route: "home",
       icon: "home",
+      text: "home",
     },
     {
-      name: "settings",
+      route: "settings",
       icon: "tune",
+      text: "settings",
     },
     {
-      name: "profile",
+      route: "profile",
       icon: "person",
+      text: "profile",
     },
   ];
-
   return (
-    <NavBar theme={selectedTheme}>
-      {DATA.map((item) => (
-        <NavButton
-          key={item.name}
-          active={homeTabScreen === item.name}
-          action={() => handler(item.name)}
-          icon={item.icon}
-          length={3}
-          text={item.name}
-        />
-      ))}
-    </NavBar>
+    <TABNAVIGATOR
+      position={"bottom"}
+      direction={"vertical"}
+      tabs={TABS}
+      length={3}
+    />
   );
 };
 
-export default HOMENAVIGATOR_TAB;
-
-// TODO this is not real navigation! repalce this with navigation.navigate
+export default HOME_TAB_NAVIGATOR;

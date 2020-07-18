@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
@@ -19,23 +20,40 @@ const REMATCH = () => {
   } = useContext(SettingsContext);
 
   const {
+    dispatchGameData,
     gameData: { p1, p2 },
   } = useContext(GameContext);
 
-  const [nod, setNod] = useState(2);
+  const navigation = useNavigation();
 
-  const handleNod = (val) => setNod(val);
+  const [activePlayer, setActivePlayer] = useState(null);
+  const [inactivePlayer, setInactivePlayer] = useState(null);
+
+  const handlePLayerToStart = (val) => {
+    const active = val === p1 ? p1 : p2;
+    const inactive = active === p1 ? p2 : p1;
+    setActivePlayer(active);
+    setInactivePlayer(inactive);
+  };
 
   const TABS = [
     {
       route: "homenavigator",
       text: "quit game",
       icon: "arrow-back",
+      action: () => navigation.navigate("home"),
     },
     {
       route: "game",
-      text: "game on!",
-      icon: "check",
+      text: activePlayer ? "game on!" : "select",
+      icon: activePlayer ? "check" : "person",
+      action: function () {
+        if (activePlayer) {
+          dispatchGameData({ type: "REMATCH", activePlayer, inactivePlayer });
+          navigation.navigate("game");
+        }
+        return null;
+      },
     },
   ];
 
@@ -52,8 +70,8 @@ const REMATCH = () => {
           <RADIO_BUTTON_SET
             direction={"horizontal"}
             options={OPTIONS}
-            action={handleNod}
-            activeValue={nod}
+            action={handlePLayerToStart}
+            activeValue={activePlayer}
           />
         </NumOfDarts>
       </View_Headers>

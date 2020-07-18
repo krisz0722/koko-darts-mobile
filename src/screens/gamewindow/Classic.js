@@ -34,9 +34,9 @@ const Overlay2 = styled(Overlay)`
   background-color: ${({ theme }) => theme.game.p2Overlay};
 `;
 
-const GAME_CLASSIC = ({ preview }) => {
+const GAME_CLASSIC = ({ navigation, preview }) => {
   const {
-    gameData: { inactivePlayer },
+    gameData: { inactivePlayer, isLegOver },
   } = useContext(GameContext);
 
   const {
@@ -52,7 +52,17 @@ const GAME_CLASSIC = ({ preview }) => {
       toValue: inactivePlayer === "p1" ? 1 : 0,
       duration: 3000,
     }).start();
-  }, [animation, animationValue, inactivePlayer, preview]);
+    if (isLegOver) {
+      navigation.navigate("legisfinished");
+    }
+  }, [
+    animation,
+    animationValue,
+    inactivePlayer,
+    preview,
+    isLegOver,
+    navigation,
+  ]);
 
   const opacity1 = animation
     ? animationValue.interpolate({

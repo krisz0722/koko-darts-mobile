@@ -55,15 +55,16 @@ export const GameContextProvider = (props) => {
         return bust(state);
 
       case "FINISH_LEG":
-        return finishLeg(
-          state,
-          action.numOfCoDartsUsed,
-          action.numOfCoDartsRequired,
-        );
+        return finishLeg(state, action.nodUsed, action.nodRequired);
       case "INITIATE_REMATCH":
         return { ...state, isRematch: true, isMatchOver: false };
       case "REMATCH":
-        return rematch(state, action.value, action.value2, GAME_DEFAULT_STATE);
+        return rematch(
+          state,
+          action.activePlayer,
+          action.inactivePlayer,
+          GAME_DEFAULT_STATE,
+        );
       case "CREATE_NEW_MATCH":
         return action.value;
       case "NEW_MATCH":

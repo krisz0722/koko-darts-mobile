@@ -1,5 +1,11 @@
-const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
-  const { activePlayer, inactivePlayer, legOrSet, toWin } = state;
+const finishLeg = (state, nodUsed, nodRequired) => {
+  const {
+    activePlayer,
+    inactivePlayer,
+    legOrSet,
+    toWin,
+    startingScore,
+  } = state;
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
 
@@ -19,8 +25,8 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
 
   legsWon += 1;
   setsWon = legOrSet === "leg" || legsWon < 3 ? setsWon : setsWon + 1;
-  numOfCoDarts = numOfCoDarts + numOfCoDartsUsed - numOfCoDartsRequired + 1;
-  dartsUsedInLeg += numOfCoDartsUsed;
+  numOfCoDarts = numOfCoDarts + nodUsed - nodRequired + 1;
+  dartsUsedInLeg += nodUsed;
   bestLegByDartsUsed =
     dartsUsedInLeg < bestLegByDartsUsed || bestLegByDartsUsed === 0
       ? dartsUsedInLeg
@@ -40,7 +46,6 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
         break;
     }
   };
-
   return {
     ...state,
     [inapKey]: {
@@ -59,10 +64,21 @@ const finishLeg = (state, numOfCoDartsUsed, numOfCoDartsRequired) => {
       bestavgLeg: bestavgLeg,
       highestCheckout: highestCheckout,
       canGoBack: false,
+      isInputByDart: false,
+      inputByRound: ["", "", ""],
+      inputByDartArray: ["", "", "", "", "", ""],
+      inputByDart: {
+        first: ["", ""],
+        second: ["", ""],
+        third: ["", ""],
+      },
+      whichDart: 1,
+      inputIndex: 0,
+      scoreToSubmit: [],
     },
     [apKey]: {
       ...apData,
-      score: state.startingScore,
+      score: startingScore,
       tsLeg: 0,
       norLeg: 0,
       dartsUsedInLeg: 0,

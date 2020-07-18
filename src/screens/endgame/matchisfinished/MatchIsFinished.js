@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
@@ -9,28 +9,34 @@ import {
 } from "./StyledMatchIsFinished";
 import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import { Text_Subtitle } from "../legisfinished/StyledLegIsFinished";
+import { useNavigation } from "@react-navigation/native";
 
 const MATCH_IS_FINISHED = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
+  const navigation = useNavigation();
+
   const TABS = [
     {
       route: "homenavigator",
       text: "quit match",
       icon: "arrow-back",
+      action: () => navigation.navigate("home"),
     },
 
     {
       route: "game",
       text: "show stats",
       icon: "show-chart",
+      action: () => navigation.navigate("game"),
     },
     {
       route: "rematch",
       text: "rematch",
       icon: "dart",
+      action: () => navigation.navigate("rematch"),
     },
   ];
 

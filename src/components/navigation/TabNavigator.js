@@ -40,13 +40,13 @@ const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
   const activeScreen =
     route === "homenavigator" ? homeTabScreen : profileTabScreen;
 
-  const handler = (value) => {
-    navigation.navigate(value);
+  const handler = (value, action) => {
     if (route === "homenavigator") {
       setHomeTabScreen(value);
     } else if (route === "profile") {
       setProfileTabScreen(value);
     } else {
+      return action();
     }
   };
 
@@ -58,7 +58,7 @@ const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
           direction={direction}
           key={item.route}
           active={activeScreen === item.route}
-          action={() => handler(item.route)}
+          action={() => handler(item.value, item.action)}
           icon={item.icon}
           length={length}
           text={item.text}

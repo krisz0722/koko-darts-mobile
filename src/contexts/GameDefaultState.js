@@ -48,7 +48,6 @@ const DEFAULT_PLAYER_DATA = {
 
 export const GAME_DEFAULT_STATE = {
   status: "initialize",
-  userName: "",
   p1: "sanyika",
   p2: "lacika",
   legOrSet: "leg",
@@ -58,7 +57,14 @@ export const GAME_DEFAULT_STATE = {
   playerToStartLeg: "p1",
   activePlayer: "p1",
   inactivePlayer: "p2",
+  showStats: false,
 
+  //PLAYERS
+  p1_DATA: DEFAULT_PLAYER_DATA,
+  p2_DATA: DEFAULT_PLAYER_DATA,
+
+  //INPUT
+  isInputByDart: false,
   inputByRound: ["", "", ""],
   inputByDartArray: ["", "", "", "", "", ""],
   inputByDart: {
@@ -67,18 +73,13 @@ export const GAME_DEFAULT_STATE = {
     third: ["", ""],
   },
   whichDart: 1,
-
   inputIndex: 0,
   scoreToSubmit: [],
-  isInputByDart: false,
-  showStats: false,
+
+  //END GAME
   isLegOver: false,
   isMatchOver: false,
   isRematch: false,
-
-  p1_DATA: DEFAULT_PLAYER_DATA,
-  p2_DATA: DEFAULT_PLAYER_DATA,
-
   winner: null,
 };
 

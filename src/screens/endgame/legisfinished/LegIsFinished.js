@@ -1,4 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+
+import { CHECKOUTS } from "../../../calc/scores";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
@@ -11,26 +14,74 @@ import {
 } from "./StyledLegIsFinished";
 import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
+import { GameContext } from "../../../contexts/GameContext";
 
 const LEG_IS_FINISHED = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const [nod, setNod] = useState(2);
+  const navigation = useNavigation();
 
-  const handleNod = (val) => setNod(val);
+  const {
+    dispatchGameData,
+    gameData,
+    gameData: { activePlayer, inactivePlayer, isLegOver, isMatchOver },
+  } = useContext(GameContext);
+
+  const inapKey = `${inactivePlayer}_DATA`;
+  const inapData = gameData[inapKey];
+
+  const apKey = `${activePlayer}_DATA`;
+  const apData = gameData[apKey];
+  const apOnCheckout = apData.onCheckout;
+
+  const nod = () => {
+    // if (isLegOver) {
+    return CHECKOUTS.find((co) => co.value === inapData.lastScore).checkouts[0]
+      .nod;
+    // }
+    // if (apOnCheckout) {
+    //   return CHECKOUTS.find((co) => co.value === apData.score).checkouts[0].nod;
+    // }
+    // return null;
+  };
+
+  useEffect(() => {
+    if (isMatchOver) {
+      navigation.navigate("matchisfinished");
+    }
+  }, [isMatchOver, navigation]);
+
+  const [lastRoundNod, setLastRoundNod] = useState(nod());
+
+  const handleLastDartNod = (val) => setLastRoundNod(val);
 
   const TABS = [
     {
       route: "game",
       text: "back",
       icon: "arrow-back",
+      action: () => {
+        alert("SET LAST DART NOD");
+        setLastRoundNod(null),
+          dispatchGameData({ type: "BACK" }),
+          navigation.navigate("game");
+      },
     },
     {
       route: "matchisfinished",
       text: "ok",
       icon: "check",
+      action: () => {
+        console.log(lastRoundNod, isLegOver, isMatchOver);
+        setLastRoundNod(null),
+          dispatchGameData({
+            type: "FINISH_LEG",
+            nodUsed: lastRoundNod,
+            nodRequired: parseInt(nod()),
+          });
+      },
     },
   ];
 
@@ -47,8 +98,8 @@ const LEG_IS_FINISHED = () => {
           <RADIO_BUTTON_SET
             direction={"horizontal"}
             options={OPTIONS}
-            action={handleNod}
-            activeValue={nod}
+            action={handleLastDartNod}
+            activeValue={lastRoundNod}
           />
         </NumOfDarts>
       </View_Headers>
@@ -67,3 +118,7 @@ const LEG_IS_FINISHED = () => {
 };
 
 export default LEG_IS_FINISHED;
+
+//TODO disabling irrelevant nod options!!!!!
+// TODO BACK DOES NOT WORK YET!!!!
+// TODO after finishing leg and initializing rematch, current score whos a value!!!

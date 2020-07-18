@@ -27,8 +27,6 @@ const submitValidation = (state) => {
 
   const score = newScore();
 
-  alert(scoreToSubmit);
-
   const isEmpty = !isInputByDart ? inputByRound[0] === "" : false;
   const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;
   const isNewScoreValid = score !== 1 && score >= 0;

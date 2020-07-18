@@ -4,7 +4,6 @@ import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, Text, View } from "react-native";
 import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
-import createAnimation from "../../../styles/playerSwitchTransition";
 
 export const ClassicStats = styled(Animated.View)`
   ${FlexRowBetween};
@@ -167,7 +166,7 @@ const CLASSIC_STATS = () => {
           theme={theme}
         >
           {AVERAGES.map((item) => (
-            <StatRow>
+            <StatRow key={item.name}>
               <StatText1 player={"p1"} theme={theme}>
                 {item.name + " average"}
               </StatText1>
@@ -184,7 +183,7 @@ const CLASSIC_STATS = () => {
           theme={theme}
         >
           {TOTALS.map((item) => (
-            <StatRow>
+            <StatRow key={item.name}>
               <StatText3 player={"p1"} theme={theme}>
                 {item.name}
               </StatText3>
@@ -209,7 +208,7 @@ const CLASSIC_STATS = () => {
           theme={theme}
         >
           {AVERAGES.map((item) => (
-            <StatRow>
+            <StatRow key={item.name}>
               <StatText1 player={"p2"} theme={theme}>
                 {item.name + " average"}
               </StatText1>
@@ -226,7 +225,7 @@ const CLASSIC_STATS = () => {
           theme={theme}
         >
           {TOTALS.map((item) => (
-            <StatRow>
+            <StatRow key={item.name}>
               <StatText3 player={"p2"} theme={theme}>
                 {item.name}
               </StatText3>

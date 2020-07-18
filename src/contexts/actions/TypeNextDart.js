@@ -1,6 +1,6 @@
 import { SCORINGDARTS } from "calc/const";
 const typeNextDart = (state) => {
-  let { activePlayer, inputByDart, whichDart } = state;
+  let { activePlayer, inputByDart, whichDart, inputByDartArray } = state;
 
   const apKey = activePlayer + "_DATA";
   const apData = state[apKey];
@@ -8,9 +8,29 @@ const typeNextDart = (state) => {
 
   let { first, second, third } = inputByDart;
 
-  first = parseInt(first.join(""));
-  second = parseInt(second.join(""));
-  third = parseInt(third.join(""));
+  const dartValue = (dart, whichDart) => {
+    const val = parseInt(dart.join(""));
+    if (val) {
+      return val;
+    } else {
+      console.log(whichDart);
+      switch (whichDart) {
+        case 2:
+          inputByDartArray[2] = 0;
+          inputByDartArray[3] = "";
+          break;
+        case 3:
+          inputByDartArray[4] = 0;
+          inputByDartArray[5] = "";
+          break;
+      }
+      return 0;
+    }
+  };
+
+  first = dartValue(first, whichDart);
+  second = dartValue(second, whichDart);
+  third = dartValue(third, whichDart);
 
   const typedScore = [first, second, third];
 

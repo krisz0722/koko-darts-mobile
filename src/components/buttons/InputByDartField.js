@@ -81,7 +81,7 @@ const INPUT_BY_DART_FIELD = () => {
         ) : (
           <>
             {DATA.map((item) => (
-              <>
+              <React.Fragment key={item.key}>
                 {item.showIcon ? (
                   <IconDart fill={selectedTheme.text} size={15} />
                 ) : (
@@ -90,7 +90,7 @@ const INPUT_BY_DART_FIELD = () => {
                 {item.key < 3 ? (
                   <Text_Function icon={true}>+</Text_Function>
                 ) : null}
-              </>
+              </React.Fragment>
             ))}
           </>
         )}

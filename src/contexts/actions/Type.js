@@ -2,9 +2,7 @@ import typeByDart from "./TypeByDart";
 import typeByRound from "./TypeByRound";
 
 const type = (state, val) => {
-  const { isInputByDart, inputByRound, inputByDart } = state;
-
-  console.log(inputByRound);
+  const { isInputByDart, inputByRound } = state;
 
   switch (isInputByDart) {
     case true:

@@ -62,7 +62,7 @@ const CLASSIC_MIDDLE = () => {
   return (
     <ClassicMiddle>
       {MIDDLE.map((item) => (
-        <>
+        <React.Fragment key={item.value}>
           {item.value === "p2" || item.value === "p1" ? (
             <PLAYER_INPUT_INFO value={item.value} name={item.value} />
           ) : (
@@ -74,7 +74,7 @@ const CLASSIC_MIDDLE = () => {
               icon={item.icon}
             />
           )}
-        </>
+        </React.Fragment>
       ))}
     </ClassicMiddle>
   );

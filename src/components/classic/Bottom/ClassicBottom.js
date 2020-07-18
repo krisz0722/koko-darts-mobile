@@ -120,6 +120,7 @@ const CLASSIC_BOTTOM = React.memo(() => {
       {DATA.map((item) => {
         return (
           <NUM_BUTTON
+            key={item.value}
             type={item.type}
             value={item.value}
             action={item.action}

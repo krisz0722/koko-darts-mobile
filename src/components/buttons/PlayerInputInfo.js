@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { Animated, Text, TouchableHighlight, View } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { Animated } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import { BasicTextBold, FlexCol, FlexRowAround } from "../../styles/css_mixins";
+import { BasicTextBold, FlexCol } from "../../styles/css_mixins";
 import INPUT_BY_DART_FIELD from "./InputByDartField";
 
 export const PlayerInputInfo = styled(Animated.View)`

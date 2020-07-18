@@ -24,8 +24,6 @@ const submitUpdateScore = (
     numOfCoDarts,
   } = playerData;
 
-  alert("UPDATE", scoreToSubmit);
-
   const prevScore = score;
   const wasOnCheckout = CHECKOUTS.some((co) => co.value === prevScore);
   const prevScoreNumOfDarts = wasOnCheckout
@@ -69,7 +67,6 @@ const submitUpdateScore = (
   numOfCoDarts = !isLegOver ? numOfCoDarts + missedDoubles() : numOfCoDarts;
 
   const lastScore = (type) => {
-    alert("LASTSCORE:" + scoreToSubmit);
     switch (type) {
       case "BUST":
         return "BUST";

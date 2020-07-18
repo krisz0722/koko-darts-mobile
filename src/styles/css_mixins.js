@@ -50,6 +50,18 @@ export const Flex = css`
   justify-content: center;
 `;
 
+export const FlexAround = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+export const FlexBetween = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const FlexCol = css`
   display: flex;
   flex-direction: column;

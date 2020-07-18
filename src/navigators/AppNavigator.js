@@ -12,14 +12,30 @@ import WELCOME from "../screens/welcome/Welcome";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 import HomeNavigator from "./HomeNavigator";
-import LEG_IS_FINISHED from "../screens/legisfinished/LegIsFinished";
+import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
+import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
+import REMATCH from "../screens/endgame/rematch/Rematch";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
     {
+      component: HomeNavigator,
+      name: "homenavigator",
+    },
+    {
       component: LEG_IS_FINISHED,
       name: "legisfinished",
+    },
+
+    {
+      component: REMATCH,
+      name: "rematch",
+    },
+
+    {
+      component: MATCH_IS_FINISHED,
+      name: "matchisfinished",
     },
     {
       component: WELCOME,
@@ -41,10 +57,7 @@ const AppNavigator = () => {
       component: GAME_CLASSIC,
       name: "game",
     },
-    {
-      component: HomeNavigator,
-      name: "homenavigator",
-    },
+
     {
       component: PREGAME_SETTINGS,
       name: "pregame",

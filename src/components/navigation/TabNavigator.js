@@ -12,7 +12,9 @@ import {
 } from "../../styles/css_mixins";
 
 export const NavBar = styled(View)`
-  ${BorderHorizontal(({ theme }) => theme.borderColor)};
+  ${BorderHorizontal(({ theme, color }) =>
+    color === "dark" ? theme.bg3 : theme.borderColor,
+  )};
   border-bottom-width: ${({ theme, position }) =>
     position === "top" ? theme.borderWidth : 0};
   position: ${({ position }) => (position === "top" ? "relative" : "absolute")};
@@ -20,10 +22,9 @@ export const NavBar = styled(View)`
   width: 100%;
   height: ${() => Window.height * 0.08};
   ${FlexRowAround};
-  border-color: ${({ theme }) => theme.borderColor};
 `;
 
-const TABNAVIGATOR = ({ position, tabs, direction, length }) => {
+const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -50,9 +51,10 @@ const TABNAVIGATOR = ({ position, tabs, direction, length }) => {
   };
 
   return (
-    <NavBar position={position} theme={selectedTheme}>
+    <NavBar color={color} position={position} theme={selectedTheme}>
       {tabs.map((item) => (
         <NavButton
+          color={color}
           direction={direction}
           key={item.route}
           active={activeScreen === item.route}

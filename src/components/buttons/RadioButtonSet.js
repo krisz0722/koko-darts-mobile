@@ -1,30 +1,41 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 import {
+  AlignText,
   BasicTextBold,
+  Flex,
+  FlexAround,
   FlexColAround,
+  FlexRowAround,
   FlexRowBetween,
   Window,
 } from "../../styles/css_mixins";
 
 const Options = styled(View)`
-  width: 50%;
+  width: ${({ direction }) => (direction === "vertical" ? "40%" : "100%")};
   height: 70%;
-  ${FlexColAround}
+  ${FlexAround};
+  flex-direction: ${({ direction }) =>
+    direction === "horizontal" ? "row" : "column"};
 `;
 
-const Option = styled(View)`
-  height: 6%;
-  width: 30%;
+const Option = styled(TouchableHighlight)`
+  border-radius: 4px;
+  height: ${({ length, direction }) =>
+    direction === "vertical" ? 100 / length + "%" : "100%"};
+  width: ${({ length, direction }) =>
+    direction === "vertical" ? "100%" : 100 / length + "%"};
   ${FlexRowBetween};
+  ${FlexRowAround};
 `;
 
 const Label = styled(Text)`
-  ${BasicTextBold}
+  ${BasicTextBold};
   height: 100%;
   width: 50%;
+  color: ${({ theme }) => theme.bg1};
 `;
 
 const Radio = styled(TouchableOpacity)`
@@ -37,21 +48,29 @@ const Radio = styled(TouchableOpacity)`
   width: ${() => (Window.height * 0.075) / 3};
 `;
 
-const RADIO_BUTTON_SET = ({ OPTIONS, action, activeValue }) => {
+const RADIO_BUTTON_SET = ({ options, action, activeValue, direction }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
   return (
-    <Options>
-      {OPTIONS.map((item) => (
-        <Option key={item}>
-          <Label>{item}</Label>
-          <Radio
-            onPress={() => action(item)}
-            active={activeValue === item}
-            theme={selectedTheme}
-          />
+    <Options direction={direction}>
+      {options.map((item) => (
+        <Option
+          underlayColor={selectedTheme.text}
+          direction={direction}
+          length={options.length}
+          key={item}
+          onPress={() => action(item)}
+        >
+          <>
+            <Label>{item}</Label>
+            <Radio
+              onPress={() => action(item)}
+              active={activeValue === item}
+              theme={selectedTheme}
+            />
+          </>
         </Option>
       ))}
     </Options>

@@ -61,7 +61,8 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
             : "legs per set to win"}
         </Header>
         <RADIO_BUTTON_SET
-          OPTIONS={OPTIONS}
+          direction={"vertical"}
+          options={OPTIONS}
           action={handleFirstToWin}
           activeValue={type === "main" ? toWin : legsPerSet}
         />

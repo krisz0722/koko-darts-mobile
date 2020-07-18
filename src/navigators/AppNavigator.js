@@ -27,7 +27,6 @@ const AppNavigator = () => {
       component: LEG_IS_FINISHED,
       name: "legisfinished",
     },
-
     {
       component: REMATCH,
       name: "rematch",

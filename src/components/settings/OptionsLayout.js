@@ -23,7 +23,7 @@ export const OptionsLayout = () => {
       <Div theme={selectedTheme}>
         {DATA.map((item) => (
           <SETTINGS_BUTTON
-            key={item.name}
+            key={item}
             value={item}
             active={layout === item}
             length={DATA.length}

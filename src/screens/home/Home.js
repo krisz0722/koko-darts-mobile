@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import {
   Info,
@@ -12,13 +13,38 @@ import {
   Buttons,
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import { Alert, BackHandler } from "react-native";
+import { NavigationContext } from "../../contexts/NavigationContext";
 
-const HOME = ({ navigation }) => {
+const HOME = ({ route, navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
   const [unfinished, setUnfinished] = useState(true);
+
+  const { setHomeTabScreen } = useContext(NavigationContext);
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert("", "Are you sure you want to exit the application?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   const infoUnfinished = {
     title: "You have an unfinished game!",
@@ -76,12 +102,12 @@ const HOME = ({ navigation }) => {
       <Info unfinished={unfinished}>
         <InfoStats theme={selectedTheme}>
           {renderContent.rows.map((item) => (
-            <>
+            <React.Fragment key={item.value}>
               <InfoRow>
                 <InfoText>{item.title}</InfoText>
                 <InfoText2>{item.value}</InfoText2>
               </InfoRow>
-            </>
+            </React.Fragment>
           ))}
         </InfoStats>
       </Info>

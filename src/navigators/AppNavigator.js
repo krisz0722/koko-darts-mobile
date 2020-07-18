@@ -16,22 +16,22 @@ const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
-    // {
-    //   component: WELCOME,
-    //   name: "welcome",
-    // },
-    // {
-    //   component: REGISTER,
-    //   name: "register",
-    // },
-    // {
-    //   component: LOGIN,
-    //   name: "login",
-    // },
-    // {
-    //   component: FORGOT_PASSWORD,
-    //   name: "forgotpassword",
-    // },
+    {
+      component: WELCOME,
+      name: "welcome",
+    },
+    {
+      component: REGISTER,
+      name: "register",
+    },
+    {
+      component: LOGIN,
+      name: "login",
+    },
+    {
+      component: FORGOT_PASSWORD,
+      name: "forgotpassword",
+    },
     {
       component: GAME_CLASSIC,
       name: "game",

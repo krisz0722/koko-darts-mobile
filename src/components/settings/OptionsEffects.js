@@ -29,11 +29,12 @@ export const OptionsEffects = () => {
       <SETTINGS_HEADER
         text={"visual effects"}
         icon={"help-outline"}
-        action={() => console.log("action")}
+        action={() => alert("action")}
       />
       <Div theme={selectedTheme}>
         {EFFECTS.map((item) => (
           <SETTINGS_BUTTON
+            key={item.name}
             value={item.name}
             active={item.prop}
             length={EFFECTS.length}

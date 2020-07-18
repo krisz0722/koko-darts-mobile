@@ -13,7 +13,6 @@ const typeNextDart = (state) => {
     if (val) {
       return val;
     } else {
-      console.log(whichDart);
       switch (whichDart) {
         case 2:
           inputByDartArray[2] = 0;

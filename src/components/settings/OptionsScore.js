@@ -31,7 +31,7 @@ export const OptionsScore = () => {
           <SETTINGS_BUTTON
             active={score === item}
             length={DATA.length}
-            key={`${item}input`}
+            key={item}
             action={() => handlePress(item)}
             value={item}
           />

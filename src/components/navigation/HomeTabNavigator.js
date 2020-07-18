@@ -1,4 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { BackHandler, Alert } from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import NavButton from "../buttons/NavButton";
 import { NavBar } from "./NavBar";
@@ -8,12 +10,13 @@ const HOMENAVIGATOR_TAB = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
-  const { setHomeTabScreen } = useContext(NavigationContext);
 
-  const [active, setActive] = useState("home");
+  const { homeTabScreen, setHomeTabScreen } = useContext(NavigationContext);
+
+  const navigation = useNavigation();
 
   const handler = (value) => {
-    setActive(value);
+    navigation.navigate(value);
     setHomeTabScreen(value);
   };
 
@@ -37,7 +40,7 @@ const HOMENAVIGATOR_TAB = () => {
       {DATA.map((item) => (
         <NavButton
           key={item.name}
-          active={active === item.name}
+          active={homeTabScreen === item.name}
           action={() => handler(item.name)}
           icon={item.icon}
           length={3}

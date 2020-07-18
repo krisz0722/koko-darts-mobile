@@ -48,6 +48,7 @@ export const OptionsLegOrSet = () => {
         <Div theme={selectedTheme}>
           {["leg", "set"].map((item) => (
             <SETTINGS_BUTTON
+              key={item}
               active={legOrSet === item}
               length={data.length}
               action={() => handleLegOrSet(item)}

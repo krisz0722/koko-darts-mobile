@@ -45,7 +45,7 @@ const RADIO_BUTTON_SET = ({ OPTIONS, action, activeValue }) => {
   return (
     <Options>
       {OPTIONS.map((item) => (
-        <Option>
+        <Option key={item}>
           <Label>{item}</Label>
           <Radio
             onPress={() => action(item)}

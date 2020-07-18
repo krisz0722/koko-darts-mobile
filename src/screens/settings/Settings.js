@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BottomButtons } from "./StyledSettings";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { OptionsLayout } from "../../components/settings/OptionsLayout";
@@ -8,12 +8,30 @@ import { OptionsScore } from "../../components/settings/OptionsScore";
 import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "../../components/settings/Preview";
-const SETTINGS = () => {
+import { BackHandler } from "react-native";
+import { NavigationContext } from "../../contexts/NavigationContext";
+
+const SETTINGS = ({ route, navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
+  const { setHomeTabScreen } = useContext(NavigationContext);
+
   const [preview, setPreview] = useState(false);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("home");
+      setHomeTabScreen("home");
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <>

@@ -19,10 +19,11 @@ export const COLOR = () => {
 
   return (
     <Row theme={theme} layout="asym">
-      <SETTINGS_HEADER text={"theme"} action={() => console.log("action")} />
+      <SETTINGS_HEADER text={"theme"} action={() => alert("action")} />
       <Div theme={theme}>
         {DATA.map((item) => (
           <SETTINGS_BUTTON
+            key={item}
             value={item}
             active={theme.name === item}
             length={DATA.length}

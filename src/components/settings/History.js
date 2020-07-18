@@ -60,12 +60,17 @@ export const HISTORY = () => {
         <SETTINGS_HEADER
           header={true}
           text={"history"}
-          action={() => console.log("action")}
+          action={() => alert("action")}
         />
       </Row>
       <HistoryContainer>
         {DATA.map((item) => (
-          <HISTORY_ROW p1={item.p1} p2={item.p2} title={item.title} />
+          <HISTORY_ROW
+            key={item.title}
+            p1={item.p1}
+            p2={item.p2}
+            title={item.title}
+          />
         ))}
       </HistoryContainer>
     </>

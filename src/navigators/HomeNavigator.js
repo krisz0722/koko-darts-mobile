@@ -9,6 +9,8 @@ import HOME from "../screens/home/Home";
 import PROFILE from "../screens/profile/Profile";
 import HOMENAVIGATOR_TAB from "../components/navigation/HomeTabNavigator";
 
+import { Alert, BackHandler } from "react-native";
+
 const { Navigator, Screen } = createStackNavigator();
 
 const HomeNavigator = () => {
@@ -17,22 +19,20 @@ const HomeNavigator = () => {
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
-  const { homeTabScreen } = useContext(NavigationContext);
-
-  const SCREENS = {
-    home: {
+  const SCREENS = [
+    {
       component: HOME,
       name: "home",
     },
-    settings: {
+    {
       component: SETTINGS,
       name: "settings",
     },
-    profile: {
+    {
       component: PROFILE,
       name: "profile",
     },
-  };
+  ];
 
   const transition = (theme) =>
     theme === "default" ? transitionDefault : transitionContrast;
@@ -45,10 +45,15 @@ const HomeNavigator = () => {
           ...transition(theme.name),
         }}
       >
-        <Screen
-          name={SCREENS[homeTabScreen].name}
-          component={SCREENS[homeTabScreen].component}
-        />
+        <>
+          {SCREENS.map((item) => (
+            <Screen
+              key={item.name}
+              name={item.name}
+              component={item.component}
+            />
+          ))}
+        </>
       </Navigator>
       <HOMENAVIGATOR_TAB />
     </>

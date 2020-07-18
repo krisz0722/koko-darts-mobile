@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import PROFILE_NAVIGATOR_TAB from "../../components/navigation/ProfileTabNavigator";
 import ProfileNavigator from "../../navigators/ProfileNavigator";
 import {
@@ -8,8 +8,26 @@ import {
   NavigationWindow,
   SubContainer,
 } from "./StyledProfile";
+import { BackHandler } from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { NavigationContext } from "../../contexts/NavigationContext";
 
-const PROFILE = () => {
+const PROFILE = ({ route, navigation }) => {
+  const { setHomeTabScreen } = useContext(NavigationContext);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("home");
+      setHomeTabScreen("home");
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <>
       <Header>

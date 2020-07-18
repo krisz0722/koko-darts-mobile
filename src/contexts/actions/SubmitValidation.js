@@ -15,7 +15,6 @@ const submitValidation = (state) => {
       const third = parseInt(inputByDart.third.join(""));
       if (third) {
         scoreToSubmit = scoreToSubmit + third;
-        console.log(scoreToSubmit);
         return score - third;
       } else {
         return score;

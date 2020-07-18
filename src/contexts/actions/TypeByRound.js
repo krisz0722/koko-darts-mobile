@@ -4,8 +4,6 @@ const typeByRound = (state, val) => {
   const apKey = activePlayer["+DATA"];
   const apData = state[apKey];
 
-  console.log(inputIndex);
-
   if (inputIndex < 3) {
     inputByRound[inputIndex] = val;
   }

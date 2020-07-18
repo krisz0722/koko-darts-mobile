@@ -38,6 +38,19 @@ const AppNavigator = () => {
       name: "matchisfinished",
     },
     {
+      component: HomeNavigator,
+      name: "homenavigator",
+    },
+    {
+      component: REMATCH,
+      name: "rematch",
+    },
+
+    {
+      component: MATCH_IS_FINISHED,
+      name: "matchisfinished",
+    },
+    {
       component: WELCOME,
       name: "welcome",
     },

@@ -10,7 +10,7 @@ import {
 } from "./StyledWelcome";
 import TABNAVIGATOR from "../../components/navigation/TabNavigator";
 
-const WELCOME = () => {
+const WELCOME = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -20,11 +20,13 @@ const WELCOME = () => {
       route: "register",
       text: "let's do it now!",
       icon: null,
+      action: () => navigation.navigate("signup"),
     },
     {
       route: "homenavigator",
       text: "no thanks, let me play!",
       icon: null,
+      action: () => navigation.navigate("homenavigator"),
     },
   ];
 

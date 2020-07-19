@@ -5,6 +5,7 @@ import {
   BasicTextBold,
   FlexCol,
   FlexColAround,
+  FlexRowAround,
 } from "../../styles/css_mixins";
 
 export const ModalContainer = styled(View)`
@@ -45,4 +46,10 @@ export const Header3 = styled(Header)`
 
 export const Header4 = styled(Header)`
   font-size: 15;
+`;
+
+export const BottomButtons = styled(View)`
+  ${FlexRowAround};
+  height: 15%;
+  width: 100%;
 `;

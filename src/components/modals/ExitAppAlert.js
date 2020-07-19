@@ -3,7 +3,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import { Header2, Header3, ModalContainer2 } from "./StyledModal";
 import THEMED_BUTTON from "../buttons/ThemedButton";
-import { BottomButtons } from "../../screens/settings/StyledSettings";
+import { BottomButtons } from "./StyledModal";
 
 const EXIT_APP_ALERT = ({ action1, action2, visible }) => {
   const {

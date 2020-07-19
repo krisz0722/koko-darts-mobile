@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
-import { BottomButtons } from "../../screens/settings/StyledSettings";
+import { BottomButtons } from "./StyledModal";
 import { Header2, Header3, Header4, ModalContainer2 } from "./StyledModal";
 
 const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {

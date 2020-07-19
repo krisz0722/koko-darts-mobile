@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import NavButton from "../buttons/NavButton";
 import { NavigationContext } from "../../contexts/NavigationContext";
@@ -24,7 +24,7 @@ export const NavBar = styled(View)`
   ${FlexRowAround};
 `;
 
-const TABNAVIGATOR = ({ position, tabs, direction, length, color, action }) => {
+const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);

@@ -48,8 +48,10 @@ const LEG_IS_FINISHED = () => {
     return null;
   };
 
-  const [lastRoundNod, setLastRoundNod] = useState(nod());
-  const [modal, setModal] = useState(nod());
+  console.log("NUM OF DARTS REQUIRED", nod());
+
+  const [lastRoundNod, setLastRoundNod] = useState(nod() === 3 ? 3 : null);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     if (isMatchOver) {
@@ -88,20 +90,26 @@ const LEG_IS_FINISHED = () => {
     },
     {
       route: "matchisfinished",
-      text: "ok",
-      icon: "check",
+      text: lastRoundNod ? "ok" : "select",
+      icon: lastRoundNod ? "check" : "dart",
       action: () => {
-        setLastRoundNod(null),
-          dispatchGameData({
-            type: "FINISH_LEG",
-            nodUsed: lastRoundNod,
-            nodRequired: parseInt(nod()),
-          });
+        if (lastRoundNod) {
+          setLastRoundNod(null),
+            dispatchGameData({
+              type: "FINISH_LEG",
+              nodUsed: lastRoundNod,
+              nodRequired: parseInt(nod()),
+            });
+        } else {
+          null;
+        }
       },
     },
   ];
 
-  const OPTIONS = [1, 2, 3];
+  const OPTIONS = nod() === 3 ? [3] : nod() === 2 ? [2, 3] : [1, 2, 3];
+
+  console.log(OPTIONS);
 
   return (
     <>

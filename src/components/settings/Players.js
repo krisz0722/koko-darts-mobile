@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Text, TouchableHighlight, View } from "react-native";
 import {
@@ -10,6 +10,7 @@ import {
   Window,
 } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { GameContext } from "../../contexts/GameContext";
 
 const Players = styled(View)`
   width: 100%;
@@ -46,19 +47,23 @@ const Swap = styled(TouchableHighlight)`
 `;
 
 export const PLAYERS = () => {
+  const {
+    gameData: { p1, p2 },
+  } = useContext(GameContext);
+
   return (
     <>
       <Players>
         <PlayerInfo>
           <Avatar />
-          <Name>Esmeralda</Name>
+          <Name>{p1}</Name>
         </PlayerInfo>
         <Swap>
           <Icon name={"sync"} size={20} />
         </Swap>
         <PlayerInfo>
           <Avatar />
-          <Name>Jose Armando</Name>
+          <Name>{p2}</Name>
         </PlayerInfo>
       </Players>
     </>

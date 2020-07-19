@@ -24,7 +24,7 @@ export const NavBar = styled(View)`
   ${FlexRowAround};
 `;
 
-const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
+const TABNAVIGATOR = ({ position, tabs, direction, length, color, action }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -40,14 +40,13 @@ const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
   const activeScreen =
     route === "homenavigator" ? homeTabScreen : profileTabScreen;
 
-  const handler = (value, action) => {
+  const handler = (newRoute, action) => {
     if (route === "homenavigator") {
-      setHomeTabScreen(value);
+      setHomeTabScreen(newRoute);
     } else if (route === "profile") {
-      setProfileTabScreen(value);
-    } else {
-      return action();
+      setProfileTabScreen(newRoute);
     }
+    return action();
   };
 
   return (
@@ -58,7 +57,7 @@ const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
           direction={direction}
           key={item.route}
           active={activeScreen === item.route}
-          action={() => handler(item.value, item.action)}
+          action={() => handler(item.route, item.action)}
           icon={item.icon}
           length={length}
           text={item.text}

@@ -48,8 +48,8 @@ const DEFAULT_PLAYER_DATA = {
 
 export const GAME_DEFAULT_STATE = {
   status: "initialize",
-  p1: "sanyika",
-  p2: "lacika",
+  p1: "p1",
+  p2: "p2",
   legOrSet: "leg",
   toWin: 1,
   legsPerSet: 3,

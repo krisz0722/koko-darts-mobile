@@ -26,7 +26,7 @@ const LEG_IS_FINISHED = () => {
   const {
     dispatchGameData,
     gameData,
-    gameData: { activePlayer, inactivePlayer, isLegOver, isMatchOver },
+    gameData: { activePlayer, inactivePlayer, isLegOver, isMatchOver, winner },
   } = useContext(GameContext);
 
   const inapKey = `${inactivePlayer}_DATA`;
@@ -37,14 +37,14 @@ const LEG_IS_FINISHED = () => {
   const apOnCheckout = apData.onCheckout;
 
   const nod = () => {
-    // if (isLegOver) {
-    return CHECKOUTS.find((co) => co.value === inapData.lastScore).checkouts[0]
-      .nod;
-    // }
-    // if (apOnCheckout) {
-    //   return CHECKOUTS.find((co) => co.value === apData.score).checkouts[0].nod;
-    // }
-    // return null;
+    if (isLegOver) {
+      return CHECKOUTS.find((co) => co.value === inapData.lastScore)
+        .checkouts[0].nod;
+    }
+    if (apOnCheckout) {
+      return CHECKOUTS.find((co) => co.value === apData.score).checkouts[0].nod;
+    }
+    return null;
   };
 
   useEffect(() => {
@@ -90,7 +90,9 @@ const LEG_IS_FINISHED = () => {
   return (
     <View_Screen>
       <View_Headers theme={selectedTheme}>
-        <Text_Title theme={selectedTheme}>valaki has won the leg!</Text_Title>
+        <Text_Title
+          theme={selectedTheme}
+        >{`${winner} has won the leg!`}</Text_Title>
         <Text_Subtitle theme={selectedTheme}>
           number of darts used:
         </Text_Subtitle>

@@ -8,7 +8,6 @@ const submitUpdateScore = (
   newScore,
   type,
   num,
-  whichDart = 3,
 ) => {
   let {
     score,
@@ -49,6 +48,7 @@ const submitUpdateScore = (
   const avgScoring = norScoring === 0 ? 0 : (tsScoring / norScoring).toFixed(1);
 
   const isLegOver = newScore === 0;
+  const winner = isLegOver ? state.activePlayer : null;
 
   const missedDoubles = () => {
     switch (prevScoreNumOfDarts) {
@@ -137,6 +137,7 @@ const submitUpdateScore = (
     whichDart: 1,
     inputIndex: 0,
     isLegOver: isLegOver,
+    winner,
   };
 };
 

@@ -7,11 +7,17 @@ import HISTORY from "../../components/settings/History";
 import PLAYERS from "../../components/settings/Players";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { NavigationContext } from "../../contexts/NavigationContext";
+import { GameContext } from "../../contexts/GameContext";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
+
+  const {
+    dispatchGameData,
+    gameData: { p1, p2 },
+  } = useContext(GameContext);
 
   return (
     <>
@@ -34,7 +40,10 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           type={"success"}
           length={2}
           icon={"dart"}
-          action={() => navigation.navigate("game")}
+          action={() => {
+            dispatchGameData({ type: "NEW_MATCH", p1, p2 });
+            navigation.navigate("game");
+          }}
         />
       </BottomButtons>
     </>

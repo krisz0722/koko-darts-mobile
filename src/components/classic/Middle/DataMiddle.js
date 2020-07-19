@@ -3,7 +3,7 @@ import { GameContext } from "../../../contexts/GameContext";
 
 const DATA_MIDDLE = () => {
   const {
-    gameData: { isInputByDart },
+    gameData: { isInputByDart, p1, p2 },
   } = useContext(GameContext);
 
   return [
@@ -27,7 +27,7 @@ const DATA_MIDDLE = () => {
     },
     {
       type: "info",
-      value: "p1",
+      value: p1,
       action: null,
       icon: null,
     },
@@ -39,7 +39,7 @@ const DATA_MIDDLE = () => {
     },
     {
       type: "info",
-      value: "p2",
+      value: p2,
       action: null,
       icon: null,
     },

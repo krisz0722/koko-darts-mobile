@@ -20,8 +20,8 @@ const CLASSIC_MIDDLE = () => {
     <ClassicMiddle>
       {DATA_MIDDLE().map((item) => (
         <React.Fragment key={item.value}>
-          {item.value === "p2" || item.value === "p1" ? (
-            <PLAYER_INPUT_INFO value={item.value} name={item.value} />
+          {item.type === "info" ? (
+            <PLAYER_INPUT_INFO value={item.value} player={item.value} />
           ) : (
             <NUM_BUTTON
               middle={true}

@@ -42,7 +42,7 @@ const Text_Sub = styled(Text_Main)`
 
 const LEGSET = ({ player }) => {
   const {
-    gameData: { showStats, legOrSet, activePlayer, p1_DATA },
+    gameData: { showStats, legOrSet, activePlayer, p1_DATA, p2_DATA },
   } = useContext(GameContext);
 
   const {
@@ -121,9 +121,9 @@ const LEGSET = ({ player }) => {
           showStats={showStats}
         >
           <Text_Main style={{ fontSize }} player={"p2"}>
-            {legOrSet === "set" ? p1_DATA.setsWon : p1_DATA.legsWon}
+            {legOrSet === "set" ? p2_DATA.setsWon : p2_DATA.legsWon}
           </Text_Main>
-          <Text_Sub player={"p2"}>({p1_DATA.legsWon})</Text_Sub>
+          <Text_Sub player={"p2"}>({p2_DATA.legsWon})</Text_Sub>
         </LegSet2>
       )}
     </>

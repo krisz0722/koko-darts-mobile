@@ -48,8 +48,11 @@ const Swap = styled(TouchableHighlight)`
 
 export const PLAYERS = () => {
   const {
+    dispatchGameData,
     gameData: { p1, p2 },
   } = useContext(GameContext);
+
+  const swap = () => dispatchGameData({ type: "SWAP_PLAYERS" });
 
   return (
     <>
@@ -58,7 +61,7 @@ export const PLAYERS = () => {
           <Avatar />
           <Name>{p1}</Name>
         </PlayerInfo>
-        <Swap>
+        <Swap onPress={swap}>
           <Icon name={"sync"} size={20} />
         </Swap>
         <PlayerInfo>

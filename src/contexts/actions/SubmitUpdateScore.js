@@ -123,20 +123,19 @@ const submitUpdateScore = (
       180: scoreToSubmit === 180 ? playerData["180"] + num : playerData["180"],
     },
     isInputByDart: false,
-
     scoreToSubmit: 0,
     activePlayer: state.inactivePlayer,
     inactivePlayer: state.activePlayer,
     inputByRound: ["", "", ""],
     inputByDartArray: ["", "", "", "", "", ""],
     inputByDart: {
-      first: [],
-      second: [],
-      third: [],
+      first: ["", ""],
+      second: ["", ""],
+      third: ["", ""],
     },
     whichDart: 1,
     inputIndex: 0,
-    isLegOver: isLegOver,
+    isLegOver,
     winner,
   };
 };

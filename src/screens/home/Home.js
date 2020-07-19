@@ -13,12 +13,14 @@ import {
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { Alert, BackHandler } from "react-native";
-import { NavigationContext } from "../../contexts/NavigationContext";
+import { GameContext } from "../../contexts/GameContext";
 
 const HOME = ({ route, navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
+
+  const { dispatchGameData } = useContext(GameContext);
 
   const [unfinished, setUnfinished] = useState(true);
 
@@ -89,6 +91,33 @@ const HOME = ({ route, navigation }) => {
 
   const renderContent = unfinished ? infoUnfinished : infoLastMatch;
 
+  const handleNewGame = () => {
+    if (unfinished) {
+      Alert.alert(
+        "You have an unfinished match",
+        "If you start a new match, you are going to lose your previous unfinished match. Proceed?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          {
+            text: "YES",
+            onPress: () => {
+              dispatchGameData({ type: "CREATE_NEW_MATCH" });
+              navigation.navigate("pregame");
+            },
+          },
+        ],
+      );
+    } else {
+      dispatchGameData({ type: "CREATE_NEW_MATCH" });
+      navigation.navigate("pregame");
+      setUnfinished(false);
+    }
+  };
+
   return (
     <>
       <Header>
@@ -121,7 +150,7 @@ const HOME = ({ route, navigation }) => {
           type={"active"}
           theme={selectedTheme}
           text={"new game"}
-          action={() => navigation.navigate("pregame")}
+          action={() => handleNewGame()}
         />
       </Buttons>
     </>

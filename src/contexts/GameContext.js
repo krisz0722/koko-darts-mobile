@@ -16,14 +16,12 @@ export const GameContext = createContext({});
 export const GameContextProvider = (props) => {
   const gameReducer = (state, action = null) => {
     switch (action.type) {
-      case "CHANGE_AP":
-        return { ...state, activePlayer: action.value };
       case "CHANGE_P1":
         return { ...state, p1: action.value };
       case "CHANGE_P2":
         return { ...state, p2: action.value };
       case "SWAP_PLAYERS":
-        return { ...state, p1: action.p1, p2: action.p2 };
+        return { ...state, p1: state.p2, p2: state.p1 };
       case "CHANGE_LEGORSET":
         return { ...state, legOrSet: action.value };
       case "CHANGE_TOWIN":
@@ -56,8 +54,6 @@ export const GameContextProvider = (props) => {
 
       case "FINISH_LEG":
         return finishLeg(state, action.nodUsed, action.nodRequired);
-      case "INITIATE_REMATCH":
-        return { ...state, isRematch: true, isMatchOver: false };
       case "REMATCH":
         return rematch(
           state,
@@ -66,12 +62,13 @@ export const GameContextProvider = (props) => {
           GAME_DEFAULT_STATE,
         );
       case "CREATE_NEW_MATCH":
-        return action.value;
+        return GAME_DEFAULT_STATE;
       case "NEW_MATCH":
         return {
           ...GAME_DEFAULT_STATE,
-          p1: action.value,
-          userName: action.value,
+          p1: action.p1,
+          p2: action.p2,
+          status: "started",
         };
       default:
         return state;
@@ -84,6 +81,8 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
+
+  console.log(gameData);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

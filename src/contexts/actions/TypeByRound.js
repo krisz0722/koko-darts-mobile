@@ -1,7 +1,7 @@
 const typeByRound = (state, val) => {
   const { inputIndex, inputByRound, activePlayer } = state;
 
-  const apKey = activePlayer["+DATA"];
+  const apKey = activePlayer + "_DATA";
   const apData = state[apKey];
 
   if (inputIndex < 3) {
@@ -16,9 +16,9 @@ const typeByRound = (state, val) => {
     inputIndex: inputIndex + 1,
     inputByRound,
     inputByDart: {
-      first: [],
-      second: [],
-      third: [],
+      first: ["", ""],
+      second: ["", ""],
+      third: ["", ""],
     },
     [apKey]: {
       ...apData,

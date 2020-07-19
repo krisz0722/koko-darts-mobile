@@ -17,7 +17,7 @@ const DATA_BOTTOM = () => {
   const canGoBack = gameData[inactivePlayer + "_DATA"].canGoBack;
 
   const backOrClear =
-    inputByRound[0] === "" && inputByDart.first.length === 0 && canGoBack
+    inputByRound[0] === "" && inputByDart.first[0] === "" && canGoBack
       ? "BACK"
       : "CLEAR";
 

@@ -38,9 +38,9 @@ const clear = (state) => {
     inputByRound: ["", "", ""],
     inputByDartArray: ["", "", "", "", "", ""],
     inputByDart: {
-      first: [],
-      second: [],
-      third: [],
+      first: ["", ""],
+      second: ["", ""],
+      third: ["", ""],
     },
     isInputByDart: false,
     [apKey]: {

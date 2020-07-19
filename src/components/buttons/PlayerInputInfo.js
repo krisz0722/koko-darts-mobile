@@ -23,7 +23,7 @@ export const Text_Function = styled(Animated.Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const PLAYER_INPUT_INFO = ({ disabled, value, name }) => {
+const PLAYER_INPUT_INFO = ({ value, player }) => {
   const {
     settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
@@ -53,21 +53,16 @@ const PLAYER_INPUT_INFO = ({ disabled, value, name }) => {
     : theme.game[activePlayer + "Border"];
 
   const scoreDisplayText =
-    name === activePlayer
+    player === gameData[activePlayer]
       ? "current:" + inputByRound.join("")
       : "last:" + gameData[inactivePlayer + "_DATA"].lastScore;
 
   return (
     <>
-      {isInputByDart && activePlayer === name ? (
+      {isInputByDart && gameData[activePlayer] === player ? (
         <INPUT_BY_DART_FIELD />
       ) : (
-        <PlayerInputInfo
-          ap={activePlayer}
-          style={{ borderColor }}
-          disabled={disabled}
-          name={name}
-        >
+        <PlayerInputInfo ap={activePlayer} style={{ borderColor }}>
           <>
             <Text_Function theme={selectedTheme}>{value}</Text_Function>
             <Text_Function theme={selectedTheme}>

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
 import { CHECKOUTS } from "../../../calc/scores";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import ShapeThrow from "../../../../assets/shapeThrow";
@@ -15,6 +14,7 @@ import {
 import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
+import { Alert, BackHandler } from "react-native";
 
 const LEG_IS_FINISHED = () => {
   const {
@@ -53,6 +53,37 @@ const LEG_IS_FINISHED = () => {
     }
   }, [isMatchOver, navigation]);
 
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert(
+        "LEAVING MATCH",
+        "Are you sure you want to leave the match? (It will be saved, you can continue it later.) ",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          {
+            text: "YES",
+            onPress: () => {
+              alert("match is being saved");
+              navigation.navigate("homenavigator");
+            },
+          },
+        ],
+      );
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
   const [lastRoundNod, setLastRoundNod] = useState(nod());
 
   const handleLastDartNod = (val) => setLastRoundNod(val);
@@ -74,7 +105,6 @@ const LEG_IS_FINISHED = () => {
       text: "ok",
       icon: "check",
       action: () => {
-        console.log(lastRoundNod, isLegOver, isMatchOver);
         setLastRoundNod(null),
           dispatchGameData({
             type: "FINISH_LEG",

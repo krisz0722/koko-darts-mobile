@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useContext } from "react";
-import { Animated } from "react-native";
+import { Alert, Animated, BackHandler } from "react-native";
 import styled from "styled-components";
 import CLASSIC_SCORES from "../../components/classic/Scores/ClassicScores";
 import CLASSIC_MIDDLE from "../../components/classic/Middle/ClassicMiddle";
@@ -64,6 +64,37 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     navigation,
   ]);
 
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert(
+        "LEAVING MATCH",
+        "Are you sure you want to leave the match? (It will be saved, you can continue it later.) ",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          {
+            text: "YES",
+            onPress: () => {
+              alert("match is being saved");
+              navigation.navigate("homenavigator");
+            },
+          },
+        ],
+      );
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
   const opacity1 = animation
     ? animationValue.interpolate({
         inputRange: [0, 1],
@@ -101,3 +132,5 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
 };
 
 export default GAME_CLASSIC;
+
+// TODO BACKHANDLING!!

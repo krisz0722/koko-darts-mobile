@@ -15,6 +15,7 @@ import {
 import { BackHandler } from "react-native";
 import { NavigationContext } from "../../contexts/NavigationContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
+import PROFILE_STATS from "./DataProfile";
 
 const PROFILE = ({ route, navigation }) => {
   const {
@@ -36,29 +37,6 @@ const PROFILE = ({ route, navigation }) => {
     return () => backHandler.remove();
   }, [navigation, setHomeTabScreen]);
 
-  const DATA = [
-    {
-      stat: "total games played",
-      value: 125,
-    },
-    {
-      stat: "winning percentage",
-      value: "56%",
-    },
-    {
-      stat: "overall average",
-      value: 120.2,
-    },
-    {
-      stat: "best match average",
-      value: 110.2,
-    },
-    {
-      stat: "180s",
-      value: 11,
-    },
-  ];
-
   return (
     <>
       <Header>
@@ -67,7 +45,7 @@ const PROFILE = ({ route, navigation }) => {
           <Name theme={selectedTheme}>Jose armando</Name>
         </Container>
         <Container2 theme={selectedTheme}>
-          {DATA.map((item) => (
+          {PROFILE_STATS.map((item) => (
             <Field>
               <Stat theme={selectedTheme}>{item.stat}</Stat>
               <StatValue>{item.value}</StatValue>
@@ -84,3 +62,5 @@ const PROFILE = ({ route, navigation }) => {
 };
 
 export default PROFILE;
+
+//TODO profile stats font- size, matches font-size,

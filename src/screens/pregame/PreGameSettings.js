@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BottomButtons } from "../settings/StyledSettings";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { OptionsScore } from "../../components/settings/OptionsScore";
@@ -7,6 +7,7 @@ import HISTORY from "../../components/settings/History";
 import PLAYERS from "../../components/settings/Players";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { GameContext } from "../../contexts/GameContext";
+import { BackHandler } from "react-native";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
   const {
@@ -17,6 +18,18 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     dispatchGameData,
     gameData: { p1, p2 },
   } = useContext(GameContext);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("home");
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+    return () => backHandler.remove();
+  }, [navigation]);
 
   return (
     <>

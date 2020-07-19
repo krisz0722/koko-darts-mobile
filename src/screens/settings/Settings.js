@@ -63,3 +63,5 @@ const SETTINGS = ({ route, navigation }) => {
 };
 
 export default SETTINGS;
+
+// TODO animation toggle, visual effecet info modal or tooltip, RESET button, ASYM component, PREVIEW visibilityi icon

@@ -13,7 +13,6 @@ const Div = styled(View)`
   width: 100%;
   background-color: ${({ focused, theme, valid }) =>
     focused ? theme.bgActive : valid ? "transparent" : theme.bg1};
-  border: 2px red solid;
 `;
 
 const TextInput_Login = styled(TextInput)`

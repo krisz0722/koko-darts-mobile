@@ -10,7 +10,7 @@ export const Friend = styled(View)`
   padding: 0 5%;
   width: 100%;
   margin-top: 10;
-  background-color: ${({ theme }) => "rgba(0,0,0,0.2)"};
+  background-color: rgba(255, 255, 255, 0.1);
 `;
 
 export const FriendAvatar = styled(Image)`

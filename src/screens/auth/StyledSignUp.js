@@ -10,7 +10,6 @@ export const Form = styled(View)`
   top: ${({ isKeyboardUp }) => (isKeyboardUp ? "0%" : "18%")};
   margin: auto;
   height: ${() => Window.height * 0.55};
-  border: 2px red solid;
 `;
 
 export const Buttons = styled(View)`
@@ -20,5 +19,4 @@ export const Buttons = styled(View)`
   bottom: 5%;
   margin: auto;
   height: 20%;
-  border: 2px red solid;
 `;

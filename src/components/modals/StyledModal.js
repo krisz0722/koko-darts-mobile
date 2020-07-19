@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { KeyboardAvoidingView, Text, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import {
   BasicText,
   BasicTextBold,
@@ -21,11 +21,8 @@ export const ModalContainerAlert = styled(ModalContainerBasic)`
   padding: 50% 0;
 `;
 
-export const ModalContainerSearch = styled(KeyboardAvoidingView)`
-  ${FlexCol};
+export const ModalContainerSearch = styled(ScrollView)`
   background-color: rgba(255, 255, 255, 0.95);
-  width: 100%;
-  height: 100%;
 `;
 
 export const Header = styled(Text)`

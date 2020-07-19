@@ -1,13 +1,18 @@
 import React, { useContext } from "react";
+import { SafeAreaView } from "react-native";
 import { SettingsContext } from "../../../contexts/SettingsContext";
-import { HeaderText } from "../../home/StyledHome";
+import LIST_MATCHES from "./ListMatches";
 
 const MATCHES = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  return <HeaderText theme={selectedTheme}>MATCHES</HeaderText>;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <LIST_MATCHES />
+    </SafeAreaView>
+  );
 };
 
 export default MATCHES;

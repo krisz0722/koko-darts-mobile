@@ -1,28 +1,27 @@
 import React, { useContext } from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import styled from "styled-components";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { FlatList } from "react-native";
-import FRIENDS_LIST from "./DataFriends";
-import FRIEND_COMPONENT from "./FriendComponent";
+import MATCH_COMPONENT from "./MatchComponent";
+import MATCHES_LIST from "./DataMatches";
 
-export const FriendsContainer = styled(FlatList)`
+export const MatchesContainer = styled(FlatList)`
   width: 100%;
-  border-bottom-width: ${({ theme }) => theme.borderWidth};
-  border-color: ${({ theme }) => theme.borderColor};
+  height: 100%;
 `;
 
-const LIST_FRIENDS = () => {
+const LIST_MATCHES = () => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const renderItem = ({ item }) => <FRIEND_COMPONENT item={item} />;
+  const renderItem = ({ item }) => <MATCH_COMPONENT item={item} />;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <FriendsContainer
-        data={FRIENDS_LIST}
+      <MatchesContainer
+        data={MATCHES_LIST}
         renderItem={renderItem}
         keyExtractor={(item) => item.name}
         theme={selectedTheme}
@@ -31,4 +30,4 @@ const LIST_FRIENDS = () => {
   );
 };
 
-export default LIST_FRIENDS;
+export default LIST_MATCHES;

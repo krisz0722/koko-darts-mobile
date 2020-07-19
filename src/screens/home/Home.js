@@ -120,3 +120,5 @@ const HOME = ({ route, navigation }) => {
 };
 
 export default HOME;
+
+//TODO friend request info bar at the top, app update info bar top

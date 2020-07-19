@@ -14,7 +14,8 @@ import {
 import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
-import { Alert, BackHandler } from "react-native";
+import { BackHandler } from "react-native";
+import LEAVE_MATCH_ALERT from "../../../components/modals/LeaveMatchAlert";
 
 const LEG_IS_FINISHED = () => {
   const {
@@ -47,6 +48,9 @@ const LEG_IS_FINISHED = () => {
     return null;
   };
 
+  const [lastRoundNod, setLastRoundNod] = useState(nod());
+  const [modal, setModal] = useState(nod());
+
   useEffect(() => {
     if (isMatchOver) {
       navigation.navigate("matchisfinished");
@@ -55,36 +59,19 @@ const LEG_IS_FINISHED = () => {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert(
-        "LEAVING MATCH",
-        "Are you sure you want to leave the match? (It will be saved, you can continue it later.) ",
-        [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel",
-          },
-          {
-            text: "YES",
-            onPress: () => {
-              alert("match is being saved");
-              navigation.navigate("homenavigator");
-            },
-          },
-        ],
-      );
+      setModal(true);
       return true;
     };
-
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       backAction,
     );
-
     return () => backHandler.remove();
   }, [navigation]);
 
-  const [lastRoundNod, setLastRoundNod] = useState(nod());
+  const handleLeaveMatch = () => {
+    navigation.navigate("homenavigator");
+  };
 
   const handleLastDartNod = (val) => setLastRoundNod(val);
 
@@ -94,7 +81,6 @@ const LEG_IS_FINISHED = () => {
       text: "back",
       icon: "arrow-back",
       action: () => {
-        alert("SET LAST DART NOD");
         setLastRoundNod(null),
           dispatchGameData({ type: "BACK" }),
           navigation.navigate("game");
@@ -118,39 +104,44 @@ const LEG_IS_FINISHED = () => {
   const OPTIONS = [1, 2, 3];
 
   return (
-    <View_Screen>
-      <View_Headers theme={selectedTheme}>
-        <Text_Title
-          theme={selectedTheme}
-        >{`${winner} has won the leg!`}</Text_Title>
-        <Text_Subtitle theme={selectedTheme}>
-          number of darts used:
-        </Text_Subtitle>
-        <NumOfDarts>
-          <RADIO_BUTTON_SET
-            direction={"horizontal"}
-            options={OPTIONS}
-            action={handleLastDartNod}
-            activeValue={lastRoundNod}
-          />
-        </NumOfDarts>
-      </View_Headers>
-      <View_Shape theme={selectedTheme}>
-        <ShapeThrow fill={selectedTheme.bg3} />
-      </View_Shape>
-      <TABNAVIGATOR
-        tabs={TABS}
-        color={"dark"}
-        position={"bottom"}
-        length={3}
-        direction={"horizontal"}
+    <>
+      <View_Screen>
+        <View_Headers theme={selectedTheme}>
+          <Text_Title
+            theme={selectedTheme}
+          >{`${winner} has won the leg!`}</Text_Title>
+          <Text_Subtitle theme={selectedTheme}>
+            number of darts used:
+          </Text_Subtitle>
+          <NumOfDarts>
+            <RADIO_BUTTON_SET
+              direction={"horizontal"}
+              options={OPTIONS}
+              action={handleLastDartNod}
+              activeValue={lastRoundNod}
+            />
+          </NumOfDarts>
+        </View_Headers>
+        <View_Shape theme={selectedTheme}>
+          <ShapeThrow fill={selectedTheme.bg3} />
+        </View_Shape>
+        <TABNAVIGATOR
+          tabs={TABS}
+          color={"dark"}
+          position={"bottom"}
+          length={3}
+          direction={"horizontal"}
+        />
+      </View_Screen>
+      <LEAVE_MATCH_ALERT
+        action1={() => setModal(!modal)}
+        action2={handleLeaveMatch}
+        visible={modal}
       />
-    </View_Screen>
+    </>
   );
 };
 
 export default LEG_IS_FINISHED;
 
 //TODO disabling irrelevant nod options!!!!!
-// TODO BACK DOES NOT WORK YET!!!!
-// TODO after finishing leg and initializing rematch, current score whos a value!!!

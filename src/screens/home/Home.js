@@ -12,8 +12,12 @@ import {
   Buttons,
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { Alert, BackHandler } from "react-native";
+import { BackHandler } from "react-native";
 import { GameContext } from "../../contexts/GameContext";
+import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
+import UNFINISHED_MATCH from "./DataUnfinished";
+import LAST_MATCH from "./DataLastMatch";
+import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
 
 const HOME = ({ route, navigation }) => {
   const {
@@ -23,17 +27,12 @@ const HOME = ({ route, navigation }) => {
   const { dispatchGameData } = useContext(GameContext);
 
   const [unfinished, setUnfinished] = useState(true);
+  const [exitModal, setExitModal] = useState(false);
+  const [newGameModal, setNewGameModal] = useState(false);
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("", "Are you sure you want to exit the application?", [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        { text: "YES", onPress: () => BackHandler.exitApp() },
-      ]);
+      setExitModal(true);
       return true;
     };
 
@@ -45,77 +44,30 @@ const HOME = ({ route, navigation }) => {
     return () => backHandler.remove();
   }, []);
 
-  const infoUnfinished = {
-    title: "You have an unfinished game!",
-    rows: [
-      {
-        title: "last palyed on:",
-        value: "2020.05.12",
-      },
-      {
-        title: "opponent",
-        value: "Mustang",
-      },
-      {
-        title: "match standing",
-        value: "3-2",
-      },
-      {
-        title: "match average",
-        value: "65.21",
-      },
-    ],
-  };
-
-  const infoLastMatch = {
-    title: "Your last match:",
-    rows: [
-      {
-        title: "result:",
-        value: "3-2 (WIN)",
-      },
-      {
-        title: "opponent",
-        value: "Mustang",
-      },
-      {
-        title: "match average",
-        value: "65.2",
-      },
-      {
-        title: "best leg average",
-        value: "110.2",
-      },
-    ],
-  };
-
-  const renderContent = unfinished ? infoUnfinished : infoLastMatch;
+  const renderContent = unfinished ? UNFINISHED_MATCH : LAST_MATCH;
 
   const handleNewGame = () => {
     if (unfinished) {
-      Alert.alert(
-        "You have an unfinished match",
-        "If you start a new match, you are going to lose your previous unfinished match. Proceed?",
-        [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel",
-          },
-          {
-            text: "YES",
-            onPress: () => {
-              dispatchGameData({ type: "CREATE_NEW_MATCH" });
-              navigation.navigate("pregame");
-            },
-          },
-        ],
-      );
+      setNewGameModal(!newGameModal);
     } else {
       dispatchGameData({ type: "CREATE_NEW_MATCH" });
       navigation.navigate("pregame");
       setUnfinished(false);
     }
+  };
+
+  const handleNewGameModal = () => {
+    dispatchGameData({ type: "CREATE_NEW_MATCH" });
+    navigation.navigate("pregame");
+    setUnfinished(false);
+    setTimeout(() => {
+      setNewGameModal(!newGameModal);
+    }, 300);
+  };
+
+  const handleExitApp = () => {
+    BackHandler.exitApp();
+    setExitModal(!exitModal);
   };
 
   return (
@@ -153,6 +105,16 @@ const HOME = ({ route, navigation }) => {
           action={() => handleNewGame()}
         />
       </Buttons>
+      <EXIT_APP_ALERT
+        action1={() => setExitModal(!exitModal)}
+        action2={handleExitApp}
+        visible={exitModal}
+      />
+      <NEW_GAME_ALERT
+        action1={() => setNewGameModal(!newGameModal)}
+        action2={handleNewGameModal}
+        visible={newGameModal}
+      />
     </>
   );
 };

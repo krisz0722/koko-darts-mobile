@@ -3,10 +3,8 @@ import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { BasicText, Flex, FlexCol, Window } from "../../styles/css_mixins";
-import IconDart from "../../../assets/iconDart";
+import { BasicText, Flex, Window } from "../../styles/css_mixins";
 import IconThreeDart from "../../../assets/iconThreeDart";
-
 const Button_Nav = styled(TouchableOpacity)`
   ${Flex};
   flex-direction: ${({ direction }) =>

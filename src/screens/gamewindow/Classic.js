@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useContext } from "react";
-import { Alert, Animated, BackHandler } from "react-native";
+import React, { useEffect, useRef, useContext, useState } from "react";
+import { Animated, BackHandler } from "react-native";
 import styled from "styled-components";
 import CLASSIC_SCORES from "../../components/classic/Scores/ClassicScores";
 import CLASSIC_MIDDLE from "../../components/classic/Middle/ClassicMiddle";
@@ -9,6 +9,7 @@ import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
 import { Window } from "../../styles/css_mixins";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
+import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
 
 const GameWindow = styled(Animated.View)`
   position: absolute;
@@ -47,6 +48,8 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     new Animated.Value(inactivePlayer === "p1" ? 1 : 0),
   ).current;
 
+  const [modal, setModal] = useState(false);
+
   useEffect(() => {
     Animated.timing(animationValue, {
       toValue: inactivePlayer === "p1" ? 1 : 0,
@@ -66,34 +69,19 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert(
-        "LEAVING MATCH",
-        "Are you sure you want to leave the match? (It will be saved, you can continue it later.) ",
-        [
-          {
-            text: "Cancel",
-            onPress: () => null,
-            style: "cancel",
-          },
-          {
-            text: "YES",
-            onPress: () => {
-              alert("match is being saved");
-              navigation.navigate("homenavigator");
-            },
-          },
-        ],
-      );
+      setModal(true);
       return true;
     };
-
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       backAction,
     );
-
     return () => backHandler.remove();
   }, [navigation]);
+
+  const handleLeaveMatch = () => {
+    navigation.navigate("homenavigator");
+  };
 
   const opacity1 = animation
     ? animationValue.interpolate({
@@ -127,10 +115,13 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
       ) : null}
       <CLASSIC_MIDDLE />
       <CLASSIC_BOTTOM />
+      <LEAVE_MATCH_ALERT
+        action1={() => setModal(!modal)}
+        action2={handleLeaveMatch}
+        visible={modal}
+      />
     </GameWindow>
   );
 };
 
 export default GAME_CLASSIC;
-
-// TODO BACKHANDLING!!

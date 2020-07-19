@@ -7,10 +7,9 @@ import {
   View_Shape,
   View_Screen,
 } from "./StyledMatchIsFinished";
-import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import { Text_Subtitle } from "../legisfinished/StyledLegIsFinished";
 import { useNavigation } from "@react-navigation/native";
-import { Alert, BackHandler } from "react-native";
+import { BackHandler } from "react-native";
 import MATCH_IS_FINISHED_NAVIGATOR from "../../../components/navigation/MatchIsFinishedNavigator";
 import { GameContext } from "../../../contexts/GameContext";
 
@@ -28,23 +27,7 @@ const MATCH_IS_FINISHED = () => {
   useEffect(() => {
     if (isMatchOver) {
       const backAction = () => {
-        Alert.alert(
-          "LEAVING MATCH",
-          "You will be navigated to the home screen. Proceed?",
-          [
-            {
-              text: "Cancel",
-              onPress: () => null,
-              style: "cancel",
-            },
-            {
-              text: "YES",
-              onPress: () => {
-                navigation.navigate("homenavigator");
-              },
-            },
-          ],
-        );
+        navigation.navigate("homenavigator");
         return true;
       };
 
@@ -54,7 +37,7 @@ const MATCH_IS_FINISHED = () => {
       );
       return () => backHandler.remove();
     }
-  }, []);
+  }, [isMatchOver, navigation]);
 
   return (
     <View_Screen>

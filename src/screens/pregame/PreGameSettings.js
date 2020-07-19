@@ -6,7 +6,6 @@ import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
 import HISTORY from "../../components/settings/History";
 import PLAYERS from "../../components/settings/Players";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { NavigationContext } from "../../contexts/NavigationContext";
 import { GameContext } from "../../contexts/GameContext";
 
 const PREGAME_SETTINGS = ({ navigation }) => {

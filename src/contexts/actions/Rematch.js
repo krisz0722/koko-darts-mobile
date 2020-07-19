@@ -1,7 +1,6 @@
 const rematch = (state, activePlayer, inactivePlayer, GAME_DEFAULT_STATE) => {
   const { toWin, legOrSet, startingScore } = state;
 
-  alert("initalizing new match");
   state = {
     ...GAME_DEFAULT_STATE,
     status: "started",

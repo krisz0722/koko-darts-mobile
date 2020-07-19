@@ -3,11 +3,8 @@ import styled from "styled-components";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 import {
-  AlignText,
   BasicTextBold,
-  Flex,
   FlexAround,
-  FlexColAround,
   FlexRowAround,
   FlexRowBetween,
   Window,

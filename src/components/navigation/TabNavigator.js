@@ -29,7 +29,6 @@ const TABNAVIGATOR = ({ position, tabs, direction, length, color, action }) => {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const navigation = useNavigation();
   const route = useRoute().name;
 
   const { homeTabScreen, setHomeTabScreen } = useContext(NavigationContext);

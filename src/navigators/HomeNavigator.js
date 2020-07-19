@@ -58,5 +58,3 @@ const HomeNavigator = () => {
 };
 
 export default HomeNavigator;
-
-// TODO this is not real navigation! repalce this with navigation.navigate

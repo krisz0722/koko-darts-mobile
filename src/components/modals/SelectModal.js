@@ -1,28 +1,10 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { View, Modal, Text } from "react-native";
-import { BasicTextBold, FlexColAround } from "../../styles/css_mixins";
+import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
-
-const ModalContainer = styled(View)`
-  height: 100%;
-  width: 100%;
-  padding: 10% 0;
-  ${FlexColAround};
-  background-color: rgba(255, 255, 255, 0.95);
-`;
-const Header = styled(Text)`
-${BasicTextBold}
-height:10%;
-width:100%;
-margin:auto;
-background-color: ${({ theme }) => theme.bg1};
-color: ${({ theme }) => theme.text}
-font-size:20;
-`;
+import { ModalContainer, Header } from "./StyledModal";
 
 const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
   const {

@@ -4,7 +4,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Div, Row2, Row } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "./SettingsButton";
-import MODAL_SELECT from "./Modal";
+import MODAL_SELECT from "../modals/SelectModal";
 
 export const OptionsLegOrSet = () => {
   const {

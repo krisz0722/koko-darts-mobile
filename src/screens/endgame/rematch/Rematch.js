@@ -90,5 +90,3 @@ const REMATCH = () => {
 };
 
 export default REMATCH;
-
-// TODO new player to start is not good !

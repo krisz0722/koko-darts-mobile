@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Text, View } from "react-native";
+import { KeyboardAvoidingView, Text, View } from "react-native";
 import {
   BasicText,
   BasicTextBold,
@@ -8,7 +8,7 @@ import {
   FlexRowAround,
 } from "../../styles/css_mixins";
 
-export const ModalContainer = styled(View)`
+export const ModalContainerBasic = styled(View)`
   height: 100%;
   width: 100%;
   padding: 10% 0;
@@ -16,9 +16,16 @@ export const ModalContainer = styled(View)`
   background-color: rgba(255, 255, 255, 0.95);
 `;
 
-export const ModalContainer2 = styled(ModalContainer)`
+export const ModalContainerAlert = styled(ModalContainerBasic)`
   ${FlexCol};
   padding: 50% 0;
+`;
+
+export const ModalContainerSearch = styled(KeyboardAvoidingView)`
+  ${FlexCol};
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 100%;
+  height: 100%;
 `;
 
 export const Header = styled(Text)`

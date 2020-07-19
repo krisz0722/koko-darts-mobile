@@ -3,7 +3,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
-import { Header2, Header3, Header4, ModalContainer2 } from "./StyledModal";
+import { Header2, Header3, Header4, ModalContainerAlert } from "./StyledModal";
 
 const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {
   const {
@@ -17,7 +17,7 @@ const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {
       presentationStyle={"pageSheet"}
       visible={visible}
     >
-      <ModalContainer2 theme={selectedTheme}>
+      <ModalContainerAlert theme={selectedTheme}>
         <Header2>leaving match</Header2>
         <Header3>
           Are you sure you want to leave the match? (It will be saved, you can
@@ -42,7 +42,7 @@ const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {
             action={() => action2()}
           />
         </BottomButtons>
-      </ModalContainer2>
+      </ModalContainerAlert>
     </Modal>
   );
 };

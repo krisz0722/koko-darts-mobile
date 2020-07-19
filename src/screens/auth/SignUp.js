@@ -3,7 +3,7 @@ import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Buttons, Form } from "./StyledSignUp";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import LoginInput from "../../components/LoginInput";
+import LoginInput from "../../components/buttons/LoginInput";
 
 const REGISTER = ({ navigation }) => {
   const {

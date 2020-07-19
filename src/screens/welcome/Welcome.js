@@ -20,7 +20,7 @@ const WELCOME = ({ navigation }) => {
       route: "register",
       text: "let's do it now!",
       icon: null,
-      action: () => navigation.navigate("signup"),
+      action: () => navigation.navigate("register"),
     },
     {
       route: "homenavigator",

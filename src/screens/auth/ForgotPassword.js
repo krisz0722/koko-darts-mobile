@@ -4,7 +4,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Form } from "./StyledSignUp";
 
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import LoginInput from "../../components/LoginInput";
+import LoginInput from "../../components/buttons/LoginInput";
 
 const FORGOT_PASSWORD = ({ navigation }) => {
   const {

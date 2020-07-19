@@ -3,7 +3,7 @@ import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Div, Row2, Row } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
-import SETTINGS_BUTTON from "./SettingsButton";
+import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import MODAL_SELECT from "../modals/SelectModal";
 
 export const OptionsLegOrSet = () => {

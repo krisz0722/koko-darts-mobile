@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Text, View, TouchableHighlight } from "react-native";
 import { FlexRowAround, BasicText, FlexCol } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Checkbox } from "react-native-paper";
+import CheckBox from "@react-native-community/checkbox";
 
 const Button_Settings = styled(TouchableHighlight)`
   ${FlexCol};
@@ -64,10 +64,11 @@ const SETTINGS_BUTTON = ({
         </Text_Button>
         {icon ? <Icon name={icon} size={35} color={theme.text2} /> : null}
         {checkbox ? (
-          <Checkbox
-            uncheckedColor={theme.borderColor}
-            color={active ? theme.bg1 : "transparent"}
-            status={active ? "checked" : "unchecked"}
+          <CheckBox
+            tintColors={{ true: selectedTheme.bg3, false: selectedTheme.text }}
+            onCheckColor={theme.bg1}
+            value={active}
+            onChange={action}
           />
         ) : null}
       </TextAndIcon>

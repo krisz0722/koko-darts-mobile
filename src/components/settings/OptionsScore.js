@@ -3,7 +3,7 @@ import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
-import SETTINGS_BUTTON from "./SettingsButton";
+import SETTINGS_BUTTON from "../buttons/SettingsButton";
 
 export const OptionsScore = () => {
   const {

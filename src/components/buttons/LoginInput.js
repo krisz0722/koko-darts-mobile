@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components";
 import { TextInput, TouchableWithoutFeedback, View } from "react-native";
-import { SettingsContext } from "../contexts/SettingsContext";
-import { FlexRowAround, Window } from "../styles/css_mixins";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
 
 const Div = styled(View)`
   ${FlexRowAround};
@@ -17,11 +17,11 @@ const Div = styled(View)`
 `;
 
 const TextInput_Login = styled(TextInput)`
+  ${BasicText}
   height: 100%;
   width: 80%;
   font-size: ${({ theme }) => theme.menu.fontSizeText};
   font-size: 20;
-  font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ focused, valid, theme }) =>
     focused ? theme.text2 : valid ? theme.text : theme.borderColor};
 `;

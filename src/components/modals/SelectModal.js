@@ -4,7 +4,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
-import { ModalContainer, Header } from "./StyledModal";
+import { ModalContainerBasic, Header } from "./StyledModal";
 
 const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
   const {
@@ -34,7 +34,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
       presentationStyle={"pageSheet"}
       visible={visible}
     >
-      <ModalContainer theme={selectedTheme}>
+      <ModalContainerBasic theme={selectedTheme}>
         <Header>
           {type === "main"
             ? legOrSet === "set"
@@ -53,7 +53,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
           text={"ok"}
           type={"active2"}
         />
-      </ModalContainer>
+      </ModalContainerBasic>
     </Modal>
   );
 };

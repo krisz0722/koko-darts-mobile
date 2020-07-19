@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
-import { Header2, Header3, ModalContainer2 } from "./StyledModal";
+import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 
@@ -17,7 +17,7 @@ const EXIT_APP_ALERT = ({ action1, action2, visible }) => {
       presentationStyle={"pageSheet"}
       visible={visible}
     >
-      <ModalContainer2 theme={selectedTheme}>
+      <ModalContainerAlert theme={selectedTheme}>
         <Header2>EXIT APP</Header2>
         <Header3>Are you sure you want to exit the application?</Header3>
         <BottomButtons theme={selectedTheme}>
@@ -38,7 +38,7 @@ const EXIT_APP_ALERT = ({ action1, action2, visible }) => {
             action={() => action2()}
           />
         </BottomButtons>
-      </ModalContainer2>
+      </ModalContainerAlert>
     </Modal>
   );
 };

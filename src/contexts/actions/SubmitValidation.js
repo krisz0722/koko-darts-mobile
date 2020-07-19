@@ -27,9 +27,10 @@ const submitValidation = (state) => {
   third = dartValue(third, 3);
 
   const proceedDefault = () => {
+    const newScore = score - scoreToSubmit;
     const isEmpty = !isInputByDart ? inputByRound[0] === "" : false;
     const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;
-    const isNewScoreValid = newScoreDefault() !== 1 && newScoreDefault() >= 0;
+    const isNewScoreValid = newScore !== 1 && newScore >= 0;
     return !isEmpty && isValid && isNewScoreValid;
   };
 
@@ -44,6 +45,7 @@ const submitValidation = (state) => {
 
   const newScoreDefault = (proceed) => {
     if (proceed) {
+      console.log(score, scoreToSubmit);
       return score - scoreToSubmit;
     }
     return score;

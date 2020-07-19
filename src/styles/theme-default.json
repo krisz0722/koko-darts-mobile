@@ -87,8 +87,15 @@
     "fontSizeHeader":17.5,
     "fontSizeButton": 13,
     "fontSizeButton2": 10
-
   },
+
+  "profile": {
+    "name": 12.5,
+    "stat": 12.5
+  },
+
+
+
   "stats": {
     "fontSize": 1
   },

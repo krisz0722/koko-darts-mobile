@@ -18,16 +18,16 @@ const HomeNavigator = () => {
 
   const SCREENS = [
     {
+      component: PROFILE,
+      name: "profile",
+    },
+    {
       component: HOME,
       name: "home",
     },
     {
       component: SETTINGS,
       name: "settings",
-    },
-    {
-      component: PROFILE,
-      name: "profile",
     },
   ];
 

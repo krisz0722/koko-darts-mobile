@@ -125,6 +125,7 @@ const LEG_IS_FINISHED = () => {
             <RADIO_BUTTON_SET
               direction={"horizontal"}
               options={OPTIONS}
+              length={3}
               action={handleLastDartNod}
               activeValue={lastRoundNod}
             />

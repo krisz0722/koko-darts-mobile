@@ -94,3 +94,5 @@ const DrawerNavigator = () => {
 };
 
 export default DrawerNavigator;
+
+//TODO navigatio transition!!!

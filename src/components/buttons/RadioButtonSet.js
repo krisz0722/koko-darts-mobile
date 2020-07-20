@@ -45,7 +45,13 @@ const Radio = styled(TouchableOpacity)`
   width: ${() => (Window.height * 0.075) / 3};
 `;
 
-const RADIO_BUTTON_SET = ({ options, action, activeValue, direction }) => {
+const RADIO_BUTTON_SET = ({
+  options,
+  action,
+  activeValue,
+  direction,
+  length,
+}) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
@@ -56,7 +62,7 @@ const RADIO_BUTTON_SET = ({ options, action, activeValue, direction }) => {
         <Option
           underlayColor={selectedTheme.text}
           direction={direction}
-          length={options.length}
+          length={length}
           key={item}
           onPress={() => action(item)}
         >

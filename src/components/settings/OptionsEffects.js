@@ -29,7 +29,6 @@ export const OptionsEffects = () => {
           length={2}
           action={toggleAnimation}
           checkbox={true}
-          size={"small"}
         />
         <SETTINGS_BUTTON
           value={"opacity"}
@@ -37,7 +36,6 @@ export const OptionsEffects = () => {
           length={2}
           action={toggleOpacity}
           checkbox={true}
-          size={"small"}
         />
       </Div>
     </Row>

@@ -86,7 +86,7 @@
     "bgActive": "rgb(255, 255, 255)",
     "fontSizeHeader":17.5,
     "fontSizeButton": 13,
-    "fontSizeButton2": 13
+    "fontSizeButton2": 10
   },
 
   "profile": {

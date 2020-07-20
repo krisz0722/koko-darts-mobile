@@ -10,15 +10,25 @@ import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "../../components/settings/Preview";
 import { BackHandler } from "react-native";
 import { NavigationContext } from "../../contexts/NavigationContext";
+import { GameContext } from "../../contexts/GameContext";
 
-const SETTINGS = ({ route, navigation }) => {
+const SETTINGS = ({ navigation }) => {
   const {
+    dispatchSettings,
     settings: { selectedTheme },
   } = useContext(SettingsContext);
+
+  const { dispatchGameData } = useContext(GameContext);
 
   const { setHomeTabScreen } = useContext(NavigationContext);
 
   const [preview, setPreview] = useState(false);
+
+  const togglePreview = () => setPreview(!preview);
+  const reset = () => {
+    dispatchGameData({ type: "RESET" });
+    dispatchSettings({ type: "RESET" });
+  };
 
   useEffect(() => {
     const backAction = () => {
@@ -47,7 +57,7 @@ const SETTINGS = ({ route, navigation }) => {
           text={"show preview"}
           type={"success"}
           length={2}
-          action={() => setPreview(!preview)}
+          action={togglePreview}
         />
         <THEMED_BUTTON
           type={"danger"}
@@ -55,6 +65,7 @@ const SETTINGS = ({ route, navigation }) => {
           icon={"undo"}
           text={"reset"}
           length={2}
+          action={reset}
         />
       </BottomButtons>
       {preview ? <PREVIEW preview={preview} /> : null}
@@ -64,4 +75,5 @@ const SETTINGS = ({ route, navigation }) => {
 
 export default SETTINGS;
 
-// TODO animation toggle, visual effecet info modal or tooltip, RESET button, ASYM component, PREVIEW visibilityi icon
+// TODO animation toggle, visual effecet info modal or tooltip, ASYM component, PREVIEW visibilityi icon
+// TODO reset has to set the users saved settins to default in the database too

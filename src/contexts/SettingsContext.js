@@ -16,7 +16,6 @@ export const SettingsContextProvider = (props) => {
     selectedTheme: THEMES.default,
     layout: "classic",
     animation: true,
-    blur: true,
     opacity: true,
   };
 

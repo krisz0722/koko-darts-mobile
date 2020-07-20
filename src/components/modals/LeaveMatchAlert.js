@@ -54,3 +54,5 @@ const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {
 };
 
 export default LEAVE_MATCH_ALERT;
+
+//TODO replace this with activityi indicator aligned to async post (save game)

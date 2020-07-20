@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import SETTINGS from "../screens/settings/Settings";
 import GAME_CLASSIC from "../screens/gamewindow/Classic";
 import { SettingsContext } from "../contexts/SettingsContext";
 import { View } from "react-native";
@@ -8,6 +7,7 @@ import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { FlexCol } from "../styles/css_mixins";
 import { GameContext } from "../contexts/GameContext";
+import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -32,12 +32,12 @@ const DRAWER_CONTENT = ({ navigation }) => {
     {
       route: "settings",
       icon: "tune",
-      action: () => navigation.navigate("settings"),
+      action: () => navigation.navigate("settings-ingame"),
     },
     {
       route: "stats",
       icon: "show-chart",
-      action: () => navigation.navigate("settings"),
+      action: () => navigation.navigate("settings-ingame"),
     },
     {
       route: "home",
@@ -87,8 +87,8 @@ const DrawerNavigator = () => {
       overlayColor={selectedTheme.game[activePlayer + "Overlay"]}
     >
       <Screen name="game" component={GAME_CLASSIC} />
-      <Screen name="settings" component={SETTINGS} />
-      <Screen name="stats" component={SETTINGS} />
+      <Screen name="settings-ingame" component={SETTINGS_INGAME} />
+      <Screen name="stats" component={SETTINGS_INGAME} />
     </Navigator>
   );
 };

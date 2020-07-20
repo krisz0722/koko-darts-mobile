@@ -26,11 +26,3 @@ export const Overlay2 = styled(Overlay)`
   right: 0;
   background-color: ${({ theme }) => theme.game.p2Overlay};
 `;
-
-export const OverlayFull = styled(Animated.View)`
-  position: absolute;
-  z-index: ${({ active }) => (active ? 1 : -1)}
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-`;

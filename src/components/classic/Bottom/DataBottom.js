@@ -79,7 +79,7 @@ const DATA_BOTTOM = () => {
       icon: null,
     },
     {
-      type: "function",
+      type: "dispatch",
       value: backOrClear,
       action: backOrClear,
       icon: backOrClear === "CLEAR" ? "clear" : "replay",
@@ -91,7 +91,7 @@ const DATA_BOTTOM = () => {
       icon: null,
     },
     {
-      type: "function",
+      type: "dispatch",
       value: okOrNext,
       action: okOrNext,
       icon: okOrNext === "OK" ? "check" : "dart",

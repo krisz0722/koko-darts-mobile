@@ -114,3 +114,4 @@ const SEARCH_MODAL = ({ action1, action2, visible }) => {
 export default SEARCH_MODAL;
 
 // TODO keyboard avoiding view... or just simply put it in a scrollview
+// TODO icons and button titles

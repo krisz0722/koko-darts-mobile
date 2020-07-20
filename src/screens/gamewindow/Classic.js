@@ -89,29 +89,26 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     : 1;
 
   return (
-    <>
-      <GameWindow preview={preview}>
-        <CLASSIC_TOP />
-        <CLASSIC_SCORES />
-        <CLASSIC_STATS />
-        {opacity ? (
-          inactivePlayer === "p1" ? (
-            <Overlay1 style={{ opacity: opacity1 }} theme={selectedTheme} />
-          ) : (
-            <Overlay2 style={{ opacity: opacity2 }} theme={selectedTheme} />
-          )
-        ) : null}
-        <CLASSIC_MIDDLE />
-        <CLASSIC_BOTTOM />
+    <GameWindow preview={preview}>
+      <CLASSIC_TOP />
+      <CLASSIC_SCORES />
+      <CLASSIC_STATS />
+      {opacity ? (
+        inactivePlayer === "p1" ? (
+          <Overlay1 style={{ opacity: opacity1 }} theme={selectedTheme} />
+        ) : (
+          <Overlay2 style={{ opacity: opacity2 }} theme={selectedTheme} />
+        )
+      ) : null}
+      <CLASSIC_MIDDLE />
+      <CLASSIC_BOTTOM />
 
-        <LEAVE_MATCH_ALERT
-          action1={() => setModal(!modal)}
-          action2={handleLeaveMatch}
-          visible={modal}
-        />
-        {/*<OverlayFull active={isDrawerOpen} style={{ backgroundColor }} />*/}
-      </GameWindow>
-    </>
+      <LEAVE_MATCH_ALERT
+        action1={() => setModal(!modal)}
+        action2={handleLeaveMatch}
+        visible={modal}
+      />
+    </GameWindow>
   );
 };
 

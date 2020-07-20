@@ -61,9 +61,14 @@
     "medium": 0.1,
     "large": 0.2
   },
-  "buttonFontSize": 15,
+  "buttonFontSize": {
+    "small":15,
+    "medium": 20,
+    "large": 25
+  },
+
   "home": {
-    "fontSize1": 25,
+    "fontSize1": 30,
     "fontSize2": 20,
     "fontSize3": 15
   },

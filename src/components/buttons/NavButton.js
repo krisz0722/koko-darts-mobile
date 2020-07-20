@@ -39,7 +39,7 @@ const NavButton = ({
   icon = null,
 }) => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
@@ -53,6 +53,7 @@ const NavButton = ({
       length={length}
       theme={selectedTheme}
       onPress={action}
+      activeOpacity={animation ? 0.2 : 1}
     >
       <>
         {icon === "dart" ? (

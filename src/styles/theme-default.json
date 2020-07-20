@@ -53,7 +53,11 @@
     "medium": 0.1,
     "large": 0.2
   },
-  "buttonFontSize": 12.5,
+  "buttonFontSize": {
+    "small":10,
+    "medium": 15,
+    "large": 25
+  },
 
   "home": {
     "fontSize1": 20,

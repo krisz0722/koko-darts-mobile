@@ -18,7 +18,7 @@ const DATA_BOTTOM = () => {
 
   const backOrClear =
     inputByRound[0] === "" && inputByDart.first[0] === "" && canGoBack
-      ? "BACK"
+      ? "UNDO"
       : "CLEAR";
 
   const okOrNext = isInputByDart && whichDart !== 3 ? "NEXT" : "OK";
@@ -82,7 +82,7 @@ const DATA_BOTTOM = () => {
       type: "function",
       value: backOrClear,
       action: backOrClear,
-      icon: backOrClear === "CLEAR" ? "clear" : "show-chart",
+      icon: backOrClear === "CLEAR" ? "clear" : "replay",
     },
     {
       type: "num",

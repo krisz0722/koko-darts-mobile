@@ -80,11 +80,11 @@ const LEG_IS_FINISHED = () => {
   const TABS = [
     {
       route: "game",
-      text: "back",
+      text: "UNDO",
       icon: "arrow-back",
       action: () => {
         setLastRoundNod(null),
-          dispatchGameData({ type: "BACK" }),
+          dispatchGameData({ type: "UNDO" }),
           navigation.navigate("game");
       },
     },

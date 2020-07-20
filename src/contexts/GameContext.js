@@ -6,7 +6,7 @@ import finishLeg from "./actions/FinishLeg";
 import rematch from "./actions/Rematch";
 import changeStartingScore from "./actions/ChangeStartingScore";
 import submitValidation from "./actions/SubmitValidation";
-import back from "./actions/Back";
+import undo from "./actions/Undo";
 import clear from "./actions/Clear";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
@@ -45,8 +45,8 @@ export const GameContextProvider = (props) => {
         return submitValidation(state);
       case "NEXT":
         return typeNextDart(state);
-      case "BACK":
-        return back(state);
+      case "UNDO":
+        return undo(state);
       case "CLEAR":
         return clear(state);
       case "BUST":

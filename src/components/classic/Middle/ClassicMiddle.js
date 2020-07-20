@@ -3,7 +3,7 @@ import styled from "styled-components/native/dist/styled-components.native.esm";
 import { View } from "react-native";
 import { FlexRow } from "../../../styles/css_mixins";
 import NUM_BUTTON from "../../buttons/NumButton";
-import PLAYER_INPUT_INFO from "../../buttons/PlayerInputInfo";
+import PLAYER_INPUT_INFO from "./PlayerInputInfo";
 import DATA_MIDDLE from "./DataMiddle";
 
 export const ClassicMiddle = styled(View)`

@@ -14,6 +14,8 @@ export const Button_Num_Classic = styled(TouchableHighlight)`
   ${FlexRowAround};
   border-width: ${({ theme }) => theme.borderWidth};
   padding: 0 3%;
+  background-color: ${({ theme, value }) =>
+    value === "NEXT" ? theme.bgGreen : "transparent"};
 `;
 
 export const Text_Number = styled(Animated.Text)`
@@ -58,6 +60,8 @@ const NUM_BUTTON = React.memo(
       }
     };
 
+    console.log(value);
+
     useEffect(() => {
       Animated.timing(animationValue, {
         toValue: activePlayer === "p1" ? 1 : 0,
@@ -87,9 +91,11 @@ const NUM_BUTTON = React.memo(
       : theme.game[activePlayer + "Text"];
 
     const backgroundColor =
-      type === "num"
+      value === "NEXT"
+        ? theme.bgGreen
+        : type === "num"
         ? animatedBg
-        : icon === "dart"
+        : value === "next"
         ? theme.bgGreen
         : theme.game.middle.bgMid;
 
@@ -99,7 +105,7 @@ const NUM_BUTTON = React.memo(
 
     return (
       <AnimatedButton
-        icon={"clear"}
+        value={value}
         middle={middle}
         onPress={() => typeOfHandler(type, action, value)}
         disabled={route !== "game"}

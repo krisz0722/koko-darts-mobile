@@ -70,7 +70,7 @@ const submitUpdateScore = (
     switch (type) {
       case "BUST":
         return "BUST";
-      case "BACK":
+      case "UNDO":
         return 0;
       case "OK":
         return scoreToSubmit;
@@ -103,7 +103,7 @@ const submitUpdateScore = (
       numOfCoDarts,
       score: newScore,
       lastScore: lastScore(type),
-      canGoBack: type !== "BACK",
+      canGoBack: type !== "UNDO",
       60:
         scoreToSubmit >= 60 && scoreToSubmit < 80
           ? playerData["60"] + num

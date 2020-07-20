@@ -1,6 +1,6 @@
 import submitUpdateScore from "./SubmitUpdateScore";
 
-const back = (state) => {
+const undo = (state) => {
   const { inactivePlayer } = state;
   const inapKey = `${inactivePlayer}_DATA`;
   const inapData = state[inapKey];
@@ -24,10 +24,10 @@ const back = (state) => {
         inapData,
         scoreToSubmit,
         newScore,
-        "BACK",
+        "UNDO",
         -1,
       );
   }
 };
 
-export default back;
+export default undo;

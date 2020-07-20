@@ -10,7 +10,7 @@ const Div = styled(View)`
   height: ${() => Window.height * 0.08};
   border-radius: 4px;
   margin: 2% 0;
-  width: 100%;
+  width: 80%;
   background-color: ${({ focused, theme, valid }) =>
     focused ? theme.bgActive : valid ? "transparent" : theme.bg1};
 `;

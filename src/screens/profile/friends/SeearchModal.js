@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { SettingsContext } from "../../../contexts/SettingsContext";
-import { View, Modal, SafeAreaView, Text, TextInput } from "react-native";
 import {
-  Header2,
-  ModalContainerSearch,
-} from "../../../components/modals/StyledModal";
+  View,
+  Modal,
+  SafeAreaView,
+  Text,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import { BottomButtons } from "../../../components/modals/StyledModal";
 import LIST_PROFILES from "./ListProfiles";
@@ -15,6 +18,10 @@ import {
   FlexCol,
   Window,
 } from "../../../styles/css_mixins";
+
+export const ModalContainerSearch = styled(ScrollView)`
+  background-color: rgba(255, 255, 255, 0.95);
+`;
 
 export const SearchBar = styled(TextInput)`
   ${BasicText}
@@ -29,7 +36,8 @@ export const SearchBar = styled(TextInput)`
 
 export const Container = styled(View)`
   width: 100%;
-  height: ${() => Window.height * 0.9} ${FlexCol};
+  height: ${() => Window.height * 0.9};
+  ${FlexCol};
 `;
 
 export const Header = styled(Text)`

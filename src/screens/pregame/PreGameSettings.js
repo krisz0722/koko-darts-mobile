@@ -54,7 +54,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           icon={"dart"}
           action={() => {
             dispatchGameData({ type: "NEW_MATCH", p1, p2 });
-            navigation.navigate("game");
+            navigation.navigate("drawernavigator");
           }}
         />
       </BottomButtons>

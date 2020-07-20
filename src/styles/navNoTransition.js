@@ -1,6 +1,3 @@
-import { Easing } from "react-native";
-import { HeaderStyleInterpolators } from "@react-navigation/stack";
-
 const configDefault = {
   animation: "timing",
   config: {
@@ -13,7 +10,7 @@ const transitionNone = {
     open: configDefault,
     close: configDefault,
   },
-  cardStyleInterpolator: ({ current, next, layouts }) => {
+  cardStyleInterpolator: ({ current, next }) => {
     return {
       cardStyle: {
         opacity: next

@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { SettingsContext } from "../contexts/SettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
-import GAME_CLASSIC from "../screens/gamewindow/Classic";
 import REGISTER from "../screens/auth/SignUp";
 import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/welcome/Welcome";
@@ -16,10 +15,19 @@ import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
 import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
 import REMATCH from "../screens/endgame/rematch/Rematch";
 import transitionNone from "../styles/navNoTransition";
+import DrawerNavigator from "./DrawerNavigator";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
+    {
+      component: WELCOME,
+      name: "welcome",
+    },
+    {
+      component: DrawerNavigator,
+      name: "drawernavigator",
+    },
     {
       component: HomeNavigator,
       name: "homenavigator",
@@ -37,10 +45,7 @@ const AppNavigator = () => {
       component: MATCH_IS_FINISHED,
       name: "matchisfinished",
     },
-    {
-      component: WELCOME,
-      name: "welcome",
-    },
+
     {
       component: REGISTER,
       name: "register",
@@ -53,11 +58,6 @@ const AppNavigator = () => {
       component: FORGOT_PASSWORD,
       name: "forgotpassword",
     },
-    {
-      component: GAME_CLASSIC,
-      name: "game",
-    },
-
     {
       component: PREGAME_SETTINGS,
       name: "pregame",

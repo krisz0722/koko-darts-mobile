@@ -1,59 +1,43 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
 import { Animated, BackHandler } from "react-native";
-import styled from "styled-components";
 import CLASSIC_SCORES from "../../components/classic/Scores/ClassicScores";
 import CLASSIC_MIDDLE from "../../components/classic/Middle/ClassicMiddle";
 import CLASSIC_BOTTOM from "../../components/classic/Bottom/ClassicBottom";
 import CLASSIC_TOP from "../../components/classic/Top/ClassicTop";
 import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
-import { Window } from "../../styles/css_mixins";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
-
-const GameWindow = styled(Animated.View)`
-  position: absolute;
-  width: ${({ preview }) => (preview ? Window.width : "100%")};
-  height: ${({ preview }) => (preview ? Window.height : "100%")};
-  transform: ${({ preview }) => (preview ? "scale(0.32, 0.32)" : null)};
-  display: ${({ preview }) => (preview ? "flex" : "none")};
-`;
-
-const Overlay = styled(Animated.View)`
-  position: absolute;
-  top: 0;
-  height: 45%;
-  width: 50%;
-`;
-const Overlay1 = styled(Overlay)`
-  left: 0;
-  background-color: ${({ theme }) => theme.game.p1Overlay};
-`;
-
-const Overlay2 = styled(Overlay)`
-  right: 0;
-  background-color: ${({ theme }) => theme.game.p2Overlay};
-`;
+import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
+import { useIsDrawerOpen } from "@react-navigation/drawer";
 
 const GAME_CLASSIC = ({ navigation, preview }) => {
   const {
-    gameData: { inactivePlayer, isLegOver },
+    gameData: { activePlayer, inactivePlayer, isLegOver },
   } = useContext(GameContext);
 
   const {
     settings: { selectedTheme, animation, opacity },
   } = useContext(SettingsContext);
 
-  const animationValue = useRef(
-    new Animated.Value(inactivePlayer === "p1" ? 1 : 0),
-  ).current;
+  const isDrawerOpen = useIsDrawerOpen();
 
   const [modal, setModal] = useState(false);
 
+  const animationValue = useRef(
+    new Animated.Value(activePlayer === "p1" ? 0 : 1),
+  ).current;
+
+  const drawerValue = useRef(new Animated.Value(!isDrawerOpen ? 1 : 0)).current;
+
   useEffect(() => {
+    Animated.timing(drawerValue, {
+      toValue: isDrawerOpen ? 1 : 0,
+      duration: 300,
+    }).start();
     Animated.timing(animationValue, {
-      toValue: inactivePlayer === "p1" ? 1 : 0,
-      duration: 3000,
+      toValue: activePlayer === "p1" ? 0 : 1,
+      duration: 300,
     }).start();
     if (isLegOver) {
       navigation.navigate("legisfinished");
@@ -61,10 +45,12 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
   }, [
     animation,
     animationValue,
-    inactivePlayer,
+    activePlayer,
     preview,
     isLegOver,
     navigation,
+    drawerValue,
+    isDrawerOpen,
   ]);
 
   useEffect(() => {
@@ -80,6 +66,7 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
   }, [navigation]);
 
   const handleLeaveMatch = () => {
+    setModal(false);
     navigation.navigate("homenavigator");
   };
 
@@ -102,25 +89,29 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     : 1;
 
   return (
-    <GameWindow preview={preview}>
-      <CLASSIC_TOP />
-      <CLASSIC_SCORES />
-      <CLASSIC_STATS />
-      {opacity ? (
-        inactivePlayer === "p1" ? (
-          <Overlay1 style={{ opacity: opacity1 }} theme={selectedTheme} />
-        ) : (
-          <Overlay2 style={{ opacity: opacity2 }} theme={selectedTheme} />
-        )
-      ) : null}
-      <CLASSIC_MIDDLE />
-      <CLASSIC_BOTTOM />
-      <LEAVE_MATCH_ALERT
-        action1={() => setModal(!modal)}
-        action2={handleLeaveMatch}
-        visible={modal}
-      />
-    </GameWindow>
+    <>
+      <GameWindow preview={preview}>
+        <CLASSIC_TOP />
+        <CLASSIC_SCORES />
+        <CLASSIC_STATS />
+        {opacity ? (
+          inactivePlayer === "p1" ? (
+            <Overlay1 style={{ opacity: opacity1 }} theme={selectedTheme} />
+          ) : (
+            <Overlay2 style={{ opacity: opacity2 }} theme={selectedTheme} />
+          )
+        ) : null}
+        <CLASSIC_MIDDLE />
+        <CLASSIC_BOTTOM />
+
+        <LEAVE_MATCH_ALERT
+          action1={() => setModal(!modal)}
+          action2={handleLeaveMatch}
+          visible={modal}
+        />
+        {/*<OverlayFull active={isDrawerOpen} style={{ backgroundColor }} />*/}
+      </GameWindow>
+    </>
   );
 };
 

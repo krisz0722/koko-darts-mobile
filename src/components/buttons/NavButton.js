@@ -5,12 +5,13 @@ import styled from "styled-components";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { BasicText, Flex, Window } from "../../styles/css_mixins";
 import IconThreeDart from "../../../assets/iconThreeDart";
+import { GameContext } from "../../contexts/GameContext";
 const Button_Nav = styled(TouchableOpacity)`
   ${Flex};
   flex-direction: ${({ direction }) =>
     direction === "horizontal" ? "row" : "column"};
   width: ${({ length }) => Window.width / length};
-  height: 100%;
+  height: ${({ height }) => (height ? Window.height / height : "100%")};
   padding: ${({ direction }) => (direction === "horizontal" ? "0 5%" : 0)};
   background-color: ${({ theme, active }) =>
     active ? theme.bgActive : "transparent"};
@@ -22,8 +23,7 @@ const Text_Button = styled(Text)`
   font-weight: ${({ direction }) =>
     direction === "horizontal" ? "bold" : "normal"};
   width: 100%;
-  color: ${({ theme, active, color }) =>
-    color === "dark" ? theme.text2 : active ? theme.text2 : theme.text};
+  color: ${({ color }) => color}
   font-size: ${({ direction, theme }) =>
     direction === "horizontal" ? theme.nav.fontSize2 : theme.nav.fontSize1};
   border-radius: 4px;
@@ -34,36 +34,69 @@ const NavButton = ({
   length,
   active,
   direction,
+  height = null,
   color = "light",
   action = null,
   icon = null,
 }) => {
   const {
+    gameData: { inactivePlayer },
+  } = useContext(GameContext);
+
+  const {
     settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
 
   const theme = selectedTheme;
-  const iconColor =
-    color === "dark" ? theme.bg3 : active ? theme.text2 : theme.text;
+  const iconColor = () => {
+    if (active) {
+      return theme.text2;
+    } else {
+      switch (color) {
+        case "dark":
+          return selectedTheme.bg3;
+        case "light":
+          return selectedTheme.text;
+        case "drawer":
+          return selectedTheme.game[inactivePlayer + "Text"];
+      }
+    }
+  };
+
+  const textColor = () => {
+    if (active) {
+      return theme.text2;
+    } else {
+      switch (color) {
+        case "dark":
+          return selectedTheme.text2;
+        case "light":
+          return selectedTheme.text;
+        case "drawer":
+          return selectedTheme.game[inactivePlayer + "Text"];
+      }
+    }
+  };
 
   return (
     <Button_Nav
       direction={direction}
       active={active}
       length={length}
+      height={height}
       theme={selectedTheme}
       onPress={action}
       activeOpacity={animation ? 0.2 : 1}
     >
       <>
         {icon === "dart" ? (
-          <IconThreeDart size={25} fill={iconColor} />
+          <IconThreeDart size={25} fill={iconColor()} />
         ) : icon ? (
-          <Icon name={icon} size={25} color={iconColor} />
+          <Icon name={icon} size={25} color={iconColor()} />
         ) : null}
 
         <Text_Button
-          color={color}
+          color={textColor()}
           active={active}
           icon={icon}
           theme={selectedTheme}

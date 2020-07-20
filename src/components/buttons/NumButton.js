@@ -52,15 +52,15 @@ const NUM_BUTTON = React.memo(
         case "num":
           dispatchGameData({ type: "TYPE", value });
           break;
-        case "function":
+        case "dispatch":
           dispatchGameData({ type: action, value });
           break;
+        case "function":
+          return action();
         case "info":
           return null;
       }
     };
-
-    console.log(value);
 
     useEffect(() => {
       Animated.timing(animationValue, {

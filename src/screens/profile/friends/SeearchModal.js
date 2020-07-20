@@ -52,17 +52,22 @@ font-size:20;
 
 const SEARCH_MODAL = ({ action1, action2, visible }) => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
+
+  const animationType = animation
+    ? selectedTheme.name === "default"
+      ? "fade"
+      : "slide"
+    : "none";
 
   const [regexp, setRegexp] = useState("");
 
   const handleRegExp = (val) => setRegexp(val);
-  console.log("REGEXP", regexp);
 
   return (
     <Modal
-      animationType={selectedTheme.name === "default" ? "fade" : "slide"}
+      animationType={animationType}
       transparent={true}
       presentationStyle={"pageSheet"}
       visible={visible}

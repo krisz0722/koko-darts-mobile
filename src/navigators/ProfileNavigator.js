@@ -6,12 +6,13 @@ import transitionContrast from "../styles/navTransitionContrast";
 import FRIENDS from "../screens/profile/friends/Friends";
 import MATCHES from "../screens/profile/matches/Matches";
 import TIMELINE from "../screens/profile/timeline/Timeline";
+import transitionNone from "../styles/navNoTransition";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const ProfileNavigator = () => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
@@ -29,15 +30,23 @@ const ProfileNavigator = () => {
       name: "timeline",
     },
   ];
+  const transition = (theme, animation) => {
+    if (animation) {
+      if (theme === "default") {
+        return transitionDefault;
+      } else {
+        return transitionContrast;
+      }
+    }
 
-  const transition = (theme) =>
-    theme === "default" ? transitionDefault : transitionContrast;
+    return transitionNone;
+  };
 
   return (
     <Navigator
       headerMode="none"
       screenOptions={{
-        ...transition(theme.name),
+        ...transition(theme.name, animation),
       }}
     >
       <>

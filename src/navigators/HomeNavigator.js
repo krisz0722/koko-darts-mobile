@@ -7,12 +7,13 @@ import SETTINGS from "../screens/settings/Settings";
 import HOME from "../screens/home/Home";
 import PROFILE from "../screens/profile/Profile";
 import HOME_TAB_NAVIGATOR from "../components/navigation/HomeTabNavigator";
+import transitionNone from "../styles/navNoTransition";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const HomeNavigator = () => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
@@ -31,15 +32,24 @@ const HomeNavigator = () => {
     },
   ];
 
-  const transition = (theme) =>
-    theme === "default" ? transitionDefault : transitionContrast;
+  const transition = (theme, animation) => {
+    if (animation) {
+      if (theme === "default") {
+        return transitionDefault;
+      } else {
+        return transitionContrast;
+      }
+    }
+
+    return transitionNone;
+  };
 
   return (
     <>
       <Navigator
         headerMode="none"
         screenOptions={{
-          ...transition(theme.name),
+          ...transition(theme.name, animation),
         }}
       >
         <>

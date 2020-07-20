@@ -7,12 +7,18 @@ import { BottomButtons } from "./StyledModal";
 
 const EXIT_APP_ALERT = ({ action1, action2, visible }) => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
+
+  const animationType = animation
+    ? selectedTheme.name === "default"
+      ? "fade"
+      : "slide"
+    : "none";
 
   return (
     <Modal
-      animationType={selectedTheme.name === "default" ? "fade" : "slide"}
+      animationType={animationType}
       transparent={true}
       presentationStyle={"pageSheet"}
       visible={visible}

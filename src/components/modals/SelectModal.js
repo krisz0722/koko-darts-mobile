@@ -8,12 +8,18 @@ import { ModalContainerBasic, Header } from "./StyledModal";
 
 const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
   const {
     gameData: { toWin, legsPerSet },
     dispatchGameData,
   } = useContext(GameContext);
+
+  const animationType = animation
+    ? selectedTheme.name === "default"
+      ? "fade"
+      : "slide"
+    : "none";
 
   const { type, legOrSet } = modalType;
 
@@ -29,7 +35,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
 
   return (
     <Modal
-      animationType={selectedTheme.name === "default" ? "fade" : "slide"}
+      animationType={animationType}
       transparent={true}
       presentationStyle={"pageSheet"}
       visible={visible}

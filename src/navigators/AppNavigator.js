@@ -15,6 +15,7 @@ import HomeNavigator from "./HomeNavigator";
 import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
 import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
 import REMATCH from "../screens/endgame/rematch/Rematch";
+import transitionNone from "../styles/navNoTransition";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
@@ -64,7 +65,7 @@ const AppNavigator = () => {
   ];
 
   const {
-    settings: { selectedTheme },
+    settings: { selectedTheme, animation },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
@@ -79,8 +80,16 @@ const AppNavigator = () => {
     },
   };
 
-  const transition = (theme) =>
-    theme === "default" ? transitionDefault : transitionContrast;
+  const transition = (theme, animation) => {
+    if (animation) {
+      if (theme === "default") {
+        return transitionDefault;
+      } else {
+        return transitionContrast;
+      }
+    }
+    return transitionNone;
+  };
 
   return (
     <AppearanceProvider>
@@ -88,7 +97,7 @@ const AppNavigator = () => {
         <Navigator
           headerMode="none"
           screenOptions={{
-            ...transition(theme.name),
+            ...transition(theme.name, animation),
           }}
         >
           {SCREENS.map((item) => (

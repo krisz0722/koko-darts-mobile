@@ -10,19 +10,10 @@ export const OptionsEffects = () => {
     dispatchSettings,
   } = useContext(SettingsContext);
 
-  const EFFECTS = [
-    {
-      name: "animations",
-      prop: animation,
-      handler: () =>
-        dispatchSettings({ type: "TOGGLE_ANIMATION", value: !animation }),
-    },
-    {
-      name: "opacity",
-      prop: opacity,
-      handler: () => dispatchSettings({ type: "OPACITY", value: !opacity }),
-    },
-  ];
+  const toggleAnimation = () =>
+    dispatchSettings({ type: "TOGGLE_ANIMATION", value: !animation });
+  const toggleOpacity = () =>
+    dispatchSettings({ type: "OPACITY", value: !opacity });
 
   return (
     <Row theme={selectedTheme} layout="asym">
@@ -32,17 +23,22 @@ export const OptionsEffects = () => {
         action={() => alert("action")}
       />
       <Div theme={selectedTheme}>
-        {EFFECTS.map((item) => (
-          <SETTINGS_BUTTON
-            key={item.name}
-            value={item.name}
-            active={item.prop}
-            length={EFFECTS.length}
-            action={item.handler}
-            checkbox={true}
-            size={"small"}
-          />
-        ))}
+        <SETTINGS_BUTTON
+          value={"animation"}
+          active={animation}
+          length={2}
+          action={toggleAnimation}
+          checkbox={true}
+          size={"small"}
+        />
+        <SETTINGS_BUTTON
+          value={"opacity"}
+          active={opacity}
+          length={2}
+          action={toggleOpacity}
+          checkbox={true}
+          size={"small"}
+        />
       </Div>
     </Row>
   );

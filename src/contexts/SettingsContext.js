@@ -26,7 +26,7 @@ export const SettingsContextProvider = (props) => {
       case "CHANGE_LAYOUT":
         return { ...state, layout: action.value };
       case "TOGGLE_ANIMATION":
-        return toggle_animation(state, action.value);
+        return { ...state, animation: action.value };
       case "TOGGLE_BLUR":
         return { ...state, blur: action.value };
       case "OPACITY":

@@ -47,27 +47,30 @@ const PLAYER_SCORE = () => {
   const fontP2 = useRef(new Animated.Value(p2Checkout ? 1 : 0)).current;
 
   useEffect(() => {
-    Animated.timing(animationValue, {
-      toValue: activePlayer === "p1" ? 1 : 0,
-      duration: 300,
-    }).start();
-    Animated.timing(animationP1, {
-      toValue: p1Checkout ? 1 : 0,
-      duration: 300,
-    }).start();
-    Animated.timing(animationP2, {
-      toValue: p2Checkout ? 1 : 0,
-      duration: 300,
-    }).start();
-    Animated.timing(fontP1, {
-      toValue: showStats && p1Checkout ? 1 : p1Checkout ? 0.5 : 0,
-      duration: 300,
-    }).start();
-    Animated.timing(fontP2, {
-      toValue: showStats && p2Checkout ? 1 : p2Checkout ? 0.5 : 0,
-      duration: 300,
-    }).start();
+    if (animation) {
+      Animated.timing(animationValue, {
+        toValue: activePlayer === "p1" ? 1 : 0,
+        duration: 300,
+      }).start();
+      Animated.timing(animationP1, {
+        toValue: p1Checkout ? 1 : 0,
+        duration: 300,
+      }).start();
+      Animated.timing(animationP2, {
+        toValue: p2Checkout ? 1 : 0,
+        duration: 300,
+      }).start();
+      Animated.timing(fontP1, {
+        toValue: showStats && p1Checkout ? 1 : p1Checkout ? 0.5 : 0,
+        duration: 300,
+      }).start();
+      Animated.timing(fontP2, {
+        toValue: showStats && p2Checkout ? 1 : p2Checkout ? 0.5 : 0,
+        duration: 300,
+      }).start();
+    }
   }, [
+    animation,
     activePlayer,
     animationValue,
     animationP1,

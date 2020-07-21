@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { CHECKOUTS } from "../../../calc/scores";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
   View_Headers,

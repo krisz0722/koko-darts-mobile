@@ -1,13 +1,7 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import styled from "styled-components";
 import { Text, View, TouchableHighlight } from "react-native";
-import {
-  FlexRowAround,
-  BasicText,
-  FlexCol,
-  FlexRow,
-} from "../../styles/css_mixins";
+import { BasicText, FlexCol, FlexRow } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import CheckBox from "@react-native-community/checkbox";
 import { ThemeContext } from "../../contexts/ThemeContext";

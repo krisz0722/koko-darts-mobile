@@ -2,10 +2,8 @@ import React, { useContext } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { BasicText, Flex, Window } from "../../styles/css_mixins";
 import IconThreeDart from "../../../assets/iconThreeDart";
-import { GameContext } from "../../contexts/GameContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Button_Nav = styled(TouchableOpacity)`

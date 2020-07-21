@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
 import IconDart from "../../../assets/iconDart";

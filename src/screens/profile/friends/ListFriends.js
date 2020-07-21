@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import styled from "styled-components";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { FlatList } from "react-native";
 import FRIENDS_LIST from "./DataFriends";
 import FRIEND_COMPONENT from "./FriendComponent";

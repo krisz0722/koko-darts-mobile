@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
-import { Buttons, Form, Form2, Inputs } from "./StyledAuth";
+import { Buttons, Form2, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";

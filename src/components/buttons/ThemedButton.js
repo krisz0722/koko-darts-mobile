@@ -8,7 +8,6 @@ import {
 } from "../../styles/css_mixins";
 
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";

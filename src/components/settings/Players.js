@@ -10,8 +10,6 @@ import {
   Window,
 } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { GameContext } from "../../contexts/GameContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 
 const Players = styled(View)`
@@ -49,8 +47,6 @@ const Swap = styled(TouchableHighlight)`
 `;
 
 export const PLAYERS = () => {
-  const { theme } = useContext(ThemeContext);
-
   const {
     dispatchSettings,
     settings: { p1, p2 },

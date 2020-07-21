@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
   View_Headers,

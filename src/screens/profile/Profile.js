@@ -11,7 +11,6 @@ import {
   StatValue,
 } from "./StyledProfile";
 import { BackHandler } from "react-native";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import PROFILE_STATS from "./DataProfile";
 import ProfileNavigator from "../../navigators/ProfileTopNavigator";
 import { ThemeContext } from "../../contexts/ThemeContext";

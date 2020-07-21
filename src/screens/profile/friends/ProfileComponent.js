@@ -1,13 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import styled from "styled-components";
-import { SettingsContext } from "../../../contexts/SettingsContext";
-import {
-  BasicText,
-  FlexRowAround,
-  FlexRowStart,
-  Window,
-} from "../../../styles/css_mixins";
+import { BasicText, FlexRowAround, Window } from "../../../styles/css_mixins";
 import CheckBox from "@react-native-community/checkbox";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Profile = styled(View)`

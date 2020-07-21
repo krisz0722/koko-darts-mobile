@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { BottomButtons } from "./StyledSettingsInGame";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { OptionsLayout } from "../../components/settings/OptionsLayout";
 import { COLOR } from "../../components/settings/OptionsColor";
 import { OptionsEffects } from "../../components/settings/OptionsEffects";

@@ -1,6 +1,4 @@
 import React from "react";
-import { SettingsContextProvider } from "./src/contexts/SettingsContext";
-import { GameContextProvider } from "./src/contexts/GameContext";
 import ROUTER from "./src/screens/router/Router";
 import { NavigationContextProvider } from "./src/contexts/NavigationContext";
 

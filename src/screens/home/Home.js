@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import {
   Info,
   HeaderText,
@@ -13,7 +12,6 @@ import {
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { BackHandler } from "react-native";
-import { GameContext } from "../../contexts/GameContext";
 import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
 import UNFINISHED_MATCH from "./DataUnfinished";
 import LAST_MATCH from "./DataLastMatch";

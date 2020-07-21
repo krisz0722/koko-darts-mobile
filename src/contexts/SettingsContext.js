@@ -42,6 +42,13 @@ export const SettingsContextProvider = (props) => {
         return changeStartingScore(state, action.value);
       case "CHANGE_LAYOUT":
         return { ...state, layout: action.value };
+      case "NEW_MATCH":
+        return {
+          ...state,
+          p1: action.p1,
+          p2: action.p2,
+          status: "started",
+        };
 
       case "RESET":
         return { ...DEFAULT_SETTINGS };

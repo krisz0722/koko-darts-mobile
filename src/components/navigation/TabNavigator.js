@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import NavButton from "../buttons/NavButton";
 import styled from "styled-components";
 import { View } from "react-native";

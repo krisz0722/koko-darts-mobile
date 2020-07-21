@@ -1,8 +1,8 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SettingsContext } from "../contexts/SettingsContext";
+import { SettingsContextProvider } from "../contexts/SettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
 import REGISTER from "../screens/auth/SignUp";
@@ -19,6 +19,7 @@ import { ThemeProvider } from "styled-components";
 import { ScreenContainer } from "../screens/router/StyledRouter";
 const { Navigator, Screen } = createStackNavigator();
 import { ThemeContext } from "../contexts/ThemeContext";
+import { GameContextProvider } from "../contexts/GameContext";
 
 const AppNavigator = () => {
   const SCREENS = [
@@ -93,22 +94,26 @@ const AppNavigator = () => {
     <AppearanceProvider>
       <ScreenContainer theme={theme}>
         <ThemeProvider theme={theme}>
-          <NavigationContainer theme={navigationTheme}>
-            <Navigator
-              headerMode="none"
-              screenOptions={{
-                ...transition(theme.name),
-              }}
-            >
-              {SCREENS.map((item) => (
-                <Screen
-                  key={item.name}
-                  name={item.name}
-                  component={item.component}
-                />
-              ))}
-            </Navigator>
-          </NavigationContainer>
+          <SettingsContextProvider>
+            <GameContextProvider>
+              <NavigationContainer theme={navigationTheme}>
+                <Navigator
+                  headerMode="none"
+                  screenOptions={{
+                    ...transition(theme.name),
+                  }}
+                >
+                  {SCREENS.map((item) => (
+                    <Screen
+                      key={item.name}
+                      name={item.name}
+                      component={item.component}
+                    />
+                  ))}
+                </Navigator>
+              </NavigationContainer>
+            </GameContextProvider>
+          </SettingsContextProvider>
         </ThemeProvider>
       </ScreenContainer>
     </AppearanceProvider>

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
 import styled from "styled-components";

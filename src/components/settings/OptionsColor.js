@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import SETTINGS_HEADER from "./SettingsHeader";

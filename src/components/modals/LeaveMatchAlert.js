@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";

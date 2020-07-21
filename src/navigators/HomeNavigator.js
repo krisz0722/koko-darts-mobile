@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../contexts/SettingsContext";
 import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { View } from "react-native";
@@ -69,9 +68,8 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   );
 });
 
-const HomeNavigator = React.memo((props) => {
+const HomeNavigator = React.memo(() => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
-  console.log("RENDER HOMENAVIGATOR");
 
   return (
     <Navigator

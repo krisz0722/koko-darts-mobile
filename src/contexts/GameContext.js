@@ -4,7 +4,6 @@ import { changeInput } from "./actions/ChangeInputMethod";
 import type from "./actions/Type";
 import finishLeg from "./actions/FinishLeg";
 import rematch from "./actions/Rematch";
-import changeStartingScore from "./actions/ChangeStartingScore";
 import submitValidation from "./actions/SubmitValidation";
 import undo from "./actions/Undo";
 import clear from "./actions/Clear";

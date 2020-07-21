@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { FlexRow } from "../../styles/css_mixins";
-import GAME_CLASSIC from "../../screens/gamewindow/Classic";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import CLASSIC_TOP from "../classic/Top/ClassicTop";
 import CLASSIC_SCORES from "../classic/Scores/ClassicScores";
 import CLASSIC_STATS from "../classic/Stats/ClassicStats";
@@ -14,7 +12,6 @@ import {
 } from "../../screens/gamewindow/StyledClassic";
 import CLASSIC_MIDDLE from "../classic/Middle/ClassicMiddle";
 import CLASSIC_BOTTOM from "../classic/Bottom/ClassicBottom";
-import LEAVE_MATCH_ALERT from "../modals/LeaveMatchAlert";
 import { GameContext } from "../../contexts/GameContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 

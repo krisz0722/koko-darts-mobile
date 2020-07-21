@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
@@ -10,9 +9,9 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
   const { theme, animation } = useContext(ThemeContext);
   const {
-    gameData: { toWin, legsPerSet },
-    dispatchGameData,
-  } = useContext(GameContext);
+    settings: { toWin, legsPerSet },
+    dispatchSettings,
+  } = useContext(SettingsContext);
 
   const animationType = animation
     ? theme.name === "default"
@@ -26,9 +25,9 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
 
   const handleFirstToWin = (val) => {
     if (type === "main") {
-      dispatchGameData({ type: "CHANGE_TOWIN", value: val });
+      dispatchSettings({ type: "CHANGE_TOWIN", value: val });
     } else {
-      dispatchGameData({ type: "CHANGE_LEGSPERSET", value: val });
+      dispatchSettings({ type: "CHANGE_LEGSPERSET", value: val });
     }
   };
 

@@ -8,7 +8,6 @@ import {
   FlexColStart,
   FlexRow,
 } from "../../../styles/css_mixins";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import AVATAR from "./ClassicAvatar";
 import LEGSET from "./ClassicLegSet";
 import NAME from "./ClassicName";

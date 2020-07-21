@@ -8,7 +8,6 @@ import {
   FlexRow,
   Window,
 } from "../../../styles/css_mixins";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 const PLayerInfoLegSet = styled(Animated.View)`
   height: 100%;

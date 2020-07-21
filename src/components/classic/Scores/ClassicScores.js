@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef } from "react";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated } from "react-native";

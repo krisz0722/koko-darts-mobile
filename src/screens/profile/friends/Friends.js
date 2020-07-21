@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { FlexCol } from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SEARCH_MODAL from "./SeearchModal";

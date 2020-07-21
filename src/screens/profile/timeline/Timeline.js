@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { HeaderText } from "../../home/StyledHome";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 const TIMELINE = () => {

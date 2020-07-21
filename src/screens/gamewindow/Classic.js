@@ -6,7 +6,6 @@ import CLASSIC_BOTTOM from "../../components/classic/Bottom/ClassicBottom";
 import CLASSIC_TOP from "../../components/classic/Top/ClassicTop";
 import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
 import { GameContext } from "../../contexts/GameContext";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
 import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
 import { useIsDrawerOpen } from "@react-navigation/drawer";
@@ -17,7 +16,7 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     gameData: { activePlayer, inactivePlayer, isLegOver, opacity },
   } = useContext(GameContext);
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, animation } = useContext(ThemeContext);
 
   const isDrawerOpen = useIsDrawerOpen();
 
@@ -30,14 +29,16 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
   const drawerValue = useRef(new Animated.Value(!isDrawerOpen ? 1 : 0)).current;
 
   useEffect(() => {
-    Animated.timing(drawerValue, {
-      toValue: isDrawerOpen ? 1 : 0,
-      duration: 300,
-    }).start();
-    Animated.timing(animationValue, {
-      toValue: activePlayer === "p1" ? 0 : 1,
-      duration: 300,
-    }).start();
+    if (animation) {
+      Animated.timing(drawerValue, {
+        toValue: isDrawerOpen ? 1 : 0,
+        duration: 300,
+      }).start();
+      Animated.timing(animationValue, {
+        toValue: activePlayer === "p1" ? 0 : 1,
+        duration: 300,
+      }).start();
+    }
     if (isLegOver) {
       navigation.navigate("legisfinished");
     }

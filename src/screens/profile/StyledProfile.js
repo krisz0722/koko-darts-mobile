@@ -1,10 +1,9 @@
-import { Text, TouchableHighlight, View } from "react-native";
+import { Text, View } from "react-native";
 import styled from "styled-components";
 import {
   BasicText,
   BasicTextBold,
   Border,
-  FlexCol,
   FlexColAround,
   FlexRow,
   FlexRowBetween,

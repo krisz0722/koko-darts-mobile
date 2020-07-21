@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 
 const DATA_MIDDLE = () => {
   const {
-    dispatchGameData,
     gameData: { isInputByDart, p1, p2 },
   } = useContext(GameContext);
 

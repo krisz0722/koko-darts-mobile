@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import {
   BasicText,
   BasicTextBold,

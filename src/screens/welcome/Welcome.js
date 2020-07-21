@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import ShapeThrow from "../../../assets/shapeThrow";
 import {
   View_Headers,
@@ -8,8 +7,7 @@ import {
   Text_Title,
   View_Shape,
 } from "./StyledWelcome";
-import TABNAVIGATOR, { NavBar } from "../../components/navigation/TabNavigator";
-import NavButton from "../../components/buttons/NavButton";
+import { NavBar } from "../../components/navigation/TabNavigator";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Button } from "react-native";
 

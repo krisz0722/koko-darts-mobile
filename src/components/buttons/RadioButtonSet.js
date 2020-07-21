@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
 import {
   BasicTextBold,

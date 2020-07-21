@@ -3,7 +3,6 @@ import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { AlignText, FlexRow } from "../../../styles/css_mixins";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Text_Name = styled(Animated.Text)`
   color: ${({ theme, player }) => theme.game[player + "Text"]};

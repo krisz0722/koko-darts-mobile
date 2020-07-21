@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, Header3, Header4, ModalContainerAlert } from "./StyledModal";
-import { GameContext } from "../../contexts/GameContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const NEW_GAME_ALERT = ({ action1, action2, visible }) => {

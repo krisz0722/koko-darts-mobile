@@ -3,7 +3,6 @@ import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { Window } from "../../../styles/css_mixins";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 const PlayerInfoAvatar = styled(Animated.View)`
   height: 100%;

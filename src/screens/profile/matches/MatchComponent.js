@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
-import { SettingsContext } from "../../../contexts/SettingsContext";
 import { BasicText, FlexRowBetween, Window } from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../../contexts/ThemeContext";

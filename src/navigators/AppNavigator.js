@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -14,8 +14,9 @@ import HomeNavigator from "./HomeNavigator";
 import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
 import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
 import REMATCH from "../screens/endgame/rematch/Rematch";
-import transitionNone from "../styles/navNoTransition";
 import DrawerNavigator from "./DrawerNavigator";
+import { ThemeProvider } from "styled-components";
+import { ScreenContainer } from "../screens/router/StyledRouter";
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
@@ -65,7 +66,7 @@ const AppNavigator = () => {
   ];
 
   const {
-    settings: { selectedTheme, animation },
+    settings: { selectedTheme },
   } = useContext(SettingsContext);
   const theme = selectedTheme;
 
@@ -73,44 +74,49 @@ const AppNavigator = () => {
     dark: false,
     colors: {
       primary: theme.bg1,
-      background: "transparent",
+
       card: theme.bg1,
       text: theme.text,
       border: "none",
     },
   };
 
-  const transition = (theme, animation) => {
-    if (animation) {
-      if (theme === "default") {
-        return transitionDefault;
-      } else {
-        return transitionContrast;
-      }
+  const transition = (theme) => {
+    if (theme === "default") {
+      return transitionDefault;
+    } else {
+      return transitionContrast;
     }
-    return transitionNone;
   };
+
+  console.log("RENDER APPNAVIAGATOR ");
 
   return (
     <AppearanceProvider>
-      <NavigationContainer theme={navigationTheme}>
-        <Navigator
-          headerMode="none"
-          screenOptions={{
-            ...transition(theme.name, animation),
-          }}
-        >
-          {SCREENS.map((item) => (
-            <Screen
-              key={item.name}
-              name={item.name}
-              component={item.component}
-            />
-          ))}
-        </Navigator>
-      </NavigationContainer>
+      <ScreenContainer theme={theme}>
+        <ThemeProvider theme={theme}>
+          <NavigationContainer theme={navigationTheme}>
+            <Navigator
+              headerMode="none"
+              screenOptions={{
+                ...transition(theme.name),
+              }}
+            >
+              {SCREENS.map((item) => (
+                <Screen
+                  key={item.name}
+                  name={item.name}
+                  component={item.component}
+                />
+              ))}
+            </Navigator>
+          </NavigationContainer>
+        </ThemeProvider>
+      </ScreenContainer>
     </AppearanceProvider>
   );
 };
 
 export default AppNavigator;
+
+//TODO appnavigator renders on every settingscontext change --> change this

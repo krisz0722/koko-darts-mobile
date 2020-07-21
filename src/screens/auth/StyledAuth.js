@@ -30,3 +30,5 @@ export const Buttons = styled(View)`
   width: 100%;
   height: 25%;
 `;
+
+// TODO positioning issue on real mobile device

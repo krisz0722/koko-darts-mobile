@@ -4,10 +4,10 @@ import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { View } from "react-native";
 import { BorderHorizontal, FlexRowAround, Window } from "../styles/css_mixins";
-import HOME from "../screens/home/Home";
-import SETTINGS from "../screens/settings/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import PROFILE from "../screens/profile/Profile";
+import FRIENDS from "../screens/profile/friends/Friends";
+import MATCHES from "../screens/profile/matches/Matches";
+import TIMELINE from "../screens/profile/timeline/Timeline";
 
 export const NavBar = styled(View)`
   ${BorderHorizontal(({ theme, color }) =>
@@ -15,51 +15,47 @@ export const NavBar = styled(View)`
   )};
   border-bottom-width: ${({ theme, position }) =>
     position === "top" ? theme.borderWidth : 0};
-  position: ${({ position }) => (position === "top" ? "relative" : "absolute")};
-  bottom: 0;
+  position: relative;
   width: 100%;
   height: ${() => Window.height * 0.08};
   ${FlexRowAround};
 `;
 
-const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
+const PROFILE_TABBAR_CONTENT = React.memo(({ navigation, state }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const navigation = props.navigation;
-  const state = props.state;
-
   const TABBAR_ITEMS = [
     {
       index: 0,
-      route: "home",
-      icon: "home",
-      action: () => navigation.navigate("home"),
+      route: "friends",
+      icon: "person",
+      action: () => navigation.navigate("friends"),
     },
     {
       index: 1,
-      route: "settings",
-      icon: "tune",
-      action: () => navigation.navigate("settings"),
+      route: "matches",
+      icon: "list",
+      action: () => navigation.navigate("matches"),
     },
     {
       index: 2,
-      route: "profile",
-      icon: "person",
-      action: () => navigation.navigate("profile"),
+      route: "timeline",
+      icon: "show-chart",
+      action: () => navigation.navigate("timeline"),
     },
   ];
 
   const index = state.index;
 
   return (
-    <NavBar position={"bottom"} theme={selectedTheme}>
+    <NavBar position={"top"} theme={selectedTheme}>
       {TABBAR_ITEMS.map((item) => (
         <NavButton
           key={item.route}
           length={3}
-          direction={"vertical"}
+          direction={"horizontal"}
           text={item.route}
           icon={item.icon}
           action={item.action}
@@ -70,20 +66,17 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   );
 });
 
-const HomeNavigator = React.memo((props) => {
+const ProfileNavigator = React.memo((props) => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
-  console.log("RENDER HOMENAVIGATOR");
+  console.log("RENDER PROFILENAVIGATOR");
 
   return (
-    <Navigator
-      tabBarPosition={"bottom"}
-      tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
-    >
-      <Screen name="home" component={HOME} />
-      <Screen name="settings" component={SETTINGS} />
-      <Screen name="profile" component={PROFILE} />
+    <Navigator tabBar={(props) => <PROFILE_TABBAR_CONTENT {...props} />}>
+      <Screen name="friends" component={FRIENDS} />
+      <Screen name="matches" component={MATCHES} />
+      <Screen name="timeline" component={TIMELINE} />
     </Navigator>
   );
 });
 
-export default HomeNavigator;
+export default ProfileNavigator;

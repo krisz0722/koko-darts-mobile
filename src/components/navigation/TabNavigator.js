@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
-import { useRoute } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import NavButton from "../buttons/NavButton";
-import { NavigationContext } from "../../contexts/NavigationContext";
 import styled from "styled-components";
 import { View } from "react-native";
 import {
@@ -10,6 +8,10 @@ import {
   FlexRowAround,
   Window,
 } from "../../styles/css_mixins";
+import HOME from "../../screens/home/Home";
+import SETTINGS from "../../screens/settings/Settings";
+import PROFILE from "../../screens/profile/Profile";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 export const NavBar = styled(View)`
   ${BorderHorizontal(({ theme, color }) =>
@@ -24,46 +26,62 @@ export const NavBar = styled(View)`
   ${FlexRowAround};
 `;
 
-const TABNAVIGATOR = ({ position, tabs, direction, length, color }) => {
+const BOTTOM_TABBAR_CONTENT = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const route = useRoute().name;
-
-  const { homeTabScreen, setHomeTabScreen } = useContext(NavigationContext);
-  const { profileTabScreen, setProfileTabScreen } = useContext(
-    NavigationContext,
-  );
-
-  const activeScreen =
-    route === "homenavigator" ? homeTabScreen : profileTabScreen;
-
-  const handler = (newRoute, action) => {
-    if (route === "homenavigator") {
-      setHomeTabScreen(newRoute);
-    } else if (route === "profile") {
-      setProfileTabScreen(newRoute);
-    }
-    return action();
-  };
+  const TABBAR_ITEMS = [
+    {
+      route: "home",
+      icon: "home",
+      action: () => navigation.navigate("home"),
+    },
+    {
+      route: "settings",
+      icon: "tune",
+      action: () => navigation.navigate("settings"),
+    },
+    {
+      route: "profile",
+      icon: "profile",
+      action: () => navigation.navigate("profile"),
+    },
+  ];
 
   return (
-    <NavBar color={color} position={position} theme={selectedTheme}>
-      {tabs.map((item) => (
+    <NavBar theme={selectedTheme}>
+      {TABBAR_ITEMS.map((item) => (
         <NavButton
-          color={color}
-          direction={direction}
           key={item.route}
-          active={activeScreen === item.route}
-          action={() => handler(item.route, item.action)}
+          color={"drawer"}
+          height={10}
+          length={3}
+          direction={"horizontal"}
+          text={item.route}
           icon={item.icon}
-          length={length}
-          text={item.text}
+          action={item.action}
         />
       ))}
     </NavBar>
   );
 };
 
-export default TABNAVIGATOR;
+const BottomTabNavigator = () => {
+  const { Screen, Navigator } = createMaterialTopTabNavigator();
+  console.log("TABNAVIGATOR ");
+  console.log("RENDER TABNAVIGATOR");
+
+  return (
+    <Navigator
+      tabBarPosition={"bottom"}
+      tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
+    >
+      <Screen name="home" component={HOME} />
+      <Screen name="settings" component={SETTINGS} />
+      <Screen name="profile" component={PROFILE} />
+    </Navigator>
+  );
+};
+
+export default BottomTabNavigator;

@@ -70,6 +70,8 @@ const HOME = ({ route, navigation }) => {
     setExitModal(!exitModal);
   };
 
+  console.log("RENDER HOME SCREEN");
+
   return (
     <>
       <Header>

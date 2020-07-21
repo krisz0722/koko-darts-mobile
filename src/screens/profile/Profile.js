@@ -1,6 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import PROFILE_NAVIGATOR_TAB from "../../components/navigation/ProfileTabNavigator";
-import ProfileNavigator from "../../navigators/ProfileNavigator";
 import {
   Header,
   Name,
@@ -13,21 +11,18 @@ import {
   StatValue,
 } from "./StyledProfile";
 import { BackHandler } from "react-native";
-import { NavigationContext } from "../../contexts/NavigationContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import PROFILE_STATS from "./DataProfile";
+import ProfileNavigator from "../../navigators/ProfileTopNavigator";
 
-const PROFILE = ({ route, navigation }) => {
+const PROFILE = React.memo(({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const { setHomeTabScreen } = useContext(NavigationContext);
-
   useEffect(() => {
     const backAction = () => {
       navigation.navigate("home");
-      setHomeTabScreen("home");
       return true;
     };
     const backHandler = BackHandler.addEventListener(
@@ -35,7 +30,9 @@ const PROFILE = ({ route, navigation }) => {
       backAction,
     );
     return () => backHandler.remove();
-  }, [navigation, setHomeTabScreen]);
+  }, [navigation]);
+
+  console.log("RENDER PROFILE SCREEN");
 
   return (
     <>
@@ -54,12 +51,11 @@ const PROFILE = ({ route, navigation }) => {
         </Container2>
       </Header>
       <NavigationWindow>
-        <PROFILE_NAVIGATOR_TAB />
         <ProfileNavigator />
       </NavigationWindow>
     </>
   );
-};
+});
 
 export default PROFILE;
 

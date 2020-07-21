@@ -4,7 +4,7 @@ import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated } from "react-native";
 import { AlignText } from "../../../styles/css_mixins";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Text_Score = styled(Animated.Text)`
   position: absolute;
   top: 0;
@@ -25,15 +25,11 @@ const Text_Score2 = styled(Text_Score)`
   right: 0;
 `;
 const PLAYER_SCORE = () => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
   const {
     gameData: { activePlayer, showStats, p1_DATA, p2_DATA },
   } = useContext(GameContext);
-
-  const theme = selectedTheme;
 
   const p1Checkout = p1_DATA.onCheckout;
   const p2Checkout = p2_DATA.onCheckout;
@@ -107,9 +103,9 @@ const PLAYER_SCORE = () => {
     ? "50%"
     : "100%";
 
-  const fs1 = selectedTheme.game.score.classic.fs1;
-  const fs2 = selectedTheme.game.score.classic.fs2;
-  const fs3 = selectedTheme.game.score.classic.fs3;
+  const fs1 = theme.game.score.classic.fs1;
+  const fs2 = theme.game.score.classic.fs2;
+  const fs3 = theme.game.score.classic.fs3;
 
   const fontSizeP1 = animation
     ? fontP1.interpolate({

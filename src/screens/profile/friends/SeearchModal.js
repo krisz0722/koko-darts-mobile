@@ -18,7 +18,7 @@ import {
   FlexCol,
   Window,
 } from "../../../styles/css_mixins";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const ModalContainerSearch = styled(ScrollView)`
   background-color: rgba(255, 255, 255, 0.95);
 `;
@@ -51,12 +51,10 @@ font-size:20;
 `;
 
 const SEARCH_MODAL = ({ action1, action2, visible }) => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
   const animationType = animation
-    ? selectedTheme.name === "default"
+    ? theme.name === "default"
       ? "fade"
       : "slide"
     : "none";
@@ -76,17 +74,17 @@ const SEARCH_MODAL = ({ action1, action2, visible }) => {
         <ModalContainerSearch
           contentContainerStyle={{ flexGrow: 1 }}
           keyboardShouldPersistTaps={"always"}
-          theme={selectedTheme}
+          theme={theme}
         >
           <Container>
             <Header>FIND YOUR FRIEND</Header>
             <SearchBar
-              placeholderTextColor={selectedTheme.borderColor}
-              theme={selectedTheme}
+              placeholderTextColor={theme.borderColor}
+              theme={theme}
               onChangeText={handleRegExp}
             />
             <LIST_PROFILES regexp={regexp} />
-            <BottomButtons theme={selectedTheme}>
+            <BottomButtons theme={theme}>
               <THEMED_BUTTON
                 text={"cancel"}
                 length={2}

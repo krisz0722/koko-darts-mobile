@@ -1,6 +1,8 @@
 import React from "react";
 import AppNavigator from "../../navigators/AppNavigator";
 import { AppBackground } from "./StyledRouter";
+import { SettingsContextProvider } from "../../contexts/SettingsContext";
+import { ThemeContextProvider } from "../../contexts/ThemeContext";
 
 const ROUTER = () => {
   console.log("ROUTER RENDER");
@@ -10,7 +12,9 @@ const ROUTER = () => {
         source={require("../../../assets/bgPortrait.jpeg")}
         resizeMode="cover"
       />
-      <AppNavigator />
+      <ThemeContextProvider>
+        <AppNavigator />
+      </ThemeContextProvider>
     </>
   );
 };

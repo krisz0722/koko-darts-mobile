@@ -4,14 +4,13 @@ import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, Header3, Header4, ModalContainerAlert } from "./StyledModal";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
   const animationType = animation
-    ? selectedTheme.name === "default"
+    ? theme.name === "default"
       ? "fade"
       : "slide"
     : "none";
@@ -23,14 +22,14 @@ const LEAVE_MATCH_ALERT = ({ action1, action2, visible }) => {
       presentationStyle={"pageSheet"}
       visible={visible}
     >
-      <ModalContainerAlert theme={selectedTheme}>
+      <ModalContainerAlert theme={theme}>
         <Header2>leaving match</Header2>
         <Header3>
           Are you sure you want to leave the match? (It will be saved, you can
           continue it later.)
         </Header3>
         <Header4>Proceed?</Header4>
-        <BottomButtons theme={selectedTheme}>
+        <BottomButtons theme={theme}>
           <THEMED_BUTTON
             text={"cancel"}
             length={2}

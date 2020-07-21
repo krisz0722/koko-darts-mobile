@@ -7,6 +7,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconDart from "../../../assets/iconDart";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
   width: ${() => 100 / 3 + "%"};
@@ -35,11 +36,7 @@ const NUM_BUTTON = React.memo(
       gameData: { activePlayer },
     } = useContext(GameContext);
 
-    const {
-      settings: { selectedTheme, animation },
-    } = useContext(SettingsContext);
-
-    const theme = selectedTheme;
+    const { theme, animation } = useContext(ThemeContext);
 
     const animationValue = useRef(
       new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -109,7 +106,7 @@ const NUM_BUTTON = React.memo(
         middle={middle}
         onPress={() => typeOfHandler(type, action, value)}
         disabled={route !== "game"}
-        theme={selectedTheme}
+        theme={theme}
         style={{
           borderColor,
           backgroundColor,
@@ -119,7 +116,7 @@ const NUM_BUTTON = React.memo(
         <>
           {icon ? (
             icon === "dart" ? (
-              <IconDart fill={selectedTheme.text} size={15} />
+              <IconDart fill={theme.text} size={15} />
             ) : (
               <Icon name={icon} size={25} color={theme.text} />
             )

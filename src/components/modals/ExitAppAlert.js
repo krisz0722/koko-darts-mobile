@@ -4,14 +4,13 @@ import { Modal } from "react-native";
 import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const EXIT_APP_ALERT = ({ action1, action2, visible }) => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
   const animationType = animation
-    ? selectedTheme.name === "default"
+    ? theme.name === "default"
       ? "fade"
       : "slide"
     : "none";
@@ -23,10 +22,10 @@ const EXIT_APP_ALERT = ({ action1, action2, visible }) => {
       presentationStyle={"pageSheet"}
       visible={visible}
     >
-      <ModalContainerAlert theme={selectedTheme}>
+      <ModalContainerAlert theme={theme}>
         <Header2>EXIT APP</Header2>
         <Header3>Are you sure you want to exit the application?</Header3>
-        <BottomButtons theme={selectedTheme}>
+        <BottomButtons theme={theme}>
           <THEMED_BUTTON
             text={"cancel"}
             length={2}

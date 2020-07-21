@@ -5,7 +5,7 @@ import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, Text, View } from "react-native";
 import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
 import DATA_STATS from "./DataStats";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const ClassicStats = styled(Animated.View)`
   ${FlexRowBetween};
   width: 50%;
@@ -69,11 +69,7 @@ export const StatText4 = styled(StatText2)`
 `;
 
 const CLASSIC_STATS = () => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
-
-  const theme = selectedTheme;
+  const { theme, animation } = useContext(ThemeContext);
 
   const {
     gameData: { activePlayer, showStats, p1_DATA, p2_DATA },

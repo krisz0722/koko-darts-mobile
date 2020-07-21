@@ -16,6 +16,7 @@ import CLASSIC_MIDDLE from "../classic/Middle/ClassicMiddle";
 import CLASSIC_BOTTOM from "../classic/Bottom/ClassicBottom";
 import LEAVE_MATCH_ALERT from "../modals/LeaveMatchAlert";
 import { GameContext } from "../../contexts/GameContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const PreviewContainer = styled(Animated.View)`
   position: ${({ ingame }) => (ingame ? "relative" : "absolute")};
@@ -30,24 +31,22 @@ const PreviewContainer = styled(Animated.View)`
 
 export const PREVIEW = ({ preview, ingame }) => {
   const {
-    gameData: { inactivePlayer },
+    gameData: { inactivePlayer, opacity },
   } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme, opacity },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <PreviewContainer ingame={ingame} visible={preview} theme={selectedTheme}>
+    <PreviewContainer ingame={ingame} visible={preview} theme={theme}>
       <GameWindow preview={preview}>
         <CLASSIC_TOP />
         <CLASSIC_SCORES />
         <CLASSIC_STATS />
         {opacity ? (
           inactivePlayer === "p1" ? (
-            <Overlay1 style={{ opacity: 0.9 }} theme={selectedTheme} />
+            <Overlay1 style={{ opacity: 0.9 }} theme={theme} />
           ) : (
-            <Overlay2 style={{ opacity: 0.9 }} theme={selectedTheme} />
+            <Overlay2 style={{ opacity: 0.9 }} theme={theme} />
           )
         ) : null}
         <CLASSIC_MIDDLE />

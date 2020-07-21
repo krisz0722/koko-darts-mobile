@@ -2,14 +2,12 @@ import React, { useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Buttons, Form2, Inputs } from "./StyledAuth";
-
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const FORGOT_PASSWORD = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const [email, setEmail] = useState("");
   const [focus, setFocus] = useState(undefined);
@@ -49,7 +47,7 @@ const FORGOT_PASSWORD = ({ navigation }) => {
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         keyboardShouldPersistTaps={"always"}
       >
-        <Form2 theme={selectedTheme} isKeyboardUp={isKeyboardUp}>
+        <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
           <Inputs>
             <LoginInput
               valid={email.length > 5}

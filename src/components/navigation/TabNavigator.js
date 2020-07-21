@@ -12,6 +12,7 @@ import HOME from "../../screens/home/Home";
 import SETTINGS from "../../screens/settings/Settings";
 import PROFILE from "../../screens/profile/Profile";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const NavBar = styled(View)`
   ${BorderHorizontal(({ theme, color }) =>
@@ -27,9 +28,7 @@ export const NavBar = styled(View)`
 `;
 
 const BOTTOM_TABBAR_CONTENT = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const TABBAR_ITEMS = [
     {
@@ -50,7 +49,7 @@ const BOTTOM_TABBAR_CONTENT = ({ navigation }) => {
   ];
 
   return (
-    <NavBar theme={selectedTheme}>
+    <NavBar theme={theme}>
       {TABBAR_ITEMS.map((item) => (
         <NavButton
           key={item.route}

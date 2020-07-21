@@ -14,11 +14,10 @@ import { BackHandler } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import PROFILE_STATS from "./DataProfile";
 import ProfileNavigator from "../../navigators/ProfileTopNavigator";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
-const PROFILE = React.memo(({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+const PROFILE = ({ navigation }) => {
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const backAction = () => {
@@ -39,12 +38,12 @@ const PROFILE = React.memo(({ navigation }) => {
       <Header>
         <Container>
           <SubContainer />
-          <Name theme={selectedTheme}>Jose armando</Name>
+          <Name theme={theme}>Jose armando</Name>
         </Container>
-        <Container2 theme={selectedTheme}>
+        <Container2 theme={theme}>
           {PROFILE_STATS.map((item) => (
             <Field key={item.stat}>
-              <Stat theme={selectedTheme}>{item.stat}</Stat>
+              <Stat theme={theme}>{item.stat}</Stat>
               <StatValue>{item.value}</StatValue>
             </Field>
           ))}
@@ -55,7 +54,7 @@ const PROFILE = React.memo(({ navigation }) => {
       </NavigationWindow>
     </>
   );
-});
+};
 
 export default PROFILE;
 

@@ -6,15 +6,14 @@ import { FlexCol } from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SEARCH_MODAL from "./SeearchModal";
 import LIST_FRIENDS from "./ListFriends";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 
 export const AddButton = styled(TouchableOpacity)`
   ${FlexCol};
 `;
 
 const FRIENDS = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const [searchModal, setSearchModal] = useState(false);
 
@@ -25,8 +24,8 @@ const FRIENDS = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LIST_FRIENDS />
-      <AddButton theme={selectedTheme} onPress={() => setSearchModal(true)}>
-        <Icon name={"add-circle"} color={selectedTheme.text} size={75} />
+      <AddButton theme={theme} onPress={() => setSearchModal(true)}>
+        <Icon name={"add-circle"} color={theme.text} size={75} />
       </AddButton>
       <SEARCH_MODAL
         action1={() => setSearchModal(!searchModal)}

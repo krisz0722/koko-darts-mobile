@@ -8,11 +8,10 @@ import PLAYERS from "../../components/settings/Players";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { GameContext } from "../../contexts/GameContext";
 import { BackHandler } from "react-native";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const {
     dispatchGameData,
@@ -37,7 +36,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
       <OptionsScore />
       <OptionsLegOrSet />
       <HISTORY />
-      <BottomButtons theme={selectedTheme}>
+      <BottomButtons theme={theme}>
         <THEMED_BUTTON
           text={"back"}
           length={2}

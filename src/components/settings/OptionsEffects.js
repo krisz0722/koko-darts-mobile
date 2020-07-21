@@ -3,26 +3,28 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import SETTINGS_HEADER from "./SettingsHeader";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { GameContext } from "../../contexts/GameContext";
 
 export const OptionsEffects = () => {
+  const { theme, animation, setAnimation } = useContext(ThemeContext);
   const {
-    settings: { selectedTheme, animation, opacity },
-    dispatchSettings,
-  } = useContext(SettingsContext);
+    dispatchGameData,
+    gameData: { opacity },
+  } = useContext(GameContext);
 
-  const toggleAnimation = () =>
-    dispatchSettings({ type: "TOGGLE_ANIMATION", value: !animation });
+  const toggleAnimation = () => setAnimation(!animation);
   const toggleOpacity = () =>
-    dispatchSettings({ type: "OPACITY", value: !opacity });
+    dispatchGameData({ type: "OPACITY", value: !opacity });
 
   return (
-    <Row theme={selectedTheme} layout="asym">
+    <Row theme={theme} layout="asym">
       <SETTINGS_HEADER
         text={"visual effects"}
         icon={"help-outline"}
         action={() => alert("action")}
       />
-      <Div theme={selectedTheme}>
+      <Div theme={theme}>
         <SETTINGS_BUTTON
           value={"animation"}
           active={animation}

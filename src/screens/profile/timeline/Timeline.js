@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { HeaderText } from "../../home/StyledHome";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 const TIMELINE = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
-  return <HeaderText theme={selectedTheme}>TIMELINE</HeaderText>;
+  return <HeaderText theme={theme}>TIMELINE</HeaderText>;
 };
 
 export default TIMELINE;

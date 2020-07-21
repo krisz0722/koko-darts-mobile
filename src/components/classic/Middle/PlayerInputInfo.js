@@ -5,7 +5,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { BasicTextBold, FlexCol } from "../../../styles/css_mixins";
 import INPUT_BY_DART_FIELD from "../../buttons/InputByDartField";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const PlayerInputInfo = styled(Animated.View)`
   ${FlexCol};
   width: ${() => 100 / 3 + "%"};
@@ -29,11 +29,8 @@ export const Text_Function = styled(Animated.Text)`
 `;
 
 const PLAYER_INPUT_INFO = ({ value, player }) => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
-  const theme = selectedTheme;
   const {
     gameData,
     gameData: { activePlayer, inactivePlayer, isInputByDart, inputByRound },
@@ -82,10 +79,8 @@ const PLAYER_INPUT_INFO = ({ value, player }) => {
           style={{ borderColor }}
         >
           <>
-            <Text_Function theme={selectedTheme}>{value}</Text_Function>
-            <Text_Function theme={selectedTheme}>
-              {scoreDisplayText}
-            </Text_Function>
+            <Text_Function theme={theme}>{value}</Text_Function>
+            <Text_Function theme={theme}>{scoreDisplayText}</Text_Function>
           </>
         </PlayerInputInfo>
       )}

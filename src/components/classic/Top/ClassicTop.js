@@ -12,6 +12,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 import AVATAR from "./ClassicAvatar";
 import LEGSET from "./ClassicLegSet";
 import NAME from "./ClassicName";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 
 export const ClassicTop = styled(Animated.View)`
   ${FlexColStart};
@@ -50,11 +51,7 @@ const CLASSIC_TOP = () => {
   const {
     gameData: { activePlayer, showStats },
   } = useContext(GameContext);
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
-
-  const theme = selectedTheme;
+  const { theme, animation } = useContext(ThemeContext);
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),

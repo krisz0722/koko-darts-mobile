@@ -18,13 +18,10 @@ import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
 import UNFINISHED_MATCH from "./DataUnfinished";
 import LAST_MATCH from "./DataLastMatch";
 import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const HOME = ({ route, navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-
-  const { dispatchGameData } = useContext(GameContext);
+  const { theme } = useContext(ThemeContext);
 
   const [unfinished, setUnfinished] = useState(true);
   const [exitModal, setExitModal] = useState(false);
@@ -50,14 +47,12 @@ const HOME = ({ route, navigation }) => {
     if (unfinished) {
       setNewGameModal(!newGameModal);
     } else {
-      dispatchGameData({ type: "CREATE_NEW_MATCH" });
       navigation.navigate("pregame");
       setUnfinished(false);
     }
   };
 
   const handleNewGameModal = () => {
-    dispatchGameData({ type: "CREATE_NEW_MATCH" });
     navigation.navigate("pregame");
     setUnfinished(false);
     setTimeout(() => {
@@ -75,12 +70,12 @@ const HOME = ({ route, navigation }) => {
   return (
     <>
       <Header>
-        <HeaderText theme={selectedTheme}>welcome</HeaderText>
-        <HeaderText theme={selectedTheme}>valaki</HeaderText>
+        <HeaderText theme={theme}>welcome</HeaderText>
+        <HeaderText theme={theme}>valaki</HeaderText>
       </Header>
       <InfoTitle unfinished={unfinished}>{renderContent.title}</InfoTitle>
       <Info unfinished={unfinished}>
-        <InfoStats theme={selectedTheme}>
+        <InfoStats theme={theme}>
           {renderContent.rows.map((item) => (
             <React.Fragment key={item.value}>
               <InfoRow>
@@ -95,14 +90,14 @@ const HOME = ({ route, navigation }) => {
         {unfinished ? (
           <THEMED_BUTTON
             type={"success"}
-            theme={selectedTheme}
+            theme={theme}
             text={"continue game"}
           />
         ) : null}
         <THEMED_BUTTON
           valami={1}
           type={"active"}
-          theme={selectedTheme}
+          theme={theme}
           text={"new game"}
           action={() => handleNewGame()}
         />

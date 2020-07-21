@@ -6,6 +6,8 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { BasicText, Flex, Window } from "../../styles/css_mixins";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import { GameContext } from "../../contexts/GameContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
+
 const Button_Nav = styled(TouchableOpacity)`
   ${Flex};
   flex-direction: ${({ direction }) =>
@@ -40,26 +42,19 @@ const NavButton = React.memo(
     action = null,
     icon = null,
   }) => {
-    const {
-      gameData: { inactivePlayer },
-    } = useContext(GameContext);
+    const { theme, animation } = useContext(ThemeContext);
 
-    const {
-      settings: { selectedTheme, animation },
-    } = useContext(SettingsContext);
-
-    const theme = selectedTheme;
     const iconColor = () => {
       if (active) {
         return theme.text2;
       } else {
         switch (color) {
           case "dark":
-            return selectedTheme.bg3;
+            return theme.bg3;
           case "light":
-            return selectedTheme.text;
+            return theme.text;
           case "drawer":
-            return selectedTheme.game[inactivePlayer + "Text"];
+            return "purple";
         }
       }
     };
@@ -70,11 +65,12 @@ const NavButton = React.memo(
       } else {
         switch (color) {
           case "dark":
-            return selectedTheme.text2;
+            return theme.text2;
           case "light":
-            return selectedTheme.text;
+            return theme.text;
           case "drawer":
-            return selectedTheme.game[inactivePlayer + "Text"];
+            // return theme.game[inactivePlayer + "Text"];
+            return "purple";
         }
       }
     };
@@ -87,7 +83,7 @@ const NavButton = React.memo(
         active={active}
         length={length}
         height={height}
-        theme={selectedTheme}
+        theme={theme}
         onPress={action}
         activeOpacity={animation ? 0.2 : 1}
       >
@@ -102,7 +98,7 @@ const NavButton = React.memo(
             color={textColor()}
             active={active}
             icon={icon}
-            theme={selectedTheme}
+            theme={theme}
           >
             {text}
           </Text_Button>

@@ -10,15 +10,14 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
 import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
 import { useIsDrawerOpen } from "@react-navigation/drawer";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const GAME_CLASSIC = ({ navigation, preview }) => {
   const {
-    gameData: { activePlayer, inactivePlayer, isLegOver },
+    gameData: { activePlayer, inactivePlayer, isLegOver, opacity },
   } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme, animation, opacity },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const isDrawerOpen = useIsDrawerOpen();
 
@@ -95,9 +94,9 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
       <CLASSIC_STATS />
       {opacity ? (
         inactivePlayer === "p1" ? (
-          <Overlay1 style={{ opacity: opacity1 }} theme={selectedTheme} />
+          <Overlay1 style={{ opacity: opacity1 }} theme={theme} />
         ) : (
-          <Overlay2 style={{ opacity: opacity2 }} theme={selectedTheme} />
+          <Overlay2 style={{ opacity: opacity2 }} theme={theme} />
         )
       ) : null}
       <CLASSIC_MIDDLE />

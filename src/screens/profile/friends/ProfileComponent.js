@@ -9,7 +9,7 @@ import {
   Window,
 } from "../../../styles/css_mixins";
 import CheckBox from "@react-native-community/checkbox";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Profile = styled(View)`
   ${FlexRowAround};
   margin: auto;
@@ -34,23 +34,17 @@ export const Name = styled(Text)`
 `;
 
 const PROFILE_COMPONENT = ({ item }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const [active, setActive] = useState(false);
 
   return (
-    <Profile theme={selectedTheme}>
-      <ProfileAvatar
-        theme={selectedTheme}
-        resizeMode={"cover"}
-        source={item.img}
-      />
+    <Profile theme={theme}>
+      <ProfileAvatar theme={theme} resizeMode={"cover"} source={item.img} />
       <Name>{item.name}</Name>
       <CheckBox
-        tintColors={{ true: selectedTheme.text, false: selectedTheme.text }}
-        onCheckColor={selectedTheme.bg3}
+        tintColors={{ true: theme.text, false: theme.text }}
+        onCheckColor={theme.bg3}
         value={active}
         onChange={() => setActive(!active)}
       />

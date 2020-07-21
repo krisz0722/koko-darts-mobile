@@ -8,6 +8,7 @@ import HOME from "../screens/home/Home";
 import SETTINGS from "../screens/settings/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PROFILE from "../screens/profile/Profile";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export const NavBar = styled(View)`
   ${BorderHorizontal(({ theme, color }) =>
@@ -23,9 +24,7 @@ export const NavBar = styled(View)`
 `;
 
 const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const navigation = props.navigation;
   const state = props.state;
@@ -54,7 +53,7 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   const index = state.index;
 
   return (
-    <NavBar position={"bottom"} theme={selectedTheme}>
+    <NavBar position={"bottom"} theme={theme}>
       {TABBAR_ITEMS.map((item) => (
         <NavButton
           key={item.route}

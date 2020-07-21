@@ -16,20 +16,6 @@ export const GameContext = createContext({});
 export const GameContextProvider = (props) => {
   const gameReducer = (state, action = null) => {
     switch (action.type) {
-      case "CHANGE_P1":
-        return { ...state, p1: action.value };
-      case "CHANGE_P2":
-        return { ...state, p2: action.value };
-      case "SWAP_PLAYERS":
-        return { ...state, p1: state.p2, p2: state.p1 };
-      case "CHANGE_LEGORSET":
-        return { ...state, legOrSet: action.value };
-      case "CHANGE_TOWIN":
-        return { ...state, toWin: parseInt(action.value) };
-      case "CHANGE_LEGSPERSET":
-        return { ...state, legsPerSet: parseInt(action.value) };
-      case "CHANGE_STARTINGSCORE":
-        return changeStartingScore(state, action.value);
       case "RESET":
         return GAME_DEFAULT_STATE;
 
@@ -51,6 +37,9 @@ export const GameContextProvider = (props) => {
         return clear(state);
       case "BUST":
         return bust(state);
+
+      case "OPACITY":
+        return { ...state, opacity: action.value };
 
       case "FINISH_LEG":
         return finishLeg(state, action.nodUsed, action.nodRequired);
@@ -75,11 +64,9 @@ export const GameContextProvider = (props) => {
     }
   };
 
-  const initialGameState = GAME_DEFAULT_STATE;
-
   const [gameData, dispatchGameData] = useReducer(
     gameReducer,
-    initialGameState,
+    GAME_DEFAULT_STATE,
   );
 
   console.log(gameData);

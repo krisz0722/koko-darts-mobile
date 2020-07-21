@@ -3,18 +3,15 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import SETTINGS_HEADER from "./SettingsHeader";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const COLOR = () => {
-  const {
-    settings: { selectedTheme },
-    dispatchSettings,
-  } = useContext(SettingsContext);
-  const theme = selectedTheme;
+  const { theme, setSelectedTheme } = useContext(ThemeContext);
 
   const DATA = ["default", "contrast"];
 
   const handlePress = (val) => {
-    dispatchSettings({ type: "CHANGE_THEME", value: val });
+    setSelectedTheme(val);
   };
 
   return (

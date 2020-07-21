@@ -5,6 +5,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
 import IconDart from "../../../assets/iconDart";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const Container = styled(Animated.View)`
   ${FlexRowAround}
@@ -22,11 +23,8 @@ export const Text_Function = styled(Animated.Text)`
 `;
 
 const INPUT_BY_DART_FIELD = () => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
-  const theme = selectedTheme;
   const {
     gameData: { activePlayer, inputByDartArray },
   } = useContext(GameContext);
@@ -77,7 +75,7 @@ const INPUT_BY_DART_FIELD = () => {
         {DATA.map((item) => (
           <React.Fragment key={item.key}>
             {item.showIcon ? (
-              <IconDart fill={selectedTheme.text} size={15} />
+              <IconDart fill={theme.text} size={15} />
             ) : (
               <Text_Function icon={true}>{item.value}</Text_Function>
             )}

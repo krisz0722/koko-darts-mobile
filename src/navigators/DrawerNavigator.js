@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { FlexCol } from "../styles/css_mixins";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -24,9 +25,7 @@ const DRAWER_CONTENT = ({ navigation }) => {
     gameData: { inactivePlayer },
   } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const DRAWER_ITEMS = [
     {
@@ -47,7 +46,7 @@ const DRAWER_CONTENT = ({ navigation }) => {
   ];
 
   return (
-    <DrawerContent theme={selectedTheme} inap={inactivePlayer}>
+    <DrawerContent theme={theme} inap={inactivePlayer}>
       {DRAWER_ITEMS.map((item) => (
         <NavButton
           key={item.route}
@@ -66,7 +65,7 @@ const DRAWER_CONTENT = ({ navigation }) => {
 
 const DrawerNavigator = () => {
   const {
-    settings: { selectedTheme },
+    settings: { theme },
   } = useContext(SettingsContext);
 
   const {
@@ -84,7 +83,7 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <DRAWER_CONTENT {...props} />}
       drawerStyle={drawerstyle}
       drawerPosition={"right"}
-      overlayColor={selectedTheme.game[activePlayer + "Overlay"]}
+      overlayColor={theme.game[activePlayer + "Overlay"]}
     >
       <Screen name="game" component={GAME_CLASSIC} />
       <Screen name="settings-ingame" component={SETTINGS_INGAME} />
@@ -96,3 +95,4 @@ const DrawerNavigator = () => {
 export default DrawerNavigator;
 
 //TODO navigatio transition!!!
+//TODO inactiveplayer prop?

@@ -9,6 +9,7 @@ import {
   FlexRowBetween,
   Window,
 } from "../../styles/css_mixins";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Options = styled(View)`
   width: ${({ direction }) => (direction === "vertical" ? "40%" : "100%")};
@@ -52,15 +53,13 @@ const RADIO_BUTTON_SET = ({
   direction,
   length,
 }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Options direction={direction}>
       {options.map((item) => (
         <Option
-          underlayColor={selectedTheme.text}
+          underlayColor={theme.text}
           direction={direction}
           length={length}
           key={item}
@@ -71,7 +70,7 @@ const RADIO_BUTTON_SET = ({
             <Radio
               onPress={() => action(item)}
               active={activeValue === item}
-              theme={selectedTheme}
+              theme={theme}
             />
           </>
         </Option>

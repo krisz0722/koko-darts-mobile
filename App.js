@@ -9,11 +9,7 @@ console.disableYellowBox = true;
 const App = () => {
   return (
     <NavigationContextProvider>
-      <SettingsContextProvider>
-        <GameContextProvider>
-          <ROUTER />
-        </GameContextProvider>
-      </SettingsContextProvider>
+      <ROUTER />
     </NavigationContextProvider>
   );
 };

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { TextInput, TouchableWithoutFeedback, View } from "react-native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Div = styled(View)`
   ${FlexRowAround};
@@ -26,11 +27,8 @@ const TextInput_Login = styled(TextInput)`
 `;
 
 const LoginInput = ({ handleFocus, valid, focused, input }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
-  const theme = selectedTheme;
   const { value, name, icon, iconAction, action, placeholder, type } = input;
 
   return (

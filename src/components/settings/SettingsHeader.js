@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
 import styled from "styled-components";
 import { AlignText, FlexRow } from "../../styles/css_mixins";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const HeaderContainer = styled(View)`
   ${FlexRow};
@@ -21,10 +22,7 @@ const Header = styled(Text)`
 `;
 
 const SETTINGS_HEADER = ({ text, action, icon = null, header = false }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-  const theme = selectedTheme;
+  const { theme } = useContext(ThemeContext);
 
   return (
     <HeaderContainer header={header}>

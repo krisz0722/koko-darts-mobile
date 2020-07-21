@@ -5,7 +5,7 @@ import { SettingsContext } from "../../../contexts/SettingsContext";
 import { FlatList } from "react-native";
 import FRIENDS_LIST from "./DataFriends";
 import FRIEND_COMPONENT from "./FriendComponent";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const FriendsContainer = styled(FlatList)`
   width: 100%;
   border-bottom-width: ${({ theme }) => theme.borderWidth};
@@ -13,9 +13,7 @@ export const FriendsContainer = styled(FlatList)`
 `;
 
 const LIST_FRIENDS = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const renderItem = ({ item }) => <FRIEND_COMPONENT item={item} />;
 
@@ -25,7 +23,7 @@ const LIST_FRIENDS = () => {
         data={FRIENDS_LIST}
         renderItem={renderItem}
         keyExtractor={(item) => item.name}
-        theme={selectedTheme}
+        theme={theme}
       />
     </SafeAreaView>
   );

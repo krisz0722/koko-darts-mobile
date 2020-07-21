@@ -6,7 +6,7 @@ import { Animated } from "react-native";
 import { FlexColAround } from "../../../styles/css_mixins";
 import PLAYER_CHECKOUTS from "./ClassicCheckoutsDiv";
 import PLAYER_SCORE from "./ClassicPlayerScore";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const ClassicScores = styled(Animated.View)`
   ${FlexColAround};
   position: absolute;
@@ -33,15 +33,11 @@ export const ClassicCheckoutsP2 = styled(ClassicCheckoutsPlayer)`
 `;
 
 const CLASSIC_SCORES = () => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
 
   const {
     gameData: { activePlayer, showStats },
   } = useContext(GameContext);
-
-  const theme = selectedTheme;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -88,14 +84,14 @@ const CLASSIC_SCORES = () => {
     <ClassicScores style={{ top, height }} showStats={showStats}>
       <ClassicCheckoutsP1
         style={{ borderColor }}
-        theme={selectedTheme}
+        theme={theme}
         ap={activePlayer}
       >
         <PLAYER_CHECKOUTS player={"p1"} />
       </ClassicCheckoutsP1>
       <ClassicCheckoutsP2
         style={{ borderColor }}
-        theme={selectedTheme}
+        theme={theme}
         ap={activePlayer}
       >
         <PLAYER_CHECKOUTS player={"p2"} />

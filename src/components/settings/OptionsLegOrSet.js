@@ -5,15 +5,15 @@ import { Div, Row2, Row } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import MODAL_SELECT from "../modals/SelectModal";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const OptionsLegOrSet = () => {
+  const { theme } = useContext(ThemeContext);
+
   const {
-    settings: { selectedTheme },
+    dispatchSettings,
+    settings: { legOrSet, toWin, legsPerSet },
   } = useContext(SettingsContext);
-  const {
-    gameData: { legOrSet, toWin, legsPerSet },
-    dispatchGameData,
-  } = useContext(GameContext);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState({
@@ -34,17 +34,17 @@ export const OptionsLegOrSet = () => {
   const length = legOrSet === "leg" ? 3 : 5;
 
   const handleLegOrSet = (val) => {
-    dispatchGameData({ type: "CHANGE_LEGORSET", value: val });
+    dispatchSettings({ type: "CHANGE_LEGORSET", value: val });
   };
 
   const data = ["leg", "set"];
 
   return (
     <>
-      <Row theme={selectedTheme} id="gamesettings2">
+      <Row theme={theme} id="gamesettings2">
         <SETTINGS_HEADER text={"match settings"} />
 
-        <Div theme={selectedTheme}>
+        <Div theme={theme}>
           {["leg", "set"].map((item) => (
             <SETTINGS_BUTTON
               key={item}
@@ -56,7 +56,7 @@ export const OptionsLegOrSet = () => {
           ))}
         </Div>
       </Row>
-      <Row2 theme={selectedTheme}>
+      <Row2 theme={theme}>
         <SETTINGS_BUTTON
           size={"small"}
           length={length}

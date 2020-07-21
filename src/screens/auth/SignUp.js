@@ -9,11 +9,10 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Buttons, Form, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const REGISTER = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -92,7 +91,7 @@ const REGISTER = ({ navigation }) => {
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         keyboardShouldPersistTaps={"always"}
       >
-        <Form theme={selectedTheme} isKeyboardUp={isKeyboardUp}>
+        <Form theme={theme} isKeyboardUp={isKeyboardUp}>
           <Inputs>
             {INPUTS.map((item) => (
               <LoginInput

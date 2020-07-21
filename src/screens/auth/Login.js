@@ -1,15 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { Buttons, Form, Form2, Inputs } from "./StyledAuth";
-
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const LOGIN = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const [password, setPassword] = useState("");
   const [userName, setUsername] = useState("");
@@ -65,7 +62,7 @@ const LOGIN = ({ navigation }) => {
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         keyboardShouldPersistTaps={"always"}
       >
-        <Form2 theme={selectedTheme} isKeyboardUp={isKeyboardUp}>
+        <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
           <Inputs>
             {INPUTS.map((item) => {
               return (

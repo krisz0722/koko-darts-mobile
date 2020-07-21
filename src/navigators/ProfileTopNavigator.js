@@ -8,6 +8,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import FRIENDS from "../screens/profile/friends/Friends";
 import MATCHES from "../screens/profile/matches/Matches";
 import TIMELINE from "../screens/profile/timeline/Timeline";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export const NavBar = styled(View)`
   ${BorderHorizontal(({ theme, color }) =>
@@ -22,9 +23,7 @@ export const NavBar = styled(View)`
 `;
 
 const PROFILE_TABBAR_CONTENT = React.memo(({ navigation, state }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const TABBAR_ITEMS = [
     {
@@ -50,7 +49,7 @@ const PROFILE_TABBAR_CONTENT = React.memo(({ navigation, state }) => {
   const index = state.index;
 
   return (
-    <NavBar position={"top"} theme={selectedTheme}>
+    <NavBar position={"top"} theme={theme}>
       {TABBAR_ITEMS.map((item) => (
         <NavButton
           key={item.route}

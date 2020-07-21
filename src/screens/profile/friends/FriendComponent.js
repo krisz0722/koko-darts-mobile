@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { BasicText, FlexRowBetween, Window } from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Friend = styled(View)`
   ${FlexRowBetween};
   padding: 0 5%;
@@ -33,22 +33,16 @@ export const Name = styled(Text)`
 `;
 
 const FRIEND_COMPONENT = ({ item }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <Friend theme={selectedTheme}>
-      <FriendAvatar
-        theme={selectedTheme}
-        resizeMode={"cover"}
-        source={item.img}
-      />
+    <Friend theme={theme}>
+      <FriendAvatar theme={theme} resizeMode={"cover"} source={item.img} />
       <Name>{item.name}</Name>
       <TouchableOpacity onPress={() => alert("remove friend")}>
         <Icon
           name={"remove-circle"}
-          color={selectedTheme.bgRed}
+          color={theme.bgRed}
           size={Window.height * 0.06}
         />
       </TouchableOpacity>

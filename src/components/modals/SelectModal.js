@@ -5,18 +5,17 @@ import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 import { ModalContainerBasic, Header } from "./StyledModal";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+  const { theme, animation } = useContext(ThemeContext);
   const {
     gameData: { toWin, legsPerSet },
     dispatchGameData,
   } = useContext(GameContext);
 
   const animationType = animation
-    ? selectedTheme.name === "default"
+    ? theme.name === "default"
       ? "fade"
       : "slide"
     : "none";
@@ -40,7 +39,7 @@ const MODAL_SELECT = ({ visible, modalType, modalHandler }) => {
       presentationStyle={"pageSheet"}
       visible={visible}
     >
-      <ModalContainerBasic theme={selectedTheme}>
+      <ModalContainerBasic theme={theme}>
         <Header>
           {type === "main"
             ? legOrSet === "set"

@@ -9,7 +9,7 @@ import {
   Window,
 } from "../../../styles/css_mixins";
 import { SettingsContext } from "../../../contexts/SettingsContext";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 const PLayerInfoLegSet = styled(Animated.View)`
   height: 100%;
   ${FlexRow};
@@ -45,11 +45,7 @@ const LEGSET = ({ player }) => {
     gameData: { showStats, legOrSet, activePlayer, p1_DATA, p2_DATA },
   } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
-
-  const theme = selectedTheme;
+  const { theme, animation } = useContext(ThemeContext);
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -89,8 +85,8 @@ const LEGSET = ({ player }) => {
       })
     : theme.game[activePlayer + "Border"];
 
-  const fs1 = selectedTheme.game.legset.classic.fs1;
-  const fs2 = selectedTheme.game.legset.classic.fs2;
+  const fs1 = theme.game.legset.classic.fs1;
+  const fs2 = theme.game.legset.classic.fs2;
 
   const fontSize = animation
     ? resize.interpolate({

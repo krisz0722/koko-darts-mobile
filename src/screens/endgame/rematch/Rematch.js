@@ -13,11 +13,10 @@ import {
 import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 
 const REMATCH = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const {
     dispatchGameData,
@@ -61,9 +60,9 @@ const REMATCH = () => {
 
   return (
     <View_Screen>
-      <View_Headers theme={selectedTheme}>
-        <Text_Title theme={selectedTheme}>throw for the start</Text_Title>
-        <Text_Subtitle theme={selectedTheme}>
+      <View_Headers theme={theme}>
+        <Text_Title theme={theme}>throw for the start</Text_Title>
+        <Text_Subtitle theme={theme}>
           selec the player to start the next match
         </Text_Subtitle>
         <NumOfDarts>
@@ -75,8 +74,8 @@ const REMATCH = () => {
           />
         </NumOfDarts>
       </View_Headers>
-      <View_Shape theme={selectedTheme}>
-        <ShapeThrow fill={selectedTheme.bg3} />
+      <View_Shape theme={theme}>
+        <ShapeThrow fill={theme.bg3} />
       </View_Shape>
       <TABNAVIGATOR
         tabs={TABS}

@@ -11,6 +11,7 @@ import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const Button_Login = styled(TouchableHighlight)`
   text-decoration: none;
@@ -43,35 +44,27 @@ const THEMED_BUTTON = ({
   type = "basic",
   icon = null,
 }) => {
-  const {
-    settings: { selectedTheme, layout },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Button_Login
-      layout={layout}
       size={size}
       length={length}
       type={type}
-      theme={selectedTheme}
+      theme={theme}
       onPress={action}
     >
       <>
         {icon ? (
           icon === "dart" ? (
             <>
-              <IconThreeDart fill={selectedTheme.text} size={15} />
+              <IconThreeDart fill={theme.text} size={15} />
             </>
           ) : (
-            <Icon name={icon} size={25} color={selectedTheme.text} />
+            <Icon name={icon} size={25} color={theme.text} />
           )
         ) : null}
-        <Text_Button_Login
-          size={size}
-          icon={icon}
-          type={type}
-          heme={selectedTheme}
-        >
+        <Text_Button_Login size={size} icon={icon} type={type} heme={theme}>
           {text}
         </Text_Button_Login>
       </>

@@ -10,6 +10,7 @@ import {
 } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import CheckBox from "@react-native-community/checkbox";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Button_Settings = styled(TouchableHighlight)`
   ${FlexCol};
@@ -48,10 +49,7 @@ const SETTINGS_BUTTON = ({
   size = null,
   checkbox = false,
 }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-  const theme = selectedTheme;
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Button_Settings
@@ -69,7 +67,7 @@ const SETTINGS_BUTTON = ({
         {icon ? <Icon name={icon} size={35} color={theme.text2} /> : null}
         {checkbox ? (
           <CheckBox
-            tintColors={{ true: selectedTheme.bg3, false: selectedTheme.text }}
+            tintColors={{ true: theme.bg3, false: theme.text }}
             onCheckColor={theme.bg1}
             value={active}
             onChange={action}

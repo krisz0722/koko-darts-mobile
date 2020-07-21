@@ -7,11 +7,10 @@ import { OptionsEffects } from "../../components/settings/OptionsEffects";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "../../components/settings/Preview";
 import { BackHandler } from "react-native";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const SETTINGS_INGAME = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const backAction = () => {
@@ -32,7 +31,7 @@ const SETTINGS_INGAME = ({ navigation }) => {
       <OptionsEffects />
 
       <PREVIEW preview={true} ingame={true} />
-      <BottomButtons theme={selectedTheme}>
+      <BottomButtons theme={theme}>
         <THEMED_BUTTON
           type={"basic"}
           size={"small"}

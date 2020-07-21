@@ -18,6 +18,7 @@ import DrawerNavigator from "./DrawerNavigator";
 import { ThemeProvider } from "styled-components";
 import { ScreenContainer } from "../screens/router/StyledRouter";
 const { Navigator, Screen } = createStackNavigator();
+import { ThemeContext } from "../contexts/ThemeContext";
 
 const AppNavigator = () => {
   const SCREENS = [
@@ -65,10 +66,7 @@ const AppNavigator = () => {
     },
   ];
 
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
-  const theme = selectedTheme;
+  const { theme } = useContext(ThemeContext);
 
   const navigationTheme = {
     dark: false,

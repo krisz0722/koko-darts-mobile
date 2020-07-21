@@ -12,11 +12,9 @@ import { useNavigation } from "@react-navigation/native";
 import { BackHandler } from "react-native";
 import MATCH_IS_FINISHED_NAVIGATOR from "../../../components/navigation/MatchIsFinishedNavigator";
 import { GameContext } from "../../../contexts/GameContext";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 const MATCH_IS_FINISHED = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const {
     gameData: { isMatchOver, winner },
@@ -41,14 +39,12 @@ const MATCH_IS_FINISHED = () => {
 
   return (
     <View_Screen>
-      <View_Headers theme={selectedTheme}>
-        <Text_Title
-          theme={selectedTheme}
-        >{`${winner} has won the match!`}</Text_Title>
-        <Text_Subtitle theme={selectedTheme}>congratulations!</Text_Subtitle>
+      <View_Headers theme={theme}>
+        <Text_Title theme={theme}>{`${winner} has won the match!`}</Text_Title>
+        <Text_Subtitle theme={theme}>congratulations!</Text_Subtitle>
       </View_Headers>
-      <View_Shape theme={selectedTheme}>
-        <ShapeThrow fill={selectedTheme.bg3} />
+      <View_Shape theme={theme}>
+        <ShapeThrow fill={theme.bg3} />
       </View_Shape>
       <MATCH_IS_FINISHED_NAVIGATOR />
     </View_Screen>

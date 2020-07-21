@@ -3,12 +3,14 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const OptionsLayout = () => {
   const {
-    settings: { layout, selectedTheme },
+    settings: { layout },
     dispatchSettings,
   } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const DATA = ["classic", "asym"];
 
@@ -17,10 +19,10 @@ export const OptionsLayout = () => {
   };
 
   return (
-    <Row theme={selectedTheme}>
+    <Row theme={theme}>
       <SETTINGS_HEADER text={"layout"} />
 
-      <Div theme={selectedTheme}>
+      <Div theme={theme}>
         {DATA.map((item) => (
           <SETTINGS_BUTTON
             key={item}

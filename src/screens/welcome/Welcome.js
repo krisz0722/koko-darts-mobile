@@ -10,11 +10,11 @@ import {
 } from "./StyledWelcome";
 import TABNAVIGATOR, { NavBar } from "../../components/navigation/TabNavigator";
 import NavButton from "../../components/buttons/NavButton";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { Button } from "react-native";
 
 const WELCOME = ({ navigation }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const TABBAR_ITEMS = [
     {
@@ -33,32 +33,32 @@ const WELCOME = ({ navigation }) => {
 
   return (
     <>
-      <View_Headers theme={selectedTheme}>
-        <Text_Title theme={selectedTheme}>
+      <View_Headers theme={theme}>
+        <Text_Title theme={theme}>
           Welcome to koko's darts scoreboard!
         </Text_Title>
-        <Text_Subtitle theme={selectedTheme}>
+        <Text_Subtitle theme={theme}>
           Sign up and create a profile in order to save and sync your games
           between your computer and mobile device.
         </Text_Subtitle>
-        <Text_Subtitle2 theme={selectedTheme}>
+        <Text_Subtitle2 theme={theme}>
           If you skip this step now, you can sign up later in the profile menu.
         </Text_Subtitle2>
       </View_Headers>
-      <View_Shape theme={selectedTheme}>
-        <ShapeThrow fill={selectedTheme.bgActive} />
+      <View_Shape theme={theme}>
+        <ShapeThrow fill={theme.bgActive} />
       </View_Shape>
-      <NavBar theme={selectedTheme}>
+      <NavBar theme={theme}>
         {TABBAR_ITEMS.map((item) => (
-          <NavButton
+          <Button
             key={item.route}
-            color={"drawer"}
+            color={"light"}
             height={10}
             length={3}
             direction={"horizontal"}
-            text={item.text}
+            title={"item.text"}
             icon={item.icon}
-            action={item.action}
+            onPress={item.action}
           />
         ))}
       </NavBar>

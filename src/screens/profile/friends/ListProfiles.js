@@ -7,7 +7,7 @@ import FRIENDS_LIST from "./DataFriends";
 import { BasicText } from "../../../styles/css_mixins";
 import FRIEND_COMPONENT from "./FriendComponent";
 import PROFILE_COMPONENT from "./ProfileComponent";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Safe = styled(SafeAreaView)`
   height: 40%;
   width: 100%;
@@ -22,9 +22,7 @@ export const ProfilesContainer = styled(FlatList)`
 `;
 
 const LIST_PROFILES = ({ regexp }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const renderItem = ({ item }) => <PROFILE_COMPONENT item={item} />;
 
@@ -34,7 +32,7 @@ const LIST_PROFILES = ({ regexp }) => {
         data={FRIENDS_LIST}
         renderItem={renderItem}
         keyExtractor={(item) => item.name}
-        theme={selectedTheme}
+        theme={theme}
       />
     </Safe>
   );

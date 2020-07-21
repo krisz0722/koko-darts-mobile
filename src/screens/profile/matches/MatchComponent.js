@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { BasicText, FlexRowBetween, Window } from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Match = styled(View)`
   ${FlexRowBetween};
   width: 100%;
@@ -43,22 +43,20 @@ export const Result2 = styled(Result1)`
 `;
 
 const MATCH_COMPONENT = ({ item }) => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <Match theme={selectedTheme}>
-      <MatchDate theme={selectedTheme}>{item.date}</MatchDate>
+    <Match theme={theme}>
+      <MatchDate theme={theme}>{item.date}</MatchDate>
       <Name>VS. {item.opponent}</Name>
       <Result1>{item.result1}</Result1>
-      <Result2 theme={selectedTheme} result={item.result2}>
+      <Result2 theme={theme} result={item.result2}>
         {item.result2}
       </Result2>
       <TouchableOpacity onPress={() => alert("remove friend")}>
         <Icon
           name={"remove-circle"}
-          color={selectedTheme.bgRed}
+          color={theme.bgRed}
           size={Window.height * 0.03}
         />
       </TouchableOpacity>

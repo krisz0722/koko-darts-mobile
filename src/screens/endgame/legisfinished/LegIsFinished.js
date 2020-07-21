@@ -16,11 +16,9 @@ import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
 import { BackHandler } from "react-native";
 import LEAVE_MATCH_ALERT from "../../../components/modals/LeaveMatchAlert";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 const LEG_IS_FINISHED = () => {
-  const {
-    settings: { selectedTheme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const navigation = useNavigation();
 
@@ -114,13 +112,9 @@ const LEG_IS_FINISHED = () => {
   return (
     <>
       <View_Screen>
-        <View_Headers theme={selectedTheme}>
-          <Text_Title
-            theme={selectedTheme}
-          >{`${winner} has won the leg!`}</Text_Title>
-          <Text_Subtitle theme={selectedTheme}>
-            number of darts used:
-          </Text_Subtitle>
+        <View_Headers theme={theme}>
+          <Text_Title theme={theme}>{`${winner} has won the leg!`}</Text_Title>
+          <Text_Subtitle theme={theme}>number of darts used:</Text_Subtitle>
           <NumOfDarts>
             <RADIO_BUTTON_SET
               direction={"horizontal"}
@@ -131,8 +125,8 @@ const LEG_IS_FINISHED = () => {
             />
           </NumOfDarts>
         </View_Headers>
-        <View_Shape theme={selectedTheme}>
-          <ShapeThrow fill={selectedTheme.bg3} />
+        <View_Shape theme={theme}>
+          <ShapeThrow fill={theme.bg3} />
         </View_Shape>
         <TABNAVIGATOR
           tabs={TABS}

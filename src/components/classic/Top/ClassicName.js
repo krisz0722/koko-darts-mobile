@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Animated } from "react-native";
 import { AlignText, FlexRow } from "../../../styles/css_mixins";
 import { SettingsContext } from "../../../contexts/SettingsContext";
-
+import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Text_Name = styled(Animated.Text)`
   color: ${({ theme, player }) => theme.game[player + "Text"]};
   font-family: ${({ theme }) => theme.fontFamily};
@@ -28,11 +28,7 @@ const NAME = ({ player }) => {
     gameData: { activePlayer },
   } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
-
-  const theme = selectedTheme;
+  const { theme, animation } = useContext(ThemeContext);
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),

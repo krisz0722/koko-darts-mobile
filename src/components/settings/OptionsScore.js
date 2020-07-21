@@ -4,32 +4,30 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const OptionsScore = () => {
+  const { theme } = useContext(ThemeContext);
+
   const {
-    settings: { selectedTheme },
+    dispatchSettings,
+    settings: { startingScore },
   } = useContext(SettingsContext);
-  const {
-    gameData: {
-      p1_DATA: { score },
-    },
-    dispatchGameData,
-  } = useContext(GameContext);
 
   const DATA = [301, 501, 701, 901];
 
   const handlePress = (val) => {
     const value = parseInt(val);
-    dispatchGameData({ type: "CHANGE_STARTINGSCORE", value });
+    dispatchSettings({ type: "CHANGE_STARTINGSCORE", value });
   };
 
   return (
-    <Row theme={selectedTheme} id="gamesettings1">
+    <Row theme={theme} id="gamesettings1">
       <SETTINGS_HEADER text={"starting score"} />
-      <Div theme={selectedTheme}>
+      <Div theme={theme}>
         {DATA.map((item) => (
           <SETTINGS_BUTTON
-            active={score === item}
+            active={startingScore === item}
             length={DATA.length}
             key={item}
             action={() => handlePress(item)}

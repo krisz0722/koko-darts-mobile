@@ -2,7 +2,12 @@ import React, { useContext } from "react";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import styled from "styled-components";
 import { Text, View, TouchableHighlight } from "react-native";
-import { FlexRowAround, BasicText, FlexCol } from "../../styles/css_mixins";
+import {
+  FlexRowAround,
+  BasicText,
+  FlexCol,
+  FlexRow,
+} from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import CheckBox from "@react-native-community/checkbox";
 
@@ -15,7 +20,7 @@ const Button_Settings = styled(TouchableHighlight)`
   padding: ${({ icon }) => (icon ? "0 5%" : 0)};
 `;
 const TextAndIcon = styled(View)`
-  ${FlexRowAround};
+  ${FlexRow};
   width: 100%;
   height: 100%;
   padding: 0 5%;
@@ -24,8 +29,7 @@ const TextAndIcon = styled(View)`
 const Text_Button = styled(Text)`
   ${BasicText};
   height: 100%;
-  width: 100%;
-  padding: 0 10%;
+  padding: 0 0%;
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)};
   font-family: ${({ theme, active }) =>
     active ? theme.fontFamilyBold : theme.fontFamily};

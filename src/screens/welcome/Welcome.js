@@ -8,14 +8,15 @@ import {
   Text_Title,
   View_Shape,
 } from "./StyledWelcome";
-import TABNAVIGATOR from "../../components/navigation/TabNavigator";
+import TABNAVIGATOR, { NavBar } from "../../components/navigation/TabNavigator";
+import NavButton from "../../components/buttons/NavButton";
 
 const WELCOME = ({ navigation }) => {
   const {
     settings: { selectedTheme },
   } = useContext(SettingsContext);
 
-  const TABS = [
+  const TABBAR_ITEMS = [
     {
       route: "register",
       text: "let's do it now!",
@@ -47,12 +48,20 @@ const WELCOME = ({ navigation }) => {
       <View_Shape theme={selectedTheme}>
         <ShapeThrow fill={selectedTheme.bgActive} />
       </View_Shape>
-      <TABNAVIGATOR
-        tabs={TABS}
-        position={"bottom"}
-        length={2}
-        direction={"vertical"}
-      />
+      <NavBar theme={selectedTheme}>
+        {TABBAR_ITEMS.map((item) => (
+          <NavButton
+            key={item.route}
+            color={"drawer"}
+            height={10}
+            length={3}
+            direction={"horizontal"}
+            text={item.text}
+            icon={item.icon}
+            action={item.action}
+          />
+        ))}
+      </NavBar>
     </>
   );
 };

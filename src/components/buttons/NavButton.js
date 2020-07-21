@@ -29,83 +29,87 @@ const Text_Button = styled(Text)`
   border-radius: 4px;
 `;
 
-const NavButton = ({
-  text,
-  length,
-  active,
-  direction,
-  height = null,
-  color = "light",
-  action = null,
-  icon = null,
-}) => {
-  const {
-    gameData: { inactivePlayer },
-  } = useContext(GameContext);
+const NavButton = React.memo(
+  ({
+    text,
+    length,
+    active,
+    direction,
+    height = null,
+    color = "light",
+    action = null,
+    icon = null,
+  }) => {
+    const {
+      gameData: { inactivePlayer },
+    } = useContext(GameContext);
 
-  const {
-    settings: { selectedTheme, animation },
-  } = useContext(SettingsContext);
+    const {
+      settings: { selectedTheme, animation },
+    } = useContext(SettingsContext);
 
-  const theme = selectedTheme;
-  const iconColor = () => {
-    if (active) {
-      return theme.text2;
-    } else {
-      switch (color) {
-        case "dark":
-          return selectedTheme.bg3;
-        case "light":
-          return selectedTheme.text;
-        case "drawer":
-          return selectedTheme.game[inactivePlayer + "Text"];
+    const theme = selectedTheme;
+    const iconColor = () => {
+      if (active) {
+        return theme.text2;
+      } else {
+        switch (color) {
+          case "dark":
+            return selectedTheme.bg3;
+          case "light":
+            return selectedTheme.text;
+          case "drawer":
+            return selectedTheme.game[inactivePlayer + "Text"];
+        }
       }
-    }
-  };
+    };
 
-  const textColor = () => {
-    if (active) {
-      return theme.text2;
-    } else {
-      switch (color) {
-        case "dark":
-          return selectedTheme.text2;
-        case "light":
-          return selectedTheme.text;
-        case "drawer":
-          return selectedTheme.game[inactivePlayer + "Text"];
+    const textColor = () => {
+      if (active) {
+        return theme.text2;
+      } else {
+        switch (color) {
+          case "dark":
+            return selectedTheme.text2;
+          case "light":
+            return selectedTheme.text;
+          case "drawer":
+            return selectedTheme.game[inactivePlayer + "Text"];
+        }
       }
-    }
-  };
+    };
 
-  return (
-    <Button_Nav
-      direction={direction}
-      active={active}
-      length={length}
-      height={height}
-      theme={selectedTheme}
-      onPress={action}
-      activeOpacity={animation ? 0.2 : 1}
-    >
-      <>
-        {icon === "dart" ? (
-          <IconThreeDart size={25} fill={iconColor()} />
-        ) : icon ? (
-          <Icon name={icon} size={25} color={iconColor()} />
-        ) : null}
+    console.log("RENDER BUTTON", text);
 
-        <Text_Button
-          color={textColor()}
-          active={active}
-          icon={icon}
-          theme={selectedTheme}
-        >
-          {text}
-        </Text_Button>
-      </>
-    </Button_Nav>
-  );
-};
+    return (
+      <Button_Nav
+        direction={direction}
+        active={active}
+        length={length}
+        height={height}
+        theme={selectedTheme}
+        onPress={action}
+        activeOpacity={animation ? 0.2 : 1}
+      >
+        <>
+          {icon === "dart" ? (
+            <IconThreeDart size={25} fill={iconColor()} />
+          ) : icon ? (
+            <Icon name={icon} size={25} color={iconColor()} />
+          ) : null}
+
+          <Text_Button
+            color={textColor()}
+            active={active}
+            icon={icon}
+            theme={selectedTheme}
+          >
+            {text}
+          </Text_Button>
+        </>
+      </Button_Nav>
+    );
+  },
+);
 
 export default NavButton;

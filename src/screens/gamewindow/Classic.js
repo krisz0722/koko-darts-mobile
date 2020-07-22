@@ -9,14 +9,25 @@ import { GameContext } from "../../contexts/GameContext";
 import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
 import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
 import { useIsDrawerOpen } from "@react-navigation/drawer";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { InGameThemeContext } from "../../contexts/InGameThemeContext";
+import { InGameOpacityContext } from "../../contexts/InGameOpacityContext";
 
 const GAME_CLASSIC = ({ navigation, preview }) => {
   const {
-    gameData: { activePlayer, inactivePlayer, isLegOver, opacity },
+    gameData: {
+      activePlayer,
+      p1,
+      p2,
+      p1_DATA,
+      p2_DATA,
+      showStats,
+      inactivePlayer,
+      isLegOver,
+    },
   } = useContext(GameContext);
 
-  const { theme, animation } = useContext(ThemeContext);
+  const { inGameTheme, inGameAnimation } = useContext(InGameThemeContext);
+  const { inGameOpacity } = useContext(InGameOpacityContext);
 
   const isDrawerOpen = useIsDrawerOpen();
 
@@ -29,7 +40,7 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
   const drawerValue = useRef(new Animated.Value(!isDrawerOpen ? 1 : 0)).current;
 
   useEffect(() => {
-    if (animation) {
+    if (inGameAnimation) {
       Animated.timing(drawerValue, {
         toValue: isDrawerOpen ? 1 : 0,
         duration: 300,
@@ -43,7 +54,7 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
       navigation.navigate("legisfinished");
     }
   }, [
-    animation,
+    inGameAnimation,
     animationValue,
     activePlayer,
     preview,
@@ -70,7 +81,7 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     navigation.navigate("homenavigator");
   };
 
-  const opacity1 = animation
+  const opacity1 = inGameAnimation
     ? animationValue.interpolate({
         inputRange: [0, 1],
         outputRange: [1, 0.9],
@@ -79,7 +90,7 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
     ? 0.9
     : 1;
 
-  const opacity2 = animation
+  const opacity2 = inGameAnimation
     ? animationValue.interpolate({
         inputRange: [0, 1],
         outputRange: [0.9, 1],
@@ -90,18 +101,60 @@ const GAME_CLASSIC = ({ navigation, preview }) => {
 
   return (
     <GameWindow preview={preview}>
-      <CLASSIC_TOP />
-      <CLASSIC_SCORES />
-      <CLASSIC_STATS />
-      {opacity ? (
+      <CLASSIC_TOP
+        ingame={false}
+        animation={inGameAnimation}
+        theme={inGameTheme}
+        showStats={showStats}
+        activePlayer={activePlayer}
+        p1={p1}
+        p2={p2}
+        p1_DATA={p1_DATA}
+        p2_DATA={p2_DATA}
+      />
+      <CLASSIC_SCORES
+        ingame={false}
+        animation={inGameAnimation}
+        theme={inGameTheme}
+        showStats={showStats}
+        activePlayer={activePlayer}
+      />
+      <CLASSIC_STATS
+        ingame={false}
+        animation={inGameAnimation}
+        theme={inGameTheme}
+        showStats={showStats}
+        activePlayer={activePlayer}
+        p1_DATA={p1_DATA}
+        p2_DATA={p2_DATA}
+      />
+      {inGameOpacity ? (
         inactivePlayer === "p1" ? (
-          <Overlay1 style={{ opacity: opacity1 }} theme={theme} />
+          <Overlay1
+            ingame={false}
+            style={{ opacity: opacity1 }}
+            theme={inGameTheme}
+          />
         ) : (
-          <Overlay2 style={{ opacity: opacity2 }} theme={theme} />
+          <Overlay2
+            ingame={false}
+            style={{ opacity: opacity2 }}
+            theme={inGameTheme}
+          />
         )
       ) : null}
-      <CLASSIC_MIDDLE />
-      <CLASSIC_BOTTOM />
+      <CLASSIC_MIDDLE
+        ingame={false}
+        animation={inGameAnimation}
+        theme={inGameTheme}
+        activePlayer={activePlayer}
+        inactivePlayer={inactivePlayer}
+      />
+      <CLASSIC_BOTTOM
+        animation={inGameAnimation}
+        theme={inGameTheme}
+        activePlayer={activePlayer}
+      />
 
       <LEAVE_MATCH_ALERT
         action1={() => setModal(!modal)}

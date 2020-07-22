@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import GAME_CLASSIC from "../screens/gamewindow/Classic";
-import { SettingsContext } from "../contexts/SettingsContext";
 import { View } from "react-native";
 import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
@@ -9,6 +8,9 @@ import { FlexCol } from "../styles/css_mixins";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
+import { InGameThemeContextProvider } from "../contexts/InGameThemeContext";
+import { InGameOpacityProvider } from "../contexts/InGameOpacityContext";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -64,9 +66,7 @@ const DRAWER_CONTENT = ({ navigation }) => {
 };
 
 const DrawerNavigator = () => {
-  const {
-    settings: { theme },
-  } = useContext(SettingsContext);
+  const { theme } = useContext(ThemeContext);
 
   const {
     gameData: { activePlayer },
@@ -78,17 +78,23 @@ const DrawerNavigator = () => {
   };
 
   return (
-    <Navigator
-      backBehavior={"initialRoute"}
-      drawerContent={(props) => <DRAWER_CONTENT {...props} />}
-      drawerStyle={drawerstyle}
-      drawerPosition={"right"}
-      overlayColor={theme.game[activePlayer + "Overlay"]}
-    >
-      <Screen name="game" component={GAME_CLASSIC} />
-      <Screen name="settings-ingame" component={SETTINGS_INGAME} />
-      <Screen name="stats" component={SETTINGS_INGAME} />
-    </Navigator>
+    <InGameThemeContextProvider>
+      <InGameSettingsContextProvider>
+        <InGameOpacityProvider>
+          <Navigator
+            backBehavior={"initialRoute"}
+            drawerContent={(props) => <DRAWER_CONTENT {...props} />}
+            drawerStyle={drawerstyle}
+            drawerPosition={"right"}
+            overlayColor={theme.game[activePlayer + "Overlay"]}
+          >
+            <Screen name="game" component={GAME_CLASSIC} />
+            <Screen name="settings-ingame" component={SETTINGS_INGAME} />
+            <Screen name="stats" component={SETTINGS_INGAME} />
+          </Navigator>
+        </InGameOpacityProvider>
+      </InGameSettingsContextProvider>
+    </InGameThemeContextProvider>
   );
 };
 

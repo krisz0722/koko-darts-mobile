@@ -4,7 +4,7 @@ import { Animated } from "react-native";
 import { GameContext } from "../../../contexts/GameContext";
 import { BasicTextBold, FlexCol } from "../../../styles/css_mixins";
 import INPUT_BY_DART_FIELD from "../../buttons/InputByDartField";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+
 export const PlayerInputInfo = styled(Animated.View)`
   ${FlexCol};
   width: ${() => 100 / 3 + "%"};
@@ -27,13 +27,15 @@ export const Text_Function = styled(Animated.Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const PLAYER_INPUT_INFO = ({ value, player }) => {
-  const { theme, animation } = useContext(ThemeContext);
+const PLAYER_INPUT_INFO = (props) => {
+  const { animation, value, theme, player } = props;
 
   const {
     gameData,
     gameData: { activePlayer, inactivePlayer, isInputByDart, inputByRound },
   } = useContext(GameContext);
+
+  //TODO input context???
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -57,8 +59,6 @@ const PLAYER_INPUT_INFO = ({ value, player }) => {
 
   const inputScore = inputByRound.join("");
   const isInvalid = /INVALID/.test(inputScore);
-
-  console.log(isInvalid);
 
   const scoreDisplayText = active
     ? inputScore === ""

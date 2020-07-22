@@ -67,8 +67,6 @@ const BOTTOM_TABBAR_CONTENT = ({ navigation }) => {
 
 const BottomTabNavigator = () => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
-  console.log("TABNAVIGATOR ");
-  console.log("RENDER TABNAVIGATOR");
 
   return (
     <Navigator

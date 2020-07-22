@@ -15,13 +15,21 @@ export const ClassicMiddle = styled(View)`
   height: 18%;
 `;
 
-const CLASSIC_MIDDLE = () => {
+const CLASSIC_MIDDLE = React.memo((props) => {
+  const { activePlayer, theme, animation, inactivePlayer } = props;
   return (
     <ClassicMiddle>
       {DATA_MIDDLE().map((item) => (
         <React.Fragment key={item.value}>
           {item.type === "info" ? (
-            <PLAYER_INPUT_INFO value={item.value} player={item.value} />
+            <PLAYER_INPUT_INFO
+              animation={animation}
+              theme={theme}
+              activePlayer={activePlayer}
+              inactivePlayer={inactivePlayer}
+              value={item.value}
+              player={item.value}
+            />
           ) : (
             <NUM_BUTTON
               middle={true}
@@ -29,12 +37,16 @@ const CLASSIC_MIDDLE = () => {
               value={item.value}
               action={item.action}
               icon={item.icon}
+              animation={animation}
+              theme={theme}
+              activePlayer={activePlayer}
+              inactivePlayer={inactivePlayer}
             />
           )}
         </React.Fragment>
       ))}
     </ClassicMiddle>
   );
-};
+});
 
 export default CLASSIC_MIDDLE;

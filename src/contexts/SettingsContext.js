@@ -13,8 +13,6 @@ export const SettingsContextProvider = (props) => {
 
   const DEFAULT_SETTINGS = {
     layout: "classic",
-    animation: true,
-    opacity: true,
     p1: "esmeralda",
     p2: "jose armando",
     legOrSet: "leg",
@@ -47,7 +45,7 @@ export const SettingsContextProvider = (props) => {
           ...state,
           p1: action.p1,
           p2: action.p2,
-          status: "started",
+          status: "initialize",
         };
 
       case "RESET":

@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { AlignText, FlexRow } from "../../../styles/css_mixins";
-import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Text_Name = styled(Animated.Text)`
   color: ${({ theme, player }) => theme.game[player + "Text"]};
   font-family: ${({ theme }) => theme.fontFamily};
@@ -21,13 +19,8 @@ export const Text_Name = styled(Animated.Text)`
     active ? theme.bgGreen : "transparent"};
 `;
 
-const NAME = ({ player }) => {
-  const {
-    gameData,
-    gameData: { activePlayer },
-  } = useContext(GameContext);
-
-  const { theme, animation } = useContext(ThemeContext);
+const NAME = React.memo((props) => {
+  const { player, name, activePlayer, animation, theme } = props;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -49,9 +42,9 @@ const NAME = ({ player }) => {
 
   return (
     <Text_Name style={{ borderColor }} player={player} ap={activePlayer}>
-      {gameData[player]}
+      {name}
     </Text_Name>
   );
-};
+});
 
 export default NAME;

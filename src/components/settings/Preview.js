@@ -14,6 +14,9 @@ import CLASSIC_MIDDLE from "../classic/Middle/ClassicMiddle";
 import CLASSIC_BOTTOM from "../classic/Bottom/ClassicBottom";
 import { GameContext } from "../../contexts/GameContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { InGameThemeContext } from "../../contexts/InGameThemeContext";
+import { OpacityContext } from "../../contexts/OpacityContext";
+import { InGameOpacityContext } from "../../contexts/InGameOpacityContext";
 
 const PreviewContainer = styled(Animated.View)`
   position: ${({ ingame }) => (ingame ? "relative" : "absolute")};
@@ -28,26 +31,83 @@ const PreviewContainer = styled(Animated.View)`
 
 export const PREVIEW = ({ preview, ingame }) => {
   const {
-    gameData: { inactivePlayer, opacity },
+    gameData: {
+      activePlayer,
+      p1,
+      p2,
+      p1_DATA,
+      p2_DATA,
+      showStats,
+      inactivePlayer,
+    },
   } = useContext(GameContext);
 
-  const { theme } = useContext(ThemeContext);
+  const { inGameTheme, inGameAnimation } = useContext(InGameThemeContext);
+  const { theme, animation } = useContext(ThemeContext);
+  const { opacity } = useContext(OpacityContext);
+  const { inGameOpacity } = useContext(InGameOpacityContext);
+
+  const themeToUse = ingame ? inGameTheme : theme;
+  const animationToUse = ingame ? inGameAnimation : animation;
+  const opacityToUse = ingame ? inGameOpacity : opacity;
 
   return (
-    <PreviewContainer ingame={ingame} visible={preview} theme={theme}>
+    <PreviewContainer ingame={ingame} visible={preview} theme={themeToUse}>
       <GameWindow preview={preview}>
-        <CLASSIC_TOP />
-        <CLASSIC_SCORES />
-        <CLASSIC_STATS />
-        {opacity ? (
+        <CLASSIC_TOP
+          activePlayer={activePlayer}
+          showStats={showStats}
+          ingame={ingame}
+          animation={animationToUse}
+          theme={themeToUse}
+          p1={p1}
+          p2={p2}
+          p1_DATA={p1_DATA}
+          p2_DATA={p2_DATA}
+        />
+        <CLASSIC_SCORES
+          activePlayer={activePlayer}
+          showStats={showStats}
+          ingame={ingame}
+          animation={animationToUse}
+          theme={themeToUse}
+        />
+        <CLASSIC_STATS
+          activePlayer={activePlayer}
+          showStats={showStats}
+          ingame={ingame}
+          animation={animationToUse}
+          theme={themeToUse}
+          p1_DATA={p1_DATA}
+          p2_DATA={p2_DATA}
+        />
+        {opacityToUse ? (
           inactivePlayer === "p1" ? (
-            <Overlay1 style={{ opacity: 0.9 }} theme={theme} />
+            <Overlay1
+              ingame={ingame}
+              style={{ opacity: 0.9 }}
+              theme={themeToUse}
+            />
           ) : (
-            <Overlay2 style={{ opacity: 0.9 }} theme={theme} />
+            <Overlay2
+              ingame={ingame}
+              style={{ opacity: 0.9 }}
+              theme={themeToUse}
+            />
           )
         ) : null}
-        <CLASSIC_MIDDLE />
-        <CLASSIC_BOTTOM />
+        <CLASSIC_MIDDLE
+          animation={animationToUse}
+          theme={themeToUse}
+          ingame={ingame}
+          activePlayer={activePlayer}
+          inactivePlayer={inactivePlayer}
+        />
+        <CLASSIC_BOTTOM
+          animation={animationToUse}
+          theme={themeToUse}
+          activePlayer={activePlayer}
+        />
       </GameWindow>
     </PreviewContainer>
   );

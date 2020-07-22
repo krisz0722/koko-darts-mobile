@@ -3,7 +3,7 @@ import { GameContext } from "../../../contexts/GameContext";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { Window } from "../../../styles/css_mixins";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+
 const PlayerInfoAvatar = styled(Animated.View)`
   height: 100%;
   position: absolute;
@@ -21,12 +21,8 @@ export const Avatar2 = styled(PlayerInfoAvatar)`
   border-left-width: ${({ theme }) => theme.borderWidth};
 `;
 
-const AVATAR = ({ player }) => {
-  const {
-    gameData: { showStats, activePlayer },
-  } = useContext(GameContext);
-
-  const { theme, animation } = useContext(ThemeContext);
+const AVATAR = React.memo((props) => {
+  const { player, showStats, activePlayer, theme, animation } = props;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -80,6 +76,6 @@ const AVATAR = ({ player }) => {
       )}
     </>
   );
-};
+});
 
 export default AVATAR;

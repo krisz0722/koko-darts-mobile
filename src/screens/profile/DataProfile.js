@@ -15,10 +15,6 @@ const PROFILE_STATS = [
     stat: "best match average",
     value: 110.2,
   },
-  {
-    stat: "180s",
-    value: 11,
-  },
 ];
 
 export default PROFILE_STATS;

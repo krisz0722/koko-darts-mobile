@@ -45,7 +45,6 @@ const submitValidation = (state) => {
 
   const newScoreDefault = (proceed) => {
     if (proceed) {
-      console.log(score, scoreToSubmit);
       return score - scoreToSubmit;
     }
     return score;

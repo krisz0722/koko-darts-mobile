@@ -20,6 +20,7 @@ import { ScreenContainer } from "../screens/router/StyledRouter";
 const { Navigator, Screen } = createStackNavigator();
 import { ThemeContext } from "../contexts/ThemeContext";
 import { GameContextProvider } from "../contexts/GameContext";
+import { OpacityProvider } from "../contexts/OpacityContext";
 
 const AppNavigator = () => {
   const SCREENS = [
@@ -95,24 +96,26 @@ const AppNavigator = () => {
       <ScreenContainer theme={theme}>
         <ThemeProvider theme={theme}>
           <SettingsContextProvider>
-            <GameContextProvider>
-              <NavigationContainer theme={navigationTheme}>
-                <Navigator
-                  headerMode="none"
-                  screenOptions={{
-                    ...transition(theme.name),
-                  }}
-                >
-                  {SCREENS.map((item) => (
-                    <Screen
-                      key={item.name}
-                      name={item.name}
-                      component={item.component}
-                    />
-                  ))}
-                </Navigator>
-              </NavigationContainer>
-            </GameContextProvider>
+            <OpacityProvider>
+              <GameContextProvider>
+                <NavigationContainer theme={navigationTheme}>
+                  <Navigator
+                    headerMode="none"
+                    screenOptions={{
+                      ...transition(theme.name),
+                    }}
+                  >
+                    {SCREENS.map((item) => (
+                      <Screen
+                        key={item.name}
+                        name={item.name}
+                        component={item.component}
+                      />
+                    ))}
+                  </Navigator>
+                </NavigationContainer>
+              </GameContextProvider>
+            </OpacityProvider>
           </SettingsContextProvider>
         </ThemeProvider>
       </ScreenContainer>

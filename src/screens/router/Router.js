@@ -4,7 +4,6 @@ import { AppBackground } from "./StyledRouter";
 import { ThemeContextProvider } from "../../contexts/ThemeContext";
 
 const ROUTER = () => {
-  console.log("ROUTER RENDER");
   return (
     <>
       <AppBackground

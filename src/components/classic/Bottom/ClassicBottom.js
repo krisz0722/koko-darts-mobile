@@ -14,12 +14,17 @@ export const ClassicBottom = styled(Animated.View)`
   height: 37%;
 `;
 
-const CLASSIC_BOTTOM = React.memo(() => {
+const CLASSIC_BOTTOM = React.memo((props) => {
+  const { animation, theme, activePlayer } = props;
+
   return (
     <ClassicBottom>
       {DATA_BOTTOM().map((item) => {
         return (
           <NUM_BUTTON
+            activePlayer={activePlayer}
+            animation={animation}
+            theme={theme}
             key={item.value}
             type={item.type}
             value={item.value}

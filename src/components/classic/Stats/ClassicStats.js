@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, Text, View } from "react-native";
 import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
 import DATA_STATS from "./DataStats";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+
 export const ClassicStats = styled(Animated.View)`
   ${FlexRowBetween};
   width: 50%;
@@ -67,12 +66,8 @@ export const StatText4 = styled(StatText2)`
   width: 50%;
 `;
 
-const CLASSIC_STATS = () => {
-  const { theme, animation } = useContext(ThemeContext);
-
-  const {
-    gameData: { activePlayer, showStats, p1_DATA, p2_DATA },
-  } = useContext(GameContext);
+const CLASSIC_STATS = React.memo((props) => {
+  const { activePlayer, showStats, animation, theme, p1_DATA, p2_DATA } = props;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -197,6 +192,6 @@ const CLASSIC_STATS = () => {
       </ClassicStatsPlayer2>
     </>
   );
-};
+});
 
 export default CLASSIC_STATS;

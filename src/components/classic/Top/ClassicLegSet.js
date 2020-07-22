@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import {
@@ -8,7 +7,7 @@ import {
   FlexRow,
   Window,
 } from "../../../styles/css_mixins";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+
 const PLayerInfoLegSet = styled(Animated.View)`
   height: 100%;
   ${FlexRow};
@@ -39,12 +38,17 @@ const Text_Sub = styled(Text_Main)`
   font-size: 15;
 `;
 
-const LEGSET = ({ player }) => {
+const LEGSET = React.memo((props) => {
   const {
-    gameData: { showStats, legOrSet, activePlayer, p1_DATA, p2_DATA },
-  } = useContext(GameContext);
-
-  const { theme, animation } = useContext(ThemeContext);
+    player,
+    showStats,
+    legsWon,
+    setsWon,
+    legOrSet,
+    activePlayer,
+    animation,
+    theme,
+  } = props;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -104,9 +108,9 @@ const LEGSET = ({ player }) => {
           ap={activePlayer}
           showStats={showStats}
         >
-          <Text_Sub player={"p1"}>({p1_DATA.legsWon})</Text_Sub>
+          <Text_Sub player={"p1"}>({legsWon})</Text_Sub>
           <Text_Main style={{ fontSize }} player={"p1"}>
-            {legOrSet === "set" ? p1_DATA.setsWon : p1_DATA.legsWon}
+            {legOrSet === "set" ? setsWon : legsWon}
           </Text_Main>
         </LegSet1>
       ) : (
@@ -116,13 +120,13 @@ const LEGSET = ({ player }) => {
           showStats={showStats}
         >
           <Text_Main style={{ fontSize }} player={"p2"}>
-            {legOrSet === "set" ? p2_DATA.setsWon : p2_DATA.legsWon}
+            {legOrSet === "set" ? setsWon : legsWon}
           </Text_Main>
-          <Text_Sub player={"p2"}>({p2_DATA.legsWon})</Text_Sub>
+          <Text_Sub player={"p2"}>({legsWon})</Text_Sub>
         </LegSet2>
       )}
     </>
   );
-};
+});
 
 export default LEGSET;

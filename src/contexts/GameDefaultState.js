@@ -1,5 +1,5 @@
 const DEFAULT_PLAYER_DATA = {
-  score: 301,
+  score: "",
   lastScore: "",
   legsWon: 0,
   setsWon: 0,
@@ -48,17 +48,9 @@ const DEFAULT_PLAYER_DATA = {
 
 export const GAME_DEFAULT_STATE = {
   status: "initialize",
-  p1: "esmeralda",
-  p2: "jose armando",
-  // legOrSet: "leg",
-  // toWin: 1,
-  // legsPerSet: 3,
-  // startingScore: 301,
-  playerToStartLeg: "p1",
   activePlayer: "p1",
   inactivePlayer: "p2",
   showStats: false,
-  opacity: false,
 
   //PLAYERS
   p1_DATA: DEFAULT_PLAYER_DATA,
@@ -85,3 +77,5 @@ export const GAME_DEFAULT_STATE = {
 };
 
 export default GAME_DEFAULT_STATE;
+//TODO input context
+//TODO score context

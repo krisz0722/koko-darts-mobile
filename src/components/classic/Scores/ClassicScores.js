@@ -5,7 +5,7 @@ import { Animated } from "react-native";
 import { FlexColAround } from "../../../styles/css_mixins";
 import PLAYER_CHECKOUTS from "./ClassicCheckoutsDiv";
 import PLAYER_SCORE from "./ClassicPlayerScore";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+
 export const ClassicScores = styled(Animated.View)`
   ${FlexColAround};
   position: absolute;
@@ -31,11 +31,11 @@ export const ClassicCheckoutsP2 = styled(ClassicCheckoutsPlayer)`
   right: 0;
 `;
 
-const CLASSIC_SCORES = () => {
-  const { theme, animation } = useContext(ThemeContext);
+const CLASSIC_SCORES = React.memo((props) => {
+  const { activePlayer, showStats, animation, theme } = props;
 
   const {
-    gameData: { activePlayer, showStats },
+    gameData: { p1_DATA, p2_DATA },
   } = useContext(GameContext);
 
   const animationValue = useRef(
@@ -86,18 +86,24 @@ const CLASSIC_SCORES = () => {
         theme={theme}
         ap={activePlayer}
       >
-        <PLAYER_CHECKOUTS player={"p1"} />
+        <PLAYER_CHECKOUTS theme={theme} playerData={p1_DATA} />
       </ClassicCheckoutsP1>
       <ClassicCheckoutsP2
         style={{ borderColor }}
         theme={theme}
         ap={activePlayer}
       >
-        <PLAYER_CHECKOUTS player={"p2"} />
+        <PLAYER_CHECKOUTS theme={theme} playerData={p2_DATA} />
       </ClassicCheckoutsP2>
-      <PLAYER_SCORE />
+      <PLAYER_SCORE
+        theme={theme}
+        activePlayer={activePlayer}
+        showStats={showStats}
+        p1_DATA={p1_DATA}
+        p2_DATA={p2_DATA}
+      />
     </ClassicScores>
   );
-};
+});
 
 export default CLASSIC_SCORES;

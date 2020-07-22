@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Text, View } from "react-native";
-import { GameContext } from "../../../contexts/GameContext";
 import { CHECKOUTS } from "../../../calc/scores";
 
 import styled from "styled-components";
@@ -20,10 +19,8 @@ const Checkout_Text = styled(Text)`
   width: ${() => 100 / 3 + "%"};
 `;
 
-const PLAYER_CHECKOUTS = ({ player }) => {
-  const { gameData } = useContext(GameContext);
-
-  const { score, onCheckout } = gameData[`${player}_DATA`];
+const PLAYER_CHECKOUTS = React.memo(({ playerData, theme }) => {
+  const { score, onCheckout } = playerData;
 
   const checkouts = onCheckout
     ? CHECKOUTS.find((co) => co.value === score).checkouts
@@ -39,15 +36,21 @@ const PLAYER_CHECKOUTS = ({ player }) => {
 
             return (
               <Checkout_Row key={checkouts.indexOf(co)} isCheckout={onCheckout}>
-                {r1 !== "0" ? <Checkout_Text>{r1}</Checkout_Text> : null}
-                {r2 !== "0" ? <Checkout_Text>{r2}</Checkout_Text> : null}
-                {d !== "0" ? <Checkout_Text>{d}</Checkout_Text> : null}
+                {r1 !== "0" ? (
+                  <Checkout_Text theme={theme}>{r1}</Checkout_Text>
+                ) : null}
+                {r2 !== "0" ? (
+                  <Checkout_Text theme={theme}>{r2}</Checkout_Text>
+                ) : null}
+                {d !== "0" ? (
+                  <Checkout_Text theme={theme}>{d}</Checkout_Text>
+                ) : null}
               </Checkout_Row>
             );
           })
         : null}
     </>
   );
-};
+});
 
 export default PLAYER_CHECKOUTS;

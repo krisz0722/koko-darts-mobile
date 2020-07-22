@@ -53,11 +53,7 @@ const MATCH_COMPONENT = ({ item }) => {
         {item.result2}
       </Result2>
       <TouchableOpacity onPress={() => alert("remove friend")}>
-        <Icon
-          name={"remove-circle"}
-          color={theme.bgRed}
-          size={Window.height * 0.03}
-        />
+        <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.03} />
       </TouchableOpacity>
     </Match>
   );

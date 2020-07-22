@@ -8,14 +8,16 @@ import PLAYERS from "../../components/settings/Players";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { BackHandler } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { GameContext } from "../../contexts/GameContext";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const {
-    dispatchSettings,
     settings: { p1, p2 },
   } = useContext(SettingsContext);
+
+  const { dispatchGameData } = useContext(GameContext);
 
   useEffect(() => {
     const backAction = () => {
@@ -51,7 +53,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           length={2}
           icon={"dart"}
           action={() => {
-            dispatchSettings({ type: "NEW_MATCH", p1, p2 });
+            dispatchGameData({ type: "NEW_MATCH", p1, p2 });
             navigation.navigate("drawernavigator");
           }}
         />

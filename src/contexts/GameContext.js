@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext, useContext } from "react";
 import GAME_DEFAULT_STATE from "./GameDefaultState";
 import { changeInput } from "./actions/ChangeInputMethod";
 import type from "./actions/Type";
@@ -9,10 +9,29 @@ import undo from "./actions/Undo";
 import clear from "./actions/Clear";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
+import { SettingsContext } from "./SettingsContext";
 
 export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
+  const { settings } = useContext(SettingsContext);
+
+  const {
+    layout,
+    p1,
+    p2,
+    legOrSet,
+    toWin,
+    legsPerSet,
+    startingScore,
+    playerToStartLeg,
+  } = settings;
+
+  const initialGameState = {
+    ...GAME_DEFAULT_STATE,
+    ...settings,
+  };
+
   const gameReducer = (state, action = null) => {
     switch (action.type) {
       case "RESET":
@@ -37,9 +56,6 @@ export const GameContextProvider = (props) => {
       case "BUST":
         return bust(state);
 
-      case "OPACITY":
-        return { ...state, opacity: action.value };
-
       case "FINISH_LEG":
         return finishLeg(state, action.nodUsed, action.nodRequired);
       case "REMATCH":
@@ -53,7 +69,7 @@ export const GameContextProvider = (props) => {
         return GAME_DEFAULT_STATE;
       case "NEW_MATCH":
         return {
-          ...GAME_DEFAULT_STATE,
+          ...initialGameState,
           p1: action.p1,
           p2: action.p2,
           status: "started",
@@ -65,7 +81,7 @@ export const GameContextProvider = (props) => {
 
   const [gameData, dispatchGameData] = useReducer(
     gameReducer,
-    GAME_DEFAULT_STATE,
+    initialGameState,
   );
 
   console.log(gameData);

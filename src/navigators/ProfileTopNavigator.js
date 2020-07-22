@@ -66,7 +66,6 @@ const PROFILE_TABBAR_CONTENT = React.memo(({ navigation, state }) => {
 
 const ProfileNavigator = React.memo((props) => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
-  console.log("RENDER PROFILENAVIGATOR");
 
   return (
     <Navigator tabBar={(props) => <PROFILE_TABBAR_CONTENT {...props} />}>

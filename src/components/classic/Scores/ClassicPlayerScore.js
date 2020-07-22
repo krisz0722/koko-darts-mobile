@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated } from "react-native";
 import { AlignText } from "../../../styles/css_mixins";
-import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Text_Score = styled(Animated.Text)`
   position: absolute;
   top: 0;
@@ -23,12 +21,8 @@ const Text_Score1 = styled(Text_Score)`
 const Text_Score2 = styled(Text_Score)`
   right: 0;
 `;
-const PLAYER_SCORE = () => {
-  const { theme, animation } = useContext(ThemeContext);
-
-  const {
-    gameData: { activePlayer, showStats, p1_DATA, p2_DATA },
-  } = useContext(GameContext);
+const PLAYER_SCORE = React.memo((props) => {
+  const { animation, theme, activePlayer, showStats, p1_DATA, p2_DATA } = props;
 
   const p1Checkout = p1_DATA.onCheckout;
   const p2Checkout = p2_DATA.onCheckout;
@@ -149,6 +143,6 @@ const PLAYER_SCORE = () => {
       </Text_Score2>
     </>
   );
-};
+});
 
 export default PLAYER_SCORE;

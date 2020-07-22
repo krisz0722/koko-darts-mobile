@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
-import { BasicText, FlexRowBetween, Window } from "../../../styles/css_mixins";
+import {
+  BasicText,
+  FlexCol,
+  FlexRowBetween,
+  Window,
+} from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 export const Friend = styled(View)`
@@ -31,6 +36,8 @@ export const Name = styled(Text)`
   
 `;
 
+export const RemoveButton = styled(TouchableOpacity)``;
+
 const FRIEND_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
 
@@ -38,13 +45,9 @@ const FRIEND_COMPONENT = ({ item }) => {
     <Friend theme={theme}>
       <FriendAvatar theme={theme} resizeMode={"cover"} source={item.img} />
       <Name>{item.name}</Name>
-      <TouchableOpacity onPress={() => alert("remove friend")}>
-        <Icon
-          name={"remove-circle"}
-          color={theme.bgRed}
-          size={Window.height * 0.06}
-        />
-      </TouchableOpacity>
+      <RemoveButton theme={theme} onPress={() => alert("remove friend")}>
+        <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.06} />
+      </RemoveButton>
     </Friend>
   );
 };

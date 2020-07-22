@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import Theme_Default from "../styles/theme-default.json";
 import Theme_Contrast from "../styles/theme-contrast.json";
 
-export const ThemeContext = createContext("default");
+export const ThemeContext = createContext("");
 
 export const ThemeContextProvider = (props) => {
   const THEMES = {

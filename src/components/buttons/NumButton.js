@@ -6,7 +6,6 @@ import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
 import { useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconDart from "../../../assets/iconDart";
-import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
   width: ${() => 100 / 3 + "%"};
@@ -29,13 +28,17 @@ export const Text_Number = styled(Animated.Text)`
 `;
 
 const NUM_BUTTON = React.memo(
-  ({ type, value, action, icon, middle = false }) => {
-    const {
-      dispatchGameData,
-      gameData: { activePlayer },
-    } = useContext(GameContext);
-
-    const { theme, animation } = useContext(ThemeContext);
+  ({
+    activePlayer,
+    theme,
+    animation,
+    type,
+    value,
+    action,
+    icon,
+    middle = false,
+  }) => {
+    const { dispatchGameData } = useContext(GameContext);
 
     const animationValue = useRef(
       new Animated.Value(activePlayer === "p1" ? 1 : 0),

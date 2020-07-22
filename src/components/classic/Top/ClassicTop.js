@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated, View } from "react-native";
 import {
@@ -11,7 +10,6 @@ import {
 import AVATAR from "./ClassicAvatar";
 import LEGSET from "./ClassicLegSet";
 import NAME from "./ClassicName";
-import { ThemeContext } from "../../../contexts/ThemeContext";
 
 export const ClassicTop = styled(Animated.View)`
   ${FlexColStart};
@@ -46,11 +44,18 @@ export const PlayerInfoRow = styled(Animated.View)`
   border-width: ${({ theme }) => theme.borderWidth};
 `;
 
-const CLASSIC_TOP = () => {
+const CLASSIC_TOP = React.memo((props) => {
   const {
-    gameData: { activePlayer, showStats },
-  } = useContext(GameContext);
-  const { theme, animation } = useContext(ThemeContext);
+    p1,
+    p2,
+    legOrSet,
+    p1_DATA,
+    p2_DATA,
+    activePlayer,
+    showStats,
+    animation,
+    theme,
+  } = props;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -91,20 +96,62 @@ const CLASSIC_TOP = () => {
     <ClassicTop style={{ height }} showStats={showStats}>
       <PlayerInfo1 theme={theme}>
         <PlayerInfoRow style={{ borderColor }} ap={activePlayer} theme={theme}>
-          <AVATAR player={"p1"} />
-          <LEGSET player={"p1"} />
+          <AVATAR
+            activePlayer={activePlayer}
+            showStats={showStats}
+            player={"p1"}
+            animation={animation}
+            theme={theme}
+          />
+          <LEGSET
+            activePlayer={activePlayer}
+            showStats={showStats}
+            player={"p1"}
+            legsWon={p1_DATA.legsWon}
+            setsWon={p1_DATA.setsWon}
+            animation={animation}
+            theme={theme}
+            legOrSet={legOrSet}
+          />
         </PlayerInfoRow>
-        <NAME player={"p1"} />
+        <NAME
+          animation={animation}
+          theme={theme}
+          activePlayer={activePlayer}
+          name={p1}
+          player={"p1"}
+        />
       </PlayerInfo1>
       <PlayerInfo2 theme={theme}>
         <PlayerInfoRow style={{ borderColor }} ap={activePlayer} theme={theme}>
-          <AVATAR player={"p2"} />
-          <LEGSET player={"p2"} />
+          <AVATAR
+            animation={animation}
+            theme={theme}
+            activePlayer={activePlayer}
+            showStats={showStats}
+            player={"p2"}
+          />
+          <LEGSET
+            animation={animation}
+            theme={theme}
+            legsWon={p2_DATA.legsWon}
+            setsWon={p2_DATA.setsWon}
+            activePlayer={activePlayer}
+            showStats={showStats}
+            player={"p2"}
+          />
         </PlayerInfoRow>
-        <NAME player={"p2"} />
+        <NAME
+          animation={animation}
+          theme={theme}
+          activePlayer={activePlayer}
+          showStats={showStats}
+          name={p2}
+          player={"p2"}
+        />
       </PlayerInfo2>
     </ClassicTop>
   );
-};
+});
 
 export default CLASSIC_TOP;

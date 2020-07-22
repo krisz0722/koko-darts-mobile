@@ -48,8 +48,8 @@ const SETTINGS = ({ navigation }) => {
       <BottomButtons theme={theme}>
         <THEMED_BUTTON
           size={"small"}
-          icon={"visibility"}
-          text={"show preview"}
+          icon={preview ? "visibility-off" : "visibility"}
+          text={preview ? "hide preview" : "show preview"}
           type={"success"}
           length={2}
           action={togglePreview}
@@ -63,7 +63,7 @@ const SETTINGS = ({ navigation }) => {
           action={reset}
         />
       </BottomButtons>
-      {preview ? <PREVIEW preview={preview} /> : null}
+      {preview ? <PREVIEW ingame={false} preview={preview} /> : null}
     </>
   );
 };

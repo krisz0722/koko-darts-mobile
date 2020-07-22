@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BottomButtons } from "./StyledSettings";
+import { Bottom, BottomButtons, Options } from "./StyledSettings";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { OptionsLayout } from "../../components/settings/OptionsLayout";
 import { COLOR } from "../../components/settings/OptionsColor";
@@ -38,32 +38,38 @@ const SETTINGS = ({ navigation }) => {
     return () => backHandler.remove();
   }, [navigation, setHomeTabScreen]);
 
+  console.log("RENDER SETTINGS SCREEN");
+
   return (
     <>
-      <OptionsLayout />
-      <COLOR />
-      <OptionsEffects />
-      <OptionsScore />
-      <OptionsLegOrSet />
-      <BottomButtons theme={theme}>
-        <THEMED_BUTTON
-          size={"small"}
-          icon={preview ? "visibility-off" : "visibility"}
-          text={preview ? "hide preview" : "show preview"}
-          type={"success"}
-          length={2}
-          action={togglePreview}
-        />
-        <THEMED_BUTTON
-          type={"danger"}
-          size={"small"}
-          icon={"undo"}
-          text={"reset"}
-          length={2}
-          action={reset}
-        />
-      </BottomButtons>
-      {preview ? <PREVIEW ingame={false} preview={preview} /> : null}
+      <Options>
+        <OptionsLayout />
+        <COLOR />
+        <OptionsEffects />
+        <OptionsScore />
+        <OptionsLegOrSet />
+      </Options>
+      <Bottom theme={theme}>
+        <PREVIEW ingame={false} preview={preview} />
+        <BottomButtons>
+          <THEMED_BUTTON
+            size={"small"}
+            icon={preview ? "visibility-off" : "visibility"}
+            text={preview ? "hide preview" : "show preview"}
+            type={"success"}
+            length={2}
+            action={togglePreview}
+          />
+          <THEMED_BUTTON
+            type={"danger"}
+            size={"small"}
+            icon={"undo"}
+            text={"reset"}
+            length={2}
+            action={reset}
+          />
+        </BottomButtons>
+      </Bottom>
     </>
   );
 };

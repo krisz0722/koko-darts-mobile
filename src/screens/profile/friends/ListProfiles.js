@@ -28,7 +28,7 @@ const LIST_PROFILES = ({ regexp }) => {
       <ProfilesContainer
         data={FRIENDS_LIST}
         renderItem={renderItem}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.key}
         theme={theme}
       />
     </Safe>

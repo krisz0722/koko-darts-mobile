@@ -20,7 +20,7 @@ const LIST_MATCHES = () => {
       <MatchesContainer
         data={MATCHES_LIST}
         renderItem={renderItem}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.key}
         theme={theme}
       />
     </SafeAreaView>

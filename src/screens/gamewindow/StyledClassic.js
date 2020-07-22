@@ -7,7 +7,7 @@ export const GameWindow = styled(Animated.View)`
   width: ${({ preview }) => (preview ? Window.width : "100%")};
   height: ${({ preview }) => (preview ? Window.height : "100%")};
   transform: ${({ preview }) => (preview ? "scale(0.32, 0.32)" : null)};
-  display: ${({ preview }) => (preview ? "flex" : "none")};
+  display: ${({ preview }) => (preview ? "flex" : "flex")};
 `;
 
 export const Overlay = styled(Animated.View)`

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
-import { FlexRow } from "../../styles/css_mixins";
+import { FlexRow, Window } from "../../styles/css_mixins";
 import CLASSIC_TOP from "../classic/Top/ClassicTop";
 import CLASSIC_SCORES from "../classic/Scores/ClassicScores";
 import CLASSIC_STATS from "../classic/Stats/ClassicStats";
@@ -20,13 +20,16 @@ import { InGameOpacityContext } from "../../contexts/InGameOpacityContext";
 
 const PreviewContainer = styled(Animated.View)`
   position: ${({ ingame }) => (ingame ? "relative" : "absolute")};
-  top: ${({ ingame }) => (ingame ? "0" : "42%")};
+  top: ${({ ingame }) => (ingame ? "0" : "0%")};
   ${FlexRow};
-  height: ${({ ingame }) => (ingame ? "40%" : "35%")};
+  height: ${({ ingame }) => (ingame ? "70%" : "80%")};
   width: 100%;
   z-index: ${({ visible }) => (visible ? 1 : -1)};
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
   background-color: ${({ theme, ingame }) =>
     ingame ? "transparent" : theme.bgOverlay};
+  border: 2px red solid;
+  height: ${() => Window.height * 0.35};
 `;
 
 export const PREVIEW = ({ preview, ingame }) => {
@@ -42,6 +45,7 @@ export const PREVIEW = ({ preview, ingame }) => {
     },
   } = useContext(GameContext);
 
+  console.log(preview);
   const { inGameTheme, inGameAnimation } = useContext(InGameThemeContext);
   const { theme, animation } = useContext(ThemeContext);
   const { opacity } = useContext(OpacityContext);

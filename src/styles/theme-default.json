@@ -103,6 +103,11 @@
     "record": 10
   },
 
+  "matches": {
+    "name": 12,
+    "record": 12
+  },
+
 
   "stats": {
     "fontSize": 1

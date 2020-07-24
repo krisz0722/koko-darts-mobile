@@ -49,7 +49,7 @@ color: ${({ theme }) => theme.text}
 font-size:20;
 `;
 
-const SEARCH_MODAL = ({ action1, action2, visible }) => {
+const SEARCH_MODAL = React.memo(({ action1, action2, visible }) => {
   const { theme, animation } = useContext(ThemeContext);
 
   const animationType = animation
@@ -61,6 +61,8 @@ const SEARCH_MODAL = ({ action1, action2, visible }) => {
   const [regexp, setRegexp] = useState("");
 
   const handleRegExp = (val) => setRegexp(val);
+
+  console.log("RENDER SEARCH MODAL");
 
   return (
     <Modal
@@ -106,7 +108,7 @@ const SEARCH_MODAL = ({ action1, action2, visible }) => {
       </SafeAreaView>
     </Modal>
   );
-};
+});
 
 export default SEARCH_MODAL;
 

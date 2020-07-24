@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import { BottomButtons } from "../../../components/modals/StyledModal";
-import LIST_PROFILES from "./ListProfiles";
+import LIST_PROFILES from "./profiles/ListProfiles";
 import {
   BasicText,
   BasicTextBold,
@@ -85,20 +85,20 @@ const SEARCH_MODAL = ({ action1, action2, visible }) => {
             <LIST_PROFILES regexp={regexp} />
             <BottomButtons theme={theme}>
               <THEMED_BUTTON
-                text={"cancel"}
+                text={"back"}
                 length={2}
                 size={"small"}
-                icon={"clear"}
+                icon={"arrow-back"}
                 type={"danger"}
                 action={() => action1()}
               />
               <THEMED_BUTTON
                 size={"small"}
-                text={"yes"}
+                text={"send request"}
                 type={"success"}
                 length={2}
-                icon={"check"}
-                action={() => action2()}
+                icon={"send"}
+                action={() => alert("Request has been sent")}
               />
             </BottomButtons>
           </Container>

@@ -98,6 +98,10 @@
     "stat": 12.5
   },
 
+  "friends": {
+    "name": 10,
+    "record": 10
+  },
 
 
   "stats": {

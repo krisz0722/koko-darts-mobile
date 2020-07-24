@@ -1,23 +1,23 @@
 import React, { useContext, useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { FlexCol } from "../../../styles/css_mixins";
+import { FlexCol } from "../../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import SEARCH_MODAL from "./SeearchModal";
+import SEARCH_MODAL from "../SeearchModal";
 import LIST_FRIENDS from "./ListFriends";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 
 export const AddButton = styled(TouchableOpacity)`
   ${FlexCol};
 `;
 
-const FRIENDS = () => {
+const FRIENDS_SCREEN = () => {
   const { theme } = useContext(ThemeContext);
 
   const [searchModal, setSearchModal] = useState(false);
 
-  const handleAddFriend = (item) => {
-    alert(`${item.name} has been added!`);
+  const handleSendrequest = (item) => {
+    alert(`Request has been sent to ${item.key}`);
   };
 
   return (
@@ -28,11 +28,11 @@ const FRIENDS = () => {
       </AddButton>
       <SEARCH_MODAL
         action1={() => setSearchModal(!searchModal)}
-        action2={() => handleAddFriend()}
+        action2={handleSendrequest}
         visible={searchModal}
       />
     </SafeAreaView>
   );
 };
 
-export default FRIENDS;
+export default FRIENDS_SCREEN;

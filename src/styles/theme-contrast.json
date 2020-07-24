@@ -110,6 +110,10 @@
     "stat": 15
   },
 
+  "friends": {
+    "name": 15,
+    "record": 15
+  },
 
   "stats": {
     "fontSize": 1

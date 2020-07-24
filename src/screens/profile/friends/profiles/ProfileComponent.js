@@ -1,9 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Image, Text, View } from "react-native";
 import styled from "styled-components";
-import { BasicText, FlexRowAround, Window } from "../../../styles/css_mixins";
+import {
+  BasicText,
+  FlexRowAround,
+  Window,
+} from "../../../../styles/css_mixins";
 import CheckBox from "@react-native-community/checkbox";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 export const Profile = styled(View)`
   ${FlexRowAround};
   margin: auto;
@@ -35,7 +39,7 @@ const PROFILE_COMPONENT = ({ item }) => {
   return (
     <Profile theme={theme}>
       <ProfileAvatar theme={theme} resizeMode={"cover"} source={item.img} />
-      <Name>{item.name}</Name>
+      <Name>{item.key}</Name>
       <CheckBox
         tintColors={{ true: theme.text, false: theme.text }}
         onCheckColor={theme.bg3}

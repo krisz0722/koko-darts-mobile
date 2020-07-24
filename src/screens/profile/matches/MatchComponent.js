@@ -46,7 +46,7 @@ const MATCH_COMPONENT = ({ item }) => {
 
   return (
     <Match theme={theme}>
-      <MatchDate theme={theme}>{item.date}</MatchDate>
+      <MatchDate theme={theme}>{item.key}</MatchDate>
       <Name>VS. {item.opponent}</Name>
       <Result1>{item.result1}</Result1>
       <Result2 theme={theme} result={item.result2}>

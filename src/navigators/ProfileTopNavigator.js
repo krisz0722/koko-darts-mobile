@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { View } from "react-native";
 import { BorderHorizontal, FlexRowAround, Window } from "../styles/css_mixins";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import FRIENDS from "../screens/profile/friends/Friends";
+import FRIENDS_SCREEN from "../screens/profile/friends/friends/Friends_Screen";
 import MATCHES from "../screens/profile/matches/Matches";
 import TIMELINE from "../screens/profile/timeline/Timeline";
 import { ThemeContext } from "../contexts/ThemeContext";
@@ -69,7 +69,7 @@ const ProfileNavigator = React.memo((props) => {
 
   return (
     <Navigator tabBar={(props) => <PROFILE_TABBAR_CONTENT {...props} />}>
-      <Screen name="friends" component={FRIENDS} />
+      <Screen name="friends" component={FRIENDS_SCREEN} />
       <Screen name="matches" component={MATCHES} />
       <Screen name="timeline" component={TIMELINE} />
     </Navigator>

@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import styled from "styled-components";
 import { FlatList } from "react-native";
-import FRIENDS_LIST from "./DataFriends";
+import PROFILES_LIST from "../profiles/DataProfiles";
 import PROFILE_COMPONENT from "./ProfileComponent";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 export const Safe = styled(SafeAreaView)`
   height: 40%;
   width: 100%;
@@ -26,7 +26,7 @@ const LIST_PROFILES = ({ regexp }) => {
   return (
     <Safe>
       <ProfilesContainer
-        data={FRIENDS_LIST}
+        data={PROFILES_LIST}
         renderItem={renderItem}
         keyExtractor={(item) => item.key}
         theme={theme}

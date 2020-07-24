@@ -3,12 +3,11 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 import {
   BasicText,
-  FlexCol,
   FlexRowBetween,
   Window,
-} from "../../../styles/css_mixins";
+} from "../../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 export const Friend = styled(View)`
   ${FlexRowBetween};
   padding: 0 5%;
@@ -28,12 +27,21 @@ export const FriendAvatar = styled(Image)`
 
 export const Name = styled(Text)`
   ${BasicText};
-  padding:5%;
   text-align:left;
   color: ${({ theme }) => theme.text}
-  width: 50%;
-  font-size: 15;
-  
+  width: 40%;
+  font-size: ${({ theme }) => theme.friends.name} ;
+`;
+
+export const Record = styled(Text)`
+  ${BasicText};
+  color: ${({ theme, record }) =>
+    record === theme.bgActive ? theme.text2 : theme.text}
+  width: 15%;
+  border-radius:4px;
+  height:65%;
+  font-size: ${({ theme }) => theme.friends.name} ;
+  background-color: ${({ record }) => record}
 `;
 
 export const RemoveButton = styled(TouchableOpacity)``;
@@ -41,10 +49,38 @@ export const RemoveButton = styled(TouchableOpacity)``;
 const FRIEND_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
 
+  const { wins, losses } = item;
+
+  console.log("IZE", wins > losses);
+
+  const record = (item) => {
+    if (wins === losses) {
+      return theme.bgActive;
+    } else if (wins > losses) {
+      return theme.bgGreen;
+    } else if (wins < losses) {
+      return theme.bgRed;
+    } else {
+      return null;
+    }
+  };
+
+  console.log(
+    record({
+      key: "The Flying SCotsman",
+      wins: 56,
+      losses: 13,
+      img: require("../../../../../assets/bgPortrait.jpeg"),
+    }),
+  );
   return (
     <Friend theme={theme}>
       <FriendAvatar theme={theme} resizeMode={"cover"} source={item.img} />
-      <Name>{item.name}</Name>
+      <Name theme={theme}>{item.key}</Name>
+      <Record
+        record={record()}
+        theme={theme}
+      >{`${item.wins} - ${item.losses}`}</Record>
       <RemoveButton theme={theme} onPress={() => alert("remove friend")}>
         <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.06} />
       </RemoveButton>

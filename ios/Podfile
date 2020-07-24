@@ -83,6 +83,8 @@ target 'kokodarts' do
 
   pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'kokodartsTests' do
     inherit! :complete
     # Pods for testing

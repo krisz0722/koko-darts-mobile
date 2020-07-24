@@ -22,7 +22,16 @@ const Text_Score2 = styled(Text_Score)`
   right: 0;
 `;
 const PLAYER_SCORE = React.memo((props) => {
-  const { animation, theme, activePlayer, showStats, p1_DATA, p2_DATA } = props;
+  const {
+    animation,
+    theme,
+    ingame,
+    activePlayer,
+    showStats,
+    p1_DATA,
+    p2_DATA,
+    startingScore,
+  } = props;
 
   const p1Checkout = p1_DATA.onCheckout;
   const p2Checkout = p2_DATA.onCheckout;
@@ -34,6 +43,11 @@ const PLAYER_SCORE = React.memo((props) => {
   const animationP2 = useRef(new Animated.Value(p2Checkout ? 1 : 0)).current;
   const fontP1 = useRef(new Animated.Value(p1Checkout ? 1 : 0)).current;
   const fontP2 = useRef(new Animated.Value(p2Checkout ? 1 : 0)).current;
+
+  const p1Score = ingame ? p1_DATA.score : startingScore;
+  const p2Score = ingame ? p2_DATA.score : startingScore;
+
+  console.log("P!SCORE", p1Score);
 
   useEffect(() => {
     if (animation) {
@@ -133,13 +147,16 @@ const PLAYER_SCORE = React.memo((props) => {
     fontSize: fontSizeP2,
     height: p2Height,
   };
+
+  console.log("RENDER PLAYERSCORE");
+
   return (
     <>
       <Text_Score1 style={style1} ap={activePlayer} theme={theme} player={"p1"}>
-        {p1_DATA.score}
+        {p1Score}
       </Text_Score1>
       <Text_Score2 style={style2} ap={activePlayer} theme={theme} player={"p2"}>
-        {p2_DATA.score}
+        {p2Score}
       </Text_Score2>
     </>
   );

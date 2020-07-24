@@ -1,25 +1,25 @@
-import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
+import React, { useEffect, useContext, useState } from "react";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import styled from "styled-components";
 
-export const OptionsLayout = () => {
-  const {
-    settings: { layout },
-    dispatchSettings,
-  } = useContext(SettingsContext);
+const RowMod = styled(Row)`
+  top: 0;
+`;
+
+export const OptionsLayout = React.memo((props) => {
+  const { layout, toggleLayout } = props;
+
   const { theme } = useContext(ThemeContext);
 
   const DATA = ["classic", "asym"];
 
-  const handlePress = (val) => {
-    dispatchSettings({ type: "CHANGE_LAYOUT", value: val });
-  };
+  console.log("RENDER LAYOUT");
 
   return (
-    <Row theme={theme}>
+    <RowMod theme={theme}>
       <SETTINGS_HEADER text={"layout"} />
 
       <Div theme={theme}>
@@ -29,10 +29,10 @@ export const OptionsLayout = () => {
             value={item}
             active={layout === item}
             length={DATA.length}
-            action={() => handlePress(item)}
+            action={() => toggleLayout(item)}
           />
         ))}
       </Div>
-    </Row>
+    </RowMod>
   );
-};
+});

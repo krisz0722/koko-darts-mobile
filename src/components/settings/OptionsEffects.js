@@ -1,68 +1,46 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import SETTINGS_HEADER from "./SettingsHeader";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { InGameThemeContext } from "../../contexts/InGameThemeContext";
-import { OpacityContext } from "../../contexts/OpacityContext";
-import { InGameOpacityContext } from "../../contexts/InGameOpacityContext";
+import styled from "styled-components";
 
-export const OptionsEffects = ({ ingame }) => {
-  const { theme, animation, setAnimation } = useContext(ThemeContext);
-  const { inGameTheme, inGameAnimation, setInGameAnimation } = useContext(
-    InGameThemeContext,
-  );
-  const { opacity, setOpacity } = useContext(OpacityContext);
-  const { inGameOpacity, setInGameOpacity } = useContext(InGameOpacityContext);
+const RowMod = styled(Row)`
+  top: ${() => (100 / 5.5) * 2 + "%"};
+`;
 
-  const animationToUse = ingame ? inGameAnimation : animation;
-  const themeToUse = ingame ? inGameTheme : theme;
-  const opacityToUse = ingame ? inGameOpacity : opacity;
+export const OptionsEffects = React.memo((props) => {
+  const { animation, toggleAnimation, opacity, toggleOpacity } = props;
 
-  console.log(opacity);
-  console.log(inGameOpacity);
+  const { theme } = useContext(ThemeContext);
 
-  const toggleAnimation = () => {
-    if (ingame) {
-      setInGameAnimation(!inGameAnimation);
-    } else {
-      setAnimation(!animation);
-    }
-  };
-
-  const toggleOpacity = () => {
-    if (ingame) {
-      setInGameOpacity(!inGameOpacity);
-    } else {
-      setOpacity(!opacity);
-    }
-  };
+  console.log("RENDER EFFECT");
 
   return (
-    <Row theme={themeToUse} layout="asym">
+    <RowMod theme={theme} layout="asym">
       <SETTINGS_HEADER
         text={"visual effects"}
         icon={"help-outline"}
         action={() => alert("action")}
       />
-      <Div theme={themeToUse}>
+      <Div theme={theme}>
         <SETTINGS_BUTTON
           value={"animation"}
-          active={animationToUse}
+          active={animation}
           length={2}
           action={toggleAnimation}
           checkbox={true}
         />
         <SETTINGS_BUTTON
           value={"opacity"}
-          active={opacityToUse}
+          active={opacity}
           length={2}
           action={toggleOpacity}
           checkbox={true}
         />
       </Div>
-    </Row>
+    </RowMod>
   );
-};
+});
 
 //TODO async?

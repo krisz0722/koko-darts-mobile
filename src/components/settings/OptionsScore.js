@@ -1,27 +1,24 @@
-import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
+import React, { useEffect, useContext, useState } from "react";
 import { Row, Div } from "../../screens/settings/StyledSettings";
 import SETTINGS_HEADER from "./SettingsHeader";
 import SETTINGS_BUTTON from "../buttons/SettingsButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import styled from "styled-components";
 
-export const OptionsScore = () => {
+const RowMod = styled(Row)`
+  top: ${({ page }) => (page === "main" ? (100 / 5.5) * 3 + "%" : "30%")};
+`;
+
+export const OptionsScore = React.memo((props) => {
+  const { startingScore, toggleStartingScore, page } = props;
   const { theme } = useContext(ThemeContext);
-
-  const {
-    dispatchSettings,
-    settings: { startingScore },
-  } = useContext(SettingsContext);
 
   const DATA = [301, 501, 701, 901];
 
-  const handlePress = (val) => {
-    const value = parseInt(val);
-    dispatchSettings({ type: "CHANGE_STARTINGSCORE", value });
-  };
+  console.log("RENDER SCORE");
 
   return (
-    <Row theme={theme} id="gamesettings1">
+    <RowMod page={page} theme={theme}>
       <SETTINGS_HEADER text={"starting score"} />
       <Div theme={theme}>
         {DATA.map((item) => (
@@ -29,11 +26,11 @@ export const OptionsScore = () => {
             active={startingScore === item}
             length={DATA.length}
             key={item}
-            action={() => handlePress(item)}
+            action={() => toggleStartingScore(item)}
             value={item}
           />
         ))}
       </Div>
-    </Row>
+    </RowMod>
   );
-};
+});

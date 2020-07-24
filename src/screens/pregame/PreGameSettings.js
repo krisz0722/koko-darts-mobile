@@ -1,23 +1,28 @@
-import React, { useContext, useEffect } from "react";
-import { BottomButtons } from "../settings/StyledSettings";
-import { SettingsContext } from "../../contexts/SettingsContext";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { OptionsScore } from "../../components/settings/OptionsScore";
 import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
-import HISTORY from "../../components/settings/History";
-import PLAYERS from "../../components/settings/Players";
+import HISTORY from "./History";
+import PLAYERS from "./Players";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { BackHandler } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { GameContext } from "../../contexts/GameContext";
+import { Options, BottomButtons } from "./StyledPreGame";
+import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const {
-    settings: { p1, p2 },
-  } = useContext(SettingsContext);
+    inGameSettings,
+    inGameSettings: { legOrSet, toWin, legsPerSet, startingScore },
+  } = useContext(InGameSettingsContext);
 
-  const { dispatchGameData } = useContext(GameContext);
+  console.log(inGameSettings);
+
+  const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
+  const [stateStartingScore, setStartingScore] = useState(startingScore);
+  const [stateToWin, setTowin] = useState(toWin);
+  const [stateLegsPerSet, setLegsPerSet] = useState(legsPerSet);
 
   useEffect(() => {
     const backAction = () => {
@@ -31,12 +36,55 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     return () => backHandler.remove();
   }, [navigation]);
 
+  const toggleLegOrSet = useCallback(
+    (value) => {
+      setLegOrSet(value);
+    },
+    [setLegOrSet],
+  );
+  const toggleStartingScore = useCallback(
+    (value) => {
+      setStartingScore(value);
+    },
+    [setStartingScore],
+  );
+
+  const toggleToWin = useCallback(
+    (value) => {
+      setTowin(value);
+    },
+    [setTowin],
+  );
+
+  const toggleLegsPerSet = useCallback(
+    (value) => {
+      setLegsPerSet(value);
+    },
+    [setLegsPerSet],
+  );
+
   return (
     <>
-      <PLAYERS />
-      <OptionsScore />
-      <OptionsLegOrSet />
-      <HISTORY />
+      <Options>
+        <PLAYERS />
+        <OptionsScore
+          startingScore={stateStartingScore}
+          toggleStartingScore={toggleStartingScore}
+          page={"pregame"}
+          theme={theme}
+        />
+        <OptionsLegOrSet
+          legOrSet={stateLegOrSet}
+          toggleLegOrSet={toggleLegOrSet}
+          toWin={stateToWin}
+          toggleToWin={toggleToWin}
+          legsPerSet={stateLegsPerSet}
+          toggleLegsPerSet={toggleLegsPerSet}
+          page={"pregame"}
+          theme={theme}
+        />
+        <HISTORY theme={theme} />
+      </Options>
       <BottomButtons theme={theme}>
         <THEMED_BUTTON
           text={"back"}
@@ -53,8 +101,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           length={2}
           icon={"dart"}
           action={() => {
-            dispatchGameData({ type: "NEW_MATCH", p1, p2 });
-            navigation.navigate("drawernavigator");
+            navigation.navigate("game");
           }}
         />
       </BottomButtons>

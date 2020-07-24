@@ -8,7 +8,6 @@ import transitionDefault from "../styles/navTransitionDefault";
 import REGISTER from "../screens/auth/SignUp";
 import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/welcome/Welcome";
-import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 import HomeNavigator from "./HomeNavigator";
 import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
@@ -16,11 +15,20 @@ import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinishe
 import REMATCH from "../screens/endgame/rematch/Rematch";
 import DrawerNavigator from "./DrawerNavigator";
 import { ThemeProvider } from "styled-components";
-import { ScreenContainer } from "../screens/router/StyledRouter";
 const { Navigator, Screen } = createStackNavigator();
 import { ThemeContext } from "../contexts/ThemeContext";
 import { GameContextProvider } from "../contexts/GameContext";
 import { OpacityProvider } from "../contexts/OpacityContext";
+import styled from "styled-components/native/dist/styled-components.native.esm";
+import { View } from "react-native";
+
+export const ScreenContainer = styled(View)`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.bgOverlay};
+`;
 
 const AppNavigator = () => {
   const SCREENS = [
@@ -61,10 +69,6 @@ const AppNavigator = () => {
     {
       component: FORGOT_PASSWORD,
       name: "forgotpassword",
-    },
-    {
-      component: PREGAME_SETTINGS,
-      name: "pregame",
     },
   ];
 
@@ -124,5 +128,3 @@ const AppNavigator = () => {
 };
 
 export default AppNavigator;
-
-//TODO appnavigator renders on every settingscontext change --> change this

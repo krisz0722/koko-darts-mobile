@@ -18,7 +18,7 @@ import LAST_MATCH from "./DataLastMatch";
 import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-const HOME = ({ route, navigation }) => {
+const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const [unfinished, setUnfinished] = useState(true);
@@ -45,13 +45,13 @@ const HOME = ({ route, navigation }) => {
     if (unfinished) {
       setNewGameModal(!newGameModal);
     } else {
-      navigation.navigate("pregame");
+      navigation.navigate("drawernavigator");
       setUnfinished(false);
     }
   };
 
   const handleNewGameModal = () => {
-    navigation.navigate("pregame");
+    navigation.navigate("drawernavigator");
     setUnfinished(false);
     setTimeout(() => {
       setNewGameModal(!newGameModal);
@@ -112,7 +112,7 @@ const HOME = ({ route, navigation }) => {
       />
     </>
   );
-};
+});
 
 export default HOME;
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { Row } from "../../screens/settings/StyledSettings";
-import SETTINGS_HEADER from "./SettingsHeader";
+import { Row, Row2 } from "../settings/StyledSettings";
+import SETTINGS_HEADER from "../../components/settings/SettingsHeader";
 import styled from "styled-components";
 import { Text, View } from "react-native";
 import {
@@ -10,9 +10,16 @@ import {
   Window,
 } from "../../styles/css_mixins";
 
+const RowMod = styled(Row2)`
+  top: ${({ page }) =>
+    page === "main" ? (100 / 5.5) * 4 + "%" : 30 + (100 / 5.5) * 2.5 + "%"};
+`;
+
 const HistoryContainer = styled(View)`
   ${FlexColAround};
-  height: 18%;
+  position: absolute;
+  bottom: 0;
+  height: ${() => 100 - ((100 / 5.5) * 3 + 30) + "%"};
   width: 100%;
 `;
 
@@ -24,7 +31,8 @@ const HistoryRow = styled(View)`
 const Data = styled(Text)`
   width: ${() => Window.width / 3};
   color: ${({ theme }) => theme.text};
-  ${BasicTextBold}
+  font-size: ${({ theme }) => theme.settings.fontSizeButton2};
+  ${BasicTextBold};
 `;
 
 const HISTORY_ROW = ({ p1, title, p2 }) => (
@@ -56,13 +64,13 @@ export const HISTORY = () => {
 
   return (
     <>
-      <Row header={true}>
+      <RowMod header={true}>
         <SETTINGS_HEADER
           header={true}
           text={"history"}
           action={() => alert("action")}
         />
-      </Row>
+      </RowMod>
       <HistoryContainer>
         {DATA.map((item) => (
           <HISTORY_ROW

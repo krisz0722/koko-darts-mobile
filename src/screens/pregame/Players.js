@@ -13,9 +13,11 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { SettingsContext } from "../../contexts/SettingsContext";
 
 const Players = styled(View)`
+  position: absolute;
+  top: 0;
   width: 100%;
   ${FlexRowAround};
-  height: 25%;
+  height: 30%;
 `;
 
 const PlayerInfo = styled(View)`

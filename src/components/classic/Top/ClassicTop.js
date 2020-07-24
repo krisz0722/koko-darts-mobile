@@ -92,6 +92,8 @@ const CLASSIC_TOP = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
+  console.log("RENDER CLASSIC TOP");
+
   return (
     <ClassicTop style={{ height }} showStats={showStats}>
       <PlayerInfo1 theme={theme}>
@@ -139,6 +141,7 @@ const CLASSIC_TOP = React.memo((props) => {
             activePlayer={activePlayer}
             showStats={showStats}
             player={"p2"}
+            legOrSet={legOrSet}
           />
         </PlayerInfoRow>
         <NAME

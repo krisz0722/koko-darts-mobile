@@ -1,17 +1,32 @@
 import React from "react";
-import ROUTER from "./src/screens/router/Router";
-import { NavigationContextProvider } from "./src/contexts/NavigationContext";
+import { ThemeContextProvider } from "./src/contexts/ThemeContext";
+import styled from "styled-components/native/dist/styled-components.native.esm";
+import { ImageBackground } from "react-native";
+import { Window } from "./src/styles/css_mixins";
+import AppNavigator from "./src/navigators/AppNavigator";
+
+export const AppBackground = styled(ImageBackground)`
+  width: ${() => Window.width};
+  height: ${() => Window.height};
+  position: absolute;
+  background-color: transparent;
+  top: 0;
+`;
 
 console.disableYellowBox = true;
 
 const App = () => {
   return (
-    <NavigationContextProvider>
-      <ROUTER />
-    </NavigationContextProvider>
+    <>
+      <AppBackground
+        source={require("./assets/bgPortrait.jpeg")}
+        resizeMode="cover"
+      />
+      <ThemeContextProvider>
+        <AppNavigator />
+      </ThemeContextProvider>
+    </>
   );
 };
 
 export default App;
-
-// 21.3.6528147

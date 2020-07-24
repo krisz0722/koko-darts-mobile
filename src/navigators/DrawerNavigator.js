@@ -11,6 +11,7 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 import { InGameThemeContextProvider } from "../contexts/InGameThemeContext";
 import { InGameOpacityProvider } from "../contexts/InGameOpacityContext";
+import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -88,6 +89,7 @@ const DrawerNavigator = () => {
             drawerPosition={"right"}
             overlayColor={theme.game[activePlayer + "Overlay"]}
           >
+            <Screen name="pregame" component={PREGAME_SETTINGS} />
             <Screen name="game" component={GAME_CLASSIC} />
             <Screen name="settings-ingame" component={SETTINGS_INGAME} />
             <Screen name="stats" component={SETTINGS_INGAME} />

@@ -8,6 +8,7 @@ import SETTINGS from "../screens/settings/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PROFILE from "../screens/profile/Profile";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 
 export const NavBar = styled(View)`
   ${BorderHorizontal(({ theme, color }) =>
@@ -68,19 +69,22 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   );
 });
 
-const HomeNavigator = React.memo(() => {
+const HomeNavigator = () => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
 
   return (
-    <Navigator
-      tabBarPosition={"bottom"}
-      tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
-    >
-      <Screen name="home" component={HOME} />
-      <Screen name="settings" component={SETTINGS} />
-      <Screen name="profile" component={PROFILE} />
-    </Navigator>
+    <InGameSettingsContextProvider>
+      <Navigator
+        timingConfig={{ duration: 1 }}
+        tabBarPosition={"bottom"}
+        tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
+      >
+        <Screen name="home" component={HOME} />
+        <Screen name="settings" component={SETTINGS} />
+        <Screen name="profile" component={PROFILE} />
+      </Navigator>
+    </InGameSettingsContextProvider>
   );
-});
+};
 
 export default HomeNavigator;

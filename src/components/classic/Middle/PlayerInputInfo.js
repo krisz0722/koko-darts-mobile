@@ -27,7 +27,7 @@ export const Text_Function = styled(Animated.Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const PLAYER_INPUT_INFO = (props) => {
+const PLAYER_INPUT_INFO = React.memo((props) => {
   const { animation, value, theme, player } = props;
 
   const {
@@ -66,6 +66,8 @@ const PLAYER_INPUT_INFO = (props) => {
       : inputByRound.join("")
     : "last: " + gameData[inactivePlayer + "_DATA"].lastScore;
 
+  console.log("RENDER PLAYER INFO");
+
   return (
     <>
       {isInputByDart && gameData[activePlayer] === player ? (
@@ -85,6 +87,6 @@ const PLAYER_INPUT_INFO = (props) => {
       )}
     </>
   );
-};
+});
 
 export default PLAYER_INPUT_INFO;

@@ -18,6 +18,7 @@ export const ThemeContextProvider = (props) => {
   return (
     <ThemeContext.Provider
       value={{
+        THEMES,
         selectedTheme,
         theme,
         setSelectedTheme,

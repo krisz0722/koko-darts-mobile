@@ -10,6 +10,8 @@ export const InGameSettingsContextProvider = (props) => {
 
   const settingsReducer = (state, action) => {
     switch (action.type) {
+      case "LOAD_SETTINGS":
+        return action.value;
       case "CHANGE_LAYOUT":
         return { ...state, layout: action.value };
       case "TOGGLE_ANIMATION":
@@ -25,6 +27,8 @@ export const InGameSettingsContextProvider = (props) => {
     settingsReducer,
     DEFAULT_INGAME_SETTINGS,
   );
+
+  console.log("INGAMESETTINGSCONTEXT", inGameSettings);
 
   return (
     <InGameSettingsContext.Provider

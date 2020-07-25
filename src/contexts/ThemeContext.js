@@ -12,8 +12,10 @@ export const ThemeContextProvider = (props) => {
 
   const [selectedTheme, setSelectedTheme] = useState("default");
   const [animation, setAnimation] = useState(true);
-
+  const [background, setBackground] = useState(true);
   const theme = THEMES[selectedTheme];
+
+  console.log("THEMECONTEXT", selectedTheme, animation);
 
   return (
     <ThemeContext.Provider
@@ -24,6 +26,8 @@ export const ThemeContextProvider = (props) => {
         setSelectedTheme,
         animation,
         setAnimation,
+        background,
+        setBackground,
       }}
     >
       {props.children}

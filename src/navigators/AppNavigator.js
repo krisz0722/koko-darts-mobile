@@ -20,11 +20,10 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { GameContextProvider } from "../contexts/GameContext";
 import { OpacityProvider } from "../contexts/OpacityContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
+import { AppBackground } from "../../App";
 
-export const ScreenContainer = styled(View)`
-  position: absolute;
-  top: 0;
+export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.bgOverlay};
@@ -72,7 +71,7 @@ const AppNavigator = () => {
     },
   ];
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, background } = useContext(ThemeContext);
 
   const navigationTheme = {
     dark: false,
@@ -97,11 +96,18 @@ const AppNavigator = () => {
 
   return (
     <AppearanceProvider>
-      <ScreenContainer theme={theme}>
-        <ThemeProvider theme={theme}>
-          <SettingsContextProvider>
-            <OpacityProvider>
-              <GameContextProvider>
+      {background ? (
+        <AppBackground
+          source={require("../../assets/bgPortrait.jpeg")}
+          resizeMode="cover"
+        />
+      ) : null}
+
+      <ThemeProvider theme={theme}>
+        <SettingsContextProvider>
+          <OpacityProvider>
+            <GameContextProvider>
+              <ScreenContainer theme={theme}>
                 <NavigationContainer theme={navigationTheme}>
                   <Navigator
                     headerMode="none"
@@ -118,11 +124,11 @@ const AppNavigator = () => {
                     ))}
                   </Navigator>
                 </NavigationContainer>
-              </GameContextProvider>
-            </OpacityProvider>
-          </SettingsContextProvider>
-        </ThemeProvider>
-      </ScreenContainer>
+              </ScreenContainer>
+            </GameContextProvider>
+          </OpacityProvider>
+        </SettingsContextProvider>
+      </ThemeProvider>
     </AppearanceProvider>
   );
 };

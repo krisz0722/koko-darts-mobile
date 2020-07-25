@@ -1,13 +1,8 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Row, Div } from "../../screens/settings/StyledSettings";
-import SETTINGS_HEADER from "./SettingsHeader";
-import SETTINGS_BUTTON from "../buttons/SettingsButton";
+import React, { useContext } from "react";
+import { Row, Div } from "./StyledSettings";
+import SETTINGS_HEADER from "./Header";
+import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import styled from "styled-components";
-
-const RowMod = styled(Row)`
-  top: 0;
-`;
 
 export const OptionsLayout = React.memo((props) => {
   const { layout, toggleLayout } = props;
@@ -19,7 +14,7 @@ export const OptionsLayout = React.memo((props) => {
   console.log("RENDER LAYOUT");
 
   return (
-    <RowMod theme={theme}>
+    <Row theme={theme}>
       <SETTINGS_HEADER text={"layout"} />
 
       <Div theme={theme}>
@@ -33,6 +28,6 @@ export const OptionsLayout = React.memo((props) => {
           />
         ))}
       </Div>
-    </RowMod>
+    </Row>
   );
 });

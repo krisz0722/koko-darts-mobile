@@ -1,27 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Div, Row2, Row } from "../../screens/settings/StyledSettings";
-import SETTINGS_HEADER from "./SettingsHeader";
-import SETTINGS_BUTTON from "../buttons/SettingsButton";
+import { Div, Row2, Row, Div2 } from "./StyledSettings";
+import SETTINGS_HEADER from "./Header";
+import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import styled from "styled-components";
-import { FlexRowBetween } from "../../styles/css_mixins";
 import MODAL_SELECT from "../../components/modals/SelectModal";
-
-const RowMod = styled(Row)`
-  top: ${({ page }) =>
-    page === "main" ? (100 / 5.5) * 4 + "%" : 30 + 100 / 5.5 + "%"};
-`;
-
-const RowMod2 = styled(Row2)`
-  top: ${({ page }) =>
-    page === "main" ? 100 - 100 / 5.5 / 2 + "%" : 30 + (100 / 5.5) * 2 + "%"};
-  width: 100%;
-  ${FlexRowBetween};
-`;
-
-export const DivMod = styled(Div)`
-  height: 100%;
-`;
 
 export const OptionsLegOrSet = React.memo((props) => {
   const {
@@ -60,7 +42,7 @@ export const OptionsLegOrSet = React.memo((props) => {
 
   return (
     <>
-      <RowMod page={page} theme={theme} id="gamesettings2">
+      <Row page={page} theme={theme} id="gamesettings2">
         <SETTINGS_HEADER text={"match settings"} />
 
         <Div theme={theme}>
@@ -74,15 +56,16 @@ export const OptionsLegOrSet = React.memo((props) => {
             />
           ))}
         </Div>
-      </RowMod>
-      <RowMod2 page={page} theme={theme}>
-        <DivMod>
+      </Row>
+      <Row2 page={page} theme={theme}>
+        <Div2>
           <SETTINGS_BUTTON
             size={"small"}
             length={length}
             value={"first to win"}
           />
           <SETTINGS_BUTTON
+            size={"small"}
             length={length}
             value={toWin}
             icon={"arrow-drop-up"}
@@ -107,8 +90,8 @@ export const OptionsLegOrSet = React.memo((props) => {
               />
             </>
           ) : null}
-        </DivMod>
-      </RowMod2>
+        </Div2>
+      </Row2>
       {modalVisible ? (
         <MODAL_SELECT
           animation={animation}

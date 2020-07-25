@@ -8,16 +8,16 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
-import { BottomButtons } from "../../../components/modals/StyledModal";
-import LIST_PROFILES from "./profiles/ListProfiles";
+import THEMED_BUTTON from "../buttons/ThemedButton";
+import { BottomButtons } from "./StyledModal";
+import LIST_PROFILES from "../lists/ListProfiles";
 import {
   BasicText,
   BasicTextBold,
   FlexCol,
   Window,
-} from "../../../styles/css_mixins";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+} from "../../styles/css_mixins";
+import { ThemeContext } from "../../contexts/ThemeContext";
 export const ModalContainerSearch = styled(ScrollView)`
   background-color: rgba(255, 255, 255, 0.95);
 `;

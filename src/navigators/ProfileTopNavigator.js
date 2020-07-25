@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { View } from "react-native";
-import { BorderHorizontal, FlexRowAround, Window } from "../styles/css_mixins";
+import { BorderVertical, FlexRowAround, Window } from "../styles/css_mixins";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import FRIENDS_SCREEN from "../screens/profile/friends/friends/Friends_Screen";
-import MATCHES from "../screens/profile/matches/Matches";
-import TIMELINE from "../screens/profile/timeline/Timeline";
+import Friends from "../screens/profile/Friends";
+import LIST_MATCHES from "../components/lists/ListMatches";
+import TIMELINE from "../screens/profile/Timeline";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 export const NavBar = styled(View)`
-  ${BorderHorizontal(({ theme, color }) =>
+  ${BorderVertical(({ theme, color }) =>
     color === "dark" ? theme.bg3 : theme.borderColor,
   )};
   border-bottom-width: ${({ theme, position }) =>
@@ -69,8 +69,8 @@ const ProfileNavigator = React.memo((props) => {
 
   return (
     <Navigator tabBar={(props) => <PROFILE_TABBAR_CONTENT {...props} />}>
-      <Screen name="friends" component={FRIENDS_SCREEN} />
-      <Screen name="matches" component={MATCHES} />
+      <Screen name="friends" component={Friends} />
+      <Screen name="matches" component={LIST_MATCHES} />
       <Screen name="timeline" component={TIMELINE} />
     </Navigator>
   );

@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import {
   FlexColEnd,
   FlexCol,
-  BorderHorizontal,
+  BorderVertical,
   BasicTextBold,
 } from "../../../styles/css_mixins";
 
@@ -18,7 +18,7 @@ export const View_Headers = styled(View)`
   top: 15%;
   height: 35%;
   ${FlexCol};
-  ${BorderHorizontal(({ theme }) => theme.bg3)};
+  ${BorderVertical(({ theme }) => theme.bg3)};
 `;
 
 export const View_Shape = styled(View)`

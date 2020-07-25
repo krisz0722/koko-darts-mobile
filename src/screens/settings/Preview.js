@@ -1,22 +1,20 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
-import { FlexRow, Window } from "../../styles/css_mixins";
+import { FlexRow } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import GAME_CLASSIC from "../../screens/gamewindow/Classic";
+import GAME_CLASSIC from "../gamewindow/Classic";
 
 const PreviewContainer = styled(Animated.View)`
   position: ${({ ingame }) => (ingame ? "relative" : "absolute")};
   top: ${({ ingame }) => (ingame ? "0" : "0%")};
   ${FlexRow};
-  height: ${({ ingame }) => (ingame ? "70%" : "80%")};
+  height: ${({ ingame }) => (ingame ? "70%" : "70%")};
   width: 100%;
   z-index: ${({ visible }) => (visible ? 3 : -1)};
-
   background-color: ${({ theme, ingame }) =>
     ingame ? "transparent" : theme.bgOverlay};
   border: 2px red solid;
-  height: ${() => Window.height * 0.35};
 `;
 
 export const PREVIEW = React.memo((props) => {
@@ -52,7 +50,7 @@ export const PREVIEW = React.memo((props) => {
       theme={theme}
     >
       <GAME_CLASSIC
-        opacity={opacity}
+        opacitySettings={opacity}
         ingame={ingame}
         preview={true}
         settings={settings}

@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import styled from "styled-components";
 import { FlatList } from "react-native";
-import FRIENDS_LIST from "./DataFriends";
-import FRIEND_COMPONENT from "./FriendComponent";
-import { ThemeContext } from "../../../../contexts/ThemeContext";
+import FRIENDS_LIST from "./data/DataFriends";
+import FRIEND_COMPONENT from "./ComponentFriend";
+import { ThemeContext } from "../../contexts/ThemeContext";
 export const FriendsContainer = styled(FlatList)`
   width: 100%;
   border-bottom-width: ${({ theme }) => theme.borderWidth};

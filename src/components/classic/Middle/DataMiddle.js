@@ -1,11 +1,16 @@
 import { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext";
 import { useNavigation } from "@react-navigation/native";
+import { InGameSettingsContext } from "../../../contexts/InGameSettingsContext";
 
 const DATA_MIDDLE = () => {
   const {
-    gameData: { isInputByDart, p1, p2 },
+    gameData: { isInputByDart },
   } = useContext(GameContext);
+
+  const {
+    inGameSettings: { p1, p2 },
+  } = useContext(InGameSettingsContext);
 
   const navigation = useNavigation();
 

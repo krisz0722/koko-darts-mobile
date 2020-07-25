@@ -23,7 +23,6 @@ const TextAndIcon = styled(View)`
 
 const Text_Button = styled(Text)`
   ${BasicText};
-  height: 100%;
   padding: 0 0%;
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)};
   font-family: ${({ theme, active }) =>

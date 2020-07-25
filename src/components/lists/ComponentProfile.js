@@ -1,13 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Image, Text, View } from "react-native";
 import styled from "styled-components";
-import {
-  BasicText,
-  FlexRowAround,
-  Window,
-} from "../../../../styles/css_mixins";
+import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
 import CheckBox from "@react-native-community/checkbox";
-import { ThemeContext } from "../../../../contexts/ThemeContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 export const Profile = styled(View)`
   ${FlexRowAround};
   margin: auto;
@@ -36,6 +32,11 @@ const PROFILE_COMPONENT = ({ item }) => {
 
   const [active, setActive] = useState(false);
 
+  const toggleChecked = (item) => {
+    //use ASyncStorage here
+    setActive(!active);
+  };
+
   return (
     <Profile theme={theme}>
       <ProfileAvatar theme={theme} resizeMode={"cover"} source={item.img} />
@@ -44,7 +45,7 @@ const PROFILE_COMPONENT = ({ item }) => {
         tintColors={{ true: theme.text, false: theme.text }}
         onCheckColor={theme.bg3}
         value={active}
-        onChange={() => setActive(!active)}
+        onChange={() => toggleChecked(item)}
       />
     </Profile>
   );

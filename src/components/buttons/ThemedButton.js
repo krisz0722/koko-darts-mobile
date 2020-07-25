@@ -11,6 +11,7 @@ import React, { useContext } from "react";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import IconDart from "../../../assets/iconDart";
 
 export const Button_Login = styled(TouchableHighlight)`
   text-decoration: none;
@@ -22,6 +23,7 @@ export const Button_Login = styled(TouchableHighlight)`
   border-width: ${({ theme, type }) =>
     type !== "ghost" ? theme.borderWidth : 0};
   border-color: ${({ theme }) => theme.text};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)}
   padding: ${({ theme }) => (theme.name === "default" ? "0 2%" : "0 5%")};
   ${FlexRowAround};
 `;
@@ -42,6 +44,7 @@ const THEMED_BUTTON = ({
   size = "medium",
   type = "basic",
   icon = null,
+  disabled = false,
 }) => {
   const { theme } = useContext(ThemeContext);
 
@@ -52,13 +55,14 @@ const THEMED_BUTTON = ({
       type={type}
       theme={theme}
       onPress={action}
+      disabled={disabled}
     >
       <>
         {icon ? (
           icon === "dart" ? (
-            <>
-              <IconThreeDart fill={theme.text} size={15} />
-            </>
+            <IconDart fill={theme.text} size={15} />
+          ) : icon === "threedart" ? (
+            <IconThreeDart fill={theme.text} size={15} />
           ) : (
             <Icon name={icon} size={25} color={theme.text} />
           )

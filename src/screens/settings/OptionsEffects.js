@@ -1,23 +1,18 @@
-import React, { useContext, useState } from "react";
-import { Row, Div } from "../../screens/settings/StyledSettings";
-import SETTINGS_BUTTON from "../buttons/SettingsButton";
-import SETTINGS_HEADER from "./SettingsHeader";
+import React, { useContext } from "react";
+import { Row, Div } from "./StyledSettings";
+import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
+import SETTINGS_HEADER from "./Header";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import styled from "styled-components";
-
-const RowMod = styled(Row)`
-  top: ${() => (100 / 5.5) * 2 + "%"};
-`;
 
 export const OptionsEffects = React.memo((props) => {
   const { animation, toggleAnimation, opacity, toggleOpacity } = props;
 
-  const { theme } = useContext(ThemeContext);
+  const { theme, background, setBackground } = useContext(ThemeContext);
 
   console.log("RENDER EFFECT");
 
   return (
-    <RowMod theme={theme} layout="asym">
+    <Row theme={theme} layout="asym">
       <SETTINGS_HEADER
         text={"visual effects"}
         icon={"help-outline"}
@@ -27,19 +22,29 @@ export const OptionsEffects = React.memo((props) => {
         <SETTINGS_BUTTON
           value={"animation"}
           active={animation}
-          length={2}
+          length={3}
+          size={"small"}
           action={toggleAnimation}
           checkbox={true}
         />
         <SETTINGS_BUTTON
+          value={"background"}
+          active={background}
+          length={3}
+          size={"small"}
+          action={() => setBackground(!background)}
+          checkbox={true}
+        />
+        <SETTINGS_BUTTON
           value={"opacity"}
+          size={"small"}
           active={opacity}
-          length={2}
+          length={3}
           action={toggleOpacity}
           checkbox={true}
         />
       </Div>
-    </RowMod>
+    </Row>
   );
 });
 

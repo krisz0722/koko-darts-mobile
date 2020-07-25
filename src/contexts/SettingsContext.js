@@ -11,24 +11,31 @@ export const SettingsContextProvider = (props) => {
   };
 
   const DEFAULT_SETTINGS = {
+    p1: "USER",
+    p2: null,
+    userName: "UESR",
     layout: "classic",
-    p1: "esmeralda",
-    p2: "jose armando",
-    legOrSet: "leg",
-    toWin: 1,
+    legOrSet: "set",
+    toWin: 3,
     legsPerSet: 3,
-    startingScore: 301,
+    startingScore: 501,
     playerToStartLeg: "p1",
+    opacity: true,
+    animation: true,
   };
 
   const settingsReducer = (state, action) => {
     switch (action.type) {
+      case "CHANGE_LAYOUT":
+        return { ...state, layout: action.value };
       case "SAVE_SETTINGS":
         console.log("saving settings...");
         return action.value;
       case "RESET":
         console.log("resettings saved user settings...");
         return action.value;
+      case "CHOOSE_OPPONENT":
+        return { ...state, p2: action.value };
       default:
         return state;
     }

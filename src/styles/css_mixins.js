@@ -33,6 +33,12 @@ export const Border = (color) => css`
   border-width: ${({ theme }) => theme.borderWidth};
 `;
 
+export const BorderVertical = (color) => css`
+  border-top-width: ${({ theme }) => theme.borderWidth};
+  border-bottom-width: ${({ theme }) => theme.borderWidth};
+  border-color: ${() => color};
+`;
+
 export const BorderHorizontal = (color) => css`
   border-top-width: ${({ theme }) => theme.borderWidth};
   border-bottom-width: ${({ theme }) => theme.borderWidth};

@@ -18,10 +18,6 @@ console.disableYellowBox = true;
 const App = () => {
   return (
     <>
-      <AppBackground
-        source={require("./assets/bgPortrait.jpeg")}
-        resizeMode="cover"
-      />
       <ThemeContextProvider>
         <AppNavigator />
       </ThemeContextProvider>

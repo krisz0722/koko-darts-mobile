@@ -16,17 +16,6 @@ export const GameContext = createContext({});
 export const GameContextProvider = (props) => {
   const { settings } = useContext(SettingsContext);
 
-  const {
-    layout,
-    p1,
-    p2,
-    legOrSet,
-    toWin,
-    legsPerSet,
-    startingScore,
-    playerToStartLeg,
-  } = settings;
-
   const initialGameState = {
     ...GAME_DEFAULT_STATE,
     ...settings,

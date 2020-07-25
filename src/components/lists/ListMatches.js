@@ -2,15 +2,10 @@ import React, { useContext } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import styled from "styled-components";
 import { FlatList } from "react-native";
-import MATCH_COMPONENT from "./MatchComponent";
-import MATCHES_LIST from "./DataMatches";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-import {
-  BasicText,
-  BasicTextBold,
-  FlexRowBetween,
-  Window,
-} from "../../../styles/css_mixins";
+import MATCH_COMPONENT from "./ComponentMatch";
+import MATCHES_LIST from "./data/DataMatches";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { BasicText, FlexRowBetween, Window } from "../../styles/css_mixins";
 export const MatchesContainer = styled(FlatList)`
   width: 100%;
   height: 100%;
@@ -45,17 +40,11 @@ export const Col5 = styled(Col1)`
   width: ${() => Window.height * 0.03};
 `;
 
-const LIST_MATCHES = () => {
+const ListMatches = () => {
   const { theme } = useContext(ThemeContext);
 
   const renderItem = ({ item }) => <MATCH_COMPONENT item={item} />;
 
-  const headerItem = {
-    key: "09/07//2020",
-    opponent: "opponent",
-    result1: "match result",
-    result2: "Win / Loss",
-  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Header theme={theme}>
@@ -75,12 +64,12 @@ const LIST_MATCHES = () => {
   );
 };
 
-const MATCHES = () => {
+const LIST_MATCHES = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <LIST_MATCHES />
+      <ListMatches />
     </SafeAreaView>
   );
 };
 
-export default MATCHES;
+export default LIST_MATCHES;

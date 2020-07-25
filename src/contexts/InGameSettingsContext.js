@@ -12,12 +12,10 @@ export const InGameSettingsContextProvider = (props) => {
     switch (action.type) {
       case "LOAD_SETTINGS":
         return action.value;
-      case "CHANGE_LAYOUT":
-        return { ...state, layout: action.value };
-      case "TOGGLE_ANIMATION":
-        return { ...state, animation: action.value };
-      case "TOGGLE_OPACITY":
-        return { ...state, opacity: action.value };
+      case "SWAP_PLAYERS":
+        return { ...state, p1: action.p2, p2: action.p1 };
+      case "CHOOSE_OPPONENT":
+        return { ...state, p2: action.value };
       default:
         return state;
     }

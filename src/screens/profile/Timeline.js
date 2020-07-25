@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { HeaderText } from "../../home/StyledHome";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import { HeaderText } from "../home/StyledHome";
+import { ThemeContext } from "../../contexts/ThemeContext";
 const TIMELINE = () => {
   const { theme } = useContext(ThemeContext);
 

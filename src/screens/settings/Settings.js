@@ -1,20 +1,30 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Bottom, BottomButtons, Options } from "./StyledSettings";
+import { Bottom, BottomButtons } from "./StyledSettings";
 import { SettingsContext } from "../../contexts/SettingsContext";
-import { OptionsLayout } from "../../components/settings/OptionsLayout";
-import { COLOR } from "../../components/settings/OptionsColor";
-import { OptionsEffects } from "../../components/settings/OptionsEffects";
-import { OptionsScore } from "../../components/settings/OptionsScore";
-import { OptionsLegOrSet } from "../../components/settings/OptionsLegOrSet";
+import { OptionsLayout } from "./OptionsLayout";
+import { COLOR } from "./OptionsColor";
+import { OptionsEffects } from "./OptionsEffects";
+import { OptionsScore } from "./OptionsScore";
+import { OptionsLegOrSet } from "./OptionsLegOrSet";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import PREVIEW from "../../components/settings/Preview";
+import PREVIEW from "./Preview";
 import { useIsFocused } from "@react-navigation/native";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const SETTINGS = () => {
-  const { dispatchSettings } = useContext(SettingsContext);
+  const {
+    dispatchSettings,
+    settings: { p1, p2 },
+  } = useContext(SettingsContext);
+  const { setBackground, setAnimation, setSelectedTheme } = useContext(
+    ThemeContext,
+  );
+
+  //axios DB get
 
   const USER_SETTINGS = {
     layout: "classic",
+    theme: "default",
     legOrSet: "set",
     toWin: 3,
     legsPerSet: 3,
@@ -23,22 +33,18 @@ const SETTINGS = () => {
     animation: true,
   };
 
-  const [legOrSet, setLegOrSet] = useState("leg");
-  const [startingScore, setStartingScore] = useState(501);
-  const [layout, setLayout] = useState("classic");
   const [preview, setPreview] = useState(false);
-  const [toWin, setTowin] = useState(3);
-  const [legsPerSet, setLegsPerSet] = useState(3);
-  const [opacity, setOpacity] = useState(true);
-  const [animation, setAnimation] = useState(true);
 
-  useEffect(() => {
-    return () => {
-      console.log(
-        "Behavior right before the component is removed from the DOM.",
-      );
-    };
-  }, []);
+  const [legOrSet, setLegOrSet] = useState(USER_SETTINGS.legOrSet);
+  const [startingScore, setStartingScore] = useState(
+    USER_SETTINGS.startingScore,
+  );
+  const [layout, setLayout] = useState(USER_SETTINGS.layout);
+
+  const [toWin, setTowin] = useState(USER_SETTINGS.toWin);
+  const [legsPerSet, setLegsPerSet] = useState(USER_SETTINGS.legsPerSet);
+  const [opacity, setOpacity] = useState(USER_SETTINGS.opacity);
+  const [animation, setStateAnimation] = useState(USER_SETTINGS.animation);
 
   const isFocused = useIsFocused();
 
@@ -52,6 +58,8 @@ const SETTINGS = () => {
       dispatchSettings({
         type: "SAVE_SETTINGS",
         value: {
+          p1,
+          p2,
           legOrSet,
           startingScore,
           layout,
@@ -62,8 +70,12 @@ const SETTINGS = () => {
           animation,
         },
       });
+      console.log("animation TOGGLING");
+      setAnimation(animation);
     }
   }, [
+    p1,
+    p2,
     isFocused,
     dispatchSettings,
     legOrSet,
@@ -74,6 +86,7 @@ const SETTINGS = () => {
     legsPerSet,
     opacity,
     animation,
+    setAnimation,
   ]);
 
   const reset = useCallback(() => {
@@ -90,14 +103,16 @@ const SETTINGS = () => {
     setPreview(false);
     setLayout(layout);
     setLegsPerSet(legsPerSet);
-    setAnimation(animation);
+    setStateAnimation(animation);
     setOpacity(opacity);
     setTowin(toWin);
     setLegOrSet(legOrSet);
     setStartingScore(startingScore);
 
     dispatchSettings({ type: "RESET", value: USER_SETTINGS });
-  }, [dispatchSettings, USER_SETTINGS]);
+    setSelectedTheme(USER_SETTINGS.theme);
+    setBackground(true);
+  }, [setSelectedTheme, dispatchSettings, USER_SETTINGS]);
 
   const togglePreview = useCallback(() => {
     setPreview(!preview);
@@ -139,8 +154,8 @@ const SETTINGS = () => {
   );
 
   const toggleAnimation = useCallback(() => {
-    setAnimation(!animation);
-  }, [animation, setAnimation]);
+    setStateAnimation(!animation);
+  }, [animation, setStateAnimation]);
 
   const toggleOpacity = useCallback(() => {
     setOpacity(!opacity);
@@ -154,31 +169,29 @@ const SETTINGS = () => {
 
   return (
     <>
-      <Options>
-        <OptionsLayout layout={layout} toggleLayout={toggleLayout} />
-        <COLOR />
-        <OptionsEffects
-          animation={animation}
-          toggleAnimation={toggleAnimation}
-          opacity={opacity}
-          toggleOpacity={toggleOpacity}
-        />
-        <OptionsScore
-          page={"main"}
-          startingScore={startingScore}
-          toggleStartingScore={toggleStartingScore}
-        />
-        <OptionsLegOrSet
-          page={"main"}
-          animation={animation}
-          legOrSet={legOrSet}
-          toggleLegOrSet={toggleLegOrSet}
-          toWin={toWin}
-          toggleToWin={toggleToWin}
-          legsPerSet={legsPerSet}
-          toggleLegsPerSet={toggleLegsPerSet}
-        />
-      </Options>
+      <OptionsLayout layout={layout} toggleLayout={toggleLayout} />
+      <COLOR />
+      <OptionsEffects
+        animation={animation}
+        toggleAnimation={toggleAnimation}
+        opacity={opacity}
+        toggleOpacity={toggleOpacity}
+      />
+      <OptionsScore
+        page={"main"}
+        startingScore={startingScore}
+        toggleStartingScore={toggleStartingScore}
+      />
+      <OptionsLegOrSet
+        page={"main"}
+        animation={animation}
+        legOrSet={legOrSet}
+        toggleLegOrSet={toggleLegOrSet}
+        toWin={toWin}
+        toggleToWin={toggleToWin}
+        legsPerSet={legsPerSet}
+        toggleLegsPerSet={toggleLegsPerSet}
+      />
       <Bottom preview={preview}>
         <PREVIEW
           animation={animation}

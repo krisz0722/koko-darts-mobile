@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
-import { BasicText, FlexRowBetween, Window } from "../../../styles/css_mixins";
+import { BasicText, FlexRowBetween, Window } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { ThemeContext } from "../../../contexts/ThemeContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 export const Match = styled(View)`
   ${FlexRowBetween};
   width: 100%;

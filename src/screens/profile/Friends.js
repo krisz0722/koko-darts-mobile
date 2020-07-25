@@ -1,17 +1,17 @@
 import React, { useContext, useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import styled from "styled-components";
-import { FlexCol } from "../../../../styles/css_mixins";
+import { FlexCol } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import SEARCH_MODAL from "../SeearchModal";
-import LIST_FRIENDS from "./ListFriends";
-import { ThemeContext } from "../../../../contexts/ThemeContext";
+import SEARCH_MODAL from "../../components/modals/SeearchModal";
+import LIST_FRIENDS from "../../components/lists/ListFriends";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export const AddButton = styled(TouchableOpacity)`
   ${FlexCol};
 `;
 
-const FRIENDS_SCREEN = () => {
+const Friends = () => {
   const { theme } = useContext(ThemeContext);
 
   const [searchModal, setSearchModal] = useState(false);
@@ -35,4 +35,4 @@ const FRIENDS_SCREEN = () => {
   );
 };
 
-export default FRIENDS_SCREEN;
+export default Friends;

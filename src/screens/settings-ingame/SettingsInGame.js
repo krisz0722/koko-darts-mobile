@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { BottomButtons } from "./StyledSettingsInGame";
-import { OptionsLayout } from "../../components/settings/OptionsLayout";
-import { COLOR } from "../../components/settings/OptionsColor";
-import { OptionsEffects } from "../../components/settings/OptionsEffects";
+import { OptionsLayout } from "../settings/OptionsLayout";
+import { COLOR } from "../settings/OptionsColor";
+import { OptionsEffects } from "../settings/OptionsEffects";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import PREVIEW from "../../components/settings/Preview";
+import PREVIEW from "../settings/Preview";
 import { BackHandler } from "react-native";
 import { InGameThemeContext } from "../../contexts/InGameThemeContext";
 

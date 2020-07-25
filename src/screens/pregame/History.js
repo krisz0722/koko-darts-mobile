@@ -1,6 +1,6 @@
 import React from "react";
-import { Row, Row2 } from "../settings/StyledSettings";
-import SETTINGS_HEADER from "../../components/settings/SettingsHeader";
+import { Row2 } from "../settings/StyledSettings";
+import SETTINGS_HEADER from "../settings/Header";
 import styled from "styled-components";
 import { Text, View } from "react-native";
 import {
@@ -10,16 +10,11 @@ import {
   Window,
 } from "../../styles/css_mixins";
 
-const RowMod = styled(Row2)`
-  top: ${({ page }) =>
-    page === "main" ? (100 / 5.5) * 4 + "%" : 30 + (100 / 5.5) * 2.5 + "%"};
-`;
+const RowMod = styled(Row2)``;
 
 const HistoryContainer = styled(View)`
   ${FlexColAround};
-  position: absolute;
-  bottom: 0;
-  height: ${() => 100 - ((100 / 5.5) * 3 + 30) + "%"};
+  height: 18%;
   width: 100%;
 `;
 

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { View } from "react-native";
-import { BorderHorizontal, FlexRowAround, Window } from "../styles/css_mixins";
+import { BorderVertical, FlexRowAround, Window } from "../styles/css_mixins";
 import HOME from "../screens/home/Home";
 import SETTINGS from "../screens/settings/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -11,7 +11,7 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 
 export const NavBar = styled(View)`
-  ${BorderHorizontal(({ theme, color }) =>
+  ${BorderVertical(({ theme, color }) =>
     color === "dark" ? theme.bg3 : theme.borderColor,
   )};
   border-bottom-width: ${({ theme, position }) =>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {
   BasicTextBold,
-  BorderHorizontal,
+  BorderVertical,
   FlexCol,
   FlexColBetween,
   FlexColStart,
@@ -46,7 +46,7 @@ export const InfoStats = styled(View)`
   ${FlexCol};
   width: 100%;
   height: 100%;
-  ${BorderHorizontal(({ theme }) => theme.borderColor)}
+  ${BorderVertical(({ theme }) => theme.borderColor)}
 `;
 
 export const InfoRow = styled(View)`

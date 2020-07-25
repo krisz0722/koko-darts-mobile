@@ -47,8 +47,6 @@ const FRIEND_COMPONENT = ({ item }) => {
 
   const { wins, losses } = item;
 
-  console.log("IZE", wins > losses);
-
   const record = () => {
     if (wins === losses) {
       return theme.bgActive;
@@ -61,14 +59,6 @@ const FRIEND_COMPONENT = ({ item }) => {
     }
   };
 
-  console.log(
-    record({
-      key: "The Flying SCotsman",
-      wins: 56,
-      losses: 13,
-      img: require("../../../assets/bgPortrait.jpeg"),
-    }),
-  );
   return (
     <Friend theme={theme}>
       <FriendAvatar theme={theme} resizeMode={"cover"} source={item.img} />

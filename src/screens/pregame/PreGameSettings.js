@@ -11,6 +11,7 @@ import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 import CHOOSE_PLAYER_MODAL from "../../components/modals/ChoosePlayerModal";
 import { useIsFocused } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
+import { GameContext } from "../../contexts/GameContext";
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
 
@@ -29,8 +30,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   const [modal, setModal] = useState(
     p2 === "GUEST" || (!p2 && isFocused) ? true : false,
   );
-  const [change, setChange] = useState(false);
-  const [stateP2, setP2] = useState(p2);
 
   const newGameSettings = {
     ...inGameSettings,
@@ -43,6 +42,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   };
 
   const { dispatchSettings } = useContext(SettingsContext);
+  const { dispatchGameData } = useContext(GameContext);
 
   console.log("ISFOCUSED", isFocused);
 
@@ -104,6 +104,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
       setModal(true);
     } else {
       dispatchInGameSettings({ type: "LOAD_SETTINGS", value: newGameSettings });
+      dispatchGameData({ type: "LOAD_SETTINGS", value: newGameSettings });
       navigation.navigate("game");
     }
   };
@@ -173,7 +174,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
         />
       </BottomButtons>
       <CHOOSE_PLAYER_MODAL
-        change={change}
         p2={p2}
         chooseGuest={chooseGuest}
         chooseProfile={chooseProfile}

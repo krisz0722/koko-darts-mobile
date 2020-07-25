@@ -22,6 +22,7 @@ import { OpacityProvider } from "../contexts/OpacityContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { SafeAreaView } from "react-native";
 import { AppBackground } from "../../App";
+import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 
 export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;
@@ -105,28 +106,30 @@ const AppNavigator = () => {
 
       <ThemeProvider theme={theme}>
         <SettingsContextProvider>
-          <OpacityProvider>
+          <InGameSettingsContextProvider>
             <GameContextProvider>
-              <ScreenContainer theme={theme}>
-                <NavigationContainer theme={navigationTheme}>
-                  <Navigator
-                    headerMode="none"
-                    screenOptions={{
-                      ...transition(theme.name),
-                    }}
-                  >
-                    {SCREENS.map((item) => (
-                      <Screen
-                        key={item.name}
-                        name={item.name}
-                        component={item.component}
-                      />
-                    ))}
-                  </Navigator>
-                </NavigationContainer>
-              </ScreenContainer>
+              <OpacityProvider>
+                <ScreenContainer theme={theme}>
+                  <NavigationContainer theme={navigationTheme}>
+                    <Navigator
+                      headerMode="none"
+                      screenOptions={{
+                        ...transition(theme.name),
+                      }}
+                    >
+                      {SCREENS.map((item) => (
+                        <Screen
+                          key={item.name}
+                          name={item.name}
+                          component={item.component}
+                        />
+                      ))}
+                    </Navigator>
+                  </NavigationContainer>
+                </ScreenContainer>
+              </OpacityProvider>
             </GameContextProvider>
-          </OpacityProvider>
+          </InGameSettingsContextProvider>
         </SettingsContextProvider>
       </ThemeProvider>
     </AppearanceProvider>

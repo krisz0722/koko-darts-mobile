@@ -9,20 +9,25 @@ import undo from "./actions/Undo";
 import clear from "./actions/Clear";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
-import { SettingsContext } from "./SettingsContext";
+import { InGameSettingsContext } from "./InGameSettingsContext";
 
 export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
-  const { settings } = useContext(SettingsContext);
+  const { inGameSettings } = useContext(InGameSettingsContext);
 
   const initialGameState = {
     ...GAME_DEFAULT_STATE,
-    ...settings,
+    ...inGameSettings,
   };
 
   const gameReducer = (state, action = null) => {
     switch (action.type) {
+      case "LOAD_SETTINGS":
+        return {
+          ...GAME_DEFAULT_STATE,
+          ...action.value,
+        };
       case "RESET":
         return GAME_DEFAULT_STATE;
 
@@ -54,15 +59,6 @@ export const GameContextProvider = (props) => {
           action.inactivePlayer,
           GAME_DEFAULT_STATE,
         );
-      case "CREATE_NEW_MATCH":
-        return GAME_DEFAULT_STATE;
-      case "NEW_MATCH":
-        return {
-          ...initialGameState,
-          p1: action.p1,
-          p2: action.p2,
-          status: "started",
-        };
       default:
         return state;
     }
@@ -73,7 +69,7 @@ export const GameContextProvider = (props) => {
     initialGameState,
   );
 
-  console.log(gameData);
+  console.log("GAAAAAAAAAAAAAAAAAEM", gameData, inGameSettings);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

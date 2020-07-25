@@ -14,11 +14,6 @@ const NEW_GAME_ALERT = ({ action1, action2, visible }) => {
       : "slide"
     : "none";
 
-  // const action = {
-  //   action,
-  //   dispatchGameData({ type: "CREATE_NEW_MATCH" });
-  // }
-
   return (
     <Modal
       animationType={animationType}

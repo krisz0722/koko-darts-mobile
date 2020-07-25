@@ -8,7 +8,6 @@ import { FlexCol } from "../styles/css_mixins";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 import { InGameThemeContextProvider } from "../contexts/InGameThemeContext";
 import { InGameOpacityProvider } from "../contexts/InGameOpacityContext";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
@@ -80,22 +79,20 @@ const DrawerNavigator = () => {
 
   return (
     <InGameThemeContextProvider>
-      <InGameSettingsContextProvider>
-        <InGameOpacityProvider>
-          <Navigator
-            backBehavior={"initialRoute"}
-            drawerContent={(props) => <DRAWER_CONTENT {...props} />}
-            drawerStyle={drawerstyle}
-            drawerPosition={"right"}
-            overlayColor={theme.game[activePlayer + "Overlay"]}
-          >
-            <Screen name="pregame" component={PREGAME_SETTINGS} />
-            <Screen name="game" component={GAME_CLASSIC} />
-            <Screen name="settings-ingame" component={SETTINGS_INGAME} />
-            <Screen name="stats" component={SETTINGS_INGAME} />
-          </Navigator>
-        </InGameOpacityProvider>
-      </InGameSettingsContextProvider>
+      <InGameOpacityProvider>
+        <Navigator
+          backBehavior={"initialRoute"}
+          drawerContent={(props) => <DRAWER_CONTENT {...props} />}
+          drawerStyle={drawerstyle}
+          drawerPosition={"right"}
+          overlayColor={theme.game[activePlayer + "Overlay"]}
+        >
+          <Screen name="pregame" component={PREGAME_SETTINGS} />
+          <Screen name="game" component={GAME_CLASSIC} />
+          <Screen name="settings-ingame" component={SETTINGS_INGAME} />
+          <Screen name="stats" component={SETTINGS_INGAME} />
+        </Navigator>
+      </InGameOpacityProvider>
     </InGameThemeContextProvider>
   );
 };

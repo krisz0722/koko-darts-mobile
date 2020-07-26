@@ -17,10 +17,13 @@ import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
 import { InGameThemeContext } from "../../contexts/InGameThemeContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
+import { InputContextProvider } from "../../contexts/InputContext";
+import { useNavigation } from "@react-navigation/native";
 
 const GAME_CLASSIC = React.memo((props) => {
-  const { ingame = true, preview, settings, navigation } = props;
+  const { ingame = true, preview, settings } = props;
 
+  console.log("NAVIGATIOON", props);
   const {
     gameData: { p1_DATA, p2_DATA, activePlayer, inactivePlayer, isLegOver },
   } = useContext(GameContext);
@@ -40,7 +43,8 @@ const GAME_CLASSIC = React.memo((props) => {
   const [modal, setModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [showStats, setShowStats] = useState(false);
-  const [inputMethod, setInputMethod] = useState("byRound");
+
+  const navigation = useNavigation();
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 0 : 1),
@@ -74,11 +78,6 @@ const GAME_CLASSIC = React.memo((props) => {
   const toggleShowStats = useCallback(() => {
     setShowStats(!showStats);
   }, [showStats]);
-
-  const toggleInputMethod = useCallback((value) => {
-    const newValue = value === "byRound" ? "byDart" : value;
-    setInputMethod(newValue);
-  }, []);
 
   useEffect(() => {
     const backAction = () => {
@@ -115,12 +114,10 @@ const GAME_CLASSIC = React.memo((props) => {
     ? 0.9
     : 1;
 
-  console.log("GAME CLASSIC");
-
   return (
     <GameWindow preview={preview}>
       <CLASSIC_TOP
-        ingame={false}
+        ingame={ingame}
         animation={animationToUse}
         theme={themeToUse}
         showStats={showStats}
@@ -132,15 +129,17 @@ const GAME_CLASSIC = React.memo((props) => {
         legOrSet={legOrSet}
       />
       <CLASSIC_SCORES
-        ingame={false}
+        ingame={ingame}
         animation={animationToUse}
         theme={themeToUse}
         showStats={showStats}
         activePlayer={activePlayer}
         startingScore={startingScore}
+        p1Data={p1_DATA}
+        p2Data={p2_DATA}
       />
       <CLASSIC_STATS
-        ingame={false}
+        ingame={ingame}
         animation={animationToUse}
         theme={themeToUse}
         showStats={showStats}
@@ -157,33 +156,34 @@ const GAME_CLASSIC = React.memo((props) => {
           />
         ) : (
           <Overlay2
-            ingame={false}
+            ingame={ingame}
             style={{ opacity: opacity2 }}
             theme={themeToUse}
           />
         )
       ) : null}
-      <CLASSIC_MIDDLE
-        p1={p1}
-        p2={p2}
-        ingame={false}
-        animation={animationToUse}
-        theme={themeToUse}
-        activePlayer={activePlayer}
-        inactivePlayer={inactivePlayer}
-        drawer={drawer}
-        inputMethod={inputMethod}
-        toggleShowStats={toggleShowStats}
-        toggleDrawer={() => setDrawer}
-        toggleInputMethod={toggleInputMethod}
-      />
-      <CLASSIC_BOTTOM
-        animation={animationToUse}
-        theme={themeToUse}
-        activePlayer={activePlayer}
-        inputMethod={inputMethod}
-      />
-
+      <InputContextProvider>
+        <CLASSIC_MIDDLE
+          p1={p1}
+          p2={p2}
+          ingame={false}
+          animation={animationToUse}
+          theme={themeToUse}
+          activePlayer={activePlayer}
+          inactivePlayer={inactivePlayer}
+          drawer={drawer}
+          toggleShowStats={toggleShowStats}
+          toggleDrawer={() => setDrawer}
+        />
+        <CLASSIC_BOTTOM
+          animation={animationToUse}
+          theme={themeToUse}
+          activePlayer={activePlayer}
+          inactivePlayer={inactivePlayer}
+          p1Data={p1_DATA}
+          p2Data={p2_DATA}
+        />
+      </InputContextProvider>
       <LEAVE_MATCH_ALERT
         action1={() => setModal(!modal)}
         action2={handleLeaveMatch}

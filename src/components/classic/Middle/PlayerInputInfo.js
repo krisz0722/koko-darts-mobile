@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Animated } from "react-native";
 import { GameContext } from "../../../contexts/GameContext";
 import { BasicTextBold, FlexCol } from "../../../styles/css_mixins";
-import INPUT_BY_DART_FIELD from "../../buttons/InputByDartField";
+import INPUT_BY_DART_FIELD from "./InputByDartField";
+import { InputContext } from "../../../contexts/InputContext";
 
 export const PlayerInputInfo = styled(Animated.View)`
   ${FlexCol};
@@ -32,9 +33,12 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
 
   const {
     gameData,
-    gameData: { activePlayer, inactivePlayer, isInputByDart, inputByRound },
+    gameData: { activePlayer, inactivePlayer },
   } = useContext(GameContext);
 
+  const {
+    inputContext: { inputArray, inputMethod, inputByRound, inputByDart },
+  } = useContext(InputContext);
   //TODO input context???
 
   const animationValue = useRef(
@@ -60,18 +64,22 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
   const inputScore = inputByRound.join("");
   const isInvalid = /INVALID/.test(inputScore);
 
-  const scoreDisplayText = active
-    ? inputScore === ""
-      ? "enter score"
-      : inputByRound.join("")
-    : "last: " + gameData[inactivePlayer + "_DATA"].lastScore;
+  const inputToDisplay =
+    inputMethod === "byRound" ? inputByRound.join("") : inputArray;
 
-  console.log("RENDER PLAYER INFO");
+  const scoreDisplayText = active
+    ? inputToDisplay === ""
+      ? "enter score"
+      : inputToDisplay
+    : "last: " + gameData[inactivePlayer + "_DATA"].lastScore;
 
   return (
     <>
-      {isInputByDart && gameData[activePlayer] === player ? (
-        <INPUT_BY_DART_FIELD />
+      {inputMethod === "byDart" && gameData[activePlayer] === player ? (
+        <INPUT_BY_DART_FIELD
+          inputByDart={inputByDart}
+          activePlayer={activePlayer}
+        />
       ) : (
         <PlayerInputInfo
           isInvalid={isInvalid}

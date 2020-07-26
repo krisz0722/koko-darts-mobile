@@ -1,15 +1,14 @@
 import React, { useReducer, createContext, useContext } from "react";
 import GAME_DEFAULT_STATE from "./GameDefaultState";
-import { changeInput } from "./actions/ChangeInputMethod";
-import type from "./actions/Type";
 import finishLeg from "./actions/FinishLeg";
 import rematch from "./actions/Rematch";
-import submitValidation from "./actions/SubmitValidation";
 import undo from "./actions/Undo";
 import clear from "./actions/Clear";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
 import { InGameSettingsContext } from "./InGameSettingsContext";
+import submitUpdateScore from "./actions/SubmitUpdateScore";
+import UpdateByDart from "./actions/UpdateByDart";
 
 export const GameContext = createContext({});
 
@@ -19,28 +18,46 @@ export const GameContextProvider = (props) => {
   const initialGameState = {
     ...GAME_DEFAULT_STATE,
     ...inGameSettings,
+    p1_DATA: {
+      ...GAME_DEFAULT_STATE.p1_DATA,
+      score: inGameSettings.startingScore,
+    },
+    p2_DATA: {
+      ...GAME_DEFAULT_STATE.p2_DATA,
+      score: inGameSettings.startingScore,
+    },
   };
 
   const gameReducer = (state, action = null) => {
     switch (action.type) {
+      case "UPDATE_BY_DART":
+        return UpdateByDart(state, action.scoreToSubmit, action.newScore);
+      case "SUBMIT":
+        return submitUpdateScore(
+          state,
+          action.playerKey,
+          action.value,
+          action.method,
+          1,
+        );
+
       case "LOAD_SETTINGS":
+        const settings = action.value;
         return {
           ...GAME_DEFAULT_STATE,
           ...action.value,
+          p1_DATA: {
+            ...GAME_DEFAULT_STATE.p1_DATA,
+            score: settings.startingScore,
+          },
+          p2_DATA: {
+            ...GAME_DEFAULT_STATE.p2_DATA,
+            score: settings.startingScore,
+          },
         };
       case "RESET":
         return GAME_DEFAULT_STATE;
-
       //in-game actions
-
-      case "SHOW_STATS":
-        return { ...state, showStats: !state.showStats };
-      case "CHANGE_INPUT":
-        return changeInput(state);
-      case "TYPE":
-        return type(state, action.value);
-      case "OK":
-        return submitValidation(state);
       case "NEXT":
         return typeNextDart(state);
       case "UNDO":
@@ -49,7 +66,6 @@ export const GameContextProvider = (props) => {
         return clear(state);
       case "BUST":
         return bust(state);
-
       case "FINISH_LEG":
         return finishLeg(state, action.nodUsed, action.nodRequired);
       case "REMATCH":
@@ -69,7 +85,7 @@ export const GameContextProvider = (props) => {
     initialGameState,
   );
 
-  console.log("GAAAAAAAAAAAAAAAAAEM", gameData, inGameSettings);
+  console.log("GAMEDATA", gameData);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

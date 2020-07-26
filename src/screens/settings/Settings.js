@@ -48,13 +48,9 @@ const SETTINGS = () => {
 
   const isFocused = useIsFocused();
 
-  console.log("ISFOCUSED", isFocused);
-
   useEffect(() => {
     if (isFocused) {
-      console.log("SETTINGS FOCUSED");
     } else {
-      console.log("NOT FOCUSED!!!");
       dispatchSettings({
         type: "SAVE_SETTINGS",
         value: {
@@ -70,7 +66,6 @@ const SETTINGS = () => {
           animation,
         },
       });
-      console.log("animation TOGGLING");
       setAnimation(animation);
     }
   }, [
@@ -112,7 +107,7 @@ const SETTINGS = () => {
     dispatchSettings({ type: "RESET", value: USER_SETTINGS });
     setSelectedTheme(USER_SETTINGS.theme);
     setBackground(true);
-  }, [setSelectedTheme, dispatchSettings, USER_SETTINGS]);
+  }, [setBackground, setSelectedTheme, dispatchSettings, USER_SETTINGS]);
 
   const togglePreview = useCallback(() => {
     setPreview(!preview);
@@ -161,11 +156,7 @@ const SETTINGS = () => {
     setOpacity(!opacity);
   }, [opacity, setOpacity]);
 
-  useEffect(() => {
-    console.log("effect");
-  }, []);
-
-  console.log("RENDER SETTINGS SCREEN");
+  console.log("RENDER SETTINGS");
 
   return (
     <>

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 export const Opponent = styled(TouchableOpacity)`
   ${FlexRowAround};
@@ -34,12 +35,12 @@ const OPPONENT_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
 
   const {
-    dispatchInGameSettings,
-    inGameSettings: { p2 },
-  } = useContext(InGameSettingsContext);
+    dispatchSettings,
+    settings: { p2 },
+  } = useContext(SettingsContext);
 
   const choosePlayer = (value) => {
-    dispatchInGameSettings({ type: "CHOOSE_OPPONENT", value });
+    dispatchSettings({ type: "CHOOSE_OPPONENT", value });
   };
 
   const active = p2 === item.key;

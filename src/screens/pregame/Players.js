@@ -11,6 +11,7 @@ import {
 } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 const Players = styled(View)`
   width: 100%;
@@ -48,13 +49,11 @@ const Swap = styled(TouchableHighlight)`
 
 export const PLAYERS = () => {
   const {
-    dispatchInGameSettings,
-    inGameSettings: { p1, p2 },
-  } = useContext(InGameSettingsContext);
+    dispatchSettings,
+    settings: { p1, p2 },
+  } = useContext(SettingsContext);
 
-  const swap = () => dispatchInGameSettings({ type: "SWAP_PLAYERS", p1, p2 });
-
-  console.log("RENDER PLAYERS");
+  const swap = () => dispatchSettings({ type: "SWAP_PLAYERS", p1, p2 });
 
   return (
     <>

@@ -6,6 +6,7 @@ import PLAYER_INPUT_INFO from "./PlayerInputInfo";
 import { useNavigation } from "@react-navigation/native";
 import { GameContext } from "../../../contexts/GameContext";
 import FUNCTION_BUTTON from "../../buttons/FunctionButton";
+import { InputContext } from "../../../contexts/InputContext";
 
 export const ClassicMiddle = styled(View)`
   ${FlexRow};
@@ -27,9 +28,12 @@ const CLASSIC_MIDDLE = React.memo((props) => {
     animation,
     inactivePlayer,
     toggleShowStats,
-    toggleInputMethod,
-    inputMethod,
   } = props;
+
+  const {
+    dispatchInput,
+    inputContext: { inputMethod },
+  } = useContext(InputContext);
 
   const navigation = useNavigation();
 
@@ -67,7 +71,7 @@ const CLASSIC_MIDDLE = React.memo((props) => {
     },
     {
       value: inputMethod === "byRound" ? "INPUT BY DART" : "INPUT BY ROUND",
-      action: toggleInputMethod,
+      action: () => dispatchInput({ type: "CHANGE_INPUT" }),
       icon: inputMethod === "byRound" ? "dart" : "donut-large",
     },
     {
@@ -77,7 +81,6 @@ const CLASSIC_MIDDLE = React.memo((props) => {
     },
   ];
 
-  console.log("RENDER MIDDLE");
   return (
     <ClassicMiddle>
       {BUTTONS_MIDDLE.map((item) => {
@@ -91,7 +94,6 @@ const CLASSIC_MIDDLE = React.memo((props) => {
                 inactivePlayer={inactivePlayer}
                 value={item.value}
                 player={item.value}
-                inputMethod={inputMethod}
               />
             ) : (
               <FUNCTION_BUTTON

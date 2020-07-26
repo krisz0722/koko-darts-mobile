@@ -8,7 +8,6 @@ const undo = (state) => {
 
   const isValid = score && lastScore !== "" && canGoBack;
   const scoreToSubmit = lastScore === "BUST" ? 0 : lastScore;
-  const newScore = score + scoreToSubmit;
 
   switch (isValid) {
     case false:
@@ -18,15 +17,7 @@ const undo = (state) => {
         inputByDart: ["CAN'T GO BACK!"],
       };
     default:
-      return submitUpdateScore(
-        state,
-        inapKey,
-        inapData,
-        scoreToSubmit,
-        newScore,
-        "UNDO",
-        -1,
-      );
+      return submitUpdateScore(state, inapKey, scoreToSubmit, "UNDO", -1);
   }
 };
 

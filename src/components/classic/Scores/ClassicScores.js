@@ -32,7 +32,14 @@ export const ClassicCheckoutsP2 = styled(ClassicCheckoutsPlayer)`
 `;
 
 const CLASSIC_SCORES = React.memo((props) => {
-  const { activePlayer, startingScore, showStats, animation, theme } = props;
+  const {
+    activePlayer,
+    ingame,
+    startingScore,
+    showStats,
+    animation,
+    theme,
+  } = props;
 
   const {
     gameData: { p1_DATA, p2_DATA },
@@ -79,8 +86,6 @@ const CLASSIC_SCORES = React.memo((props) => {
     ? "25%"
     : "30%";
 
-  console.log("RENDER SCORE");
-
   return (
     <ClassicScores style={{ top, height }} showStats={showStats}>
       <ClassicCheckoutsP1
@@ -88,7 +93,7 @@ const CLASSIC_SCORES = React.memo((props) => {
         theme={theme}
         ap={activePlayer}
       >
-        <PLAYER_CHECKOUTS theme={theme} playerData={p1_DATA} />
+        <PLAYER_CHECKOUTS ingame={ingame} theme={theme} playerData={p1_DATA} />
       </ClassicCheckoutsP1>
       <ClassicCheckoutsP2
         style={{ borderColor }}
@@ -98,6 +103,7 @@ const CLASSIC_SCORES = React.memo((props) => {
         <PLAYER_CHECKOUTS theme={theme} playerData={p2_DATA} />
       </ClassicCheckoutsP2>
       <PLAYER_SCORE
+        ingame={ingame}
         theme={theme}
         activePlayer={activePlayer}
         showStats={showStats}

@@ -1,14 +1,8 @@
 import { CHECKOUTS } from "calc/scores";
 
-const submitUpdateScore = (
-  state,
-  playerKey,
-  playerData,
-  scoreToSubmit,
-  newScore,
-  type,
-  num,
-) => {
+const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
+  const playerData = state[playerKey];
+
   let {
     score,
     tsLeg,
@@ -23,7 +17,15 @@ const submitUpdateScore = (
     numOfCoDarts,
   } = playerData;
 
-  const prevScore = score;
+  const prevScore = score + scoreToSubmit;
+
+  const newScore =
+    type === "UNDO"
+      ? score + scoreToSubmit
+      : "SUBMIT"
+      ? score - scoreToSubmit
+      : score;
+
   const wasOnCheckout = CHECKOUTS.some((co) => co.value === prevScore);
   const prevScoreNumOfDarts = wasOnCheckout
     ? CHECKOUTS.find((co) => co.value === prevScore).checkouts[0].nod
@@ -72,7 +74,9 @@ const submitUpdateScore = (
         return "BUST";
       case "UNDO":
         return 0;
-      case "OK":
+      case "SUBMIT":
+        return scoreToSubmit;
+      case "UPDATE":
         return scoreToSubmit;
       default:
         return null;

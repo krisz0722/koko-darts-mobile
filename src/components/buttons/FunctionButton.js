@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, TouchableHighlight } from "react-native";
-import { GameContext } from "../../contexts/GameContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
 import { useRoute } from "@react-navigation/native";
@@ -9,7 +8,7 @@ import IconDart from "../../../assets/iconDart";
 
 export const Button_Num_Classic = styled(TouchableHighlight)`
   width: ${() => 100 / 3 + "%"};
-  height: 50%;
+  height: ${({ bottom }) => (bottom ? "25%" : "50%")};
   ${FlexRowAround};
   border-width: ${({ theme }) => theme.borderWidth};
   padding: 0 3%;
@@ -26,9 +25,7 @@ export const Text_Number = styled(Animated.Text)`
 `;
 
 const FUNCTION_BUTTON = React.memo(
-  ({ activePlayer, theme, animation, value, action, icon }) => {
-    const { dispatchGameData } = useContext(GameContext);
-
+  ({ activePlayer, theme, animation, value, action, icon, bottom = false }) => {
     const animationValue = useRef(
       new Animated.Value(activePlayer === "p1" ? 1 : 0),
     ).current;
@@ -53,6 +50,7 @@ const FUNCTION_BUTTON = React.memo(
 
     return (
       <AnimatedButton
+        bottom={bottom}
         value={value}
         onPress={action}
         disabled={route !== "game"}

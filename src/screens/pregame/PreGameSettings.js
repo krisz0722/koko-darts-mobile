@@ -15,11 +15,14 @@ import { GameContext } from "../../contexts/GameContext";
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
 
+  console.log("PREGAME NAVIGATION", navigation);
   const {
-    inGameSettings,
-    dispatchInGameSettings,
-    inGameSettings: { p1, p2, legOrSet, toWin, legsPerSet, startingScore },
-  } = useContext(InGameSettingsContext);
+    settings,
+    dispatchSettings,
+    settings: { p1, p2, legOrSet, toWin, legsPerSet, startingScore },
+  } = useContext(SettingsContext);
+
+  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
 
   const isFocused = useIsFocused();
 
@@ -32,7 +35,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   );
 
   const newGameSettings = {
-    ...inGameSettings,
+    ...settings,
     p1,
     p2,
     legOrSet: stateLegOrSet,
@@ -41,16 +44,11 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     legsPerSet: stateLegsPerSet,
   };
 
-  const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchGameData } = useContext(GameContext);
-
-  console.log("ISFOCUSED", isFocused);
 
   useEffect(() => {
     if (isFocused) {
-      console.log("SETTINGS FOCUSED");
     } else {
-      console.log("NOT FOCUSED!!!");
       dispatchSettings({
         type: "CHOOSE_OPPONENT",
         value: p2,
@@ -58,11 +56,9 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     }
   }, [p2, dispatchSettings, isFocused]);
 
-  console.log("NEW GAME SAETTINGS", newGameSettings);
-
   useEffect(() => {
     const backAction = () => {
-      navigation.navigate("home");
+      navigation.navigate("homenavigator");
       return true;
     };
     const backHandler = BackHandler.addEventListener(
@@ -126,6 +122,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     setModal(false);
   };
 
+  console.log("RENDER PREGAMe");
   return (
     <>
       <PLAYERS />
@@ -154,7 +151,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           size={"small"}
           icon={"arrow-back"}
           type={"danger"}
-          action={() => changeOpponent(true)}
+          action={() => navigation.navigate("homenavigator")}
         />
         <THEMED_BUTTON
           size={"small"}

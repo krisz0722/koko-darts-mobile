@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
-import { GameContext } from "../../contexts/GameContext";
-import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
-import IconDart from "../../../assets/iconDart";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { GameContext } from "../../../contexts/GameContext";
+import { BasicTextBold, FlexRowAround } from "../../../styles/css_mixins";
+import IconDart from "../../../../assets/iconDart";
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import { InputContext } from "../../../contexts/InputContext";
 
 export const Container = styled(Animated.View)`
   ${FlexRowAround}
@@ -21,12 +22,12 @@ export const Text_Function = styled(Animated.Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const INPUT_BY_DART_FIELD = () => {
+const INPUT_BY_DART_FIELD = React.memo(({ activePlayer }) => {
   const { theme, animation } = useContext(ThemeContext);
 
   const {
-    gameData: { activePlayer, inputByDartArray },
-  } = useContext(GameContext);
+    inputContext: { whichDart, inputArray, inputByDart },
+  } = useContext(InputContext);
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -46,24 +47,27 @@ const INPUT_BY_DART_FIELD = () => {
       })
     : theme.game[activePlayer + "Border"];
 
-  const first = inputByDartArray.slice(0, 2);
-  const second = inputByDartArray.slice(2, 4);
-  const third = inputByDartArray.slice(4, 6);
+  const first =
+    whichDart === 1 ? inputArray.slice(0, 2).join("") : inputByDart.first;
+  const second =
+    whichDart <= 2 ? inputArray.slice(2, 4).join("") : inputByDart.second;
+  const third =
+    whichDart <= 3 ? inputArray.slice(4, 6).join("") : inputByDart.third;
 
   const DATA = [
     {
       key: 1,
-      showIcon: inputByDartArray[0] === "",
+      showIcon: first === "",
       value: first,
     },
     {
       key: 2,
-      showIcon: inputByDartArray[2] === "",
+      showIcon: second === "",
       value: second,
     },
     {
       key: 3,
-      showIcon: inputByDartArray[4] === "",
+      showIcon: third === "",
       value: third,
     },
   ];
@@ -84,6 +88,6 @@ const INPUT_BY_DART_FIELD = () => {
       </>
     </Container>
   );
-};
+});
 
 export default INPUT_BY_DART_FIELD;

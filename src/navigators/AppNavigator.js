@@ -23,6 +23,7 @@ import styled from "styled-components/native/dist/styled-components.native.esm";
 import { SafeAreaView } from "react-native";
 import { AppBackground } from "../../App";
 import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
+import transitionNone from "../styles/navNoTransition";
 
 export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;
@@ -37,12 +38,12 @@ const AppNavigator = () => {
       name: "welcome",
     },
     {
-      component: DrawerNavigator,
-      name: "drawernavigator",
-    },
-    {
       component: HomeNavigator,
       name: "homenavigator",
+    },
+    {
+      component: DrawerNavigator,
+      name: "drawernavigator",
     },
     {
       component: LEG_IS_FINISHED,
@@ -72,13 +73,12 @@ const AppNavigator = () => {
     },
   ];
 
-  const { theme, background } = useContext(ThemeContext);
+  const { theme, animation, background } = useContext(ThemeContext);
 
   const navigationTheme = {
     dark: false,
     colors: {
       primary: theme.bg1,
-
       card: theme.bg1,
       text: theme.text,
       border: "none",
@@ -86,10 +86,14 @@ const AppNavigator = () => {
   };
 
   const transition = (theme) => {
-    if (theme === "default") {
-      return transitionDefault;
+    if (animation) {
+      if (theme === "default") {
+        return transitionDefault;
+      } else {
+        return transitionContrast;
+      }
     } else {
-      return transitionContrast;
+      return transitionNone;
     }
   };
 

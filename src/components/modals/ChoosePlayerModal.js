@@ -51,7 +51,7 @@ font-size:20;
 `;
 
 const CHOOSE_PLAYER_MODAL = React.memo(
-  ({ p2, chooseGuest, chooseProfile, visible }) => {
+  ({ p2, handleModal, chooseGuest, chooseProfile, visible }) => {
     const { theme, animation } = useContext(ThemeContext);
 
     const animationType = animation
@@ -86,7 +86,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
                 theme={theme}
                 onChangeText={handleRegExp}
               />
-              <LIST_OPPONENTS />
+              <LIST_OPPONENTS p2={p2} chooseProfile={chooseProfile} />
               <BottomButtons theme={theme}>
                 <THEMED_BUTTON
                   size={"small"}
@@ -103,7 +103,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
                   length={2}
                   icon={"check"}
                   disabled={!p2}
-                  action={chooseProfile}
+                  action={handleModal}
                 />
               </BottomButtons>
             </Container>

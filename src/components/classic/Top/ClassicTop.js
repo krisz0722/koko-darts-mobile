@@ -57,6 +57,8 @@ const CLASSIC_TOP = React.memo((props) => {
     theme,
   } = props;
 
+  console.log("TOP", p1, p2);
+
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
   ).current;
@@ -92,8 +94,6 @@ const CLASSIC_TOP = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
-  console.log("RENDER CLASSIC TOP");
-
   return (
     <ClassicTop style={{ height }} showStats={showStats}>
       <PlayerInfo1 theme={theme}>
@@ -120,7 +120,7 @@ const CLASSIC_TOP = React.memo((props) => {
           animation={animation}
           theme={theme}
           activePlayer={activePlayer}
-          name={p1}
+          name={p1.key}
           player={"p1"}
         />
       </PlayerInfo1>
@@ -149,7 +149,7 @@ const CLASSIC_TOP = React.memo((props) => {
           theme={theme}
           activePlayer={activePlayer}
           showStats={showStats}
-          name={p2}
+          name={p2.key}
           player={"p2"}
         />
       </PlayerInfo2>

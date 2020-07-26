@@ -65,7 +65,7 @@ const CLASSIC_MIDDLE = React.memo((props) => {
       icon: "not-interested",
     },
     {
-      value: p1,
+      value: p1.key,
       action: null,
       icon: null,
     },
@@ -75,7 +75,7 @@ const CLASSIC_MIDDLE = React.memo((props) => {
       icon: inputMethod === "byRound" ? "dart" : "donut-large",
     },
     {
-      value: p2,
+      value: p2.key,
       action: null,
       icon: null,
     },

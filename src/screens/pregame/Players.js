@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { Text, TouchableHighlight, View } from "react-native";
+import { Image, Text, TouchableHighlight, View } from "react-native";
 import {
   BasicTextBold,
   Border,
@@ -10,8 +10,6 @@ import {
   Window,
 } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
-import { SettingsContext } from "../../contexts/SettingsContext";
 
 const Players = styled(View)`
   width: 100%;
@@ -26,7 +24,7 @@ const PlayerInfo = styled(View)`
   ${FlexColAround}
 `;
 
-const Avatar = styled(View)`
+const Avatar = styled(Image)`
   width: ${() => Window.width * 0.3};
   height: ${() => Window.width * 0.3};
   border-radius: 4px;
@@ -47,27 +45,24 @@ const Swap = styled(TouchableHighlight)`
   ${FlexCol};
 `;
 
-export const PLAYERS = () => {
-  const {
-    dispatchSettings,
-    settings: { p1, p2 },
-  } = useContext(SettingsContext);
-
-  const swap = () => dispatchSettings({ type: "SWAP_PLAYERS", p1, p2 });
-
+export const PLAYERS = ({ toggleSwap, p1, p2 }) => {
+  const p1Name = p1 ? p1.key : "";
+  const p1Img = p1 ? p1.img : null;
+  const p2Name = p2 ? p2.key : "";
+  const p2Img = p2 ? p2.img : null;
   return (
     <>
       <Players>
         <PlayerInfo>
-          <Avatar />
-          <Name>{p1}</Name>
+          <Avatar source={p1Img} />
+          <Name>{p1Name}</Name>
         </PlayerInfo>
-        <Swap onPress={swap}>
+        <Swap onPress={toggleSwap}>
           <Icon name={"sync"} size={20} />
         </Swap>
         <PlayerInfo>
-          <Avatar />
-          <Name>{p2}</Name>
+          <Avatar source={p2Img} />
+          <Name>{p2Name}</Name>
         </PlayerInfo>
       </Players>
     </>

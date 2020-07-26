@@ -11,8 +11,14 @@ export const SettingsContextProvider = (props) => {
   };
 
   const DEFAULT_SETTINGS = {
-    p1: "USER",
-    p2: null,
+    p1: {
+      key: "USER",
+      img: require("../../assets/bgPortrait.jpeg"),
+    },
+    p2: {
+      key: "",
+      img: "",
+    },
     userName: "UESR",
     layout: "classic",
     legOrSet: "set",
@@ -29,10 +35,8 @@ export const SettingsContextProvider = (props) => {
       case "CHANGE_LAYOUT":
         return { ...state, layout: action.value };
       case "SAVE_SETTINGS":
-        console.log("saving settings...");
         return action.value;
       case "RESET":
-        console.log("resettings saved user settings...");
         return action.value;
       case "CHOOSE_OPPONENT":
         return { ...state, p2: action.value };

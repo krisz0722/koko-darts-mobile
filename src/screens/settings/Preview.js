@@ -18,15 +18,11 @@ const PreviewContainer = styled(Animated.View)`
 `;
 
 export const PREVIEW = React.memo((props) => {
-  const { preview, ingame, opacity, animation } = props;
+  const { preview, ingame, settings } = props;
 
-  const settings = props;
-
-  console.log("SETTINGS", settings);
+  const { animation, opacity } = settings;
 
   const { theme } = useContext(ThemeContext);
-
-  console.log("RENDER PREVIEW");
 
   const animationValue = useRef(new Animated.Value(!preview ? 0 : 1)).current;
 
@@ -41,6 +37,7 @@ export const PREVIEW = React.memo((props) => {
     inputRange: [0, 1],
     outputRange: [0, 1],
   });
+  console.log("PREVIEWSETTT", settings);
 
   return (
     <PreviewContainer

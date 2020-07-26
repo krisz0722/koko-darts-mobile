@@ -14,6 +14,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 const SETTINGS = () => {
   const {
     dispatchSettings,
+    settings,
     settings: { p1, p2 },
   } = useContext(SettingsContext);
   const { setBackground, setAnimation, setSelectedTheme } = useContext(
@@ -184,15 +185,7 @@ const SETTINGS = () => {
         toggleLegsPerSet={toggleLegsPerSet}
       />
       <Bottom preview={preview}>
-        <PREVIEW
-          animation={animation}
-          startingScore={startingScore}
-          legOrSet={legOrSet}
-          layout={layout}
-          opacity={opacity}
-          preview={preview}
-          ingame={false}
-        />
+        <PREVIEW settings={settings} preview={preview} ingame={false} />
         <BottomButtons>
           <THEMED_BUTTON
             size={"small"}

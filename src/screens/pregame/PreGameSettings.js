@@ -26,18 +26,22 @@ const PREGAME_SETTINGS = ({ navigation }) => {
 
   const isFocused = useIsFocused();
 
+  console.log("PeKEY", p2.key);
+
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
   const [stateStartingScore, setStartingScore] = useState(startingScore);
   const [stateToWin, setTowin] = useState(toWin);
   const [stateLegsPerSet, setLegsPerSet] = useState(legsPerSet);
+  const [stateP1, setP1] = useState(p1);
+  const [stateP2, setP2] = useState(p2);
   const [modal, setModal] = useState(
-    p2 === "GUEST" || (!p2 && isFocused) ? true : false,
+    p2 === "GUEST" || (p2.key === "" && isFocused) ? true : false,
   );
 
   const newGameSettings = {
     ...settings,
-    p1,
-    p2,
+    p1: stateP1,
+    p2: stateP2,
     legOrSet: stateLegOrSet,
     startingScore: stateStartingScore,
     toWin: stateToWin,
@@ -68,12 +72,18 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     return () => backHandler.remove();
   }, [navigation]);
 
+  const toggleSwap = useCallback(() => {
+    setP1(stateP2);
+    setP2(stateP1);
+  }, [stateP1, stateP2]);
+
   const toggleLegOrSet = useCallback(
     (value) => {
       setLegOrSet(value);
     },
     [setLegOrSet],
   );
+
   const toggleStartingScore = useCallback(
     (value) => {
       setStartingScore(value);
@@ -118,14 +128,23 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     dispatchInGameSettings({ type: "CHOOSE_OPPONENT", value: "GUEST" });
     setModal(false);
   };
-  const chooseProfile = () => {
+
+  const chooseProfile = (val) => {
+    if (stateP2 === p1) {
+      setP1(val);
+    } else {
+      setP2(val);
+    }
+  };
+
+  const handleModal = () => {
     setModal(false);
   };
 
   console.log("RENDER PREGAMe");
   return (
     <>
-      <PLAYERS />
+      <PLAYERS toggleSwap={toggleSwap} p1={stateP1} p2={stateP2} />
       <OptionsScore
         startingScore={stateStartingScore}
         toggleStartingScore={toggleStartingScore}
@@ -171,9 +190,10 @@ const PREGAME_SETTINGS = ({ navigation }) => {
         />
       </BottomButtons>
       <CHOOSE_PLAYER_MODAL
-        p2={p2}
+        p2={stateP2}
         chooseGuest={chooseGuest}
         chooseProfile={chooseProfile}
+        handleModal={handleModal}
         visible={modal}
       />
     </>

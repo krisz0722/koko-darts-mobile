@@ -3,8 +3,6 @@ import { Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
-import { SettingsContext } from "../../contexts/SettingsContext";
 
 export const Opponent = styled(TouchableOpacity)`
   ${FlexRowAround};
@@ -31,26 +29,13 @@ export const Name = styled(Text)`
   font-size: 15;
 `;
 
-const OPPONENT_COMPONENT = ({ item }) => {
+const OPPONENT_COMPONENT = ({ chooseProfile, p2, item }) => {
   const { theme } = useContext(ThemeContext);
 
-  const {
-    dispatchSettings,
-    settings: { p2 },
-  } = useContext(SettingsContext);
-
-  const choosePlayer = (value) => {
-    dispatchSettings({ type: "CHOOSE_OPPONENT", value });
-  };
-
-  const active = p2 === item.key;
+  const active = p2 ? p2.key === item.key : false;
 
   return (
-    <Opponent
-      active={active}
-      onPress={() => choosePlayer(item.key)}
-      theme={theme}
-    >
+    <Opponent active={active} onPress={() => chooseProfile(item)} theme={theme}>
       <OpponentAvatar theme={theme} resizeMode={"cover"} source={item.img} />
       <Name active={active}>{item.key}</Name>
     </Opponent>

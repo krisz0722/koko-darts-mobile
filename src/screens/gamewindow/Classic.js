@@ -14,7 +14,6 @@ import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
 import { GameContext } from "../../contexts/GameContext";
 import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
 import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
-import { InGameThemeContext } from "../../contexts/InGameThemeContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 import { InputContextProvider } from "../../contexts/InputContext";
@@ -29,11 +28,9 @@ const GAME_CLASSIC = React.memo((props) => {
   } = useContext(GameContext);
 
   const { inGameSettings } = useContext(InGameSettingsContext);
-  const { inGameTheme, inGameAnimation } = useContext(InGameThemeContext);
   const { theme, animation } = useContext(ThemeContext);
 
-  const themeToUse = ingame ? inGameTheme : theme;
-  const animationToUse = ingame ? inGameAnimation : animation;
+  const animationToUse = ingame ? inGameSettings.animation : animation;
   const settingsToUse = ingame ? inGameSettings : settings;
 
   const { p1, p2, legOrSet, startingScore, opacity } = settingsToUse;
@@ -119,7 +116,7 @@ const GAME_CLASSIC = React.memo((props) => {
       <CLASSIC_TOP
         ingame={ingame}
         animation={animationToUse}
-        theme={themeToUse}
+        theme={theme}
         showStats={showStats}
         activePlayer={activePlayer}
         p1={p1}
@@ -131,7 +128,7 @@ const GAME_CLASSIC = React.memo((props) => {
       <CLASSIC_SCORES
         ingame={ingame}
         animation={animationToUse}
-        theme={themeToUse}
+        theme={theme}
         showStats={showStats}
         activePlayer={activePlayer}
         startingScore={startingScore}
@@ -141,7 +138,7 @@ const GAME_CLASSIC = React.memo((props) => {
       <CLASSIC_STATS
         ingame={ingame}
         animation={animationToUse}
-        theme={themeToUse}
+        theme={theme}
         showStats={showStats}
         activePlayer={activePlayer}
         p1_DATA={p1_DATA}
@@ -152,13 +149,13 @@ const GAME_CLASSIC = React.memo((props) => {
           <Overlay1
             ingame={false}
             style={{ opacity: opacity1 }}
-            theme={inGameTheme}
+            theme={theme}
           />
         ) : (
           <Overlay2
             ingame={ingame}
             style={{ opacity: opacity2 }}
-            theme={themeToUse}
+            theme={theme}
           />
         )
       ) : null}
@@ -168,16 +165,16 @@ const GAME_CLASSIC = React.memo((props) => {
           p2={p2}
           ingame={false}
           animation={animationToUse}
-          theme={themeToUse}
+          theme={theme}
           activePlayer={activePlayer}
           inactivePlayer={inactivePlayer}
           drawer={drawer}
           toggleShowStats={toggleShowStats}
-          toggleDrawer={() => setDrawer}
+          setDrawer={() => setDrawer}
         />
         <CLASSIC_BOTTOM
           animation={animationToUse}
-          theme={themeToUse}
+          theme={theme}
           activePlayer={activePlayer}
           inactivePlayer={inactivePlayer}
           p1Data={p1_DATA}

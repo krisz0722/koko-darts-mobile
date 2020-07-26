@@ -14,7 +14,6 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 const SETTINGS = () => {
   const {
     dispatchSettings,
-    settings,
     settings: { p1, p2 },
   } = useContext(SettingsContext);
   const { setBackground, setAnimation, setSelectedTheme } = useContext(
@@ -46,6 +45,17 @@ const SETTINGS = () => {
   const [legsPerSet, setLegsPerSet] = useState(USER_SETTINGS.legsPerSet);
   const [opacity, setOpacity] = useState(USER_SETTINGS.opacity);
   const [animation, setStateAnimation] = useState(USER_SETTINGS.animation);
+
+  const newSettings = {
+    p1,
+    p2,
+    legOrSet,
+    startingScore,
+    layout,
+    toWin,
+    legsPerSet,
+    opacity,
+  };
 
   const isFocused = useIsFocused();
 
@@ -84,31 +94,6 @@ const SETTINGS = () => {
     animation,
     setAnimation,
   ]);
-
-  const reset = useCallback(() => {
-    const {
-      layout,
-      legOrSet,
-      startingScore,
-      animation,
-      opacity,
-      toWin,
-      legsPerSet,
-    } = USER_SETTINGS;
-
-    setPreview(false);
-    setLayout(layout);
-    setLegsPerSet(legsPerSet);
-    setStateAnimation(animation);
-    setOpacity(opacity);
-    setTowin(toWin);
-    setLegOrSet(legOrSet);
-    setStartingScore(startingScore);
-
-    dispatchSettings({ type: "RESET", value: USER_SETTINGS });
-    setSelectedTheme(USER_SETTINGS.theme);
-    setBackground(true);
-  }, [setBackground, setSelectedTheme, dispatchSettings, USER_SETTINGS]);
 
   const togglePreview = useCallback(() => {
     setPreview(!preview);
@@ -157,7 +142,30 @@ const SETTINGS = () => {
     setOpacity(!opacity);
   }, [opacity, setOpacity]);
 
-  console.log("RENDER SETTINGS");
+  const reset = useCallback(() => {
+    const {
+      layout,
+      legOrSet,
+      startingScore,
+      animation,
+      opacity,
+      toWin,
+      legsPerSet,
+    } = USER_SETTINGS;
+
+    setPreview(false);
+    setLayout(layout);
+    setLegsPerSet(legsPerSet);
+    setStateAnimation(animation);
+    setOpacity(opacity);
+    setTowin(toWin);
+    setLegOrSet(legOrSet);
+    setStartingScore(startingScore);
+
+    dispatchSettings({ type: "RESET", value: USER_SETTINGS });
+    setSelectedTheme(USER_SETTINGS.theme);
+    setBackground(true);
+  }, [setBackground, setSelectedTheme, dispatchSettings, USER_SETTINGS]);
 
   return (
     <>
@@ -185,7 +193,13 @@ const SETTINGS = () => {
         toggleLegsPerSet={toggleLegsPerSet}
       />
       <Bottom preview={preview}>
-        <PREVIEW settings={settings} preview={preview} ingame={false} />
+        <PREVIEW
+          animation={animation}
+          settings={newSettings}
+          preview={preview}
+          ingame={false}
+          layout={layout}
+        />
         <BottomButtons>
           <THEMED_BUTTON
             size={"small"}

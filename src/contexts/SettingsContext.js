@@ -5,11 +5,6 @@ import Theme_Contrast from "../styles/theme-contrast.json";
 export const SettingsContext = createContext("default");
 
 export const SettingsContextProvider = (props) => {
-  const THEMES = {
-    default: Theme_Default,
-    contrast: Theme_Contrast,
-  };
-
   const DEFAULT_SETTINGS = {
     p1: {
       key: "USER",
@@ -27,7 +22,6 @@ export const SettingsContextProvider = (props) => {
     startingScore: 501,
     playerToStartLeg: "p1",
     opacity: true,
-    animation: true,
   };
 
   const settingsReducer = (state, action) => {
@@ -53,7 +47,7 @@ export const SettingsContextProvider = (props) => {
   console.log("SETTINGSCONTEXT", settings);
 
   return (
-    <SettingsContext.Provider value={{ THEMES, settings, dispatchSettings }}>
+    <SettingsContext.Provider value={{ settings, dispatchSettings }}>
       {props.children}
     </SettingsContext.Provider>
   );

@@ -1,10 +1,18 @@
 import React, { useContext } from "react";
+import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
+import styled from "styled-components/native/dist/styled-components.native.esm";
+import { ThemeProvider } from "styled-components";
+import { AppBackground } from "../../App";
+import { ThemeContext } from "../contexts/ThemeContext";
 import { SettingsContextProvider } from "../contexts/SettingsContext";
+import { GameContextProvider } from "../contexts/GameContext";
+import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
+import transitionNone from "../styles/navNoTransition";
 import REGISTER from "../screens/auth/SignUp";
 import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/welcome/Welcome";
@@ -14,22 +22,14 @@ import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
 import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
 import REMATCH from "../screens/endgame/rematch/Rematch";
 import DrawerNavigator from "./DrawerNavigator";
-import { ThemeProvider } from "styled-components";
-const { Navigator, Screen } = createStackNavigator();
-import { ThemeContext } from "../contexts/ThemeContext";
-import { GameContextProvider } from "../contexts/GameContext";
-import { OpacityProvider } from "../contexts/OpacityContext";
-import styled from "styled-components/native/dist/styled-components.native.esm";
-import { SafeAreaView } from "react-native";
-import { AppBackground } from "../../App";
-import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
-import transitionNone from "../styles/navNoTransition";
 
 export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.bgOverlay};
 `;
+
+const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
   const SCREENS = [
@@ -112,26 +112,24 @@ const AppNavigator = () => {
         <SettingsContextProvider>
           <InGameSettingsContextProvider>
             <GameContextProvider>
-              <OpacityProvider>
-                <ScreenContainer theme={theme}>
-                  <NavigationContainer theme={navigationTheme}>
-                    <Navigator
-                      headerMode="none"
-                      screenOptions={{
-                        ...transition(theme.name),
-                      }}
-                    >
-                      {SCREENS.map((item) => (
-                        <Screen
-                          key={item.name}
-                          name={item.name}
-                          component={item.component}
-                        />
-                      ))}
-                    </Navigator>
-                  </NavigationContainer>
-                </ScreenContainer>
-              </OpacityProvider>
+              <ScreenContainer theme={theme}>
+                <NavigationContainer theme={navigationTheme}>
+                  <Navigator
+                    headerMode="none"
+                    screenOptions={{
+                      ...transition(theme.name),
+                    }}
+                  >
+                    {SCREENS.map((item) => (
+                      <Screen
+                        key={item.name}
+                        name={item.name}
+                        component={item.component}
+                      />
+                    ))}
+                  </Navigator>
+                </NavigationContainer>
+              </ScreenContainer>
             </GameContextProvider>
           </InGameSettingsContextProvider>
         </SettingsContextProvider>

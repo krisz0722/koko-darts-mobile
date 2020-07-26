@@ -3,7 +3,6 @@ import GAME_DEFAULT_STATE from "./GameDefaultState";
 import finishLeg from "./actions/FinishLeg";
 import rematch from "./actions/Rematch";
 import undo from "./actions/Undo";
-import clear from "./actions/Clear";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
 import { InGameSettingsContext } from "./InGameSettingsContext";
@@ -62,8 +61,6 @@ export const GameContextProvider = (props) => {
         return typeNextDart(state);
       case "UNDO":
         return undo(state);
-      case "CLEAR":
-        return clear(state);
       case "BUST":
         return bust(state);
       case "FINISH_LEG":

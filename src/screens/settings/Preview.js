@@ -1,28 +1,24 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { FlexRow } from "../../styles/css_mixins";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import GAME_CLASSIC from "../gamewindow/Classic";
 
 const PreviewContainer = styled(Animated.View)`
   position: ${({ ingame }) => (ingame ? "relative" : "absolute")};
   top: ${({ ingame }) => (ingame ? "0" : "0%")};
   ${FlexRow};
-  height: ${({ ingame }) => (ingame ? "70%" : "70%")};
+  height: ${({ ingame }) => (ingame ? "40%" : "70%")};
   width: 100%;
   z-index: ${({ visible }) => (visible ? 3 : -1)};
   background-color: ${({ theme, ingame }) =>
     ingame ? "transparent" : theme.bgOverlay};
-  border: 2px red solid;
 `;
 
 export const PREVIEW = React.memo((props) => {
-  const { preview, ingame, settings } = props;
+  const { animation, theme, preview, ingame, settings } = props;
 
-  const { animation, opacity } = settings;
-
-  const { theme } = useContext(ThemeContext);
+  const { opacity } = settings;
 
   const animationValue = useRef(new Animated.Value(!preview ? 0 : 1)).current;
 
@@ -37,7 +33,6 @@ export const PREVIEW = React.memo((props) => {
     inputRange: [0, 1],
     outputRange: [0, 1],
   });
-  console.log("PREVIEWSETTT", settings);
 
   return (
     <PreviewContainer

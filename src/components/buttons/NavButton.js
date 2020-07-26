@@ -39,6 +39,7 @@ const NavButton = React.memo(
     color = "light",
     action = null,
     icon = null,
+    inap = null,
   }) => {
     const { theme, animation } = useContext(ThemeContext);
 
@@ -52,7 +53,7 @@ const NavButton = React.memo(
           case "light":
             return theme.text;
           case "drawer":
-            return "purple";
+            return theme.game[inap + "Text"];
         }
       }
     };
@@ -67,8 +68,7 @@ const NavButton = React.memo(
           case "light":
             return theme.text;
           case "drawer":
-            // return theme.game[inactivePlayer + "Text"];
-            return "purple";
+            return theme.game[inap + "Text"];
         }
       }
     };

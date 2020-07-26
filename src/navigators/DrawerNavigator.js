@@ -8,8 +8,6 @@ import { FlexCol } from "../styles/css_mixins";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { InGameThemeContextProvider } from "../contexts/InGameThemeContext";
-import { InGameOpacityProvider } from "../contexts/InGameOpacityContext";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 
 export const DrawerContent = styled(View)`
@@ -22,11 +20,7 @@ export const DrawerContent = styled(View)`
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const DRAWER_CONTENT = ({ navigation }) => {
-  const {
-    gameData: { inactivePlayer },
-  } = useContext(GameContext);
-
+const DRAWER_CONTENT = ({ navigation, inactivePlayer }) => {
   const { theme } = useContext(ThemeContext);
 
   const DRAWER_ITEMS = [
@@ -59,6 +53,7 @@ const DRAWER_CONTENT = ({ navigation }) => {
           text={item.route}
           icon={item.icon}
           action={item.action}
+          inap={inactivePlayer}
         />
       ))}
     </DrawerContent>
@@ -69,7 +64,7 @@ const DrawerNavigator = () => {
   const { theme } = useContext(ThemeContext);
 
   const {
-    gameData: { activePlayer },
+    gameData: { activePlayer, inactivePlayer },
   } = useContext(GameContext);
 
   const drawerstyle = {
@@ -78,22 +73,20 @@ const DrawerNavigator = () => {
   };
 
   return (
-    <InGameThemeContextProvider>
-      <InGameOpacityProvider>
-        <Navigator
-          backBehavior={"initialRoute"}
-          drawerContent={(props) => <DRAWER_CONTENT {...props} />}
-          drawerStyle={drawerstyle}
-          drawerPosition={"right"}
-          overlayColor={theme.game[activePlayer + "Overlay"]}
-        >
-          <Screen name="pregame" component={PREGAME_SETTINGS} />
-          <Screen name="game" component={GAME_CLASSIC} />
-          <Screen name="settings-ingame" component={SETTINGS_INGAME} />
-          <Screen name="stats" component={SETTINGS_INGAME} />
-        </Navigator>
-      </InGameOpacityProvider>
-    </InGameThemeContextProvider>
+    <Navigator
+      backBehavior={"initialRoute"}
+      drawerContent={(props) => (
+        <DRAWER_CONTENT inactivePlayer={inactivePlayer} {...props} />
+      )}
+      drawerStyle={drawerstyle}
+      drawerPosition={"right"}
+      overlayColor={theme.game[activePlayer + "Overlay"]}
+    >
+      <Screen name="pregame" component={PREGAME_SETTINGS} />
+      <Screen name="game" component={GAME_CLASSIC} />
+      <Screen name="settings-ingame" component={SETTINGS_INGAME} />
+      <Screen name="stats" component={SETTINGS_INGAME} />
+    </Navigator>
   );
 };
 

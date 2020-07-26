@@ -1,15 +1,37 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import { BottomButtons } from "./StyledSettingsInGame";
 import { OptionsLayout } from "../settings/OptionsLayout";
-import { COLOR } from "../settings/OptionsColor";
 import { OptionsEffects } from "../settings/OptionsEffects";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "../settings/Preview";
 import { BackHandler } from "react-native";
-import { InGameThemeContext } from "../../contexts/InGameThemeContext";
+import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { COLOR } from "../settings/OptionsColor";
 
 const SETTINGS_INGAME = ({ navigation }) => {
-  const { inGameTheme } = useContext(InGameThemeContext);
+  const {
+    inGameSettings,
+    inGameSettings: { opacity, layout, animation },
+    dispatchInGameSettings,
+  } = useContext(InGameSettingsContext);
+
+  const { theme } = useContext(ThemeContext);
+
+  const toggleLayout = useCallback(
+    (value) => {
+      dispatchInGameSettings({ type: "CHANGE_LAYOUT", value });
+    },
+    [dispatchInGameSettings],
+  );
+
+  const toggleAnimation = useCallback(() => {
+    dispatchInGameSettings({ type: "CHANGE_ANIMATION", value: !animation });
+  }, [dispatchInGameSettings, animation]);
+
+  const toggleOpacity = useCallback(() => {
+    dispatchInGameSettings({ type: "CHANGE_OPACITY", value: !opacity });
+  }, [dispatchInGameSettings, opacity]);
 
   useEffect(() => {
     const backAction = () => {
@@ -25,12 +47,28 @@ const SETTINGS_INGAME = ({ navigation }) => {
 
   return (
     <>
-      <OptionsLayout ingame={true} />
-      <COLOR ingame={true} />
-      <OptionsEffects ingame={true} />
+      <OptionsLayout
+        layout={layout}
+        toggleLayout={toggleLayout}
+        ingame={true}
+      />
+      <COLOR />
+      <OptionsEffects
+        showBackground={false}
+        animation={animation}
+        opacity={opacity}
+        toggleAnimation={toggleAnimation}
+        toggleOpacity={toggleOpacity}
+      />
 
-      <PREVIEW preview={true} ingame={true} />
-      <BottomButtons theme={inGameTheme}>
+      <PREVIEW
+        animation={animation}
+        settings={inGameSettings}
+        preview={true}
+        ingame={true}
+        layout={layout}
+      />
+      <BottomButtons theme={theme}>
         <THEMED_BUTTON
           type={"basic"}
           size={"small"}
@@ -45,6 +83,3 @@ const SETTINGS_INGAME = ({ navigation }) => {
 };
 
 export default SETTINGS_INGAME;
-
-// TODO animation toggle, visual effecet info modal or tooltip, ASYM component, PREVIEW visibilityi icon
-// TODO reset has to set the users saved settins to default in the database too

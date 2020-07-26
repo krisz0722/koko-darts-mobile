@@ -39,7 +39,6 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
   const {
     inputContext: { inputArray, inputMethod, inputByRound, inputByDart },
   } = useContext(InputContext);
-  //TODO input context???
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -59,9 +58,10 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
-  const active = player === gameData[activePlayer];
+  const active = player === gameData[activePlayer].key;
 
-  const inputScore = inputByRound.join("");
+  const inputScore =
+    inputMethod === "byDart" ? inputArray.join("") : inputByRound.join("");
   const isInvalid = /INVALID/.test(inputScore);
 
   const inputToDisplay =
@@ -75,7 +75,7 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
 
   return (
     <>
-      {inputMethod === "byDart" && gameData[activePlayer] === player ? (
+      {inputMethod === "byDart" && active && !isInvalid ? (
         <INPUT_BY_DART_FIELD
           inputByDart={inputByDart}
           activePlayer={activePlayer}
@@ -83,7 +83,7 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
       ) : (
         <PlayerInputInfo
           isInvalid={isInvalid}
-          active={player === gameData[activePlayer]}
+          active={active}
           ap={activePlayer}
           style={{ borderColor }}
         >

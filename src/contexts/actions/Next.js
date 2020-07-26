@@ -5,7 +5,7 @@ import { GameContext } from "../GameContext";
 const Next = (state, score, initialState) => {
   const { dispatchGameData } = useContext(GameContext);
 
-  const { whichDart, inputByDart } = state;
+  const { whichDart, inputByDart, inputMethod } = state;
   let { first, second, third } = inputByDart;
 
   const convert = (value) =>
@@ -40,9 +40,6 @@ const Next = (state, score, initialState) => {
     return newScore !== 1 && newScore >= 0;
   };
 
-  console.log("NEWSCORE", newScore);
-  console.log("CHECK", check(0));
-  console.log("CHECKNEWSOCRE", checkNewScore());
   const isValid = () => checkNewScore() && check();
 
   if (isValid()) {
@@ -83,6 +80,7 @@ const Next = (state, score, initialState) => {
     dispatchGameData({ type: "UPDATE_BY_DART", scoreToSubmit, newScore });
     return {
       ...initialState,
+      inputMethod,
       inputArray: ["INVALID"],
       inputByRound: ["INVALID"],
     };

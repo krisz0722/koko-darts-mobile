@@ -51,7 +51,7 @@ font-size:20;
 `;
 
 const CHOOSE_PLAYER_MODAL = React.memo(
-  ({ p2, handleModal, chooseGuest, chooseProfile, visible }) => {
+  ({ p1, p2, handleModal, chooseGuest, chooseProfile, visible }) => {
     const { theme, animation } = useContext(ThemeContext);
 
     const animationType = animation
@@ -64,7 +64,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
 
     const handleRegExp = (val) => setRegexp(val);
 
-    console.log("RENDER CHOOSE PLAYER MODAL");
+    const opponent = p1.key === "USER" ? p2 : p1;
 
     return (
       <Modal
@@ -86,7 +86,10 @@ const CHOOSE_PLAYER_MODAL = React.memo(
                 theme={theme}
                 onChangeText={handleRegExp}
               />
-              <LIST_OPPONENTS p2={p2} chooseProfile={chooseProfile} />
+              <LIST_OPPONENTS
+                opponent={opponent}
+                chooseProfile={chooseProfile}
+              />
               <BottomButtons theme={theme}>
                 <THEMED_BUTTON
                   size={"small"}

@@ -29,10 +29,10 @@ export const Name = styled(Text)`
   font-size: 15;
 `;
 
-const OPPONENT_COMPONENT = ({ chooseProfile, p2, item }) => {
+const OPPONENT_COMPONENT = ({ chooseProfile, opponent, item }) => {
   const { theme } = useContext(ThemeContext);
 
-  const active = p2 ? p2.key === item.key : false;
+  const active = opponent ? opponent.key === item.key : false;
 
   return (
     <Opponent active={active} onPress={() => chooseProfile(item)} theme={theme}>

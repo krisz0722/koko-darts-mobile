@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useCallback, useEffect } from "react";
 import { Animated } from "react-native";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { FlexRow } from "../../../styles/css_mixins";
@@ -30,31 +30,12 @@ const CLASSIC_BOTTOM = (props) => {
   const playerDATA = gameData[playerKey];
   const canGoBack = gameData[inactivePlayer + "_DATA"].canGoBack;
 
-  useEffect(() => {
-    const { first, second, third } = inputByDart;
-    const scoreToSubmit = first + second + third;
-    if (whichDart === 4) {
-      dispatchGameData({
-        type: "SUBMIT",
-        playerKey,
-        value: scoreToSubmit,
-        method: "UPDATE",
-      });
-      dispatchInput({ type: "SET_DEFAULT" });
-    }
-  }, [
-    playerKey,
-    activePlayer,
-    dispatchGameData,
-    dispatchInput,
-    inputByDart,
-    whichDart,
-  ]);
-
   const backOrClear =
     inputByRound[0] === "" && inputByDart.first[0] === "" && canGoBack
       ? "UNDO"
       : "CLEAR";
+
+  const okOrNext = inputMethod === "byDart" && whichDart !== 3 ? "NEXT" : "OK";
 
   const dispatchUndoOrClear = () => {
     if (backOrClear === "CLEAR") {
@@ -63,8 +44,6 @@ const CLASSIC_BOTTOM = (props) => {
       dispatchGameData({ type: "UNDO" });
     }
   };
-
-  const okOrNext = inputMethod === "byDart" && whichDart !== 3 ? "NEXT" : "OK";
 
   const dispatchOkOrNext = () => {
     if (inputMethod === "byDart") {
@@ -88,6 +67,13 @@ const CLASSIC_BOTTOM = (props) => {
       }
     }
   };
+
+  const typeMethod = useCallback(
+    (value) => {
+      dispatchInput({ type: "TYPE", value });
+    },
+    [dispatchInput],
+  );
 
   const DATA_BOTTOM = [
     1,
@@ -113,6 +99,27 @@ const CLASSIC_BOTTOM = (props) => {
     },
   ];
 
+  useEffect(() => {
+    const { first, second, third } = inputByDart;
+    const scoreToSubmit = first + second + third;
+    if (whichDart === 4) {
+      dispatchGameData({
+        type: "SUBMIT",
+        playerKey,
+        value: scoreToSubmit,
+        method: "UPDATE",
+      });
+      dispatchInput({ type: "SET_DEFAULT" });
+    }
+  }, [
+    playerKey,
+    activePlayer,
+    dispatchGameData,
+    dispatchInput,
+    inputByDart,
+    whichDart,
+  ]);
+
   return (
     <ClassicBottom>
       {DATA_BOTTOM.map((item) => {
@@ -124,6 +131,8 @@ const CLASSIC_BOTTOM = (props) => {
               theme={theme}
               key={item.value}
               value={item}
+              inputMethod={inputMethod}
+              typeMethod={typeMethod}
             />
           );
         } else {

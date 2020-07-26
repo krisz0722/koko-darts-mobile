@@ -14,19 +14,15 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
+  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
+  const { dispatchGameData } = useContext(GameContext);
+  const isFocused = useIsFocused();
 
-  console.log("PREGAME NAVIGATION", navigation);
   const {
     settings,
     dispatchSettings,
     settings: { p1, p2, legOrSet, toWin, legsPerSet, startingScore },
   } = useContext(SettingsContext);
-
-  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
-
-  const isFocused = useIsFocused();
-
-  console.log("PeKEY", p2.key);
 
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
   const [stateStartingScore, setStartingScore] = useState(startingScore);
@@ -47,8 +43,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     toWin: stateToWin,
     legsPerSet: stateLegsPerSet,
   };
-
-  const { dispatchGameData } = useContext(GameContext);
 
   useEffect(() => {
     if (isFocused) {
@@ -125,8 +119,13 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   };
 
   const chooseGuest = () => {
-    dispatchInGameSettings({ type: "CHOOSE_OPPONENT", value: "GUEST" });
+    const guest = { key: "GUEST", img: "" };
     setModal(false);
+    if (stateP2 === p1) {
+      setP1(guest);
+    } else {
+      setP2(guest);
+    }
   };
 
   const chooseProfile = (val) => {
@@ -190,6 +189,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
         />
       </BottomButtons>
       <CHOOSE_PLAYER_MODAL
+        p1={stateP1}
         p2={stateP2}
         chooseGuest={chooseGuest}
         chooseProfile={chooseProfile}

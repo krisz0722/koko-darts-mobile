@@ -20,11 +20,15 @@ export const ProfilesContainer = styled(FlatList)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
-const LIST_OPPONENTS = ({ p2, chooseProfile, regexp }) => {
+const LIST_OPPONENTS = ({ opponent, chooseProfile, regexp }) => {
   const { theme } = useContext(ThemeContext);
 
   const renderItem = ({ item }) => (
-    <OPPONENT_COMPONENT p2={p2} chooseProfile={chooseProfile} item={item} />
+    <OPPONENT_COMPONENT
+      opponent={opponent}
+      chooseProfile={chooseProfile}
+      item={item}
+    />
   );
 
   return (

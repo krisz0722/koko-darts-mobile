@@ -37,9 +37,15 @@ export default App;
 //TODO SOLVED turn drawer gesture off
 //TODO SOLVED score animation does not work
 
-//TODO next throws rules of hooks error -> know how to fix
-//TODO dont show homneavigator until all the components are mounted --> later
-//TODO score can go below 0 !!!!!! validation fix is required in NEXT and SUBMIT functions!
+//TODO score animation does not work
+//TODO setDrawer function error
+//TODO unmounting homenavigator when navigating to pregame --> settingsContext problem??
+
+//TODO next function is slow
+//TODO dont show homneavigator until all the components are mounted
+
+//TODO turn drawer gesture off
+//TODO remoing opacity provider
 
 //TODO finish auth screens
 //TODO auth screen regexp and info text

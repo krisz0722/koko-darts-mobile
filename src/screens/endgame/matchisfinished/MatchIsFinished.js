@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
   View_Headers,
@@ -14,8 +14,9 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 import CUSTOM_TAB_NAVIGATOR from "../../../navigators/CustomTabNavigator";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { InGameSettingsContext } from "../../../contexts/InGameSettingsContext";
+import EXIT_APP_ALERT from "../../../components/modals/ExitAppAlert";
 
-const MATCH_IS_FINISHED = (props) => {
+const MATCH_IS_FINISHED = React.memo((props) => {
   const { theme } = useContext(ThemeContext);
 
   const {
@@ -24,44 +25,29 @@ const MATCH_IS_FINISHED = (props) => {
     gameData: { winner },
   } = useContext(GameContext);
 
-  const { dispatchSettings, settings } = useContext(SettingsContext);
+  const { settings } = useContext(SettingsContext);
   const { dispatchInGameSettings } = useContext(InGameSettingsContext);
+  const [exitModal, setExitModal] = useState(false);
 
   const navigation = useNavigation();
 
-  const winnerName = winner ? gameData[winner].key : "";
+  const backAction = () => {
+    setExitModal(true);
+    return true;
+  };
 
+  const backHandler = BackHandler.addEventListener(
+    "hardwareBackPress",
+    backAction,
+  );
   useEffect(() => {
-    const backAction = () => {
-      (async () => {
-        const dispatch = () => {
-          dispatchInGameSettings({ type: "LOAD_SETTINGS", value: settings });
-          dispatchGameData({ type: "LOAD_SETTINGS", value: settings });
-        };
-
-        await dispatch();
-
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{ name: "homenavigator" }],
-          }),
-        );
-      })();
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction,
-    );
     return () => backHandler.remove();
-  }, [
-    settings,
-    dispatchGameData,
-    dispatchInGameSettings,
-    dispatchSettings,
-    navigation,
-  ]);
+  }, [backHandler]);
+
+  const handleExitApp = () => {
+    BackHandler.exitApp();
+    setExitModal(!exitModal);
+  };
 
   const TABS = [
     {
@@ -94,20 +80,29 @@ const MATCH_IS_FINISHED = (props) => {
     },
   ];
 
+  const winnerName = winner ? gameData[winner].key : "";
+
   return (
-    <View_Screen>
-      <View_Headers theme={theme}>
-        <Text_Title
-          theme={theme}
-        >{`${winnerName} has won the match!`}</Text_Title>
-        <Text_Subtitle theme={theme}>congratulations!</Text_Subtitle>
-      </View_Headers>
-      <View_Shape theme={theme}>
-        <ShapeThrow fill={theme.bg3} />
-      </View_Shape>
-      <CUSTOM_TAB_NAVIGATOR tabs={TABS} />
-    </View_Screen>
+    <>
+      <View_Screen>
+        <View_Headers theme={theme}>
+          <Text_Title
+            theme={theme}
+          >{`${winnerName} has won the match!`}</Text_Title>
+          <Text_Subtitle theme={theme}>congratulations!</Text_Subtitle>
+        </View_Headers>
+        <View_Shape theme={theme}>
+          <ShapeThrow fill={theme.bg3} />
+        </View_Shape>
+        <CUSTOM_TAB_NAVIGATOR tabs={TABS} />
+      </View_Screen>
+      <EXIT_APP_ALERT
+        action1={() => setExitModal(!exitModal)}
+        action2={handleExitApp}
+        visible={exitModal}
+      />
+    </>
   );
-};
+});
 
 export default MATCH_IS_FINISHED;

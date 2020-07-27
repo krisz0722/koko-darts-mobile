@@ -11,8 +11,6 @@ import {
   Buttons,
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { BackHandler } from "react-native";
-import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
 import UNFINISHED_MATCH from "./DataUnfinished";
 import LAST_MATCH from "./DataLastMatch";
 import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
@@ -22,22 +20,8 @@ const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const [unfinished, setUnfinished] = useState(true);
-  const [exitModal, setExitModal] = useState(false);
+
   const [newGameModal, setNewGameModal] = useState(false);
-
-  useEffect(() => {
-    const backAction = () => {
-      setExitModal(true);
-      return true;
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction,
-    );
-
-    return () => backHandler.remove();
-  }, []);
 
   const renderContent = unfinished ? UNFINISHED_MATCH : LAST_MATCH;
 
@@ -56,11 +40,6 @@ const HOME = React.memo(({ navigation }) => {
     setTimeout(() => {
       setNewGameModal(!newGameModal);
     }, 300);
-  };
-
-  const handleExitApp = () => {
-    BackHandler.exitApp();
-    setExitModal(!exitModal);
   };
 
   console.log("RENDER HOME SCREEN");
@@ -100,11 +79,7 @@ const HOME = React.memo(({ navigation }) => {
           action={() => handleNewGame()}
         />
       </Buttons>
-      <EXIT_APP_ALERT
-        action1={() => setExitModal(!exitModal)}
-        action2={handleExitApp}
-        visible={exitModal}
-      />
+
       <NEW_GAME_ALERT
         action1={() => setNewGameModal(!newGameModal)}
         action2={handleNewGameModal}

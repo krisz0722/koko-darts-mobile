@@ -72,15 +72,17 @@ const HomeNavigator = () => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
 
   return (
-    <Navigator
-      timingConfig={{ duration: 1 }}
-      tabBarPosition={"bottom"}
-      tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
-    >
-      <Screen name="home" component={HOME} />
-      <Screen name="settings" component={SETTINGS} />
-      <Screen name="profile" component={PROFILE} />
-    </Navigator>
+    <>
+      <Navigator
+        timingConfig={{ duration: 1 }}
+        tabBarPosition={"bottom"}
+        tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
+      >
+        <Screen name="home" component={HOME} />
+        <Screen name="settings" component={SETTINGS} />
+        <Screen name="profile" component={PROFILE} />
+      </Navigator>
+    </>
   );
 };
 

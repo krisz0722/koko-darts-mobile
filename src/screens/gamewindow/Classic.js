@@ -12,12 +12,12 @@ import CLASSIC_BOTTOM from "../../components/classic/Bottom/ClassicBottom";
 import CLASSIC_TOP from "../../components/classic/Top/ClassicTop";
 import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
 import { GameContext } from "../../contexts/GameContext";
-import LEAVE_MATCH_ALERT from "../../components/modals/LeaveMatchAlert";
 import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 import { InputContextProvider } from "../../contexts/InputContext";
 import { useNavigation } from "@react-navigation/native";
+import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
 
 const GAME_CLASSIC = React.memo((props) => {
   const { ingame = true, preview, settings } = props;
@@ -36,11 +36,33 @@ const GAME_CLASSIC = React.memo((props) => {
 
   const drawerValue = useRef(new Animated.Value(!drawer ? 1 : 0)).current;
 
-  const [modal, setModal] = useState(false);
+  const [exitModal, setExitModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [showStats, setShowStats] = useState(false);
 
+  const toggleShowStats = useCallback(() => {
+    setShowStats(!showStats);
+  }, [showStats]);
+
   const navigation = useNavigation();
+
+  const backAction = () => {
+    setExitModal(true);
+    return true;
+  };
+
+  const backHandler = BackHandler.addEventListener(
+    "hardwareBackPress",
+    backAction,
+  );
+  useEffect(() => {
+    return () => backHandler.remove();
+  }, [backHandler]);
+
+  const handleExitApp = () => {
+    BackHandler.exitApp();
+    setExitModal(!exitModal);
+  };
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 0 : 1),
@@ -66,27 +88,6 @@ const GAME_CLASSIC = React.memo((props) => {
     drawerValue,
     drawer,
   ]);
-
-  const toggleShowStats = useCallback(() => {
-    setShowStats(!showStats);
-  }, [showStats]);
-
-  useEffect(() => {
-    const backAction = () => {
-      setModal(true);
-      return true;
-    };
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction,
-    );
-    return () => backHandler.remove();
-  }, [navigation]);
-
-  const handleLeaveMatch = () => {
-    setModal(false);
-    navigation.navigate("homenavigator");
-  };
 
   const opacity1 = animationToUse
     ? animationValue.interpolate({
@@ -176,10 +177,10 @@ const GAME_CLASSIC = React.memo((props) => {
           p2Data={p2_DATA}
         />
       </InputContextProvider>
-      <LEAVE_MATCH_ALERT
-        action1={() => setModal(!modal)}
-        action2={handleLeaveMatch}
-        visible={modal}
+      <EXIT_APP_ALERT
+        action1={() => setExitModal(!exitModal)}
+        action2={handleExitApp}
+        visible={exitModal}
       />
     </GameWindow>
   );

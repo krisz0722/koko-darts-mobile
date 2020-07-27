@@ -13,10 +13,10 @@ import {
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
 import { BackHandler } from "react-native";
-import LEAVE_MATCH_ALERT from "../../../components/modals/LeaveMatchAlert";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import CUSTOM_TAB_NAVIGATOR from "../../../navigators/CustomTabNavigator";
 import { InGameSettingsContext } from "../../../contexts/InGameSettingsContext";
+import EXIT_APP_ALERT from "../../../components/modals/ExitAppAlert";
 const LEG_IS_FINISHED = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
@@ -47,41 +47,34 @@ const LEG_IS_FINISHED = ({ navigation }) => {
     return null;
   };
 
-  console.log("NOOOOOOD", nod() === 3);
-
   const [lastRoundNod, setLastRoundNod] = useState(nod() === 3 ? 3 : null);
-  const [modal, setModal] = useState(false);
+  const [exitModal, setExitModal] = useState(false);
 
-  console.log("LASTROudnod", lastRoundNod);
+  const backAction = () => {
+    setExitModal(true);
+    return true;
+  };
+
+  const backHandler = BackHandler.addEventListener(
+    "hardwareBackPress",
+    backAction,
+  );
+  useEffect(() => {
+    return () => backHandler.remove();
+  }, [backHandler]);
+
+  const handleExitApp = () => {
+    BackHandler.exitApp();
+    setExitModal(!exitModal);
+  };
+
   useEffect(() => {
     if (isMatchOver) {
       navigation.navigate("matchisfinished");
     }
   }, [isMatchOver, navigation]);
 
-  useEffect(() => {
-    const backAction = () => {
-      setModal(true);
-      return true;
-    };
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction,
-    );
-    return () => backHandler.remove();
-  }, []);
-
-  useEffect(() => {
-    console.log("UNMOUNTIIIIIING LEGISFINISHED");
-    return () => setModal(false);
-  });
-
-  const handleLeaveMatch = () => {
-    navigation.navigate("homenavigator");
-  };
-
   const handleLastDartNod = (val) => setLastRoundNod(val);
-
   const OPTIONS = nod() === 3 ? [3] : nod() === 2 ? [2, 3] : [1, 2, 3];
 
   const TABS = [
@@ -141,10 +134,10 @@ const LEG_IS_FINISHED = ({ navigation }) => {
         </View_Shape>
       </View_Screen>
       <CUSTOM_TAB_NAVIGATOR tabs={TABS} />
-      <LEAVE_MATCH_ALERT
-        action1={() => setModal(!modal)}
-        action2={handleLeaveMatch}
-        visible={modal}
+      <EXIT_APP_ALERT
+        action1={() => setExitModal(!exitModal)}
+        action2={handleExitApp}
+        visible={exitModal}
       />
     </>
   );

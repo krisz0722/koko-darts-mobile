@@ -64,7 +64,7 @@ const THEMED_BUTTON = ({
           ) : icon === "threedart" ? (
             <IconThreeDart fill={theme.text} size={15} />
           ) : (
-            <Icon name={icon} size={25} color={theme.text} />
+            <Icon name={icon} size={25} color={theme.buttonType[type].color} />
           )
         ) : null}
         <Text_Button_Login size={size} icon={icon} type={type} heme={theme}>

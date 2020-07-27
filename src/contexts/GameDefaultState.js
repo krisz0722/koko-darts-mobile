@@ -30,7 +30,7 @@ const DEFAULT_PLAYER_DATA = {
 
   //  NOTABLE STATS
   highestCheckout: 0,
-  bestavgLeg: 0,
+  bestAvgLeg: 0,
   bestLegByDartsUsed: 0,
   doublePercentage: 0,
 

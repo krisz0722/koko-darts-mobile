@@ -13,7 +13,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
     dartsUsedInLeg,
     bestLegByDartsUsed,
     avgLeg,
-    bestavgLeg,
+    bestAvgLeg,
     numOfCoDarts,
     lastScore,
     highestCheckout,
@@ -27,7 +27,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
     dartsUsedInLeg < bestLegByDartsUsed || bestLegByDartsUsed === 0
       ? dartsUsedInLeg
       : bestLegByDartsUsed;
-  bestavgLeg = avgLeg < bestavgLeg || bestavgLeg === 0 ? avgLeg : bestavgLeg;
+  bestAvgLeg = avgLeg < bestAvgLeg || bestAvgLeg === 0 ? avgLeg : bestAvgLeg;
   highestCheckout = lastScore > highestCheckout ? lastScore : highestCheckout;
 
   const doublePercentage = `${((legsWon / numOfCoDarts) * 100).toFixed(1)}%`;
@@ -57,7 +57,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
       numOfCoDarts: numOfCoDarts,
       doublePercentage: doublePercentage,
       bestLegByDartsUsed: bestLegByDartsUsed,
-      bestavgLeg: bestavgLeg,
+      bestAvgLeg: bestAvgLeg,
       highestCheckout: highestCheckout,
       canGoBack: false,
     },

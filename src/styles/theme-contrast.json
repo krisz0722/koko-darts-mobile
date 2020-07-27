@@ -27,7 +27,7 @@
   "stroke2": "rgb(235, 87, 87)",
   "textLight": "rgb(255, 255, 255)",
   "border": "0.07 rgba(255,255,255,0.5)",
-  "borderWidth": 2,
+  "borderWidth": 1,
   "borderColor": "rgb(235, 87, 87)",
 
   "buttonType": {
@@ -120,7 +120,10 @@
   },
 
   "stats": {
-    "fontSize": 1
+    "name": 15,
+    "scoreMain": 35,
+    "scoreSub": 20,
+    "stat": 14
   },
 
   "game": {

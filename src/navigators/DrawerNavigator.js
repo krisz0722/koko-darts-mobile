@@ -14,6 +14,7 @@ import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinishe
 import REMATCH from "../screens/endgame/rematch/Rematch";
 import LEAVE_MATCH_ALERT from "../components/modals/LeaveMatchAlert";
 import { CommonActions } from "@react-navigation/native";
+import STATS from "../screens/stats/Stats";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -25,7 +26,12 @@ export const DrawerContent = styled(View)`
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const DRAWER_CONTENT = ({ navigation, toggleModal, inactivePlayer }) => {
+const DRAWER_CONTENT = ({
+  navigation,
+  gameData,
+  toggleModal,
+  inactivePlayer,
+}) => {
   const { theme } = useContext(ThemeContext);
 
   const DRAWER_ITEMS = [
@@ -37,7 +43,7 @@ const DRAWER_CONTENT = ({ navigation, toggleModal, inactivePlayer }) => {
     {
       route: "stats",
       icon: "show-chart",
-      action: () => navigation.navigate("settings-ingame"),
+      action: () => navigation.navigate("stats", { gameData, back: "game" }),
     },
     {
       route: "home",
@@ -69,6 +75,7 @@ const DrawerNavigator = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const {
+    gameData,
     gameData: { activePlayer, inactivePlayer },
   } = useContext(GameContext);
 
@@ -99,6 +106,7 @@ const DrawerNavigator = ({ navigation }) => {
         drawerContent={(props) => (
           <DRAWER_CONTENT
             toggleModal={() => setModal(!modal)}
+            gameData={gameData}
             inactivePlayer={inactivePlayer}
             {...props}
           />
@@ -110,7 +118,7 @@ const DrawerNavigator = ({ navigation }) => {
         <Screen name="pregame" component={PREGAME_SETTINGS} />
         <Screen name="game" component={GAME_CLASSIC} />
         <Screen name="settings-ingame" component={SETTINGS_INGAME} />
-        <Screen name="stats" component={SETTINGS_INGAME} />
+        <Screen name="stats" component={STATS} />
         <Screen name="legisfinished" component={LEG_IS_FINISHED} />
         <Screen name="matchisfinished" component={MATCH_IS_FINISHED} />
         <Screen name="rematch" component={REMATCH} />

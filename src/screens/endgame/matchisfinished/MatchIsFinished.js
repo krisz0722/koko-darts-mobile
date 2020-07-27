@@ -67,10 +67,11 @@ const MATCH_IS_FINISHED = React.memo((props) => {
     },
 
     {
-      route: "game",
+      route: "stats",
       text: "show stats",
       icon: "show-chart",
-      action: () => navigation.navigate("game"),
+      action: () =>
+        navigation.navigate("stats", { gameData, back: "matchisfinished" }),
     },
     {
       route: "rematch",

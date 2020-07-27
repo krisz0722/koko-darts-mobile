@@ -7,7 +7,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 export const Opponent = styled(TouchableOpacity)`
   ${FlexRowAround};
 
-  padding: 2.5%;
+  padding: 2.5% 10%;
   background-color: ${({ theme, active }) =>
     active ? theme.bgActive : "transparent"};
 `;
@@ -25,8 +25,8 @@ export const Name = styled(Text)`
   ${BasicText};  
   text-align:left;
   color: ${({ theme, active }) => (active ? theme.text2 : theme.text)}
-  width: 50%;
-  font-size: 15;
+  width: 75%;
+  font-size: ${({ theme }) => theme.opponent};
 `;
 
 const OPPONENT_COMPONENT = ({ chooseProfile, opponent, item }) => {

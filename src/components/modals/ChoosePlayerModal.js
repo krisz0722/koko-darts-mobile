@@ -81,11 +81,6 @@ const CHOOSE_PLAYER_MODAL = React.memo(
           >
             <Container>
               <Header>CHOOSE AN OPPONENT</Header>
-              <SearchBar
-                placeholderTextColor={theme.borderColor}
-                theme={theme}
-                onChangeText={handleRegExp}
-              />
               <LIST_OPPONENTS
                 opponent={opponent}
                 chooseProfile={chooseProfile}

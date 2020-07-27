@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
 import CheckBox from "@react-native-community/checkbox";
 import { ThemeContext } from "../../contexts/ThemeContext";
-export const Profile = styled(View)`
+export const Profile = styled(TouchableOpacity)`
   ${FlexRowAround};
   margin: auto;
   margin: 2.5%;
@@ -22,9 +22,9 @@ export const ProfileAvatar = styled(Image)`
 export const Name = styled(Text)`
   ${BasicText};  
   text-align:left;
-  color: ${({ theme }) => theme.text}
-  width: 50%;
-  font-size: 15;
+  color: ${({ theme, active }) => (active ? theme.text2 : theme.text)}
+  width: 70%;
+  font-size: ${({ theme }) => theme.opponent};
 `;
 
 const PROFILE_COMPONENT = ({ item }) => {
@@ -38,7 +38,7 @@ const PROFILE_COMPONENT = ({ item }) => {
   };
 
   return (
-    <Profile theme={theme}>
+    <Profile onPress={() => toggleChecked(item)} theme={theme}>
       <ProfileAvatar theme={theme} resizeMode={"cover"} source={item.img} />
       <Name>{item.key}</Name>
       <CheckBox

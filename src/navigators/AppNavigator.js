@@ -31,6 +31,10 @@ const { Navigator, Screen } = createStackNavigator();
 const AppNavigator = () => {
   const SCREENS = [
     {
+      component: HomeNavigator,
+      name: "homenavigator",
+    },
+    {
       component: DrawerNavigator,
       name: "drawernavigator",
     },
@@ -38,10 +42,7 @@ const AppNavigator = () => {
       component: WELCOME,
       name: "welcome",
     },
-    {
-      component: HomeNavigator,
-      name: "homenavigator",
-    },
+
     {
       component: REGISTER,
       name: "register",

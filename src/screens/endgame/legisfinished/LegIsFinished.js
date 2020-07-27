@@ -103,7 +103,6 @@ const LEG_IS_FINISHED = ({ navigation }) => {
             });
           navigation.navigate("game");
         } else {
-          alert("BAJ");
         }
       },
     },

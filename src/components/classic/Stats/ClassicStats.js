@@ -104,6 +104,13 @@ const CLASSIC_STATS = React.memo((props) => {
     ? "35%"
     : "45%";
 
+  const sixtyPlus = (player) =>
+    player === "p1"
+      ? p1_DATA["60"] + p1_DATA["80"]
+      : p2_DATA["60"] + p2_DATA["80"];
+
+  console.log(sixtyPlus("p1"));
+
   return (
     <>
       <ClassicStatsPlayer1
@@ -142,7 +149,7 @@ const CLASSIC_STATS = React.memo((props) => {
                 {item.name}
               </StatText3>
               <StatText4 player={"p1"} theme={theme}>
-                {item.value}
+                {item.name === "60+" ? sixtyPlus("p1") : p1_DATA[item.value]}
               </StatText4>
             </StatRow>
           ))}
@@ -184,7 +191,7 @@ const CLASSIC_STATS = React.memo((props) => {
                 {item.name}
               </StatText3>
               <StatText4 player={"p2"} theme={theme}>
-                {item.value}
+                {item.name === "60+" ? sixtyPlus("p2") : p2_DATA[item.value]}
               </StatText4>
             </StatRow>
           ))}

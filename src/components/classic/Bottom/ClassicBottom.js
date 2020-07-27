@@ -117,7 +117,11 @@ const CLASSIC_BOTTOM = (props) => {
       }
     } else {
       const scoreToSubmit = parseInt(inputByRound.join(""));
-      const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;
+      const newScore = playerScore - scoreToSubmit;
+      const isValid =
+        VALIDSCORES.indexOf(scoreToSubmit) !== -1 &&
+        newScore >= 0 &&
+        newScore !== 1;
       if (isValid) {
         dispatchGameData({
           type: "SUBMIT",

@@ -107,8 +107,11 @@
 
   "profile": {
     "name": 15,
-    "stat": 15
+    "stat": 12.5
   },
+
+  "opponent": 17.5,
+
 
   "friends": {
     "name": 15,

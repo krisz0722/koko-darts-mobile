@@ -8,7 +8,6 @@ const PlayerInfoAvatar = styled(Animated.View)`
   height: 100%;
   position: absolute;
   top: 0;
-  background-color: blue;
 `;
 
 export const Avatar1 = styled(PlayerInfoAvatar)`

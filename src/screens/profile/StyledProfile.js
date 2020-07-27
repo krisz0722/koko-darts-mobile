@@ -24,7 +24,7 @@ export const Container = styled(View)`
 
 export const Container2 = styled(Container)`
   width: 60%;
-  border-left-width: 2px;
+  padding: 5% 0;
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
@@ -44,17 +44,20 @@ export const Name = styled(Text)`
 
 export const Field = styled(View)`
   ${FlexRowBetween};
-  width: 100%;
+  width: 90%;
   padding-right: 5%;
   padding-left: 5%;
+  height: 15%;
+  color: ${({ theme }) => theme.text2};
+  background-color: ${({ theme }) => theme.text};
 `;
 
 export const Stat = styled(Text)`
-  ${BasicText};
+  ${BasicTextBold};
   text-align: left;
   width: 70%;
   font-size: ${({ theme }) => theme.profile.stat};
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.text2};
 `;
 
 export const StatValue = styled(Stat)`

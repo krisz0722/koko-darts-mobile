@@ -7,7 +7,7 @@ import OPPONENT_COMPONENT from "./ComponentOpponent";
 import FRIENDS_LIST from "./data/DataFriends";
 import { BorderVertical } from "../../styles/css_mixins";
 export const Safe = styled(SafeAreaView)`
-  height: 40%;
+  height: 50%;
   width: 100%;
   background-color: ${({ theme }) => theme.text2};
 `;

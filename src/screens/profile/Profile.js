@@ -40,7 +40,7 @@ const PROFILE = ({ navigation }) => {
         </Container>
         <Container2 theme={theme}>
           {PROFILE_STATS.map((item) => (
-            <Field key={item.stat}>
+            <Field theme={theme} key={item.stat}>
               <Stat theme={theme}>{item.stat}</Stat>
               <StatValue>{item.value}</StatValue>
             </Field>

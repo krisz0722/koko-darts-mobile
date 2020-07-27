@@ -22,7 +22,7 @@ const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
   const newScore =
     type === "UNDO"
       ? score + scoreToSubmit
-      : "SUBMIT"
+      : type === "SUBMIT"
       ? score - scoreToSubmit
       : score;
 

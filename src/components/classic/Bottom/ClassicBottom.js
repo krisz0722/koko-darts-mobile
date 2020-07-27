@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useEffect } from "react";
+import React, { useContext, useCallback, useEffect } from "react";
 import { Animated } from "react-native";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { FlexRow } from "../../../styles/css_mixins";
@@ -8,6 +8,7 @@ import { InputContext } from "../../../contexts/InputContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { VALIDSCORES } from "../../../calc/scores";
 import { useNavigation } from "@react-navigation/native";
+import nextValidation from "../../../contexts/actions/nextValidation";
 
 export const ClassicBottom = styled(Animated.View)`
   ${FlexRow};
@@ -74,10 +75,46 @@ const CLASSIC_BOTTOM = (props) => {
   const dispatchOkOrNext = () => {
     const playerScore = playerDATA.score;
     if (inputMethod === "byDart") {
-      dispatchInput({
-        type: "NEXT",
-        value: playerScore,
-      });
+      const validationResult = nextValidation(
+        inputByDart,
+        whichDart,
+        playerScore,
+      );
+
+      const {
+        valid,
+        scoreToSubmit,
+        scoreToSubmitWhenInvalid,
+        first,
+        second,
+        third,
+        prevScore,
+        newScore,
+        newIndex,
+      } = validationResult;
+
+      if (valid) {
+        dispatchInput({
+          type: "NEXT",
+          first,
+          second,
+          third,
+          newIndex,
+        });
+
+        dispatchGameData({ type: "UPDATE_BY_DART", scoreToSubmit, newScore });
+      } else {
+        dispatchInput({
+          type: "INVALID",
+          inputMethod,
+        });
+
+        dispatchGameData({
+          type: "UPDATE_BY_DART",
+          scoreToSubmitWhenInvalid,
+          newScore: prevScore,
+        });
+      }
     } else {
       const scoreToSubmit = parseInt(inputByRound.join(""));
       const isValid = VALIDSCORES.indexOf(scoreToSubmit) !== -1;

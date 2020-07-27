@@ -95,6 +95,7 @@ const DrawerNavigator = ({ navigation }) => {
     <>
       <Navigator
         backBehavior={"initialRoute"}
+        screenOptions={{ swipeEnabled: false }}
         drawerContent={(props) => (
           <DRAWER_CONTENT
             toggleModal={() => setModal(!modal)}

@@ -87,7 +87,7 @@ const CLASSIC_SCORES = React.memo((props) => {
     : "30%";
 
   return (
-    <ClassicScores style={{ top, height }} showStats={showStats}>
+    <ClassicScores style={{ top, height, borderColor }} showStats={showStats}>
       <ClassicCheckoutsP1
         style={{ borderColor }}
         theme={theme}
@@ -103,6 +103,7 @@ const CLASSIC_SCORES = React.memo((props) => {
         <PLAYER_CHECKOUTS theme={theme} playerData={p2_DATA} />
       </ClassicCheckoutsP2>
       <PLAYER_SCORE
+        animation={animation}
         ingame={ingame}
         theme={theme}
         activePlayer={activePlayer}

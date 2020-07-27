@@ -32,7 +32,6 @@ const CLASSIC_MIDDLE = React.memo((props) => {
 
   const {
     dispatchInput,
-
     inputContext: { whichDart, inputByDart, inputMethod },
   } = useContext(InputContext);
 
@@ -46,8 +45,9 @@ const CLASSIC_MIDDLE = React.memo((props) => {
   }, [setDrawer, navigation, drawer]);
 
   const submitBust = useCallback(() => {
+    dispatchInput({ type: "SET_DEFAULT" });
     dispatchGameData({ type: "BUST" });
-  }, [dispatchGameData]);
+  }, [dispatchInput, dispatchGameData]);
 
   const changeInput = () => {
     const apKey = gameData.activePlayer + "_DATA";

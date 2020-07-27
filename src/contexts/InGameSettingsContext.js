@@ -14,6 +14,8 @@ export const InGameSettingsContextProvider = (props) => {
     switch (action.type) {
       case "LOAD_SETTINGS":
         return action.value;
+      case "REMATCH":
+        return { ...action.value, p1: action.p1, p2: action.p2 };
       case "CHOOSE_OPPONENT":
         return { ...state, p2: action.value };
       case "CHANGE_LAYOUT":

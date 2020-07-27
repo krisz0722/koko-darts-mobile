@@ -22,9 +22,8 @@ import { useNavigation } from "@react-navigation/native";
 const GAME_CLASSIC = React.memo((props) => {
   const { ingame = true, preview, settings } = props;
 
-  console.log("NAVIGATIOON", props);
   const {
-    gameData: { p1_DATA, p2_DATA, activePlayer, inactivePlayer, isLegOver },
+    gameData: { p1_DATA, p2_DATA, activePlayer, inactivePlayer },
   } = useContext(GameContext);
 
   const { inGameSettings } = useContext(InGameSettingsContext);
@@ -58,15 +57,11 @@ const GAME_CLASSIC = React.memo((props) => {
         duration: 300,
       }).start();
     }
-    if (isLegOver) {
-      navigation.navigate("legisfinished");
-    }
   }, [
     animationToUse,
     animationValue,
     activePlayer,
     preview,
-    isLegOver,
     navigation,
     drawerValue,
     drawer,

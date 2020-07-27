@@ -1,11 +1,7 @@
-const finishLeg = (state, nodUsed, nodRequired) => {
-  const {
-    activePlayer,
-    inactivePlayer,
-    legOrSet,
-    toWin,
-    startingScore,
-  } = state;
+const finishLeg = (state, nodUsed, nodRequired, settings) => {
+  const { activePlayer, inactivePlayer } = state;
+
+  const { legOrSet, toWin, startingScore } = settings;
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
 
@@ -90,7 +86,7 @@ const finishLeg = (state, nodUsed, nodRequired) => {
     isMatchOver: isMatchOver(),
     isLegOver: false,
     status: isMatchOver() ? "finished" : "pending",
-    winner: isMatchOver() ? state[inactivePlayer] : null,
+    winner: isMatchOver() ? inactivePlayer : null,
   };
 };
 

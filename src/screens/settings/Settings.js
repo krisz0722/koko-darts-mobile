@@ -23,6 +23,8 @@ const SETTINGS = () => {
   //axios DB get
 
   const USER_SETTINGS = {
+    p1: { key: "USER", img: "" },
+    p2: { key: null, img: "" },
     layout: "classic",
     theme: "default",
     legOrSet: "set",
@@ -32,6 +34,8 @@ const SETTINGS = () => {
     opacity: true,
     animation: true,
   };
+
+  //axios DB get
 
   const [preview, setPreview] = useState(false);
 
@@ -162,10 +166,16 @@ const SETTINGS = () => {
     setLegOrSet(legOrSet);
     setStartingScore(startingScore);
 
-    dispatchSettings({ type: "RESET", value: USER_SETTINGS });
+    dispatchSettings({ type: "RESET", value: newSettings });
     setSelectedTheme(USER_SETTINGS.theme);
     setBackground(true);
-  }, [setBackground, setSelectedTheme, dispatchSettings, USER_SETTINGS]);
+  }, [
+    setBackground,
+    setSelectedTheme,
+    dispatchSettings,
+    newSettings,
+    USER_SETTINGS,
+  ]);
 
   return (
     <>

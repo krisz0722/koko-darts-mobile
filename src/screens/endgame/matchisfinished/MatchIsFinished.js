@@ -7,45 +7,105 @@ import {
   View_Screen,
 } from "./StyledMatchIsFinished";
 import { Text_Subtitle } from "../legisfinished/StyledLegIsFinished";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { BackHandler } from "react-native";
-import MATCH_IS_FINISHED_NAVIGATOR from "../../../components/navigation/MatchIsFinishedNavigator";
 import { GameContext } from "../../../contexts/GameContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
-const MATCH_IS_FINISHED = () => {
+import CUSTOM_TAB_NAVIGATOR from "../../../navigators/CustomTabNavigator";
+import { SettingsContext } from "../../../contexts/SettingsContext";
+import { InGameSettingsContext } from "../../../contexts/InGameSettingsContext";
+
+const MATCH_IS_FINISHED = (props) => {
   const { theme } = useContext(ThemeContext);
 
   const {
-    gameData: { isMatchOver, winner },
+    dispatchGameData,
+    gameData,
+    gameData: { winner },
   } = useContext(GameContext);
+
+  const { dispatchSettings, settings } = useContext(SettingsContext);
+  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (isMatchOver) {
-      const backAction = () => {
-        navigation.navigate("homenavigator");
-        return true;
-      };
+  const winnerName = winner ? gameData[winner].key : "";
 
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction,
-      );
-      return () => backHandler.remove();
-    }
-  }, [isMatchOver, navigation]);
+  useEffect(() => {
+    const backAction = () => {
+      (async () => {
+        const dispatch = () => {
+          dispatchInGameSettings({ type: "LOAD_SETTINGS", value: settings });
+          dispatchGameData({ type: "LOAD_SETTINGS", value: settings });
+        };
+
+        await dispatch();
+
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: "homenavigator" }],
+          }),
+        );
+      })();
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
+    );
+    return () => backHandler.remove();
+  }, [
+    settings,
+    dispatchGameData,
+    dispatchInGameSettings,
+    dispatchSettings,
+    navigation,
+  ]);
+
+  const TABS = [
+    {
+      route: "homenavigator",
+      text: "quit match",
+      icon: "arrow-back",
+      action: () => {
+        dispatchInGameSettings({ type: "LOAD_SETTINGS", value: settings });
+        dispatchGameData({ type: "LOAD_SETTINGS", value: settings });
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: "homenavigator" }],
+          }),
+        );
+      },
+    },
+
+    {
+      route: "game",
+      text: "show stats",
+      icon: "show-chart",
+      action: () => navigation.navigate("game"),
+    },
+    {
+      route: "rematch",
+      text: "rematch",
+      icon: "dart",
+      action: () => navigation.navigate("rematch"),
+    },
+  ];
 
   return (
     <View_Screen>
       <View_Headers theme={theme}>
-        <Text_Title theme={theme}>{`${winner} has won the match!`}</Text_Title>
+        <Text_Title
+          theme={theme}
+        >{`${winnerName} has won the match!`}</Text_Title>
         <Text_Subtitle theme={theme}>congratulations!</Text_Subtitle>
       </View_Headers>
       <View_Shape theme={theme}>
         <ShapeThrow fill={theme.bg3} />
       </View_Shape>
-      <MATCH_IS_FINISHED_NAVIGATOR />
+      <CUSTOM_TAB_NAVIGATOR tabs={TABS} />
     </View_Screen>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import ShapeThrow from "../../../../assets/shapeThrow";
 import {
   View_Headers,
@@ -9,13 +9,20 @@ import {
   NumOfDarts,
   View_Screen,
 } from "./StyledRematch";
-import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
+import TABNAVIGATOR from "../../../navigators/CustomTabNavigator";
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 
+import { InGameSettingsContext } from "../../../contexts/InGameSettingsContext";
+
 const REMATCH = () => {
   const { theme } = useContext(ThemeContext);
+  const {
+    inGameSettings,
+    inGameSettings: { startingScore },
+    dispatchInGameSettings,
+  } = useContext(InGameSettingsContext);
 
   const {
     dispatchGameData,
@@ -28,7 +35,7 @@ const REMATCH = () => {
   const [inactivePlayer, setInactivePlayer] = useState(null);
 
   const handlePLayerToStart = (val) => {
-    const active = val === p1 ? p1 : p2;
+    const active = val === p1.key ? p1 : p2;
     const inactive = active === p1 ? p2 : p1;
     setActivePlayer(active);
     setInactivePlayer(inactive);
@@ -45,17 +52,35 @@ const REMATCH = () => {
       route: "game",
       text: activePlayer ? "game on!" : "select",
       icon: activePlayer ? "check" : "person",
-      action: function () {
+      action: () => {
         if (activePlayer) {
-          dispatchGameData({ type: "REMATCH", activePlayer, inactivePlayer });
-          navigation.navigate("game");
+          dispatchGameData({
+            type: "REMATCH",
+            activePlayer,
+            inactivePlayer,
+            startingScore,
+          });
+          dispatchInGameSettings({
+            type: "REMATCH",
+            p1: activePlayer,
+            p2: inactivePlayer,
+            value: inGameSettings,
+          });
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{ name: "game" }],
+            }),
+          );
         }
         return null;
       },
     },
   ];
 
-  const OPTIONS = [p1, p2];
+  const activePlayerName = activePlayer ? activePlayer.key : "";
+
+  const OPTIONS = [p1.key, p2.key];
 
   return (
     <View_Screen>
@@ -69,7 +94,7 @@ const REMATCH = () => {
             direction={"horizontal"}
             options={OPTIONS}
             action={handlePLayerToStart}
-            activeValue={activePlayer}
+            activeValue={activePlayerName}
           />
         </NumOfDarts>
       </View_Headers>

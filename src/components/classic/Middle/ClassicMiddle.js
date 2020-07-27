@@ -32,12 +32,13 @@ const CLASSIC_MIDDLE = React.memo((props) => {
 
   const {
     dispatchInput,
-    inputContext: { inputMethod },
+
+    inputContext: { whichDart, inputByDart, inputMethod },
   } = useContext(InputContext);
 
   const navigation = useNavigation();
 
-  const { dispatchGameData } = useContext(GameContext);
+  const { gameData, dispatchGameData } = useContext(GameContext);
 
   const toggleDrawer = useCallback(() => {
     navigation.toggleDrawer();
@@ -47,6 +48,30 @@ const CLASSIC_MIDDLE = React.memo((props) => {
   const submitBust = useCallback(() => {
     dispatchGameData({ type: "BUST" });
   }, [dispatchGameData]);
+
+  const changeInput = () => {
+    const apKey = gameData.activePlayer + "_DATA";
+    const apData = gameData[apKey];
+    const apScore = apData.score;
+    const { first, second } = inputByDart;
+
+    const newScore = () => {
+      switch (whichDart) {
+        case 1:
+          return apScore;
+        case 2:
+          return apScore + first;
+        case 3:
+          return apScore + first + second;
+      }
+    };
+    dispatchGameData({
+      type: "UPDATE_BY_DART",
+      scoreToSubmit: 0,
+      newScore: newScore(),
+    });
+    dispatchInput({ type: "CHANGE_INPUT" });
+  };
 
   const BUTTONS_MIDDLE = [
     {
@@ -71,7 +96,7 @@ const CLASSIC_MIDDLE = React.memo((props) => {
     },
     {
       value: inputMethod === "byRound" ? "INPUT BY DART" : "INPUT BY ROUND",
-      action: () => dispatchInput({ type: "CHANGE_INPUT" }),
+      action: () => changeInput(),
       icon: inputMethod === "byRound" ? "dart" : "donut-large",
     },
     {

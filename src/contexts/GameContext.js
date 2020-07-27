@@ -1,7 +1,7 @@
 import React, { useReducer, createContext, useContext } from "react";
 import GAME_DEFAULT_STATE from "./GameDefaultState";
 import finishLeg from "./actions/FinishLeg";
-import rematch from "./actions/Rematch";
+import Rematch from "./actions/Rematch";
 import undo from "./actions/Undo";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
@@ -64,12 +64,19 @@ export const GameContextProvider = (props) => {
       case "BUST":
         return bust(state);
       case "FINISH_LEG":
-        return finishLeg(state, action.nodUsed, action.nodRequired);
-      case "REMATCH":
-        return rematch(
+        return finishLeg(
           state,
+          action.nodUsed,
+          action.nodRequired,
+          action.settings,
+        );
+      case "REMATCH":
+        return Rematch(
           action.activePlayer,
           action.inactivePlayer,
+          action.activePlayer,
+          action.inactivePlayer,
+          action.startingScore,
           GAME_DEFAULT_STATE,
         );
       default:

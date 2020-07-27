@@ -1,28 +1,19 @@
-const rematch = (state, activePlayer, inactivePlayer, GAME_DEFAULT_STATE) => {
-  const { toWin, legOrSet, startingScore } = state;
-
-  state = {
+const Rematch = (
+  activePlayer,
+  inactivePlayer,
+  p1,
+  p2,
+  startingScore,
+  GAME_DEFAULT_STATE,
+) => {
+  return {
     ...GAME_DEFAULT_STATE,
+    p1,
+    p2,
     status: "started",
-
-    p1: activePlayer,
-    p2: inactivePlayer,
     activePlayer: "p1",
     inactivePlayer: "p2",
-    legOrSet,
-    toWin,
-    startingScore,
     rematchInitiated: false,
-    isInputByDart: false,
-    inputByRound: ["", "", ""],
-    inputByDartArray: ["", "", "", "", "", ""],
-    inputByDart: {
-      first: ["", ""],
-      second: ["", ""],
-      third: ["", ""],
-    },
-    whichDart: 1,
-    inputIndex: 0,
     p1_DATA: {
       ...GAME_DEFAULT_STATE.p1_DATA,
       score: startingScore,
@@ -32,8 +23,6 @@ const rematch = (state, activePlayer, inactivePlayer, GAME_DEFAULT_STATE) => {
       score: startingScore,
     },
   };
-
-  return state;
 };
 
-export default rematch;
+export default Rematch;

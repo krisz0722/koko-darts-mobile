@@ -18,9 +18,6 @@ import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/welcome/Welcome";
 import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 import HomeNavigator from "./HomeNavigator";
-import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
-import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
-import REMATCH from "../screens/endgame/rematch/Rematch";
 import DrawerNavigator from "./DrawerNavigator";
 
 export const ScreenContainer = styled(SafeAreaView)`
@@ -34,6 +31,10 @@ const { Navigator, Screen } = createStackNavigator();
 const AppNavigator = () => {
   const SCREENS = [
     {
+      component: DrawerNavigator,
+      name: "drawernavigator",
+    },
+    {
       component: WELCOME,
       name: "welcome",
     },
@@ -41,24 +42,6 @@ const AppNavigator = () => {
       component: HomeNavigator,
       name: "homenavigator",
     },
-    {
-      component: DrawerNavigator,
-      name: "drawernavigator",
-    },
-    {
-      component: LEG_IS_FINISHED,
-      name: "legisfinished",
-    },
-    {
-      component: REMATCH,
-      name: "rematch",
-    },
-
-    {
-      component: MATCH_IS_FINISHED,
-      name: "matchisfinished",
-    },
-
     {
       component: REGISTER,
       name: "register",
@@ -97,7 +80,7 @@ const AppNavigator = () => {
     }
   };
 
-  console.log("RENDER APPNAVIAGATOR ");
+  // console.log("RENDER APPNAVIAGATOR ");
 
   return (
     <AppearanceProvider>

@@ -15,7 +15,6 @@ const Button_Nav = styled(TouchableOpacity)`
   padding: ${({ direction }) => (direction === "horizontal" ? "0 5%" : 0)};
   background-color: ${({ theme, active }) =>
     active ? theme.bgActive : "transparent"};
-  transform: ${({ active }) => (!active ? "scale(0.8,0.8)" : "")};
 `;
 
 const Text_Button = styled(Text)`
@@ -72,8 +71,6 @@ const NavButton = React.memo(
         }
       }
     };
-
-    console.log("RENDER BUTTON", text);
 
     return (
       <Button_Nav

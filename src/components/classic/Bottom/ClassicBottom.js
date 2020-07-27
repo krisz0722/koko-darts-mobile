@@ -7,6 +7,7 @@ import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { VALIDSCORES } from "../../../calc/scores";
+import { useNavigation } from "@react-navigation/native";
 
 export const ClassicBottom = styled(Animated.View)`
   ${FlexRow};
@@ -25,6 +26,7 @@ const CLASSIC_BOTTOM = (props) => {
   } = useContext(InputContext);
 
   const { dispatchGameData, gameData } = useContext(GameContext);
+  const navigation = useNavigation();
 
   const playerKey = activePlayer + "_DATA";
   const playerDATA = gameData[playerKey];
@@ -39,17 +41,42 @@ const CLASSIC_BOTTOM = (props) => {
 
   const dispatchUndoOrClear = () => {
     if (backOrClear === "CLEAR") {
+      if (inputMethod === "byDart") {
+        const apKey = gameData.activePlayer + "_DATA";
+        const apData = gameData[apKey];
+        const apScore = apData.score;
+        const { first, second } = inputByDart;
+
+        const newScore = () => {
+          switch (whichDart) {
+            case 1:
+              return apScore;
+            case 2:
+              return apScore + first;
+            case 3:
+              return apScore + first + second;
+          }
+        };
+        dispatchGameData({
+          type: "UPDATE_BY_DART",
+          scoreToSubmit: 0,
+          newScore: newScore(),
+        });
+      }
       dispatchInput({ type: "CLEAR_BY_DART" });
     } else {
       dispatchGameData({ type: "UNDO" });
     }
   };
 
+  // console.log("PLAYER SCORE", playerDATA.score);
+
   const dispatchOkOrNext = () => {
+    const playerScore = playerDATA.score;
     if (inputMethod === "byDart") {
       dispatchInput({
         type: "NEXT",
-        value: playerDATA.score,
+        value: playerScore,
       });
     } else {
       const scoreToSubmit = parseInt(inputByRound.join(""));
@@ -62,6 +89,9 @@ const CLASSIC_BOTTOM = (props) => {
           method: "SUBMIT",
         });
         dispatchInput({ type: "SET_DEFAULT" });
+        if (playerScore === scoreToSubmit) {
+          navigation.navigate("legisfinished");
+        }
       } else {
         dispatchInput({ type: "INVALID" });
       }

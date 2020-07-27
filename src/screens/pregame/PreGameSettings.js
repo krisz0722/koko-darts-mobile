@@ -140,7 +140,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     setModal(false);
   };
 
-  console.log("RENDER PREGAMe");
+  // console.log("RENDER PREGAMe");
   return (
     <>
       <PLAYERS toggleSwap={toggleSwap} p1={stateP1} p2={stateP2} />
@@ -174,9 +174,8 @@ const PREGAME_SETTINGS = ({ navigation }) => {
         <THEMED_BUTTON
           size={"small"}
           text={"change opponent"}
-          type={"danger"}
+          type={"active"}
           length={3}
-          icon={"person"}
           action={() => changeOpponent(false)}
         />
         <THEMED_BUTTON

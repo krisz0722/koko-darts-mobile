@@ -14,12 +14,12 @@ export const SettingsContextProvider = (props) => {
       key: "",
       img: "",
     },
-    userName: "UESR",
+    userName: "USER",
     layout: "classic",
-    legOrSet: "set",
-    toWin: 3,
+    legOrSet: "leg",
+    toWin: 1,
     legsPerSet: 3,
-    startingScore: 501,
+    startingScore: 301,
     playerToStartLeg: "p1",
     opacity: true,
   };
@@ -34,6 +34,8 @@ export const SettingsContextProvider = (props) => {
         return action.value;
       case "CHOOSE_OPPONENT":
         return { ...state, p2: action.value };
+      case "REMATCH":
+        return { ...state, p1: action.p1, p2: action.p2 };
       default:
         return state;
     }

@@ -10,16 +10,15 @@ import {
   NumOfDarts,
   View_Screen,
 } from "./StyledLegIsFinished";
-import TABNAVIGATOR from "../../../components/navigation/TabNavigator";
 import RADIO_BUTTON_SET from "../../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../../contexts/GameContext";
 import { BackHandler } from "react-native";
 import LEAVE_MATCH_ALERT from "../../../components/modals/LeaveMatchAlert";
 import { ThemeContext } from "../../../contexts/ThemeContext";
-const LEG_IS_FINISHED = () => {
+import CUSTOM_TAB_NAVIGATOR from "../../../navigators/CustomTabNavigator";
+import { InGameSettingsContext } from "../../../contexts/InGameSettingsContext";
+const LEG_IS_FINISHED = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
-
-  const navigation = useNavigation();
 
   const {
     dispatchGameData,
@@ -27,6 +26,9 @@ const LEG_IS_FINISHED = () => {
     gameData: { activePlayer, inactivePlayer, isLegOver, isMatchOver, winner },
   } = useContext(GameContext);
 
+  const { inGameSettings } = useContext(InGameSettingsContext);
+
+  const winnerName = winner ? gameData[winner].key : "";
   const inapKey = `${inactivePlayer}_DATA`;
   const inapData = gameData[inapKey];
 
@@ -45,11 +47,12 @@ const LEG_IS_FINISHED = () => {
     return null;
   };
 
-  console.log("NUM OF DARTS REQUIRED", nod());
+  console.log("NOOOOOOD", nod() === 3);
 
   const [lastRoundNod, setLastRoundNod] = useState(nod() === 3 ? 3 : null);
   const [modal, setModal] = useState(false);
 
+  console.log("LASTROudnod", lastRoundNod);
   useEffect(() => {
     if (isMatchOver) {
       navigation.navigate("matchisfinished");
@@ -66,13 +69,20 @@ const LEG_IS_FINISHED = () => {
       backAction,
     );
     return () => backHandler.remove();
-  }, [navigation]);
+  }, []);
+
+  useEffect(() => {
+    console.log("UNMOUNTIIIIIING LEGISFINISHED");
+    return () => setModal(false);
+  });
 
   const handleLeaveMatch = () => {
     navigation.navigate("homenavigator");
   };
 
   const handleLastDartNod = (val) => setLastRoundNod(val);
+
+  const OPTIONS = nod() === 3 ? [3] : nod() === 2 ? [2, 3] : [1, 2, 3];
 
   const TABS = [
     {
@@ -86,7 +96,7 @@ const LEG_IS_FINISHED = () => {
       },
     },
     {
-      route: "matchisfinished",
+      route: "game",
       text: lastRoundNod ? "ok" : "select",
       icon: lastRoundNod ? "check" : "dart",
       action: () => {
@@ -96,23 +106,25 @@ const LEG_IS_FINISHED = () => {
               type: "FINISH_LEG",
               nodUsed: lastRoundNod,
               nodRequired: parseInt(nod()),
+              settings: inGameSettings,
             });
+          navigation.navigate("game");
         } else {
-          null;
+          alert("BAJ");
         }
       },
     },
   ];
 
-  const OPTIONS = nod() === 3 ? [3] : nod() === 2 ? [2, 3] : [1, 2, 3];
-
-  console.log(OPTIONS);
+  console.log("RENDER LEGISFINISHED");
 
   return (
     <>
       <View_Screen>
         <View_Headers theme={theme}>
-          <Text_Title theme={theme}>{`${winner} has won the leg!`}</Text_Title>
+          <Text_Title
+            theme={theme}
+          >{`${winnerName} has won the leg!`}</Text_Title>
           <Text_Subtitle theme={theme}>number of darts used:</Text_Subtitle>
           <NumOfDarts>
             <RADIO_BUTTON_SET
@@ -127,14 +139,8 @@ const LEG_IS_FINISHED = () => {
         <View_Shape theme={theme}>
           <ShapeThrow fill={theme.bg3} />
         </View_Shape>
-        <TABNAVIGATOR
-          tabs={TABS}
-          color={"dark"}
-          position={"bottom"}
-          length={3}
-          direction={"horizontal"}
-        />
       </View_Screen>
+      <CUSTOM_TAB_NAVIGATOR tabs={TABS} />
       <LEAVE_MATCH_ALERT
         action1={() => setModal(!modal)}
         action2={handleLeaveMatch}

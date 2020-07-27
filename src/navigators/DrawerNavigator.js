@@ -9,6 +9,9 @@ import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
 import { ThemeContext } from "../contexts/ThemeContext";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
+import LEG_IS_FINISHED from "../screens/endgame/legisfinished/LegIsFinished";
+import MATCH_IS_FINISHED from "../screens/endgame/matchisfinished/MatchIsFinished";
+import REMATCH from "../screens/endgame/rematch/Rematch";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -86,6 +89,9 @@ const DrawerNavigator = () => {
       <Screen name="game" component={GAME_CLASSIC} />
       <Screen name="settings-ingame" component={SETTINGS_INGAME} />
       <Screen name="stats" component={SETTINGS_INGAME} />
+      <Screen name="legisfinished" component={LEG_IS_FINISHED} />
+      <Screen name="matchisfinished" component={MATCH_IS_FINISHED} />
+      <Screen name="rematch" component={REMATCH} />
     </Navigator>
   );
 };

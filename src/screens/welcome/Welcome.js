@@ -7,7 +7,7 @@ import {
   Text_Title,
   View_Shape,
 } from "./StyledWelcome";
-import { NavBar } from "../../components/navigation/TabNavigator";
+import { NavBar } from "../../navigators/CustomTabNavigator";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Button } from "react-native";
 

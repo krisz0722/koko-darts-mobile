@@ -94,8 +94,6 @@ export const GameContextProvider = (props) => {
     initialGameState,
   );
 
-  console.log(gameData);
-
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>
       {props.children}

@@ -137,10 +137,11 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   };
 
   const handleModal = () => {
-    setModal(false);
+    if (p2 !== "" && p2) {
+      setModal(false);
+    }
   };
 
-  // console.log("RENDER PREGAMe");
   return (
     <>
       <PLAYERS toggleSwap={toggleSwap} p1={stateP1} p2={stateP2} />

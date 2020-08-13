@@ -60,10 +60,6 @@ const CHOOSE_PLAYER_MODAL = React.memo(
         : "slide"
       : "none";
 
-    const [regexp, setRegexp] = useState("");
-
-    const handleRegExp = (val) => setRegexp(val);
-
     const opponent = p1.key === "USER" ? p2 : p1;
 
     return (
@@ -100,8 +96,8 @@ const CHOOSE_PLAYER_MODAL = React.memo(
                   type={"success"}
                   length={2}
                   icon={"check"}
-                  disabled={!p2}
-                  action={handleModal}
+                  disabled={!p2.key || p2.key === ""}
+                  action={() => handleModal(p2.key)}
                 />
               </BottomButtons>
             </Container>

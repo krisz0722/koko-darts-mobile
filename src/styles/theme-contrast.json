@@ -163,6 +163,7 @@
 
     "name": {
       "classic": 20,
+      "classic2": 15,
       "asym": 20
     },
     "legset": {

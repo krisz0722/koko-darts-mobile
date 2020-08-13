@@ -115,6 +115,7 @@ const CLASSIC_TOP = React.memo((props) => {
           />
         </PlayerInfoRow>
         <NAME
+          showStats={showStats}
           animation={animation}
           theme={theme}
           activePlayer={activePlayer}

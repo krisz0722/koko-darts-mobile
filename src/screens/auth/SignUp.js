@@ -11,15 +11,13 @@ const REGISTER = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUsername] = useState("");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
 
   const enableSignUp =
-    [email, password, confirmPassword, userName].filter(
-      (item) => item.length < 6,
-    ).length === 0;
+    [email, password, confirmPassword].filter((item) => item.length < 6)
+      .length === 0;
 
   const keyboardDidShow = (e) => {
     setIsKeyboardUp(true);
@@ -36,7 +34,6 @@ const REGISTER = ({ navigation }) => {
   const handleEmail = (val) => setEmail(val);
   const handlePassword = (val) => setPassword(val);
   const handleConfirmPassword = (val) => setConfirmPassword(val);
-  const handleUsername = (val) => setUsername(val);
   const handleFocus = (val) => {
     setFocus(val);
   };
@@ -50,6 +47,7 @@ const REGISTER = ({ navigation }) => {
       type: "email",
       action: handleEmail,
       icon: "email",
+      iconAction: () => {},
     },
     {
       name: "password",
@@ -68,14 +66,6 @@ const REGISTER = ({ navigation }) => {
       action: handleConfirmPassword,
       icon: passwordHidden ? "visibility" : "visibility-off",
       iconAction: toggleSecureEntry,
-    },
-    {
-      name: "username",
-      value: userName,
-      placeholder: "Username",
-      type: "username",
-      action: handleUsername,
-      icon: "person",
     },
   ];
   return (
@@ -103,11 +93,6 @@ const REGISTER = ({ navigation }) => {
             />
           </Inputs>
           <Buttons>
-            <THEMED_BUTTON
-              text={"Already have an account?\ntap here to log in!"}
-              action={() => navigation.navigate("login")}
-              type={"ghost"}
-            />
             <THEMED_BUTTON
               text={"Already have an account?\ntap here to log in!"}
               action={() => navigation.navigate("login")}

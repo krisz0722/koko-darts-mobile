@@ -14,12 +14,12 @@ export const Form = styled(View)`
 `;
 
 export const Form2 = styled(Form)`
-  ${FlexCol}
+  ${FlexCol};
 `;
 
 export const Inputs = styled(View)`
   ${FlexColEnd};
-  height: 60%;
+  height: 50%;
   width: 100%;
 `;
 

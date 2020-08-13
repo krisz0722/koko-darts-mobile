@@ -2,24 +2,27 @@ import styled from "styled-components";
 import { Text, View } from "react-native";
 import {
   FlexColEnd,
-  FlexCol,
-  BorderVertical,
   BasicTextBold,
+  FlexColAround,
+  FlexColBetween,
 } from "../../styles/css_mixins";
 
 export const View_Headers = styled(View)`
   width: 100%;
-  top: 15%;
-  height: 35%;
-  ${FlexCol};
-  ${BorderVertical(({ theme }) => theme.borderColor)};
+  height: 10%;
+  ${FlexColAround};
+`;
+
+export const View_Buttons = styled(View)`
+  width: 100%;
+  height: 50%;
+  ${FlexColBetween};
 `;
 
 export const View_Shape = styled(View)`
   ${FlexColEnd};
-  position: absolute;
   width: 100%;
-  bottom: 8%;
+  bottom: 0;
   height: 40%;
 `;
 

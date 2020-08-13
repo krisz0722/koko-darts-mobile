@@ -31,18 +31,9 @@ const { Navigator, Screen } = createStackNavigator();
 const AppNavigator = () => {
   const SCREENS = [
     {
-      component: HomeNavigator,
-      name: "homenavigator",
-    },
-    {
-      component: DrawerNavigator,
-      name: "drawernavigator",
-    },
-    {
       component: WELCOME,
       name: "welcome",
     },
-
     {
       component: REGISTER,
       name: "register",
@@ -54,6 +45,14 @@ const AppNavigator = () => {
     {
       component: FORGOT_PASSWORD,
       name: "forgotpassword",
+    },
+    {
+      component: HomeNavigator,
+      name: "homenavigator",
+    },
+    {
+      component: DrawerNavigator,
+      name: "drawernavigator",
     },
   ];
 

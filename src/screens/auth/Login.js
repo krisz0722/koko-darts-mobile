@@ -9,13 +9,13 @@ const LOGIN = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const [password, setPassword] = useState("");
-  const [userName, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
 
   const enableSignUp =
-    [password, userName].filter((item) => item.length < 6).length === 0;
+    [password, email].filter((item) => item.length < 6).length === 0;
 
   const keyboardDidShow = (e) => {
     setIsKeyboardUp(true);
@@ -30,7 +30,7 @@ const LOGIN = ({ navigation }) => {
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   const handlePassword = (val) => setPassword(val);
-  const handleUsername = (val) => setUsername(val);
+  const handleEmail = (val) => setEmail(val);
   const handleFocus = (val) => {
     setFocus(val);
   };
@@ -38,12 +38,12 @@ const LOGIN = ({ navigation }) => {
 
   const INPUTS = [
     {
-      name: "username",
-      value: userName,
-      placeholder: "Username",
+      name: "email",
+      value: email,
+      placeholder: "E-mail",
       type: "text",
-      action: handleUsername,
-      icon: "person",
+      action: handleEmail,
+      icon: "email",
     },
     {
       name: "password",

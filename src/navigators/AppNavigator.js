@@ -87,7 +87,7 @@ const AppNavigator = () => {
     <AppearanceProvider>
       {background ? (
         <AppBackground
-          source={require("../../assets/bgPortrait.jpeg")}
+          source={require("../../assets/bg.png")}
           resizeMode="cover"
         />
       ) : null}

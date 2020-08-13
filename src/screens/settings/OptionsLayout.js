@@ -11,8 +11,6 @@ export const OptionsLayout = React.memo((props) => {
 
   const DATA = ["classic", "asym"];
 
-  console.log("RENDER LAYOUT");
-
   return (
     <Row theme={theme}>
       <SETTINGS_HEADER text={"layout"} />

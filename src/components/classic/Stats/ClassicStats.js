@@ -109,8 +109,6 @@ const CLASSIC_STATS = React.memo((props) => {
       ? p1_DATA["60"] + p1_DATA["80"]
       : p2_DATA["60"] + p2_DATA["80"];
 
-  console.log(sixtyPlus("p1"));
-
   return (
     <>
       <ClassicStatsPlayer1

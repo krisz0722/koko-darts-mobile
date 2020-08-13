@@ -34,8 +34,6 @@ export const InGameSettingsContextProvider = (props) => {
     DEFAULT_INGAME_SETTINGS,
   );
 
-  console.log("INGAMESETTINGSCONTEXT", inGameSettings);
-
   return (
     <InGameSettingsContext.Provider
       value={{ inGameSettings, dispatchInGameSettings }}

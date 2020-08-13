@@ -10,8 +10,6 @@ export const OptionsScore = React.memo((props) => {
 
   const DATA = [301, 501, 701, 901];
 
-  console.log("RENDER SCORE");
-
   return (
     <Row page={page} theme={theme}>
       <SETTINGS_HEADER text={"starting score"} />

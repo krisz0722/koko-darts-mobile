@@ -47,8 +47,6 @@ const PLAYER_SCORE = React.memo((props) => {
   const p1Score = ingame ? p1_DATA.score : startingScore;
   const p2Score = ingame ? p2_DATA.score : startingScore;
 
-  console.log("P!SCORE", p1Score);
-
   useEffect(() => {
     if (animation) {
       Animated.timing(animationValue, {
@@ -147,8 +145,6 @@ const PLAYER_SCORE = React.memo((props) => {
     fontSize: fontSizeP2,
     height: p2Height,
   };
-
-  console.log("RENDER PLAYERSCORE");
 
   return (
     <>

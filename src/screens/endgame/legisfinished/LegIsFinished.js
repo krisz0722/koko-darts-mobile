@@ -108,8 +108,6 @@ const LEG_IS_FINISHED = ({ navigation }) => {
     },
   ];
 
-  console.log("RENDER LEGISFINISHED");
-
   return (
     <>
       <View_Screen>

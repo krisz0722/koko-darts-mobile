@@ -59,8 +59,6 @@ export const InputContextProvider = (props) => {
 
   const [inputContext, dispatchInput] = useReducer(inputReducer, initialState);
 
-  console.log("INPUT CONTEXT", inputContext);
-
   return (
     <InputContext.Provider value={{ inputContext, dispatchInput }}>
       {props.children}

@@ -9,8 +9,6 @@ export const OptionsEffects = React.memo((props) => {
 
   const { theme, background, setBackground } = useContext(ThemeContext);
 
-  console.log("RENDER EFFECT");
-
   return (
     <Row theme={theme} layout="asym">
       <SETTINGS_HEADER

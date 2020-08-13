@@ -15,8 +15,6 @@ export const ThemeContextProvider = (props) => {
   const [background, setBackground] = useState(true);
   const theme = THEMES[selectedTheme];
 
-  console.log("THEMECONTEXT", selectedTheme, animation);
-
   return (
     <ThemeContext.Provider
       value={{

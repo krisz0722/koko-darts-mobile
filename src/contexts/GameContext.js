@@ -70,6 +70,11 @@ export const GameContextProvider = (props) => {
           action.nodRequired,
           action.settings,
         );
+      case "SAVE_MATCH":
+        return {
+          ...state,
+          isMatchOver: false,
+        };
       case "REMATCH":
         return Rematch(
           action.activePlayer,
@@ -89,7 +94,7 @@ export const GameContextProvider = (props) => {
     initialGameState,
   );
 
-  console.log("GAMEDATA", gameData);
+  console.log(gameData);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

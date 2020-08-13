@@ -18,12 +18,23 @@ import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 import { InputContextProvider } from "../../contexts/InputContext";
 import { useNavigation } from "@react-navigation/native";
 import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
+import FINISH_LEG_MODAL from "../../components/modals/FinishLeg";
+import FINISH_MATCH_MODAL from "../../components/modals/FinishMatch";
+import REMATCH_MODAL from "../../components/modals/Rematch";
 
 const GAME_CLASSIC = React.memo((props) => {
   const { ingame = true, preview, settings } = props;
 
   const {
-    gameData: { p1_DATA, p2_DATA, activePlayer, inactivePlayer },
+    gameData: {
+      p1_DATA,
+      p2_DATA,
+      isLegOver,
+      isMatchOver,
+      isRematch,
+      activePlayer,
+      inactivePlayer,
+    },
   } = useContext(GameContext);
 
   const { inGameSettings } = useContext(InGameSettingsContext);
@@ -36,9 +47,15 @@ const GAME_CLASSIC = React.memo((props) => {
 
   const drawerValue = useRef(new Animated.Value(!drawer ? 1 : 0)).current;
 
-  const [exitModal, setExitModal] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [showStats, setShowStats] = useState(false);
+
+  // MODALS
+
+  const [exitModal, setExitModal] = useState(false);
+  const [finishLegModal, setFinishLegModal] = useState(false);
+  const [finishMatchModal, setFinishMatchModal] = useState(false);
+  const [rematchModal, setRematchModal] = useState(false);
 
   const toggleShowStats = useCallback(() => {
     setShowStats(!showStats);
@@ -58,6 +75,31 @@ const GAME_CLASSIC = React.memo((props) => {
   useEffect(() => {
     return () => backHandler.remove();
   }, [backHandler]);
+
+  useEffect(() => {
+    console.log("ISLEGOVER", isLegOver);
+    if (isLegOver) {
+      setFinishLegModal(true);
+    } else if (finishLegModal) {
+      setFinishLegModal(false);
+    }
+  }, [isLegOver, finishLegModal]);
+
+  useEffect(() => {
+    if (isMatchOver) {
+      setFinishMatchModal(true);
+    } else if (!isMatchOver && finishMatchModal) {
+      setFinishMatchModal(false);
+    }
+  }, [isMatchOver, finishMatchModal]);
+
+  useEffect(() => {
+    if (isRematch) {
+      setRematchModal(true);
+    }
+  }, [isRematch]);
+
+  //MODAL ACTIONS
 
   const handleExitApp = () => {
     BackHandler.exitApp();
@@ -106,6 +148,9 @@ const GAME_CLASSIC = React.memo((props) => {
     : inactivePlayer === "p2"
     ? 0.9
     : 1;
+
+  console.log(isLegOver);
+  console.log("FINISHMLEGMODAL", finishLegModal);
 
   return (
     <GameWindow preview={preview}>
@@ -175,12 +220,27 @@ const GAME_CLASSIC = React.memo((props) => {
           inactivePlayer={inactivePlayer}
           p1Data={p1_DATA}
           p2Data={p2_DATA}
+          action={() => setFinishLegModal(true)}
         />
       </InputContextProvider>
       <EXIT_APP_ALERT
         action1={() => setExitModal(!exitModal)}
         action2={handleExitApp}
         visible={exitModal}
+      />
+      <FINISH_LEG_MODAL
+        action={() => setFinishLegModal(!finishLegModal)}
+        action2={() => setFinishMatchModal(true)}
+        visible={finishLegModal}
+      />
+      <FINISH_MATCH_MODAL
+        action={() => setFinishMatchModal(!finishMatchModal)}
+        action2={() => setRematchModal(true)}
+        visible={finishMatchModal}
+      />
+      <REMATCH_MODAL
+        action={() => setRematchModal(false)}
+        visible={rematchModal}
       />
     </GameWindow>
   );

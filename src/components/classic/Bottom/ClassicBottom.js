@@ -7,7 +7,6 @@ import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { VALIDSCORES } from "../../../calc/scores";
-import { useNavigation } from "@react-navigation/native";
 import nextValidation from "../../../contexts/actions/nextValidation";
 
 export const ClassicBottom = styled(Animated.View)`
@@ -20,14 +19,13 @@ export const ClassicBottom = styled(Animated.View)`
 `;
 
 const CLASSIC_BOTTOM = (props) => {
-  const { animation, theme, activePlayer, inactivePlayer } = props;
+  const { animation, theme, action, activePlayer, inactivePlayer } = props;
   const {
     inputContext: { inputMethod, inputByRound, inputByDart, whichDart },
     dispatchInput,
   } = useContext(InputContext);
 
   const { dispatchGameData, gameData } = useContext(GameContext);
-  const navigation = useNavigation();
 
   const playerKey = activePlayer + "_DATA";
   const playerDATA = gameData[playerKey];
@@ -69,8 +67,6 @@ const CLASSIC_BOTTOM = (props) => {
       dispatchGameData({ type: "UNDO" });
     }
   };
-
-  // console.log("PLAYER SCORE", playerDATA.score);
 
   const dispatchOkOrNext = () => {
     const playerScore = playerDATA.score;
@@ -130,9 +126,9 @@ const CLASSIC_BOTTOM = (props) => {
           method: "SUBMIT",
         });
         dispatchInput({ type: "SET_DEFAULT" });
-        if (playerScore === scoreToSubmit) {
-          navigation.navigate("legisfinished");
-        }
+        // if (playerScore === scoreToSubmit) {
+        //   action();
+        // }
       } else {
         dispatchInput({ type: "INVALID" });
       }

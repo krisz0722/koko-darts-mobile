@@ -12,7 +12,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Options = styled(View)`
   width: ${({ direction }) => (direction === "vertical" ? "40%" : "100%")};
-  height: 70%;
+  height: ${({ direction }) => (direction === "vertical" ? "70%" : "40%")};
   ${FlexAround};
   flex-direction: ${({ direction }) =>
     direction === "horizontal" ? "row" : "column"};

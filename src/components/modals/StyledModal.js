@@ -54,6 +54,6 @@ export const Header4 = styled(Header)`
 
 export const BottomButtons = styled(View)`
   ${FlexRowAround};
-  height: 15%;
+  height: 20%;
   width: 100%;
 `;

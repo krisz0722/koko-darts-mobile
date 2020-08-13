@@ -1,17 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
-import { BottomButtons, ModalContainerBasic } from "./StyledModal";
-import { Header2, Header3, Header4, ModalContainerAlert } from "./StyledModal";
+import { BottomButtons } from "./StyledModal";
+import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
-import { CHECKOUTS } from "../../calc/scores";
 import { GameContext } from "../../contexts/GameContext";
 import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
-import {
-  Text_Subtitle,
-  Text_Title,
-} from "../../screens/endgame/rematch/StyledRematch";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 

@@ -1,7 +1,7 @@
 const finishLeg = (state, nodUsed, nodRequired, settings) => {
   const { activePlayer, inactivePlayer } = state;
 
-  const { legOrSet, toWin, startingScore } = settings;
+  const { legOrSet, toWin, startingScore, legsPerSet } = settings;
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
 
@@ -20,7 +20,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
   } = inapData;
 
   legsWon += 1;
-  setsWon = legOrSet === "leg" || legsWon < 3 ? setsWon : setsWon + 1;
+  setsWon = legsWon === legsPerSet ? setsWon + 1 : setsWon;
   numOfCoDarts = numOfCoDarts + nodUsed - nodRequired + 1;
   dartsUsedInLeg += nodUsed;
   bestLegByDartsUsed =
@@ -48,7 +48,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
       ...inapData,
       legsWon: legsWon,
       setsWon: setsWon,
-      score: state.startingScore,
+      score: startingScore,
       tsLeg: 0,
       norLeg: 0,
       avgLeg: 0,

@@ -8,7 +8,7 @@ export const SettingsContextProvider = (props) => {
   const DEFAULT_SETTINGS = {
     p1: {
       key: "USER",
-      img: require("../../assets/bgPortrait.jpeg"),
+      img: require("../../assets/bg.png"),
     },
     p2: {
       key: "",
@@ -45,8 +45,6 @@ export const SettingsContextProvider = (props) => {
     settingsReducer,
     DEFAULT_SETTINGS,
   );
-
-  console.log("SETTINGSCONTEXT", settings);
 
   return (
     <SettingsContext.Provider value={{ settings, dispatchSettings }}>

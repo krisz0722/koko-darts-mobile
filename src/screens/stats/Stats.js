@@ -28,8 +28,6 @@ const STATS = React.memo(({ navigation, route }) => {
     params: { back, gameData },
   } = route;
 
-  console.log("STAAAATS", gameData);
-
   const { p1_DATA, p2_DATA } = gameData;
 
   const isSet = legOrSet === "set";

@@ -45,8 +45,6 @@ const MODAL_SELECT = React.memo(
       toggleLegsPerSet(legsPerSetState);
       modalHandler();
     };
-    console.log("RENDER SELECT MODAL");
-
     return (
       <Modal
         animationType={animationType}

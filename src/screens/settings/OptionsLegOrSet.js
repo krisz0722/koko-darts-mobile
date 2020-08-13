@@ -38,8 +38,6 @@ export const OptionsLegOrSet = React.memo((props) => {
 
   const data = ["leg", "set"];
 
-  console.log("RENDER  LEG OR SET");
-
   return (
     <>
       <Row page={page} theme={theme} id="gamesettings2">

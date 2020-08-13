@@ -30,7 +30,6 @@ const PROFILE = ({ navigation }) => {
     return () => backHandler.remove();
   }, [navigation]);
 
-  console.log("RENDER PROFILE SCREEN");
   return (
     <>
       <Header>

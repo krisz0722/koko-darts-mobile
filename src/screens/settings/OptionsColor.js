@@ -9,8 +9,6 @@ export const COLOR = React.memo(() => {
 
   const DATA = ["default", "contrast"];
 
-  console.log("RENDER COLOR");
-
   return (
     <Row theme={theme} layout="asym">
       <SETTINGS_HEADER text={"theme"} action={() => alert("action")} />

@@ -57,8 +57,6 @@ const CLASSIC_TOP = React.memo((props) => {
     theme,
   } = props;
 
-  console.log("TOP", p1, p2);
-
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
   ).current;

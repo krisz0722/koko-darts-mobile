@@ -42,8 +42,6 @@ const HOME = React.memo(({ navigation }) => {
     }, 300);
   };
 
-  console.log("RENDER HOME SCREEN");
-
   return (
     <>
       <Header>

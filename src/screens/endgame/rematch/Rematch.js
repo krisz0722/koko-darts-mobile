@@ -116,8 +116,6 @@ const REMATCH = React.memo(() => {
 
   const OPTIONS = [p1.key, p2.key];
 
-  console.log("RENDER REMATCH");
-
   return (
     <>
       <View_Screen>

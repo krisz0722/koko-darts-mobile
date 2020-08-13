@@ -96,7 +96,7 @@ const REMATCH_MODAL = ({ action, visible }) => {
         <Header2>throw for the start!</Header2>
         <Header3>selec the player to start the next match</Header3>
         <RADIO_BUTTON_SET
-          length={3}
+          length={2}
           direction={"horizontal"}
           options={OPTIONS}
           action={handlePLayerToStart}

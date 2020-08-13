@@ -77,7 +77,6 @@ const GAME_CLASSIC = React.memo((props) => {
   }, [backHandler]);
 
   useEffect(() => {
-    console.log("ISLEGOVER", isLegOver);
     if (isLegOver) {
       setFinishLegModal(true);
     } else if (finishLegModal) {
@@ -148,9 +147,6 @@ const GAME_CLASSIC = React.memo((props) => {
     : inactivePlayer === "p2"
     ? 0.9
     : 1;
-
-  console.log(isLegOver);
-  console.log("FINISHMLEGMODAL", finishLegModal);
 
   return (
     <GameWindow preview={preview}>

@@ -81,8 +81,6 @@ const AppNavigator = () => {
     }
   };
 
-  // console.log("RENDER APPNAVIAGATOR ");
-
   return (
     <AppearanceProvider>
       {background ? (

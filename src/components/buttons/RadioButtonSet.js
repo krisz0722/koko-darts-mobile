@@ -5,7 +5,6 @@ import {
   BasicTextBold,
   FlexAround,
   FlexRowAround,
-  FlexRowBetween,
   Window,
 } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -21,17 +20,19 @@ const Options = styled(View)`
 const Option = styled(TouchableHighlight)`
   border-radius: 4px;
   height: ${({ length, direction }) =>
-    direction === "vertical" ? 100 / length + "%" : "100%"};
+    direction === "vertical" ? 100 / length + "%" : "60%"};
   width: ${({ length, direction }) =>
     direction === "vertical" ? "100%" : 100 / length + "%"};
-  ${FlexRowBetween};
   ${FlexRowAround};
+  flex-direction: ${({ direction }) =>
+    direction === "vertical" ? "row" : "column-reverse"};
+  justify-content: space-around;
 `;
 
 const Label = styled(Text)`
   ${BasicTextBold};
-  height: 100%;
-  width: 50%;
+  height: 50%;
+  width: ${({ direction }) => (direction === "vertical" ? "50%" : "90%")};
   color: ${({ theme }) => theme.bg1};
 `;
 
@@ -65,7 +66,7 @@ const RADIO_BUTTON_SET = ({
           onPress={() => action(item)}
         >
           <>
-            <Label>{item}</Label>
+            <Label direction={direction}>{item}</Label>
             <Radio
               onPress={() => action(item)}
               active={activeValue === item}

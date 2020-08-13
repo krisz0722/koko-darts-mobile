@@ -62,8 +62,6 @@ const SEARCH_MODAL = React.memo(({ action1, action2, visible }) => {
 
   const handleRegExp = (val) => setRegexp(val);
 
-  console.log("RENDER SEARCH MODAL");
-
   return (
     <Modal
       animationType={animationType}

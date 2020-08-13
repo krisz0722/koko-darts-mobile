@@ -84,7 +84,6 @@ const FINISH_MATCH_MODAL = ({ action, action2, visible }) => {
   };
 
   const initiateRematch = () => {
-    // alert("SAVING MATCH");
     dispatchGameData({ type: "SAVE_MATCH" });
     console.log("saving match here....");
     action();

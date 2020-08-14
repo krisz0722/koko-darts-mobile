@@ -10,29 +10,28 @@ import {
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Options = styled(View)`
-  width: ${({ direction }) => (direction === "vertical" ? "40%" : "100%")};
-  height: ${({ direction }) => (direction === "vertical" ? "70%" : "40%")};
+  width: ${({ direction }) => (direction === "column" ? "40%" : "100%")};
+  height: ${({ direction }) => (direction === "column" ? "70%" : "40%")};
   ${FlexAround};
-  flex-direction: ${({ direction }) =>
-    direction === "horizontal" ? "row" : "column"};
+  flex-direction: ${({ direction }) => direction};
 `;
 
 const Option = styled(TouchableHighlight)`
   border-radius: 4px;
   height: ${({ length, direction }) =>
-    direction === "vertical" ? 100 / length + "%" : "60%"};
+    direction === "column" ? 100 / length + "%" : "60%"};
   width: ${({ length, direction }) =>
-    direction === "vertical" ? "100%" : 100 / length + "%"};
+    direction === "column" ? "100%" : 100 / length + "%"};
   ${FlexRowAround};
   flex-direction: ${({ direction }) =>
-    direction === "vertical" ? "row" : "column-reverse"};
+    direction === "column" ? "row" : "column-reverse"};
   justify-content: space-around;
 `;
 
 const Label = styled(Text)`
   ${BasicTextBold};
   height: 50%;
-  width: ${({ direction }) => (direction === "vertical" ? "50%" : "90%")};
+  width: ${({ direction }) => (direction === "column" ? "50%" : "90%")};
   color: ${({ theme }) => theme.bg1};
 `;
 

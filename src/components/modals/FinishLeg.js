@@ -79,7 +79,7 @@ const FINISH_LEG_MODAL = ({ action, visible }) => {
         <Header3>Number of darts used in last round:</Header3>
         <RADIO_BUTTON_SET
           length={3}
-          direction={"horizontal"}
+          direction={"row"}
           options={OPTIONS}
           action={handleLastDartNod}
           activeValue={lastRoundNod}

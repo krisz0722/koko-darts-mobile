@@ -32,7 +32,7 @@ export const Text_Button_Login = styled(Text)`
   ${FlexCol};
   ${BasicTextBold};
   height: 100%;
-  width: ${({ icon }) => (icon ? "70%" : "100%")};
+  width: ${({ icon, text }) => (text === "" ? "0%" : icon ? "70%" : "100%")};
   font-size: ${({ theme, size }) => theme.buttonFontSize[size]};
   color: ${({ theme, type }) => theme.buttonType[type].color};
 `;
@@ -67,9 +67,17 @@ const THEMED_BUTTON = ({
             <Icon name={icon} size={25} color={theme.buttonType[type].color} />
           )
         ) : null}
-        <Text_Button_Login size={size} icon={icon} type={type} heme={theme}>
-          {text}
-        </Text_Button_Login>
+        {text ? (
+          <Text_Button_Login
+            text={text}
+            size={size}
+            icon={icon}
+            type={type}
+            heme={theme}
+          >
+            {text}
+          </Text_Button_Login>
+        ) : null}
       </>
     </Button_Login>
   );

@@ -53,7 +53,7 @@ const PROFILE_TABBAR_CONTENT = React.memo(({ navigation, state }) => {
         <NavButton
           key={item.route}
           length={3}
-          direction={"horizontal"}
+          direction={"row"}
           text={item.route}
           icon={item.icon}
           action={item.action}

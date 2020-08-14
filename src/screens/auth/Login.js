@@ -4,12 +4,13 @@ import { Buttons, Form2, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { LogIn } from "../../fb/auth";
 
 const LOGIN = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("111111");
+  const [email, setEmail] = useState("krisz0722@gmail.com");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
@@ -81,6 +82,9 @@ const LOGIN = ({ navigation }) => {
             type={enableSignUp ? "active" : "basic"}
             disabled={!enableSignUp}
             text={"log in"}
+            action={() => {
+              LogIn(email, password, navigation);
+            }}
           />
           <Buttons>
             <THEMED_BUTTON

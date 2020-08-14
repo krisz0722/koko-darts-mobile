@@ -62,7 +62,7 @@ const MODAL_SELECT = React.memo(
           </Header>
           <RADIO_BUTTON_SET
             length={9}
-            direction={"vertical"}
+            direction={"column"}
             options={OPTIONS}
             action={handleFirstToWin}
             activeValue={type === "main" ? toWinState : legsPerSetState}

@@ -4,13 +4,14 @@ import { Buttons, Form, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { signUp } from "../../fb/auth";
 
 const REGISTER = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("krisz0722@gmail.com");
+  const [password, setPassword] = useState("111111");
+  const [confirmPassword, setConfirmPassword] = useState("111111");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
@@ -68,6 +69,7 @@ const REGISTER = ({ navigation }) => {
       iconAction: toggleSecureEntry,
     },
   ];
+
   return (
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
       <KeyboardAvoidingView
@@ -90,6 +92,7 @@ const REGISTER = ({ navigation }) => {
               type={enableSignUp ? "active" : "basic"}
               disabled={!enableSignUp}
               text={"Sign Up"}
+              action={() => signUp(email, password, navigation)}
             />
           </Inputs>
           <Buttons>

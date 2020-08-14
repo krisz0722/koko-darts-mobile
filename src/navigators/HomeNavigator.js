@@ -57,7 +57,7 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
         <NavButton
           key={item.route}
           length={3}
-          direction={"vertical"}
+          direction={"column"}
           text={item.route}
           icon={item.icon}
           action={item.action}

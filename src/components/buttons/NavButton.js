@@ -8,23 +8,27 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Button_Nav = styled(TouchableOpacity)`
   ${Flex};
-  flex-direction: ${({ direction }) =>
-    direction === "horizontal" ? "row" : "column"};
-  width: ${({ length }) => Window.width / length};
-  height: ${({ height }) => (height ? Window.height / height : "100%")};
-  padding: ${({ direction }) => (direction === "horizontal" ? "0 5%" : 0)};
+  flex-direction: ${({ direction }) => direction};
+  width: ${({ length }) =>
+    length === "auto" ? "auto" : Window.width / length};
+  height: ${({ height }) =>
+    height === "auto" ? "auto" : height ? Window.height / height : "100%"};
+  padding: ${({ direction }) =>
+    direction === "row" || direction === "row-reverse" ? "0 5%" : 0};
   background-color: ${({ theme, active }) =>
     active ? theme.bgActive : "transparent"};
 `;
 
 const Text_Button = styled(Text)`
   ${BasicText};
-  font-weight: ${({ direction }) =>
-    direction === "horizontal" ? "bold" : "normal"};
+  display: ${({ text }) => (text === "" ? "none" : "flex")};
+  font-weight: ${({ direction }) => (direction === "row" ? "bold" : "normal")};
   width: 100%;
   color: ${({ color }) => color}
   font-size: ${({ direction, theme }) =>
-    direction === "horizontal" ? theme.nav.fontSize2 : theme.nav.fontSize1};
+    direction === "row" || direction === "row-reverse"
+      ? theme.nav.fontSize2
+      : theme.nav.fontSize1};
   border-radius: 4px;
 `;
 
@@ -80,6 +84,7 @@ const NavButton = React.memo(
         height={height}
         theme={theme}
         onPress={action}
+        text={text}
         activeOpacity={animation ? 0.2 : 1}
       >
         <>
@@ -88,15 +93,17 @@ const NavButton = React.memo(
           ) : icon ? (
             <Icon name={icon} size={25} color={iconColor()} />
           ) : null}
-
-          <Text_Button
-            color={textColor()}
-            active={active}
-            icon={icon}
-            theme={theme}
-          >
-            {text}
-          </Text_Button>
+          {text ? (
+            <Text_Button
+              color={textColor()}
+              active={active}
+              icon={icon}
+              theme={theme}
+              text={text}
+            >
+              {text}
+            </Text_Button>
+          ) : null}
         </>
       </Button_Nav>
     );

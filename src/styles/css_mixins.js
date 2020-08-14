@@ -130,3 +130,10 @@ export const FlexRowStart = css`
   align-items: center;
   justify-content: flex-start;
 `;
+
+export const FlexRowEnd = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;

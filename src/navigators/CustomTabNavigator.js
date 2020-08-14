@@ -33,7 +33,7 @@ const CUSTOM_TAB_NAVIGATOR = ({ tabs }) => {
           color={"dark"}
           height={10}
           length={3}
-          direction={"horizontal"}
+          direction={"row"}
           text={item.text}
           icon={item.icon}
           action={item.action}

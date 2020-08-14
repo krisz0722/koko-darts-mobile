@@ -9,18 +9,30 @@ import {
   InfoStats,
   Header,
   Buttons,
+  TopButtons,
+  TopBar,
+  Friend,
+  Friendrequest,
+  FriendName,
+  FriendMessage,
+  FriendAvatar,
+  LogOut,
+  OverflowMenu,
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import UNFINISHED_MATCH from "./DataUnfinished";
 import LAST_MATCH from "./DataLastMatch";
 import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import NavButton from "../../components/buttons/NavButton";
+import { logOut, deleteAccount } from "../../fb/auth";
 
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
-  const [unfinished, setUnfinished] = useState(true);
-
+  const [unfinished, setUnfinished] = useState(false);
+  const [friendRequest, setFriendRequest] = useState(true);
+  const [overflow, setOverflow] = useState(false);
   const [newGameModal, setNewGameModal] = useState(false);
 
   const renderContent = unfinished ? UNFINISHED_MATCH : LAST_MATCH;
@@ -44,6 +56,86 @@ const HOME = React.memo(({ navigation }) => {
 
   return (
     <>
+      {overflow ? (
+        <OverflowMenu>
+          <NavButton
+            text={"about the app"}
+            length={"auto"}
+            active={false}
+            direction={"row"}
+            height={"auto"}
+            icon={"info"}
+            color={"dark"}
+            action={() => alert("info")}
+          />
+          <NavButton
+            text={"log out"}
+            length={"auto"}
+            active={false}
+            direction={"row"}
+            height={"auto"}
+            icon={"exit-to-app"}
+            color={"dark"}
+            action={() => logOut()}
+          />
+          <NavButton
+            text={"delete account"}
+            length={"auto"}
+            active={false}
+            direction={"row"}
+            height={"auto"}
+            icon={"delete"}
+            color={"dark"}
+            action={() => deleteAccount()}
+          />
+        </OverflowMenu>
+      ) : null}
+
+      <TopBar friendRequest={friendRequest} theme={theme}>
+        {friendRequest ? (
+          <>
+            <Friendrequest theme={theme}>
+              <Friend>
+                <FriendAvatar
+                  theme={theme}
+                  resizeMode={"cover"}
+                  source={require("../../../assets/bg.png")}
+                />
+                <FriendName>michael schimacher jose armando</FriendName>
+              </Friend>
+
+              <TopButtons>
+                <THEMED_BUTTON
+                  length={2}
+                  size={"small"}
+                  type={"danger"}
+                  icon={"clear"}
+                  action={() => setFriendRequest(false)}
+                />
+                <THEMED_BUTTON
+                  length={2}
+                  size={"small"}
+                  type={"success"}
+                  icon={"check"}
+                  action={() => setFriendRequest(false)}
+                />
+              </TopButtons>
+            </Friendrequest>
+          </>
+        ) : (
+          <>
+            <NavButton
+              length={"8"}
+              active={false}
+              direction={"column"}
+              height={"auto"}
+              icon={"more-vert"}
+              color={"light"}
+              action={() => setOverflow(!overflow)}
+            />
+          </>
+        )}
+      </TopBar>
       <Header>
         <HeaderText theme={theme}>welcome</HeaderText>
         <HeaderText theme={theme}>valaki</HeaderText>

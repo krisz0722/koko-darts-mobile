@@ -76,7 +76,7 @@ const HOME = React.memo(({ navigation }) => {
             height={"auto"}
             icon={"exit-to-app"}
             color={"dark"}
-            action={() => logOut()}
+            action={() => logOut(navigation)}
           />
           <NavButton
             text={"delete account"}
@@ -86,7 +86,7 @@ const HOME = React.memo(({ navigation }) => {
             height={"auto"}
             icon={"delete"}
             color={"dark"}
-            action={() => deleteAccount()}
+            action={() => deleteAccount(navigation)}
           />
         </OverflowMenu>
       ) : null}

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "559933853025",
+    "firebase_url": "https://kokodarts-native.firebaseio.com",
+    "project_id": "kokodarts-native",
+    "storage_bucket": "kokodarts-native.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559933853025:android:0f5065b050efa1f6008920",
+        "android_client_info": {
+          "package_name": "com.kokodarts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559933853025-3l9pkeogjnreck98q49nuf3fnevlf22q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCECPJnmCQbMVAtThSGNieKcSR1njy43oY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559933853025-3l9pkeogjnreck98q49nuf3fnevlf22q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

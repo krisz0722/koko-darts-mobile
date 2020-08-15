@@ -1,9 +1,12 @@
-import { auth } from "./firebaseConfig";
+import auth from "@react-native-firebase/auth";
 
 export const signUp = (email, password, navigation) => {
-  auth
+  console.log(auth);
+  console.log("signing up...");
+  auth()
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
+      console.log("sign up successful");
       LogIn(email, password, navigation);
     })
     .catch((err) => {
@@ -11,16 +14,22 @@ export const signUp = (email, password, navigation) => {
     });
 };
 
-export const logOut = () => {
-  auth.signOut().then(() => {
-    console.log("logged out");
-  });
+export const logOut = (navigation) => {
+  console.log("logging out...");
+  auth()
+    .signOut()
+    .then(() => {
+      console.log("logged out");
+      navigation.navigate("welcome");
+    });
 };
 
 export const LogIn = (email, password, navigation) => {
-  auth
+  console.log("logging in...");
+  auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
+      console.log("log in successful");
       navigation.navigate("homenavigator");
     })
     .catch((err) => {
@@ -28,14 +37,19 @@ export const LogIn = (email, password, navigation) => {
     });
 };
 
-export const deleteAccount = () => {
-  auth.currentUser.delete().then(() => {
-    console.log("user has been deleted");
-  });
+export const deleteAccount = (navigation) => {
+  console.log("deleting user...");
+
+  auth()
+    .currentUser.delete()
+    .then(() => {
+      console.log("user has been deleted");
+      navigation.navigate("welcome");
+    });
 };
 
 export const forgotPassword = (email) => {
-  auth
+  auth()
     .sendPasswordResetEmail(email)
     .then(() => {
       console.log("email  sent");
@@ -46,7 +60,7 @@ export const forgotPassword = (email) => {
 };
 
 export const onAuthStateChange = () => {
-  auth.onAuthStateChanged((user) => {
+  auth().onAuthStateChanged((user) => {
     console.log("STATACHANGE", user);
   });
 };

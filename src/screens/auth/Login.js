@@ -5,9 +5,14 @@ import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LogIn } from "../../fb/auth";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const LOGIN = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
+  const {
+    userData: { username },
+    dispatchUserData,
+  } = useContext(Authcontext);
 
   const [password, setPassword] = useState("111111");
   const [email, setEmail] = useState("krisz0722@gmail.com");
@@ -83,7 +88,7 @@ const LOGIN = ({ navigation }) => {
             disabled={!enableSignUp}
             text={"log in"}
             action={() => {
-              LogIn(email, password, navigation);
+              LogIn(email, password, username, navigation, dispatchUserData);
             }}
           />
           <Buttons>

@@ -26,9 +26,13 @@ import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import NavButton from "../../components/buttons/NavButton";
 import { logOut, deleteAccount } from "../../fb/auth";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
+  const {
+    userData: { username },
+  } = useContext(Authcontext);
 
   const [unfinished, setUnfinished] = useState(false);
   const [friendRequest, setFriendRequest] = useState(true);
@@ -86,7 +90,7 @@ const HOME = React.memo(({ navigation }) => {
             height={"auto"}
             icon={"delete"}
             color={"dark"}
-            action={() => deleteAccount(navigation)}
+            action={() => deleteAccount(username, navigation)}
           />
         </OverflowMenu>
       ) : null}

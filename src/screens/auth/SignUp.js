@@ -1,24 +1,33 @@
 import React, { useContext, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
+import {
+  Text,
+  Keyboard,
+  KeyboardAvoidingView,
+  SafeAreaView,
+} from "react-native";
 import { Buttons, Form, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { signUp } from "../../fb/auth";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const REGISTER = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
+  const { userData, dispatchUserData } = useContext(Authcontext);
 
+  const [username, setUsername] = useState("easternpotato");
   const [email, setEmail] = useState("krisz0722@gmail.com");
   const [password, setPassword] = useState("111111");
   const [confirmPassword, setConfirmPassword] = useState("111111");
-  const [passwordHidden, setPasswordHidden] = useState(false);
+  const [passwordHidden, setPasswordHidden] = useState(true);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
 
   const enableSignUp =
-    [email, password, confirmPassword].filter((item) => item.length < 6)
-      .length === 0;
+    [email, password, username, confirmPassword].filter(
+      (item) => item.length < 6,
+    ).length === 0;
 
   const keyboardDidShow = (e) => {
     setIsKeyboardUp(true);
@@ -32,6 +41,7 @@ const REGISTER = ({ navigation }) => {
   Keyboard.addListener("keyboardDidShow", keyboardDidShow);
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
+  const handleUsername = (val) => setUsername(val);
   const handleEmail = (val) => setEmail(val);
   const handlePassword = (val) => setPassword(val);
   const handleConfirmPassword = (val) => setConfirmPassword(val);
@@ -41,6 +51,15 @@ const REGISTER = ({ navigation }) => {
   const toggleSecureEntry = () => setPasswordHidden(!passwordHidden);
 
   const INPUTS = [
+    {
+      name: "username",
+      value: username,
+      placeholder: "username",
+      type: "username",
+      action: handleUsername,
+      icon: "person",
+      iconAction: () => {},
+    },
     {
       name: "email",
       value: email,
@@ -77,6 +96,7 @@ const REGISTER = ({ navigation }) => {
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         keyboardShouldPersistTaps={"always"}
       >
+        <Text>valami</Text>
         <Form theme={theme} isKeyboardUp={isKeyboardUp}>
           <Inputs>
             {INPUTS.map((item) => (
@@ -92,7 +112,9 @@ const REGISTER = ({ navigation }) => {
               type={enableSignUp ? "active" : "basic"}
               disabled={!enableSignUp}
               text={"Sign Up"}
-              action={() => signUp(email, password, navigation)}
+              action={() =>
+                signUp(email, password, username, navigation, dispatchUserData)
+              }
             />
           </Inputs>
           <Buttons>

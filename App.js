@@ -4,6 +4,7 @@ import styled from "styled-components/native/dist/styled-components.native.esm";
 import { ImageBackground } from "react-native";
 import { Window } from "./src/styles/css_mixins";
 import AppNavigator from "./src/navigators/AppNavigator";
+import { Authcontext, AuthcontextProvider } from "./src/contexts/AuthContext";
 
 export const AppBackground = styled(ImageBackground)`
   width: ${() => Window.width};
@@ -19,7 +20,9 @@ const App = () => {
   return (
     <>
       <ThemeContextProvider>
-        <AppNavigator />
+        <AuthcontextProvider>
+          <AppNavigator />
+        </AuthcontextProvider>
       </ThemeContextProvider>
     </>
   );

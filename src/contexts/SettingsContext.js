@@ -1,33 +1,19 @@
-import React, { useReducer, createContext } from "react";
-import Theme_Default from "../styles/theme-default.json";
-import Theme_Contrast from "../styles/theme-contrast.json";
+import React, { useReducer, useContext, createContext } from "react";
+import { Authcontext } from "./AuthContext";
 
 export const SettingsContext = createContext("default");
 
 export const SettingsContextProvider = (props) => {
-  const DEFAULT_SETTINGS = {
-    p1: {
-      key: "USER",
-      img: require("../../assets/bg.png"),
-    },
-    p2: {
-      key: "",
-      img: "",
-    },
-    userName: "USER",
-    layout: "classic",
-    legOrSet: "leg",
-    toWin: 1,
-    legsPerSet: 3,
-    startingScore: 301,
-    playerToStartLeg: "p1",
-    opacity: true,
-  };
+  const DEFAULT_SETTINGS = useContext(Authcontext).userData.settings;
+
+  console.log("DEFAULTS", DEFAULT_SETTINGS);
 
   const settingsReducer = (state, action) => {
     switch (action.type) {
       case "CHANGE_LAYOUT":
         return { ...state, layout: action.value };
+      case "LOAD_SETTINGS":
+        return action.value;
       case "SAVE_SETTINGS":
         return action.value;
       case "RESET":
@@ -45,6 +31,8 @@ export const SettingsContextProvider = (props) => {
     settingsReducer,
     DEFAULT_SETTINGS,
   );
+
+  console.log("SETTINGSCONTEXT", settings);
 
   return (
     <SettingsContext.Provider value={{ settings, dispatchSettings }}>

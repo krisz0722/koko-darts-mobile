@@ -13,6 +13,13 @@ import {
 } from "../../styles/css_mixins";
 import { Image, Text, View } from "react-native";
 
+export const HomeContainer = styled(View)`
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  height: 80%;
+`;
+
 export const TopBar = styled(View)`
   top: 0;
   position: absolute;
@@ -42,10 +49,9 @@ export const OverflowMenu = styled(View)`
 `;
 
 export const Header = styled(View)`
-  top: 10%;
-  height: 15%;
+  height: 20%;
   width: 100%;
-  ${FlexCol};
+  ${FlexColAround};
 `;
 
 export const Friendrequest = styled(View)`
@@ -95,27 +101,27 @@ export const FriendAvatar = styled(Image)`
 
 export const HeaderText = styled(Text)`
   ${BasicTextBold}
-  text-align-vertical: bottom;
+  height: 50%;
   width: 100%;
   color: ${({ theme }) => theme.text};
   font-size: ${({ theme }) => theme.home.fontSize1};
 `;
 export const InfoTitle = styled(Text)`
-  top: 20%;
   ${BasicTextBold}
   width: 100%;
-  height: 10%;
+  height: 12.5%;
   ${FlexRow};
   color: ${({ theme }) => theme.text};
   font-size: ${({ theme }) => theme.home.fontSize2};
   background-color: ${({ theme, unfinished }) =>
-    unfinished ? theme.bgRed : "transparent"};
+    unfinished == false ? theme.bgRed : "transparent"};
+  ${BorderVertical(({ theme }) => theme.borderColor)}
+  border-bottom-width:0;
 `;
 
 export const Info = styled(View)`
-  top: 15%;
   width: 100%;
-  height: 20%;
+  height: 30%;
   ${FlexColStart};
 `;
 
@@ -141,6 +147,18 @@ export const InfoText = styled(Text)`
   font-size: ${({ theme }) => theme.home.fontSize3};
 `;
 
+export const FirstMatch = styled(Text)`
+  width: 80%;
+  ${FlexRow};
+
+  color: white;
+  ${BasicTextBold}
+  height: 70%;
+  ${FlexRow};
+  color: ${({ theme }) => theme.text};
+  font-size: ${({ theme }) => theme.home.fontSize2};
+`;
+
 export const InfoText2 = styled(InfoText)`
   text-align: right;
 `;
@@ -148,8 +166,7 @@ export const InfoText2 = styled(InfoText)`
 export const Buttons = styled(View)`
   ${FlexColBetween};
   width: 100%;
-  top: 15%;
-  height: 32%;
+  height: 37.5%;
 `;
 
 // border: 2px green solid;

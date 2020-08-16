@@ -1,18 +1,14 @@
 import React, { useReducer, createContext, useContext } from "react";
-import { SettingsContext } from "./SettingsContext";
-import { ThemeContext } from "./ThemeContext";
+import { Authcontext } from "./AuthContext";
 
 export const InGameSettingsContext = createContext("default");
 
 export const InGameSettingsContextProvider = (props) => {
-  const { settings } = useContext(SettingsContext);
-  const { animation } = useContext(ThemeContext);
-
-  const DEFAULT_INGAME_SETTINGS = { ...settings, animation };
+  const DEFAULT_INGAME_SETTINGS = useContext(Authcontext).userData.settings;
 
   const settingsReducer = (state, action) => {
     switch (action.type) {
-      case "LOAD_SETTINGS":
+      case "LOAD_INGAME_SETTINGS":
         return action.value;
       case "REMATCH":
         return { ...action.value, p1: action.p1, p2: action.p2 };
@@ -34,6 +30,7 @@ export const InGameSettingsContextProvider = (props) => {
     DEFAULT_INGAME_SETTINGS,
   );
 
+  console.log("INGAME CONTEXT", inGameSettings);
   return (
     <InGameSettingsContext.Provider
       value={{ inGameSettings, dispatchInGameSettings }}

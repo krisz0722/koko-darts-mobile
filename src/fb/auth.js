@@ -1,71 +1,11 @@
 import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
-
-const db = firestore();
-const usersCollection = db.collection("users");
-
-const checkUsernameAvailability = (username) => {
-  console.log("UESRNAME", username);
-  return usersCollection
-    .doc(username)
-    .get()
-    .then((documentSnapshot) => {
-      console.log("SNAPSHOTS", documentSnapshot.exists);
-      return documentSnapshot.exists;
-    });
-};
-
-const createProfile = (email, username) => {
-  console.log("saving profile to database..");
-  return usersCollection.doc(username).set({
-    username: username,
-    email: email,
-    registeredOn: new Date(),
-    img: require("../../assets/bg.png"),
-    overall: {
-      gamesPlayed: 0,
-      winningPercentage: 0,
-      overallAvg: 0,
-      bestMatch: 0,
-    },
-    friends: [],
-    matches: [],
-    requestReceived: [],
-    requestSent: [],
-    settings: {
-      p1: {
-        key: username,
-        img: require("../../assets/bg.png"),
-      },
-      p2: {
-        key: "",
-        img: "",
-      },
-      layout: "classic",
-      legOrSet: "set",
-      toWin: 3,
-      legsPerSet: 3,
-      startingScore: 501,
-      playerToStartLeg: "p1",
-      opacity: true,
-    },
-  });
-};
-
-const getProfile = (username) => {
-  console.log("GETTING PROFILE", username);
-  return usersCollection.doc(username).get();
-};
-
-const deleteProfile = (username) => {
-  console.log("deleting profile from databse...");
-  usersCollection
-    .doc(username)
-    .delete()
-    .then(() => {
-      console.log("User deleted from database!");
-    });
-};
+import {
+  deleteProfile,
+  getProfileByUsername,
+  getProfileByEmail,
+  checkUsernameAvailability,
+  createProfile,
+} from "./crud";
 
 export const signUp = async (
   email,
@@ -73,6 +13,12 @@ export const signUp = async (
   username,
   navigation,
   dispatchUserData,
+  dispatchSettings,
+  dispatchInGameSettings,
+  dispatchGameData,
+  setSelectedTheme,
+  setAnimation,
+  setBackground,
 ) => {
   const userNameTaken = await checkUsernameAvailability(username);
   if (userNameTaken) {
@@ -83,7 +29,19 @@ export const signUp = async (
       .then(() => {
         console.log("sign up successful");
         createProfile(email, username).then(() => {
-          LogIn(email, password, username, navigation, dispatchUserData);
+          LogIn(
+            email,
+            password,
+            username,
+            navigation,
+            dispatchUserData,
+            dispatchSettings,
+            dispatchInGameSettings,
+            dispatchGameData,
+            setSelectedTheme,
+            setAnimation,
+            setBackground,
+          );
         });
       })
       .catch((err) => {
@@ -98,32 +56,128 @@ export const logOut = (navigation) => {
     .signOut()
     .then(() => {
       console.log("logged out");
-      navigation.navigate("welcome");
+      navigation.navigate("authnavigator");
     });
 };
 
 export const LogIn = (
   email,
   password,
-  username,
+  id,
   navigation,
   dispatchUserData,
+  dispatchSettings,
+  dispatchInGameSettings,
+  dispatchGameData,
+  setSelectedTheme,
+  setAnimation,
+  setBackground,
 ) => {
   console.log("logging in...");
   auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
       console.log("log in successful");
-      getProfile(username).then((documentSnapshot) => {
-        const userData = documentSnapshot.data();
-        console.log(userData);
-        dispatchUserData({ type: "CREATE_PROFILE", value: userData });
-        navigation.navigate("homenavigator");
-      });
+      if (email === id) {
+        (async () => {
+          try {
+            const userData = await getProfileByEmail(id).then(
+              (querySnapshot) => {
+                return querySnapshot.docs[0].data();
+              },
+            );
+            await loadAppData(
+              userData,
+              navigation,
+              dispatchUserData,
+              dispatchSettings,
+              dispatchInGameSettings,
+              dispatchGameData,
+              setSelectedTheme,
+              setAnimation,
+              setBackground,
+            );
+          } catch (err) {
+            alert(err);
+          }
+        })();
+      } else {
+        (async () => {
+          try {
+            const userData = await getProfileByUsername(id).then(
+              (documentSnapshot) => {
+                return documentSnapshot.data();
+              },
+            );
+            await loadAppData(
+              userData,
+              navigation,
+              dispatchUserData,
+              dispatchSettings,
+              dispatchInGameSettings,
+              dispatchGameData,
+              setSelectedTheme,
+              setAnimation,
+              setBackground,
+            );
+          } catch (err) {
+            alert(err);
+          }
+        })();
+      }
     })
     .catch((err) => {
       alert(err);
     });
+};
+
+export const loadAppData = async (
+  userData,
+  navigation,
+  dispatchUserData,
+  dispatchSettings,
+  dispatchInGameSettings,
+  dispatchGameData,
+  setSelectedTheme,
+  setAnimation,
+  setBackground,
+) => {
+  console.log("creating profile...");
+  const settings = userData.settings;
+
+  await dispatchUserData({
+    type: "CREATE_PROFILE",
+    value: userData,
+  });
+  console.log("PROFILE CREATED");
+
+  console.log("loading theme...");
+  await setSelectedTheme(settings.theme);
+  await setAnimation(settings.animation);
+  await setBackground(settings.background);
+  console.log("THEME");
+
+  console.log("loading settingscontext...");
+  await dispatchSettings({
+    type: "LOAD_SETTINGS",
+    value: settings,
+  });
+  console.log("SETTINGS CONTEXT LOADED");
+  console.log("loading ingame settingscontext...");
+  await dispatchInGameSettings({
+    type: "LOAD_INGAME_SETTINGS",
+    value: settings,
+  });
+  console.log("INGAME SETTINGS CONTEXT LOADED");
+  console.log("loading gameData...");
+  await dispatchGameData({
+    type: "LOAD_SETTINGS",
+    value: settings,
+  });
+  console.log("GAMEDATA LOADED");
+
+  console.log("navigating");
+  navigation.navigate("homenavigator");
 };
 
 export const deleteAccount = (username, navigation) => {
@@ -131,8 +185,10 @@ export const deleteAccount = (username, navigation) => {
   console.log("deleting user...", user);
   user.delete().then(() => {
     console.log("user has been deleted");
-    deleteProfile(username);
-    navigation.navigate("welcome");
+    deleteProfile(username).then(() => {
+      console.log("deleted from database");
+      navigation.navigate("authnavigator");
+    });
   });
 };
 

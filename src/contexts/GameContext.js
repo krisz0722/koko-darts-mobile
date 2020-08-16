@@ -5,25 +5,25 @@ import Rematch from "./actions/Rematch";
 import undo from "./actions/Undo";
 import bust from "./actions/Bust";
 import typeNextDart from "./actions/TypeNextDart";
-import { InGameSettingsContext } from "./InGameSettingsContext";
 import submitUpdateScore from "./actions/SubmitUpdateScore";
 import UpdateByDart from "./actions/UpdateByDart";
+import { Authcontext } from "./AuthContext";
 
 export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
-  const { inGameSettings } = useContext(InGameSettingsContext);
+  const DEFAULT_SETTINGS = useContext(Authcontext).userData.settings;
 
   const initialGameState = {
     ...GAME_DEFAULT_STATE,
-    ...inGameSettings,
+    ...DEFAULT_SETTINGS,
     p1_DATA: {
       ...GAME_DEFAULT_STATE.p1_DATA,
-      score: inGameSettings.startingScore,
+      score: "",
     },
     p2_DATA: {
       ...GAME_DEFAULT_STATE.p2_DATA,
-      score: inGameSettings.startingScore,
+      score: "",
     },
   };
 
@@ -88,6 +88,8 @@ export const GameContextProvider = (props) => {
         return state;
     }
   };
+
+  console.log("GAMEDATA", gameData);
 
   const [gameData, dispatchGameData] = useReducer(
     gameReducer,

@@ -10,45 +10,39 @@ import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "./Preview";
 import { useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Authcontext } from "../../contexts/AuthContext";
+import { updateSettings } from "../../fb/crud";
 
 const SETTINGS = () => {
   const {
     dispatchSettings,
+    settings,
     settings: { p1, p2 },
   } = useContext(SettingsContext);
-  const { setBackground, setAnimation, setSelectedTheme } = useContext(
-    ThemeContext,
-  );
+  const {
+    setBackground,
+    setAnimation,
+    selectedTheme,
+    setSelectedTheme,
+  } = useContext(ThemeContext);
 
-  //axios DB get
-
-  const USER_SETTINGS = {
-    p1: { key: "USER", img: "" },
-    p2: { key: null, img: "" },
-    layout: "classic",
-    theme: "default",
-    legOrSet: "set",
-    toWin: 3,
-    legsPerSet: 3,
-    startingScore: 501,
-    opacity: true,
-    animation: true,
-  };
-
-  //axios DB get
+  const {
+    userData,
+    userData: { username },
+    dispatchUserData,
+  } = useContext(Authcontext);
+  const USER_SETTINGS = userData.settings;
 
   const [preview, setPreview] = useState(false);
 
-  const [legOrSet, setLegOrSet] = useState(USER_SETTINGS.legOrSet);
-  const [startingScore, setStartingScore] = useState(
-    USER_SETTINGS.startingScore,
-  );
-  const [layout, setLayout] = useState(USER_SETTINGS.layout);
+  const [legOrSet, setLegOrSet] = useState(settings.legOrSet);
+  const [startingScore, setStartingScore] = useState(settings.startingScore);
+  const [layout, setLayout] = useState(settings.layout);
 
-  const [toWin, setTowin] = useState(USER_SETTINGS.toWin);
-  const [legsPerSet, setLegsPerSet] = useState(USER_SETTINGS.legsPerSet);
-  const [opacity, setOpacity] = useState(USER_SETTINGS.opacity);
-  const [animation, setStateAnimation] = useState(USER_SETTINGS.animation);
+  const [toWin, setTowin] = useState(settings.toWin);
+  const [legsPerSet, setLegsPerSet] = useState(settings.legsPerSet);
+  const [opacity, setOpacity] = useState(settings.opacity);
+  const [animation, setStateAnimation] = useState(settings.animation);
 
   const newSettings = {
     p1,
@@ -66,24 +60,33 @@ const SETTINGS = () => {
   useEffect(() => {
     if (isFocused) {
     } else {
+      const newSettings = {
+        p1,
+        p2,
+        legOrSet,
+        startingScore,
+        layout,
+        preview,
+        toWin,
+        legsPerSet,
+        opacity,
+        animation,
+      };
       dispatchSettings({
         type: "SAVE_SETTINGS",
-        value: {
-          p1,
-          p2,
-          legOrSet,
-          startingScore,
-          layout,
-          preview,
-          toWin,
-          legsPerSet,
-          opacity,
-          animation,
-        },
+        value: newSettings,
+      });
+      dispatchUserData({
+        type: "UPDATE_SETTINGS",
+        value: newSettings,
       });
       setAnimation(animation);
+      updateSettings(username, { ...newSettings, theme: selectedTheme });
     }
   }, [
+    dispatchUserData,
+    selectedTheme,
+    username,
     p1,
     p2,
     isFocused,

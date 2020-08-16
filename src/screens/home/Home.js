@@ -1,45 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  Info,
+  HomeContainer,
   HeaderText,
-  InfoTitle,
-  InfoRow,
-  InfoText,
-  InfoText2,
-  InfoStats,
   Header,
   Buttons,
-  TopButtons,
   TopBar,
-  Friend,
-  Friendrequest,
-  FriendName,
-  FriendMessage,
-  FriendAvatar,
-  LogOut,
-  OverflowMenu,
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import UNFINISHED_MATCH from "./DataUnfinished";
-import LAST_MATCH from "./DataLastMatch";
 import NEW_GAME_ALERT from "../../components/modals/NewGameAlert";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import NavButton from "../../components/buttons/NavButton";
-import { logOut, deleteAccount } from "../../fb/auth";
 import { Authcontext } from "../../contexts/AuthContext";
+import HOME_INFO from "./Info";
+import OVERFLOW_MENU from "./OverflowMenu";
+import FRIEND_REQUEST from "./FriendRequest";
 
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const {
-    userData: { username },
+    userData,
+    userData: { username, matches, requestReceived },
   } = useContext(Authcontext);
 
-  const [unfinished, setUnfinished] = useState(false);
-  const [friendRequest, setFriendRequest] = useState(true);
+  const lastMatch = matches[0];
+  const status = lastMatch ? lastMatch.status === "unfinished" : "empty";
+  console.log("HOME LASTMATCH", lastMatch);
+  const request = requestReceived.length > 0;
+
+  const [unfinished, setUnfinished] = useState(status);
+  const [friendRequest, setFriendRequest] = useState(request);
   const [overflow, setOverflow] = useState(false);
   const [newGameModal, setNewGameModal] = useState(false);
 
-  const renderContent = unfinished ? UNFINISHED_MATCH : LAST_MATCH;
+  useEffect(() => {
+    return () => setOverflow(false);
+  }, []);
 
   const handleNewGame = () => {
     if (unfinished) {
@@ -61,71 +56,11 @@ const HOME = React.memo(({ navigation }) => {
   return (
     <>
       {overflow ? (
-        <OverflowMenu>
-          <NavButton
-            text={"about the app"}
-            length={"auto"}
-            active={false}
-            direction={"row"}
-            height={"auto"}
-            icon={"info"}
-            color={"dark"}
-            action={() => alert("info")}
-          />
-          <NavButton
-            text={"log out"}
-            length={"auto"}
-            active={false}
-            direction={"row"}
-            height={"auto"}
-            icon={"exit-to-app"}
-            color={"dark"}
-            action={() => logOut(navigation)}
-          />
-          <NavButton
-            text={"delete account"}
-            length={"auto"}
-            active={false}
-            direction={"row"}
-            height={"auto"}
-            icon={"delete"}
-            color={"dark"}
-            action={() => deleteAccount(username, navigation)}
-          />
-        </OverflowMenu>
+        <OVERFLOW_MENU username={username} navigation={navigation} />
       ) : null}
-
       <TopBar friendRequest={friendRequest} theme={theme}>
         {friendRequest ? (
-          <>
-            <Friendrequest theme={theme}>
-              <Friend>
-                <FriendAvatar
-                  theme={theme}
-                  resizeMode={"cover"}
-                  source={require("../../../assets/bg.png")}
-                />
-                <FriendName>michael schimacher jose armando</FriendName>
-              </Friend>
-
-              <TopButtons>
-                <THEMED_BUTTON
-                  length={2}
-                  size={"small"}
-                  type={"danger"}
-                  icon={"clear"}
-                  action={() => setFriendRequest(false)}
-                />
-                <THEMED_BUTTON
-                  length={2}
-                  size={"small"}
-                  type={"success"}
-                  icon={"check"}
-                  action={() => setFriendRequest(false)}
-                />
-              </TopButtons>
-            </Friendrequest>
-          </>
+          <FRIEND_REQUEST action={setFriendRequest(false)} />
         ) : (
           <>
             <NavButton
@@ -140,40 +75,29 @@ const HOME = React.memo(({ navigation }) => {
           </>
         )}
       </TopBar>
-      <Header>
-        <HeaderText theme={theme}>welcome</HeaderText>
-        <HeaderText theme={theme}>valaki</HeaderText>
-      </Header>
-      <InfoTitle unfinished={unfinished}>{renderContent.title}</InfoTitle>
-      <Info unfinished={unfinished}>
-        <InfoStats theme={theme}>
-          {renderContent.rows.map((item) => (
-            <React.Fragment key={item.value}>
-              <InfoRow>
-                <InfoText>{item.title}</InfoText>
-                <InfoText2>{item.value}</InfoText2>
-              </InfoRow>
-            </React.Fragment>
-          ))}
-        </InfoStats>
-      </Info>
-      <Buttons>
-        {unfinished ? (
+      <HomeContainer>
+        <Header>
+          <HeaderText theme={theme}>welcome</HeaderText>
+          <HeaderText theme={theme}>{username}</HeaderText>
+        </Header>
+        <HOME_INFO lastMatch={lastMatch} unfinished={unfinished} />
+        <Buttons>
+          {unfinished == true ? (
+            <THEMED_BUTTON
+              type={"success"}
+              theme={theme}
+              text={"continue game"}
+            />
+          ) : null}
           <THEMED_BUTTON
-            type={"success"}
+            valami={1}
+            type={"active"}
             theme={theme}
-            text={"continue game"}
+            text={"new game"}
+            action={() => handleNewGame()}
           />
-        ) : null}
-        <THEMED_BUTTON
-          valami={1}
-          type={"active"}
-          theme={theme}
-          text={"new game"}
-          action={() => handleNewGame()}
-        />
-      </Buttons>
-
+        </Buttons>
+      </HomeContainer>
       <NEW_GAME_ALERT
         action1={() => setNewGameModal(!newGameModal)}
         action2={handleNewGameModal}

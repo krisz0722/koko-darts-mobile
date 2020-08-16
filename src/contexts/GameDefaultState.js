@@ -51,6 +51,7 @@ export const GAME_DEFAULT_STATE = {
   activePlayer: "p1",
   inactivePlayer: "p2",
   showStats: false,
+  opponent: "",
 
   //PLAYERS
   p1_DATA: DEFAULT_PLAYER_DATA,
@@ -74,6 +75,8 @@ export const GAME_DEFAULT_STATE = {
   isMatchOver: false,
   isRematch: false,
   winner: null,
+  result: "",
+  wonOrLost: null,
 };
 
 export default GAME_DEFAULT_STATE;

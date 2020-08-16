@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
@@ -19,6 +19,9 @@ import WELCOME from "../screens/welcome/Welcome";
 import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 import HomeNavigator from "./HomeNavigator";
 import DrawerNavigator from "./DrawerNavigator";
+import AuthNavigator from "./AuthNavigator";
+import { Authcontext } from "../contexts/AuthContext";
+import { onStateChange } from "../fb/crud";
 
 export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;
@@ -31,20 +34,8 @@ const { Navigator, Screen } = createStackNavigator();
 const AppNavigator = () => {
   const SCREENS = [
     {
-      component: WELCOME,
-      name: "welcome",
-    },
-    {
-      component: REGISTER,
-      name: "register",
-    },
-    {
-      component: LOGIN,
-      name: "login",
-    },
-    {
-      component: FORGOT_PASSWORD,
-      name: "forgotpassword",
+      component: AuthNavigator,
+      name: "authnavigator",
     },
     {
       component: HomeNavigator,
@@ -90,30 +81,24 @@ const AppNavigator = () => {
       ) : null}
 
       <ThemeProvider theme={theme}>
-        <SettingsContextProvider>
-          <InGameSettingsContextProvider>
-            <GameContextProvider>
-              <ScreenContainer theme={theme}>
-                <NavigationContainer theme={navigationTheme}>
-                  <Navigator
-                    headerMode="none"
-                    screenOptions={{
-                      ...transition(theme.name),
-                    }}
-                  >
-                    {SCREENS.map((item) => (
-                      <Screen
-                        key={item.name}
-                        name={item.name}
-                        component={item.component}
-                      />
-                    ))}
-                  </Navigator>
-                </NavigationContainer>
-              </ScreenContainer>
-            </GameContextProvider>
-          </InGameSettingsContextProvider>
-        </SettingsContextProvider>
+        <ScreenContainer theme={theme}>
+          <NavigationContainer theme={navigationTheme}>
+            <Navigator
+              headerMode="none"
+              screenOptions={{
+                ...transition(theme.name),
+              }}
+            >
+              {SCREENS.map((item) => (
+                <Screen
+                  key={item.name}
+                  name={item.name}
+                  component={item.component}
+                />
+              ))}
+            </Navigator>
+          </NavigationContainer>
+        </ScreenContainer>
       </ThemeProvider>
     </AppearanceProvider>
   );

@@ -6,13 +6,18 @@ import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LogIn } from "../../fb/auth";
 import { Authcontext } from "../../contexts/AuthContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { GameContext } from "../../contexts/GameContext";
+import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 
 const LOGIN = ({ navigation }) => {
-  const { theme } = useContext(ThemeContext);
-  const {
-    userData: { username },
-    dispatchUserData,
-  } = useContext(Authcontext);
+  const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
+    ThemeContext,
+  );
+  const { dispatchGameData } = useContext(GameContext);
+  const { dispatchSettings } = useContext(SettingsContext);
+  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
+  const { dispatchUserData } = useContext(Authcontext);
 
   const [password, setPassword] = useState("111111");
   const [email, setEmail] = useState("krisz0722@gmail.com");
@@ -88,7 +93,19 @@ const LOGIN = ({ navigation }) => {
             disabled={!enableSignUp}
             text={"log in"}
             action={() => {
-              LogIn(email, password, username, navigation, dispatchUserData);
+              LogIn(
+                email,
+                password,
+                email,
+                navigation,
+                dispatchUserData,
+                dispatchSettings,
+                dispatchInGameSettings,
+                dispatchGameData,
+                setSelectedTheme,
+                setAnimation,
+                setBackground,
+              );
             }}
           />
           <Buttons>

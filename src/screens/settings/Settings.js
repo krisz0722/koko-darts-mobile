@@ -22,6 +22,7 @@ const SETTINGS = () => {
   const {
     setBackground,
     setAnimation,
+    background,
     selectedTheme,
     setSelectedTheme,
   } = useContext(ThemeContext);
@@ -71,6 +72,7 @@ const SETTINGS = () => {
         legsPerSet,
         opacity,
         animation,
+        theme: selectedTheme,
       };
       dispatchSettings({
         type: "SAVE_SETTINGS",
@@ -81,9 +83,13 @@ const SETTINGS = () => {
         value: newSettings,
       });
       setAnimation(animation);
-      updateSettings(username, { ...newSettings, theme: selectedTheme });
+      updateSettings(username, {
+        ...newSettings,
+        background,
+      });
     }
   }, [
+    background,
     dispatchUserData,
     selectedTheme,
     username,
@@ -158,7 +164,11 @@ const SETTINGS = () => {
       opacity,
       toWin,
       legsPerSet,
+      theme,
+      background,
     } = USER_SETTINGS;
+
+    console.log("SETTINGS USER SETTINGS", USER_SETTINGS);
 
     setPreview(false);
     setLayout(layout);
@@ -168,17 +178,10 @@ const SETTINGS = () => {
     setTowin(toWin);
     setLegOrSet(legOrSet);
     setStartingScore(startingScore);
-
-    dispatchSettings({ type: "RESET", value: newSettings });
-    setSelectedTheme(USER_SETTINGS.theme);
-    setBackground(true);
-  }, [
-    setBackground,
-    setSelectedTheme,
-    dispatchSettings,
-    newSettings,
-    USER_SETTINGS,
-  ]);
+    setSelectedTheme(theme);
+    setBackground(background);
+    dispatchSettings({ type: "RESET", value: USER_SETTINGS });
+  }, [USER_SETTINGS, setBackground, setSelectedTheme, dispatchSettings]);
 
   return (
     <>

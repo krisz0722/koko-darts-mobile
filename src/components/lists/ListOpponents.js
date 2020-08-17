@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { FlatList } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import OPPONENT_COMPONENT from "./ComponentOpponent";
-import FRIENDS_LIST from "./data/DataFriends";
 import { BorderVertical } from "../../styles/css_mixins";
+import { Authcontext } from "../../contexts/AuthContext";
 export const Safe = styled(SafeAreaView)`
   height: 50%;
   width: 100%;
@@ -22,6 +22,7 @@ export const ProfilesContainer = styled(FlatList)`
 
 const LIST_OPPONENTS = ({ opponent, chooseProfile, regexp }) => {
   const { theme } = useContext(ThemeContext);
+  const FRIENDS_LIST = useContext(Authcontext).userData.friends;
 
   const renderItem = ({ item }) => (
     <OPPONENT_COMPONENT

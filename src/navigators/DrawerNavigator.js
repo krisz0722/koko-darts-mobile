@@ -12,6 +12,8 @@ import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import LEAVE_MATCH_ALERT from "../components/modals/LeaveMatchAlert";
 import { CommonActions } from "@react-navigation/native";
 import STATS from "../screens/stats/Stats";
+import { Authcontext } from "../contexts/AuthContext";
+import { updateMatches } from "../fb/crud";
 
 export const DrawerContent = styled(View)`
   ${FlexCol};
@@ -75,6 +77,10 @@ const DrawerNavigator = ({ navigation }) => {
     gameData,
     gameData: { activePlayer, inactivePlayer },
   } = useContext(GameContext);
+  const {
+    dispatchUserData,
+    userData: { username, matches },
+  } = useContext(Authcontext);
 
   const drawerstyle = {
     width: "40%",
@@ -83,9 +89,11 @@ const DrawerNavigator = ({ navigation }) => {
 
   const [modal, setModal] = useState(false);
 
-  const handleLeaveMatch = () => {
+  const handleLeaveMatch = async () => {
     //TODO save match here to db!
-
+    matches[0] = gameData;
+    await updateMatches(username, matches);
+    await dispatchUserData({ type: "UPDATE_MATCHES", value: matches });
     setModal(false);
     navigation.dispatch(
       CommonActions.reset({

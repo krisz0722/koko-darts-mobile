@@ -3,9 +3,9 @@ import { SafeAreaView, Text, View } from "react-native";
 import styled from "styled-components";
 import { FlatList } from "react-native";
 import MATCH_COMPONENT from "./ComponentMatch";
-import MATCHES_LIST from "./data/DataMatches";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { BasicText, FlexRowBetween, Window } from "../../styles/css_mixins";
+import { Authcontext } from "../../contexts/AuthContext";
 export const MatchesContainer = styled(FlatList)`
   width: 100%;
   height: 100%;
@@ -42,8 +42,17 @@ export const Col5 = styled(Col1)`
 
 const ListMatches = () => {
   const { theme } = useContext(ThemeContext);
+  const {
+    userData: { matches },
+  } = useContext(Authcontext);
 
-  const renderItem = ({ item }) => <MATCH_COMPONENT item={item} />;
+  const MATCHES_LIST = () => {
+    return matches instanceof Array
+      ? matches.filter((item) => item.status !== "pending")
+      : [];
+  };
+
+  const renderItem = (item) => <MATCH_COMPONENT item={item} />;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -55,8 +64,8 @@ const ListMatches = () => {
         <Col5></Col5>
       </Header>
       <MatchesContainer
-        data={MATCHES_LIST}
-        renderItem={renderItem}
+        data={MATCHES_LIST()}
+        renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.key}
         theme={theme}
       />

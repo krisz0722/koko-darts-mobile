@@ -14,17 +14,17 @@ import { Authcontext } from "../../contexts/AuthContext";
 import HOME_INFO from "./Info";
 import OVERFLOW_MENU from "./OverflowMenu";
 import FRIEND_REQUEST from "./FriendRequest";
+import { updateMatches } from "../../fb/crud";
 
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const {
-    userData,
+    dispatchUserData,
     userData: { username, matches, requestReceived },
   } = useContext(Authcontext);
 
   const lastMatch = matches[0];
-  const status = lastMatch ? lastMatch.status === "unfinished" : "empty";
-  console.log("HOME LASTMATCH", lastMatch);
+  const status = lastMatch ? lastMatch.status === "pending" : "empty";
   const request = requestReceived.length > 0;
 
   const [unfinished, setUnfinished] = useState(status);
@@ -37,7 +37,7 @@ const HOME = React.memo(({ navigation }) => {
   }, []);
 
   const handleNewGame = () => {
-    if (unfinished) {
+    if (unfinished && unfinished !== "empty") {
       setNewGameModal(!newGameModal);
     } else {
       navigation.navigate("drawernavigator");
@@ -45,12 +45,20 @@ const HOME = React.memo(({ navigation }) => {
     }
   };
 
-  const handleNewGameModal = () => {
+  const handleNewGameModal = async () => {
+    const newmatches = [...matches];
+    newmatches.shift();
+    await updateMatches(username, newmatches);
+    dispatchUserData({ type: "UPDATE_MATCHES", value: newmatches });
     navigation.navigate("drawernavigator");
     setUnfinished(false);
     setTimeout(() => {
       setNewGameModal(!newGameModal);
     }, 300);
+  };
+
+  const handleContinueGame = async () => {
+    navigation.navigate("drawernavigator", { screen: "game" });
   };
 
   return (
@@ -80,13 +88,18 @@ const HOME = React.memo(({ navigation }) => {
           <HeaderText theme={theme}>welcome</HeaderText>
           <HeaderText theme={theme}>{username}</HeaderText>
         </Header>
-        <HOME_INFO lastMatch={lastMatch} unfinished={unfinished} />
+        <HOME_INFO
+          lastMatch={lastMatch}
+          unfinished={unfinished}
+          username={username}
+        />
         <Buttons>
           {unfinished == true ? (
             <THEMED_BUTTON
               type={"success"}
               theme={theme}
               text={"continue game"}
+              action={() => handleContinueGame()}
             />
           ) : null}
           <THEMED_BUTTON

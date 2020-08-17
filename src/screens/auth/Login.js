@@ -19,6 +19,16 @@ const LOGIN = ({ navigation }) => {
   const { dispatchInGameSettings } = useContext(InGameSettingsContext);
   const { dispatchUserData } = useContext(Authcontext);
 
+  const reducers = {
+    game: dispatchGameData,
+    settings: dispatchSettings,
+    ingamesettings: dispatchInGameSettings,
+    user: dispatchUserData,
+    theme: setSelectedTheme,
+    animation: setAnimation,
+    background: setBackground,
+  };
+
   const [password, setPassword] = useState("111111");
   const [email, setEmail] = useState("krisz0722@gmail.com");
   const [passwordHidden, setPasswordHidden] = useState(false);
@@ -93,19 +103,7 @@ const LOGIN = ({ navigation }) => {
             disabled={!enableSignUp}
             text={"log in"}
             action={() => {
-              LogIn(
-                email,
-                password,
-                email,
-                navigation,
-                dispatchUserData,
-                dispatchSettings,
-                dispatchInGameSettings,
-                dispatchGameData,
-                setSelectedTheme,
-                setAnimation,
-                setBackground,
-              );
+              LogIn(email, password, email, navigation, reducers);
             }}
           />
           <Buttons>

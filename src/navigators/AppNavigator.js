@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
@@ -7,21 +7,12 @@ import styled from "styled-components/native/dist/styled-components.native.esm";
 import { ThemeProvider } from "styled-components";
 import { AppBackground } from "../../App";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { SettingsContextProvider } from "../contexts/SettingsContext";
-import { GameContextProvider } from "../contexts/GameContext";
-import { InGameSettingsContextProvider } from "../contexts/InGameSettingsContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
 import transitionNone from "../styles/navNoTransition";
-import REGISTER from "../screens/auth/SignUp";
-import LOGIN from "../screens/auth/Login";
-import WELCOME from "../screens/welcome/Welcome";
-import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 import HomeNavigator from "./HomeNavigator";
 import DrawerNavigator from "./DrawerNavigator";
 import AuthNavigator from "./AuthNavigator";
-import { Authcontext } from "../contexts/AuthContext";
-import { onStateChange } from "../fb/crud";
 
 export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;

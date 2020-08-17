@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row2 } from "../settings/StyledSettings";
 import SETTINGS_HEADER from "../settings/Header";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import {
   FlexRow,
   Window,
 } from "../../styles/css_mixins";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const RowMod = styled(Row2)``;
 
@@ -38,22 +39,26 @@ const HISTORY_ROW = ({ p1, title, p2 }) => (
   </HistoryRow>
 );
 
-export const HISTORY = () => {
+export const HISTORY = ({ p1, p2 }) => {
+  const {
+    userData: { username },
+  } = useContext(Authcontext);
+
   const DATA = [
     {
-      p1: 45,
+      p1: username === p1.key ? p2.losses : p1.wins,
       title: "total wins",
-      p2: 36,
+      p2: username === p1.key ? p2.wins : p1.losses,
     },
     {
-      p1: 65.2,
+      p1: p1.overallAvg,
       title: "overall average",
-      p2: 112.2,
+      p2: p2.overallAvg,
     },
     {
-      p1: 120.2,
+      p1: p1.bestMatch,
       title: "best match",
-      p2: 75.2,
+      p2: p2.bestMatch,
     },
   ];
 
@@ -67,14 +72,18 @@ export const HISTORY = () => {
         />
       </RowMod>
       <HistoryContainer>
-        {DATA.map((item) => (
-          <HISTORY_ROW
-            key={item.title}
-            p1={item.p1}
-            p2={item.p2}
-            title={item.title}
-          />
-        ))}
+        {p2 ? (
+          <>
+            {DATA.map((item) => (
+              <HISTORY_ROW
+                key={item.title}
+                p1={item.p1}
+                p2={item.p2}
+                title={item.title}
+              />
+            ))}
+          </>
+        ) : null}
       </HistoryContainer>
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import {
   View,
@@ -18,6 +18,7 @@ import {
   Window,
 } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Authcontext } from "../../contexts/AuthContext";
 
 export const ModalContainerSearch = styled(ScrollView)`
   background-color: rgba(255, 255, 255, 0.95);
@@ -53,6 +54,9 @@ font-size:20;
 const CHOOSE_PLAYER_MODAL = React.memo(
   ({ p1, p2, handleModal, chooseGuest, chooseProfile, visible }) => {
     const { theme, animation } = useContext(ThemeContext);
+    const {
+      userData: { username },
+    } = useContext(Authcontext);
 
     const animationType = animation
       ? theme.name === "default"
@@ -60,7 +64,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
         : "slide"
       : "none";
 
-    const opponent = p1.key === "USER" ? p2 : p1;
+    const opponent = p1.key === username ? p2 : p1;
 
     return (
       <Modal

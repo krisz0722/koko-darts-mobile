@@ -10,34 +10,57 @@ import {
 } from "./StyledHome";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-const HOME_INFO = React.memo(({ unfinished, lastMatch }) => {
+const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
   const { theme } = useContext(ThemeContext);
+
+  const STATS = () => {
+    const { p1, p1_DATA, p2_DATA, opponent, date } = lastMatch;
+
+    const userData = p1.key === username ? p1_DATA : p2_DATA;
+
+    return lastMatch && unfinished
+      ? [
+          {
+            stat: "last palyed on:",
+            value: date,
+          },
+          {
+            stat: "opponent",
+            value: opponent,
+          },
+          {
+            stat: "match standing",
+            value: "3-2",
+          },
+          {
+            stat: "match average",
+            value: userData.avgMatch,
+          },
+        ]
+      : lastMatch && !unfinished
+      ? [
+          {
+            stat: "result",
+            value: lastMatch.result,
+          },
+          {
+            stat: "opponent",
+            value: opponent,
+          },
+          {
+            stat: "match average",
+            value: userData.avgMatch,
+          },
+          {
+            stat: "double percentage",
+            value: userData.doublePercentage,
+          },
+        ]
+      : null;
+  };
 
   const title =
     unfinished == false ? "your last match" : "you have an unfinished match";
-
-  console.log("LASTMATCH", lastMatch);
-
-  const STATS = lastMatch
-    ? [
-        {
-          stat: "result",
-          value: lastMatch.result,
-        },
-        {
-          stat: "opponent",
-          value: lastMatch.opponent,
-        },
-        {
-          stat: "match average",
-          value: lastMatch.avgMatch,
-        },
-        {
-          stat: "double percentage",
-          value: lastMatch.doublePercentage,
-        },
-      ]
-    : null;
 
   return (
     <>
@@ -59,7 +82,7 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch }) => {
           <InfoTitle unfinished={unfinished}>{title}</InfoTitle>
           <Info unfinished={unfinished}>
             <InfoStats theme={theme}>
-              {STATS.map((item) => (
+              {STATS().map((item) => (
                 <React.Fragment key={item}>
                   <InfoRow>
                     <InfoText>{item.stat}</InfoText>
@@ -74,5 +97,4 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch }) => {
     </>
   );
 });
-
 export default HOME_INFO;

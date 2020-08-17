@@ -12,195 +12,123 @@ export const signUp = async (
   password,
   username,
   navigation,
-  dispatchUserData,
-  dispatchSettings,
-  dispatchInGameSettings,
-  dispatchGameData,
-  setSelectedTheme,
-  setAnimation,
-  setBackground,
+  reducers,
 ) => {
   const userNameTaken = await checkUsernameAvailability(username);
   if (userNameTaken) {
     return alert("username is taken");
   } else {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log("sign up successful");
-        createProfile(email, username).then(() => {
-          LogIn(
-            email,
-            password,
-            username,
-            navigation,
-            dispatchUserData,
-            dispatchSettings,
-            dispatchInGameSettings,
-            dispatchGameData,
-            setSelectedTheme,
-            setAnimation,
-            setBackground,
-          );
-        });
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+
+      console.log("sign up successful");
+      await createProfile(email, username);
+
+      LogIn(email, password, username, navigation, reducers);
+    } catch (err) {
+      alert(err);
+    }
   }
 };
 
-export const logOut = (navigation) => {
+export const logOut = async (navigation) => {
   console.log("logging out...");
-  auth()
-    .signOut()
-    .then(() => {
-      console.log("logged out");
-      navigation.navigate("authnavigator");
-    });
+  await auth().signOut();
+  console.log("logged out");
+  navigation.navigate("authnavigator", { screen: "login" });
 };
 
-export const LogIn = (
-  email,
-  password,
-  id,
-  navigation,
-  dispatchUserData,
-  dispatchSettings,
-  dispatchInGameSettings,
-  dispatchGameData,
-  setSelectedTheme,
-  setAnimation,
-  setBackground,
-) => {
+export const LogIn = async (email, password, id, navigation, reducers) => {
   console.log("logging in...");
-  auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log("log in successful");
-      if (email === id) {
-        (async () => {
-          try {
-            const userData = await getProfileByEmail(id).then(
-              (querySnapshot) => {
-                return querySnapshot.docs[0].data();
-              },
-            );
-            await loadAppData(
-              userData,
-              navigation,
-              dispatchUserData,
-              dispatchSettings,
-              dispatchInGameSettings,
-              dispatchGameData,
-              setSelectedTheme,
-              setAnimation,
-              setBackground,
-            );
-          } catch (err) {
-            alert(err);
-          }
-        })();
-      } else {
-        (async () => {
-          try {
-            const userData = await getProfileByUsername(id).then(
-              (documentSnapshot) => {
-                return documentSnapshot.data();
-              },
-            );
-            await loadAppData(
-              userData,
-              navigation,
-              dispatchUserData,
-              dispatchSettings,
-              dispatchInGameSettings,
-              dispatchGameData,
-              setSelectedTheme,
-              setAnimation,
-              setBackground,
-            );
-          } catch (err) {
-            alert(err);
-          }
-        })();
+  await auth().signInWithEmailAndPassword(email, password);
+  console.log("log in successful");
+  if (email === id) {
+    await (async () => {
+      try {
+        const userData = await getProfileByEmail(id).then((querySnapshot) => {
+          return querySnapshot.docs[0].data();
+        });
+        await loadAppData(userData, navigation, reducers);
+      } catch (err) {
+        alert(err);
       }
-    })
-    .catch((err) => {
-      alert(err);
-    });
+    })();
+  } else {
+    await (async () => {
+      try {
+        const userData = await getProfileByUsername(id).then(
+          (documentSnapshot) => {
+            return documentSnapshot.data();
+          },
+        );
+        await loadAppData(userData, navigation, reducers);
+      } catch (err) {
+        alert(err);
+      }
+    })();
+  }
 };
 
-export const loadAppData = async (
-  userData,
-  navigation,
-  dispatchUserData,
-  dispatchSettings,
-  dispatchInGameSettings,
-  dispatchGameData,
-  setSelectedTheme,
-  setAnimation,
-  setBackground,
-) => {
-  console.log("creating profile...");
-  const settings = userData.settings;
+export const loadAppData = async (userData, navigation, reducers) => {
+  const {
+    user,
+    settings,
+    game,
+    ingamesettings,
+    theme,
+    animation,
+    background,
+  } = reducers;
+  const userSettings = userData.settings;
+  const userMatches = userData.matches;
 
-  await dispatchUserData({
+  console.log("creating profile...");
+  await user({
     type: "CREATE_PROFILE",
     value: userData,
   });
-  console.log("PROFILE CREATED");
-
-  console.log("loading theme...");
-  await setSelectedTheme(settings.theme);
-  await setAnimation(settings.animation);
-  await setBackground(settings.background);
-  console.log("THEME");
-
-  console.log("loading settingscontext...");
-  await dispatchSettings({
+  await theme(userSettings.theme);
+  await animation(userSettings.animation);
+  await background(userSettings.background);
+  await settings({
     type: "LOAD_SETTINGS",
-    value: settings,
+    value: userSettings,
   });
-  console.log("SETTINGS CONTEXT LOADED");
-  console.log("loading ingame settingscontext...");
-  await dispatchInGameSettings({
+  await ingamesettings({
     type: "LOAD_INGAME_SETTINGS",
-    value: settings,
+    value: userSettings,
   });
-  console.log("INGAME SETTINGS CONTEXT LOADED");
-  console.log("loading gameData...");
-  await dispatchGameData({
-    type: "LOAD_SETTINGS",
-    value: settings,
-  });
-  console.log("GAMEDATA LOADED");
+  if (userMatches.length === 0) {
+    await game({
+      type: "LOAD_SETTINGS",
+      value: userSettings,
+    });
+  } else {
+    await game({
+      type: "CONTINUE_MATCH",
+      value: userMatches[0],
+    });
+  }
 
-  console.log("navigating");
   navigation.navigate("homenavigator");
 };
 
-export const deleteAccount = (username, navigation) => {
+export const deleteAccount = async (username, navigation) => {
   const user = auth().currentUser;
   console.log("deleting user...", user);
-  user.delete().then(() => {
-    console.log("user has been deleted");
-    deleteProfile(username).then(() => {
-      console.log("deleted from database");
-      navigation.navigate("authnavigator");
-    });
-  });
+  await user.delete();
+  console.log("user has been deleted");
+  await deleteProfile(username);
+  console.log("deleted from database");
+  navigation.navigate("authnavigator");
 };
 
-export const forgotPassword = (email) => {
-  auth()
-    .sendPasswordResetEmail(email)
-    .then(() => {
-      console.log("email  sent");
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-    });
+export const forgotPassword = async (email) => {
+  try {
+    await auth().sendPasswordResetEmail(email);
+  } catch (err) {
+    console.log("ERROR", err);
+  }
 };
 
 export const onAuthStateChange = () => {

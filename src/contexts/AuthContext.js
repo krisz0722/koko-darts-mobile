@@ -1,26 +1,29 @@
-import React, { useReducer, createContext, useContext } from "react";
+import React, { useReducer, useCallback, createContext } from "react";
 
 export const Authcontext = createContext({});
 
 export const AuthcontextProvider = (props) => {
-  const authReducer = (state, action = null) => {
+  const authReducer = useCallback((state, action = null) => {
     switch (action.type) {
       case "CREATE_PROFILE":
+        console.log("AUTCHCONTEXT: creating profile....");
         return { ...action.value };
       case "UPDATE_SETTINGS":
+        console.log("AUTCHCONTEXT: updating settings....");
         return { ...state, settings: { ...action.value } };
       case "UPDATE_FRIENDS":
-        return { ...state, friends: { ...action.value } };
-      case "UPDATE_MATCHES":
-        return { ...state, matches: { ...action.value } };
+        console.log("AUTCHCONTEXT: updating friends....");
+        return { ...state, friends: [...action.value] };
       case "UPDATE_PROFILE":
-        return { ...state, friends: { ...action.value } };
-      case "UPDATE_REQUESTS":
-        return { ...state, requestReceived: { ...action.value } };
+        console.log("AUTCHCONTEXT: updating profile....");
+        return { ...action.value };
+      case "UPDATE_MATCHES":
+        console.log("AUTCHCONTEXT: updating matches....");
+        return { ...state, matches: [...action.value] };
       default:
         return state;
     }
-  };
+  }, []);
 
   const initialAuth = {};
 

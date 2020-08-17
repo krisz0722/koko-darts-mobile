@@ -1,5 +1,5 @@
 import firestore from "@react-native-firebase/firestore";
-
+import moment from "moment";
 const db = firestore();
 const usersCollection = db.collection("users");
 
@@ -18,15 +18,26 @@ export const createProfile = (email, username) => {
   return usersCollection.doc(username).set({
     username: username,
     email: email,
-    registeredOn: new Date(),
+    registeredOn: moment().format("MMMM Do YYYY, h:mm a"),
     img: require("../../assets/bg.png"),
-    overall: {
-      gamesPlayed: 0,
-      winningPercentage: 0,
-      overallAvg: 0,
-      bestMatch: 0,
-    },
-    friends: [],
+    friends: [
+      {
+        key: "Jose armando",
+        wins: 5,
+        losses: 13,
+        overallAvg: 100,
+        bestMatch: 95,
+        img: require("../../assets/bg.png"),
+      },
+      {
+        key: "liszt ferenc",
+        wins: 20,
+        losses: 45,
+        overallAvg: 70,
+        bestMatch: 60,
+        img: require("../../assets/bg.png"),
+      },
+    ],
     matches: [],
     requestReceived: [],
     requestSent: [],
@@ -34,6 +45,10 @@ export const createProfile = (email, username) => {
       p1: {
         key: username,
         img: require("../../assets/bg.png"),
+        gamesPlayed: 0,
+        winningPercentage: 0,
+        overallAvg: 0,
+        bestMatch: 0,
       },
       p2: {
         key: "",
@@ -53,12 +68,12 @@ export const createProfile = (email, username) => {
   });
 };
 
-export const getProfileByUsername = (id, bool = false) => {
+export const getProfileByUsername = (id) => {
   console.log("GETTING PROFILE", id);
   return usersCollection.doc(id).get();
 };
 
-export const getProfileByEmail = (id, bool = false) => {
+export const getProfileByEmail = (id) => {
   console.log("GETTING PROFILE BY EMAUIL", id);
   return usersCollection.where("email", "==", id).get();
 };
@@ -68,16 +83,28 @@ export const deleteProfile = (username) => {
   return usersCollection.doc(username).delete();
 };
 
-export const updateSettings = (username, settings) => {
-  console.log("saving settings...");
-  usersCollection
-    .doc(username)
-    .update({
+export const updateSettings = async (username, settings) => {
+  try {
+    console.log("saving settings...");
+    await usersCollection.doc(username).update({
       settings,
-    })
-    .then(() => {
-      console.log("settings saved!");
     });
+    console.log("settings saved!");
+  } catch (err) {
+    alert(err);
+  }
+};
+
+export const updateMatches = async (username, matches) => {
+  console.log("saving matches...", matches);
+  try {
+    await usersCollection.doc(username).update({
+      matches,
+    });
+    console.log("matches updated!");
+  } catch (err) {
+    alert(err);
+  }
 };
 
 export const onStateChange = (username) => {

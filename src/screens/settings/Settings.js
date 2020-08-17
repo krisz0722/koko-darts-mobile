@@ -73,6 +73,7 @@ const SETTINGS = () => {
         opacity,
         animation,
         theme: selectedTheme,
+        background,
       };
       dispatchSettings({
         type: "SAVE_SETTINGS",
@@ -83,10 +84,7 @@ const SETTINGS = () => {
         value: newSettings,
       });
       setAnimation(animation);
-      updateSettings(username, {
-        ...newSettings,
-        background,
-      });
+      updateSettings(username, newSettings);
     }
   }, [
     background,
@@ -167,8 +165,6 @@ const SETTINGS = () => {
       theme,
       background,
     } = USER_SETTINGS;
-
-    console.log("SETTINGS USER SETTINGS", USER_SETTINGS);
 
     setPreview(false);
     setLayout(layout);

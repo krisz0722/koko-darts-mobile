@@ -1,4 +1,9 @@
-import React, { useReducer, createContext, useContext } from "react";
+import React, {
+  useCallback,
+  useReducer,
+  createContext,
+  useContext,
+} from "react";
 import { Authcontext } from "./AuthContext";
 
 export const InGameSettingsContext = createContext("default");
@@ -6,7 +11,7 @@ export const InGameSettingsContext = createContext("default");
 export const InGameSettingsContextProvider = (props) => {
   const DEFAULT_INGAME_SETTINGS = useContext(Authcontext).userData.settings;
 
-  const settingsReducer = (state, action) => {
+  const settingsReducer = useCallback((state, action) => {
     switch (action.type) {
       case "LOAD_INGAME_SETTINGS":
         return action.value;
@@ -23,7 +28,7 @@ export const InGameSettingsContextProvider = (props) => {
       default:
         return state;
     }
-  };
+  }, []);
 
   const [inGameSettings, dispatchInGameSettings] = useReducer(
     settingsReducer,

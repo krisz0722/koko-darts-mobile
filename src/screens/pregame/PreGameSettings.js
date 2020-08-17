@@ -99,15 +99,17 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     [setLegsPerSet],
   );
 
-  const startGame = () => {
-    if (p2 === "choose") {
-      setModal(true);
-    } else {
-      dispatchInGameSettings({ type: "LOAD_SETTINGS", value: newGameSettings });
-      dispatchGameData({ type: "LOAD_SETTINGS", value: newGameSettings });
-      navigation.navigate("game");
-    }
-  };
+  const startGame = useCallback(() => {
+    dispatchGameData({
+      type: "START_NEW_GAME",
+      value: newGameSettings,
+    });
+    dispatchInGameSettings({
+      type: "LOAD_INGAME_SETTINGS",
+      value: newGameSettings,
+    });
+    navigation.navigate("game");
+  }, [newGameSettings, navigation, dispatchGameData, dispatchInGameSettings]);
 
   const changeOpponent = (back = false) => {
     if (back) {
@@ -162,7 +164,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
         theme={theme}
         animation={animation}
       />
-      <HISTORY theme={theme} />
+      <HISTORY p1={stateP1} p2={stateP2} theme={theme} />
       <BottomButtons theme={theme}>
         <THEMED_BUTTON
           text={"back"}

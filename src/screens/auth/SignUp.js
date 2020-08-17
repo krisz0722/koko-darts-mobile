@@ -25,6 +25,16 @@ const REGISTER = ({ navigation }) => {
   const { dispatchUserData } = useContext(Authcontext);
   const { dispatchInGameSettings } = useContext(InGameSettingsContext);
 
+  const reducers = {
+    game: dispatchGameData,
+    settings: dispatchSettings,
+    ingamesettings: dispatchInGameSettings,
+    user: dispatchUserData,
+    theme: setSelectedTheme,
+    animation: setAnimation,
+    background: setBackground,
+  };
+
   const [username, setUsername] = useState("easternpotato");
   const [email, setEmail] = useState("krisz0722@gmail.com");
   const [password, setPassword] = useState("111111");
@@ -122,19 +132,7 @@ const REGISTER = ({ navigation }) => {
               disabled={!enableSignUp}
               text={"Sign Up"}
               action={() =>
-                signUp(
-                  email,
-                  password,
-                  username,
-                  navigation,
-                  dispatchUserData,
-                  dispatchSettings,
-                  dispatchInGameSettings,
-                  dispatchGameData,
-                  setSelectedTheme,
-                  setAnimation,
-                  setBackground,
-                )
+                signUp(email, password, username, navigation, reducers)
               }
             />
           </Inputs>

@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useMemo,
   useReducer,
   createContext,
   useContext,
@@ -13,8 +14,6 @@ import typeNextDart from "./actions/TypeNextDart";
 import submitUpdateScore from "./actions/SubmitUpdateScore";
 import UpdateByDart from "./actions/UpdateByDart";
 import { Authcontext } from "./AuthContext";
-import { updateMatches } from "../fb/crud";
-import moment from "moment";
 import finishMatch from "./actions/FinishMatch";
 import Theme_Default from "../styles/theme-default.json";
 import Theme_Contrast from "../styles/theme-contrast.json";
@@ -42,10 +41,13 @@ export const GameContextProvider = (props) => {
     },
   };
 
-  const THEMES = {
-    default: Theme_Default,
-    contrast: Theme_Contrast,
-  };
+  const THEMES = useMemo(
+    () => ({
+      default: Theme_Default,
+      contrast: Theme_Contrast,
+    }),
+    [],
+  );
 
   const gameReducer = useCallback(
     (state, action = null) => {

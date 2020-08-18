@@ -10,17 +10,16 @@ import {
 } from "./StyledHome";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
+const HOME_INFO = React.memo(({ lastMatch, username }) => {
   const { theme } = useContext(ThemeContext);
-
+  const status = lastMatch ? lastMatch.status : null;
   const STATS = () => {
-    const {
-      settings: { legOrSet, p1 },
-      p1_DATA,
-      p2_DATA,
-      opponent,
-      date,
-    } = lastMatch;
+    const { p1_DATA, p2_DATA, opponent, date, status } = lastMatch;
+    const p1 = status === "finished" ? lastMatch.p1 : lastMatch.settings.p1;
+    const legOrSet =
+      status === "finished"
+        ? lastMatch.matchSummary.legOrSet
+        : lastMatch.settings.legOrSet;
 
     const userData = p1.key === username ? p1_DATA : p2_DATA;
 
@@ -30,7 +29,7 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
         ? `(${userData.legsWon}) ${userData.setsWon} - ${opponentData.setsWon} (${opponentData.legsWon})`
         : `${userData.legsWon} - ${opponentData.legsWon}`;
 
-    return lastMatch && unfinished
+    return lastMatch && status === "pending"
       ? [
           {
             stat: "started",
@@ -49,11 +48,11 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
             value: userData.avgMatch,
           },
         ]
-      : lastMatch && !unfinished
+      : lastMatch && status === "finished"
       ? [
           {
             stat: "result",
-            value: lastMatch.result,
+            value: lastMatch.matchSummary.result,
           },
           {
             stat: "opponent",
@@ -72,16 +71,16 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
   };
 
   const title =
-    unfinished == false ? "your last match" : "you have an unfinished match";
+    status === "finished" ? "your last match" : "you have an unfinished match";
 
   return (
     <>
       {!lastMatch ? (
         <>
-          <InfoTitle unfinished={unfinished}>
+          <InfoTitle unfinished={status === "pending"}>
             you haven't played a game yet
           </InfoTitle>
-          <Info unfinished={unfinished}>
+          <Info unfinished={status === "pending"}>
             <InfoStats theme={theme}>
               <FirstMatch theme={theme}>
                 tap on the button below and start your first match!
@@ -91,8 +90,8 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
         </>
       ) : (
         <>
-          <InfoTitle unfinished={unfinished}>{title}</InfoTitle>
-          <Info unfinished={unfinished}>
+          <InfoTitle unfinished={status === "pending"}>{title}</InfoTitle>
+          <Info unfinished={status === "pending"}>
             <InfoStats theme={theme}>
               {STATS().map((item) => (
                 <React.Fragment key={item}>

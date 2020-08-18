@@ -24,7 +24,7 @@ const FINISH_MATCH_MODAL = ({
     gameData: { winner },
   } = useContext(GameContext);
 
-  const winnerName = winner ? gameData[winner].key : "";
+  const winnerName = winner ? gameData.settings[winner].key : "";
 
   const animationType = animation
     ? theme.name === "default"

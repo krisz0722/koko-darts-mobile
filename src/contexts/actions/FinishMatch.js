@@ -1,7 +1,15 @@
 import { updateProfile } from "../../fb/crud";
 
 const finishMatch = (state, username, matches, friends, userOverall) => {
-  const { p1, p2, p1_DATA, winner, p2_DATA, legOrSet, date, opponent } = state;
+  const {
+    settings: { p1, p2 },
+    p1_DATA,
+    winner,
+    p2_DATA,
+    legOrSet,
+    date,
+    opponent,
+  } = state;
   const userData = p1.key === username ? p1_DATA : p2_DATA;
   const opponentData = p1.key === username ? p2_DATA : p1_DATA;
   const { avgMatch, legsWon } = userData;
@@ -20,6 +28,7 @@ const finishMatch = (state, username, matches, friends, userOverall) => {
     result,
     wonOrLost: "",
     avg: avgMatch,
+    legOrSet,
   };
 
   const matchToSave = {

@@ -10,8 +10,11 @@ const Rematch = (
   return {
     ...state,
     ...GAME_DEFAULT_STATE,
-    p1,
-    p2,
+    settings: {
+      ...state.settings,
+      p1: activePlayer,
+      p2: inactivePlayer,
+    },
     status: "started",
     activePlayer: "p1",
     inactivePlayer: "p2",

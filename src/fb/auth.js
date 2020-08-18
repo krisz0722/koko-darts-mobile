@@ -121,13 +121,17 @@ export const loadAppData = async (userData, navigation, reducers) => {
 };
 
 export const deleteAccount = async (username, navigation) => {
-  const user = auth().currentUser;
-  console.log("deleting user...", user);
-  await user.delete();
-  console.log("user has been deleted");
-  await deleteProfile(username);
-  console.log("deleted from database");
-  navigation.navigate("authnavigator");
+  try {
+    const user = auth().currentUser;
+    console.log("deleting user...", user);
+    await user.delete();
+    console.log("user has been deleted");
+    await deleteProfile(username);
+    console.log("deleted from database");
+    navigation.navigate("authnavigator");
+  } catch (err) {
+    alert(err);
+  }
 };
 
 export const forgotPassword = async (email) => {

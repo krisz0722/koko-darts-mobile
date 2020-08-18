@@ -21,7 +21,7 @@ const FINISH_LEG_MODAL = ({ animation, theme, action, visible }) => {
     },
   } = useContext(GameContext);
 
-  const winnerName = winner ? gameData[winner].key : "";
+  const winnerName = winner ? gameData.settings[winner].key : "";
   const inapKey = `${inactivePlayer}_DATA`;
   const inapData = gameData[inapKey];
 

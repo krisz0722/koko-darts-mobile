@@ -24,24 +24,23 @@ const HOME = React.memo(({ navigation }) => {
   } = useContext(Authcontext);
 
   const lastMatch = matches[0];
-  const status = lastMatch ? lastMatch.status === "pending" : "empty";
+  const status = lastMatch ? lastMatch.status : null;
   const request = requestReceived.length > 0;
 
-  const [unfinished, setUnfinished] = useState(status);
   const [friendRequest, setFriendRequest] = useState(request);
   const [overflow, setOverflow] = useState(false);
-  const [newGameModal, setNewGameModal] = useState(false);
+  const [newGameModal, setNewGameModal] = useState(status === "pending");
 
   useEffect(() => {
+    setNewGameModal(false);
     return () => setOverflow(false);
   }, []);
 
   const handleNewGame = () => {
-    if (unfinished && unfinished !== "empty") {
+    if (status === "pending" && status !== "empty") {
       setNewGameModal(!newGameModal);
     } else {
       navigation.navigate("drawernavigator");
-      setUnfinished(false);
     }
   };
 
@@ -51,13 +50,12 @@ const HOME = React.memo(({ navigation }) => {
     await updateMatches(username, newmatches);
     dispatchUserData({ type: "UPDATE_MATCHES", value: newmatches });
     navigation.navigate("drawernavigator");
-    setUnfinished(false);
     setTimeout(() => {
       setNewGameModal(!newGameModal);
     }, 300);
   };
 
-  const handleContinueGame = async () => {
+  const handleContinueGame = () => {
     navigation.navigate("drawernavigator", { screen: "game" });
   };
 
@@ -88,13 +86,9 @@ const HOME = React.memo(({ navigation }) => {
           <HeaderText theme={theme}>welcome</HeaderText>
           <HeaderText theme={theme}>{username}</HeaderText>
         </Header>
-        <HOME_INFO
-          lastMatch={lastMatch}
-          unfinished={unfinished}
-          username={username}
-        />
+        <HOME_INFO lastMatch={lastMatch} username={username} />
         <Buttons>
-          {unfinished == true ? (
+          {status === "pending" ? (
             <THEMED_BUTTON
               type={"success"}
               theme={theme}

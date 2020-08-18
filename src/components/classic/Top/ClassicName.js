@@ -62,6 +62,7 @@ const NAME = React.memo((props) => {
       style={{ borderColor, fontSize }}
       player={player}
       ap={activePlayer}
+      theme={theme}
     >
       {name}
     </Text_Name>

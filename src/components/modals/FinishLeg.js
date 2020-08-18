@@ -3,22 +3,23 @@ import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons, ModalContainerBasic } from "./StyledModal";
 import { Header2, Header3, Header4, ModalContainerAlert } from "./StyledModal";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 import { CHECKOUTS } from "../../calc/scores";
 import { GameContext } from "../../contexts/GameContext";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 
-const FINISH_LEG_MODAL = ({ action, visible }) => {
-  const { theme, animation } = useContext(ThemeContext);
-
+const FINISH_LEG_MODAL = ({ animation, theme, action, visible }) => {
   const {
     dispatchGameData,
     gameData,
-    gameData: { activePlayer, inactivePlayer, isLegOver, isMatchOver, winner },
+    gameData: {
+      settings,
+      activePlayer,
+      inactivePlayer,
+      isLegOver,
+      isMatchOver,
+      winner,
+    },
   } = useContext(GameContext);
-
-  const { inGameSettings } = useContext(InGameSettingsContext);
 
   const winnerName = winner ? gameData[winner].key : "";
   const inapKey = `${inactivePlayer}_DATA`;
@@ -58,7 +59,7 @@ const FINISH_LEG_MODAL = ({ action, visible }) => {
           type: "FINISH_LEG",
           nodUsed: lastRoundNod,
           nodRequired: parseInt(nod()),
-          settings: inGameSettings,
+          settings: settings,
         });
     }
   };

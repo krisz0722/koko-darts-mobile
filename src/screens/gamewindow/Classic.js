@@ -14,18 +14,18 @@ import CLASSIC_STATS from "../../components/classic/Stats/ClassicStats";
 import { GameContext } from "../../contexts/GameContext";
 import { GameWindow, Overlay1, Overlay2 } from "./StyledClassic";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 import { InputContextProvider } from "../../contexts/InputContext";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
 import FINISH_LEG_MODAL from "../../components/modals/FinishLeg";
 import FINISH_MATCH_MODAL from "../../components/modals/FinishMatch";
 import REMATCH_MODAL from "../../components/modals/Rematch";
 
 const GAME_CLASSIC = React.memo((props) => {
-  const { ingame = true, preview, settings } = props;
+  const { ingame = true, preview, settings = null } = props;
 
   const {
+    gameData,
     gameData: {
       p1_DATA,
       p2_DATA,
@@ -36,14 +36,17 @@ const GAME_CLASSIC = React.memo((props) => {
       inactivePlayer,
     },
   } = useContext(GameContext);
+  const inGameSettings = gameData.settings;
 
-  const { inGameSettings } = useContext(InGameSettingsContext);
   const { theme, animation } = useContext(ThemeContext);
 
   const animationToUse = ingame ? inGameSettings.animation : animation;
   const settingsToUse = ingame ? inGameSettings : settings;
+  const themeToUse = ingame ? inGameSettings.theme : theme;
 
-  const { p1, p2, legOrSet, startingScore, opacity } = settingsToUse;
+  const { p1, p2 } = settingsToUse;
+
+  const { legOrSet, startingScore, opacity } = settingsToUse;
 
   const drawerValue = useRef(new Animated.Value(!drawer ? 1 : 0)).current;
 
@@ -62,6 +65,7 @@ const GAME_CLASSIC = React.memo((props) => {
   }, [showStats]);
 
   const navigation = useNavigation();
+  const route = useRoute();
 
   const backAction = () => {
     setExitModal(true);
@@ -87,10 +91,10 @@ const GAME_CLASSIC = React.memo((props) => {
   useEffect(() => {
     if (isMatchOver) {
       setFinishMatchModal(true);
-    } else if (!isMatchOver && finishMatchModal) {
+    } else {
       setFinishMatchModal(false);
     }
-  }, [isMatchOver, finishMatchModal]);
+  }, [route, isMatchOver]);
 
   useEffect(() => {
     if (isRematch) {
@@ -153,7 +157,7 @@ const GAME_CLASSIC = React.memo((props) => {
       <CLASSIC_TOP
         ingame={ingame}
         animation={animationToUse}
-        theme={theme}
+        theme={themeToUse}
         showStats={showStats}
         activePlayer={activePlayer}
         p1={p1}
@@ -165,7 +169,7 @@ const GAME_CLASSIC = React.memo((props) => {
       <CLASSIC_SCORES
         ingame={ingame}
         animation={animationToUse}
-        theme={theme}
+        theme={themeToUse}
         showStats={showStats}
         activePlayer={activePlayer}
         startingScore={startingScore}
@@ -175,7 +179,7 @@ const GAME_CLASSIC = React.memo((props) => {
       <CLASSIC_STATS
         ingame={ingame}
         animation={animationToUse}
-        theme={theme}
+        theme={themeToUse}
         showStats={showStats}
         activePlayer={activePlayer}
         p1_DATA={p1_DATA}
@@ -186,13 +190,13 @@ const GAME_CLASSIC = React.memo((props) => {
           <Overlay1
             ingame={false}
             style={{ opacity: opacity1 }}
-            theme={theme}
+            theme={themeToUse}
           />
         ) : (
           <Overlay2
             ingame={ingame}
             style={{ opacity: opacity2 }}
-            theme={theme}
+            theme={themeToUse}
           />
         )
       ) : null}
@@ -202,7 +206,7 @@ const GAME_CLASSIC = React.memo((props) => {
           p2={p2}
           ingame={false}
           animation={animationToUse}
-          theme={theme}
+          theme={themeToUse}
           activePlayer={activePlayer}
           inactivePlayer={inactivePlayer}
           drawer={drawer}
@@ -211,7 +215,7 @@ const GAME_CLASSIC = React.memo((props) => {
         />
         <CLASSIC_BOTTOM
           animation={animationToUse}
-          theme={theme}
+          theme={themeToUse}
           activePlayer={activePlayer}
           inactivePlayer={inactivePlayer}
           p1Data={p1_DATA}
@@ -220,21 +224,30 @@ const GAME_CLASSIC = React.memo((props) => {
         />
       </InputContextProvider>
       <EXIT_APP_ALERT
+        animation={animationToUse}
+        theme={themeToUse}
         action1={() => setExitModal(!exitModal)}
         action2={handleExitApp}
         visible={exitModal}
       />
       <FINISH_LEG_MODAL
+        animation={animationToUse}
+        theme={themeToUse}
         action={() => setFinishLegModal(!finishLegModal)}
         action2={() => setFinishMatchModal(true)}
         visible={finishLegModal}
       />
       <FINISH_MATCH_MODAL
-        action={() => setFinishMatchModal(!finishMatchModal)}
+        animation={animationToUse}
+        theme={themeToUse}
+        action={() => setFinishMatchModal(false)}
         action2={() => setRematchModal(true)}
+        action3={() => setFinishMatchModal(true)}
         visible={finishMatchModal}
       />
       <REMATCH_MODAL
+        animation={animationToUse}
+        theme={themeToUse}
         action={() => setRematchModal(false)}
         visible={rematchModal}
       />

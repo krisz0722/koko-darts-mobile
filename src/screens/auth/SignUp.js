@@ -13,7 +13,6 @@ import { signUp } from "../../fb/auth";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 
 const REGISTER = ({ navigation }) => {
   const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
@@ -23,12 +22,10 @@ const REGISTER = ({ navigation }) => {
   const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchGameData } = useContext(GameContext);
   const { dispatchUserData } = useContext(Authcontext);
-  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
 
   const reducers = {
     game: dispatchGameData,
     settings: dispatchSettings,
-    ingamesettings: dispatchInGameSettings,
     user: dispatchUserData,
     theme: setSelectedTheme,
     animation: setAnimation,

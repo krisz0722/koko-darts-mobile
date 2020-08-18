@@ -8,7 +8,6 @@ export const checkUsernameAvailability = (username) => {
     .doc(username)
     .get()
     .then((documentSnapshot) => {
-      console.log("SNAPSHOTS", documentSnapshot.exists);
       return documentSnapshot.exists;
     });
 };
@@ -20,21 +19,35 @@ export const createProfile = (email, username) => {
     email: email,
     registeredOn: moment().format("MMMM Do YYYY, h:mm a"),
     img: require("../../assets/bg.png"),
+    userOverall: {
+      totalGames: 0,
+      totalThrows: 0,
+      totalScore: 0,
+      wins: 0,
+      losses: 0,
+      winningPercentage: "N/A",
+      overallAvg: "N/A",
+      bestMatch: "N/A",
+    },
     friends: [
       {
         key: "Jose armando",
-        wins: 5,
-        losses: 13,
-        overallAvg: 100,
-        bestMatch: 95,
+        winsAgainst: 0,
+        lossesAgainst: 0,
+        legsWonAgainst: 0,
+        legsLostAgainst: 0,
+        bestMatchFriend: "N/A",
+        bestMatchAgainst: "N/A",
         img: require("../../assets/bg.png"),
       },
       {
         key: "liszt ferenc",
-        wins: 20,
-        losses: 45,
-        overallAvg: 70,
-        bestMatch: 60,
+        winsAgainst: 0,
+        lossesAgainst: 0,
+        legsWonAgainst: 0,
+        legsLostAgainst: 0,
+        bestMatchFriend: "N/A",
+        bestMatchAgainst: "N/A",
         img: require("../../assets/bg.png"),
       },
     ],
@@ -107,9 +120,37 @@ export const updateMatches = async (username, matches) => {
   }
 };
 
+export const updateProfile = async (
+  username,
+  matches,
+  friends,
+  opponent,
+  opponentProfile,
+  userOverall,
+) => {
+  try {
+    console.log("updating profile...");
+    console.log("FRIUENDS BEFORE", friends);
+    const profile = friends.find((item) => item.key === opponent);
+    const index = friends.indexOf(profile);
+
+    console.log("UPDATE OVERALL", userOverall);
+
+    friends[index] = opponentProfile;
+    await usersCollection.doc(username).update({
+      userOverall,
+      matches,
+      friends,
+    });
+    console.log("UPDATE FRIUENDS", friends);
+    console.log("profile updated!");
+  } catch (err) {
+    alert(err);
+  }
+};
+
 export const onStateChange = (username) => {
   usersCollection.doc(username).onSnapshot((documentSnapshot) => {
     const userData = documentSnapshot.data();
-    console.log("User data: ", userData);
   });
 };

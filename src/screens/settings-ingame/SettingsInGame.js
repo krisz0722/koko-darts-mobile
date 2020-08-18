@@ -5,33 +5,41 @@ import { OptionsEffects } from "../settings/OptionsEffects";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "../settings/Preview";
 import { BackHandler } from "react-native";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import { COLOR } from "../settings/OptionsColor";
+import { GameContext } from "../../contexts/GameContext";
+import { ScreenContainer } from "../../navigators/AppNavigator";
 
 const SETTINGS_INGAME = ({ navigation }) => {
-  const {
-    inGameSettings,
-    inGameSettings: { opacity, layout, animation },
-    dispatchInGameSettings,
-  } = useContext(InGameSettingsContext);
+  const { dispatchGameData, gameData } = useContext(GameContext);
+  const inGameSettings = gameData.settings;
 
-  const { theme } = useContext(ThemeContext);
+  const { opacity, layout, animation, background, theme } = inGameSettings;
 
   const toggleLayout = useCallback(
     (value) => {
-      dispatchInGameSettings({ type: "CHANGE_LAYOUT", value });
+      dispatchGameData({ type: "CHANGE_LAYOUT", value });
     },
-    [dispatchInGameSettings],
+    [dispatchGameData],
+  );
+
+  const toggleTheme = useCallback(
+    (value) => {
+      dispatchGameData({ type: "CHANGE_THEME", value });
+    },
+    [dispatchGameData],
   );
 
   const toggleAnimation = useCallback(() => {
-    dispatchInGameSettings({ type: "CHANGE_ANIMATION", value: !animation });
-  }, [dispatchInGameSettings, animation]);
+    dispatchGameData({ type: "CHANGE_ANIMATION", value: !animation });
+  }, [dispatchGameData, animation]);
+
+  const toggleBackground = useCallback(() => {
+    dispatchGameData({ type: "CHANGE_BACKGROUND", value: !background });
+  }, [dispatchGameData, background]);
 
   const toggleOpacity = useCallback(() => {
-    dispatchInGameSettings({ type: "CHANGE_OPACITY", value: !opacity });
-  }, [dispatchInGameSettings, opacity]);
+    dispatchGameData({ type: "CHANGE_OPACITY", value: !opacity });
+  }, [dispatchGameData, opacity]);
 
   useEffect(() => {
     const backAction = () => {
@@ -46,19 +54,21 @@ const SETTINGS_INGAME = ({ navigation }) => {
   }, [navigation]);
 
   return (
-    <>
+    <ScreenContainer theme={theme}>
       <OptionsLayout
         layout={layout}
         toggleLayout={toggleLayout}
         ingame={true}
       />
-      <COLOR />
+      <COLOR toggleTheme={toggleTheme} ingame={true} />
       <OptionsEffects
-        showBackground={false}
+        background={background}
         animation={animation}
         opacity={opacity}
         toggleAnimation={toggleAnimation}
         toggleOpacity={toggleOpacity}
+        toggleBackground={toggleBackground}
+        ingame={true}
       />
 
       <PREVIEW
@@ -76,9 +86,10 @@ const SETTINGS_INGAME = ({ navigation }) => {
           text={"back"}
           length={2}
           action={() => navigation.navigate("game")}
+          inGameTheme={theme}
         />
       </BottomButtons>
-    </>
+    </ScreenContainer>
   );
 };
 

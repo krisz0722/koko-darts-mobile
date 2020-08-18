@@ -43,35 +43,38 @@ const NavButton = React.memo(
     action = null,
     icon = null,
     inap = null,
+    inGameTheme = null,
   }) => {
     const { theme, animation } = useContext(ThemeContext);
 
+    const themeToUse = inGameTheme ? inGameTheme : theme;
+
     const iconColor = () => {
       if (active) {
-        return theme.text2;
+        return themeToUse.text2;
       } else {
         switch (color) {
           case "dark":
-            return theme.bg3;
+            return themeToUse.bg3;
           case "light":
-            return theme.text;
+            return themeToUse.text;
           case "drawer":
-            return theme.game[inap + "Text"];
+            return themeToUse.game[inap + "Text"];
         }
       }
     };
 
     const textColor = () => {
       if (active) {
-        return theme.text2;
+        return themeToUse.text2;
       } else {
         switch (color) {
           case "dark":
-            return theme.text2;
+            return themeToUse.text2;
           case "light":
-            return theme.text;
+            return themeToUse.text;
           case "drawer":
-            return theme.game[inap + "Text"];
+            return themeToUse.game[inap + "Text"];
         }
       }
     };
@@ -82,7 +85,7 @@ const NavButton = React.memo(
         active={active}
         length={length}
         height={height}
-        theme={theme}
+        theme={themeToUse}
         onPress={action}
         text={text}
         activeOpacity={animation ? 0.2 : 1}
@@ -98,7 +101,7 @@ const NavButton = React.memo(
               color={textColor()}
               active={active}
               icon={icon}
-              theme={theme}
+              theme={themeToUse}
               text={text}
             >
               {text}

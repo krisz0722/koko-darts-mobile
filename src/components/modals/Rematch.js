@@ -3,29 +3,18 @@ import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 import { GameContext } from "../../contexts/GameContext";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 
-const REMATCH_MODAL = ({ action, visible }) => {
+const REMATCH_MODAL = ({ animation, theme, action, visible }) => {
   const navigation = useNavigation();
-
-  const { theme, animation } = useContext(ThemeContext);
-
-  const {
-    inGameSettings,
-    inGameSettings: { startingScore },
-    dispatchInGameSettings,
-  } = useContext(InGameSettingsContext);
-
-  const { settings } = useContext(SettingsContext);
 
   const {
     dispatchGameData,
-    gameData: { p1, p2 },
+    gameData: {
+      settings: { startingScore, p1, p2 },
+    },
   } = useContext(GameContext);
 
   const animationType = animation
@@ -49,8 +38,7 @@ const REMATCH_MODAL = ({ action, visible }) => {
   const OPTIONS = [p1.key, p2.key];
 
   const quitGame = () => {
-    dispatchInGameSettings({ type: "LOAD_SETTINGS", value: settings });
-    dispatchGameData({ type: "LOAD_SETTINGS", value: settings });
+    dispatchGameData({ type: "LOAD_SETTINGS" });
     action();
     navigation.dispatch(
       CommonActions.reset({
@@ -67,12 +55,6 @@ const REMATCH_MODAL = ({ action, visible }) => {
         activePlayer,
         inactivePlayer,
         startingScore,
-      });
-      dispatchInGameSettings({
-        type: "REMATCH",
-        p1: activePlayer,
-        p2: inactivePlayer,
-        value: inGameSettings,
       });
       action();
       navigation.dispatch(
@@ -110,6 +92,7 @@ const REMATCH_MODAL = ({ action, visible }) => {
             icon={"arrow-back"}
             type={"danger"}
             action={quitGame}
+            inGameTheme={theme}
           />
           <THEMED_BUTTON
             size={"small"}
@@ -118,6 +101,7 @@ const REMATCH_MODAL = ({ action, visible }) => {
             length={2}
             icon={activePlayer ? "check" : "person"}
             action={rematch}
+            inGameTheme={theme}
           />
         </BottomButtons>
       </ModalContainerAlert>

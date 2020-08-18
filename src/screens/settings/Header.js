@@ -20,19 +20,27 @@ const Header = styled(Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const SETTINGS_HEADER = ({ text, action, icon = null, header = false }) => {
+const SETTINGS_HEADER = ({
+  inGameTheme,
+  text,
+  action,
+  icon = null,
+  header = false,
+}) => {
   const { theme } = useContext(ThemeContext);
+
+  const themeToUse = inGameTheme ? inGameTheme : theme;
 
   return (
     <HeaderContainer header={header}>
-      <Header theme={theme}>{text}</Header>
+      <Header theme={themeToUse}>{text}</Header>
       {icon ? (
         <TouchableWithoutFeedback onPress={action}>
           <Icon
             style={{ alignSelf: "flex-start", margin: 5 }}
             name={icon}
             size={15}
-            color={theme.text}
+            color={themeToUse.text}
           />
         </TouchableWithoutFeedback>
       ) : null}

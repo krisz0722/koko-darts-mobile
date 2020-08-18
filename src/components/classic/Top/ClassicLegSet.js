@@ -109,10 +109,12 @@ const LEGSET = React.memo((props) => {
           showStats={showStats}
         >
           {legOrSet === "set" ? (
-            <Text_Sub player={"p1"}>({legsWon})</Text_Sub>
+            <Text_Sub theme={theme} player={"p1"}>
+              ({legsWon})
+            </Text_Sub>
           ) : null}
 
-          <Text_Main style={{ fontSize }} player={"p1"}>
+          <Text_Main theme={theme} style={{ fontSize }} player={"p1"}>
             {legOrSet === "set" ? setsWon : legsWon}
           </Text_Main>
         </LegSet1>
@@ -122,12 +124,14 @@ const LEGSET = React.memo((props) => {
           ap={activePlayer}
           showStats={showStats}
         >
-          <Text_Main style={{ fontSize }} player={"p2"}>
+          <Text_Main theme={theme} style={{ fontSize }} player={"p2"}>
             {legOrSet === "set" ? setsWon : legsWon}
           </Text_Main>
 
           {legOrSet === "set" ? (
-            <Text_Sub player={"p2"}>({legsWon})</Text_Sub>
+            <Text_Sub theme={theme} player={"p2"}>
+              ({legsWon})
+            </Text_Sub>
           ) : null}
         </LegSet2>
       )}

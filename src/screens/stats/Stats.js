@@ -16,17 +16,15 @@ import {
   Stat,
   StatSide,
 } from "./StyledStats";
+import { GameContext } from "../../contexts/GameContext";
 
-const STATS = React.memo(({ navigation, route }) => {
+const STATS = React.memo(({ navigation }) => {
   const {
     settings: { legOrSet },
   } = useContext(SettingsContext);
 
   const { theme } = useContext(ThemeContext);
-
-  const {
-    params: { back, gameData },
-  } = route;
+  const { gameData } = useContext(GameContext);
 
   const { p1_DATA, p2_DATA } = gameData;
 
@@ -107,7 +105,9 @@ const STATS = React.memo(({ navigation, route }) => {
           text={"back"}
           type={"active"}
           length={2}
-          action={() => navigation.navigate(back)}
+          action={() => {
+            navigation.navigate("game");
+          }}
         />
       </BottomButtons>
     </>

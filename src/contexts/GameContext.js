@@ -15,16 +15,23 @@ import UpdateByDart from "./actions/UpdateByDart";
 import { Authcontext } from "./AuthContext";
 import { updateMatches } from "../fb/crud";
 import moment from "moment";
+import finishMatch from "./actions/FinishMatch";
+import Theme_Default from "../styles/theme-default.json";
+import Theme_Contrast from "../styles/theme-contrast.json";
+import startNewGame from "./actions/StartNewGame";
+import loadSettings from "./actions/LoadSettings";
 export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
-  const DEFAULT_SETTINGS = useContext(Authcontext).userData.settings;
-  const MATCHES = useContext(Authcontext).userData.matches;
+  const default_settings = useContext(Authcontext).userData.settings;
+  const matches = useContext(Authcontext).userData.matches;
   const username = useContext(Authcontext).userData.username;
+  const friends = useContext(Authcontext).userData.friends;
+  const userOverall = useContext(Authcontext).userData.userOverall;
 
   const initialGameState = {
     ...GAME_DEFAULT_STATE,
-    ...DEFAULT_SETTINGS,
+    ...default_settings,
     p1_DATA: {
       ...GAME_DEFAULT_STATE.p1_DATA,
       score: "",
@@ -35,9 +42,13 @@ export const GameContextProvider = (props) => {
     },
   };
 
+  const THEMES = {
+    default: Theme_Default,
+    contrast: Theme_Contrast,
+  };
+
   const gameReducer = useCallback(
     (state, action = null) => {
-      let settings;
       switch (action.type) {
         case "UPDATE_BY_DART":
           return UpdateByDart(state, action.scoreToSubmit, action.newScore);
@@ -50,64 +61,13 @@ export const GameContextProvider = (props) => {
             1,
           );
         case "START_NEW_GAME":
-          settings = action.value;
-          const { p1, p2 } = settings;
-          const opponent = p1.key === username ? p2.key : p1.key;
-          const date = moment().format("MMMM Do YYYY, h:mm a");
-          const date2 = moment().format("MMMM Do YYYY, h:mm a");
-          const matchToSave = {
-            ...GAME_DEFAULT_STATE,
-            p1_DATA: {
-              ...GAME_DEFAULT_STATE.p1_DATA,
-              score: settings.startingScore,
-            },
-            p2_DATA: {
-              ...GAME_DEFAULT_STATE.p2_DATA,
-              score: settings.startingScore,
-            },
-            ...settings,
-            status: "pending",
-            key: `${opponent} ${date2}`,
-            opponent,
-            date,
-          };
-          MATCHES.unshift(matchToSave);
-          updateMatches(username, MATCHES);
-          return matchToSave;
-        case "INITIALIZE_NEW_MATCH":
-          settings = DEFAULT_SETTINGS;
-          return {
-            ...GAME_DEFAULT_STATE,
-            ...settings,
-            p1_DATA: {
-              ...GAME_DEFAULT_STATE.p1_DATA,
-              score: settings.startingScore,
-            },
-            p2_DATA: {
-              ...GAME_DEFAULT_STATE.p2_DATA,
-              score: settings.startingScore,
-            },
-          };
+          return startNewGame(username, action.value, matches, THEMES);
         case "CONTINUE_MATCH":
           return action.value;
         case "LOAD_SETTINGS":
-          settings = action.value;
-
-          return {
-            ...GAME_DEFAULT_STATE,
-            ...settings,
-            p1_DATA: {
-              ...GAME_DEFAULT_STATE.p1_DATA,
-              score: settings.startingScore,
-            },
-            p2_DATA: {
-              ...GAME_DEFAULT_STATE.p2_DATA,
-              score: settings.startingScore,
-            },
-          };
+          return loadSettings(default_settings, THEMES);
         case "RESET":
           return GAME_DEFAULT_STATE;
-        //in-game actions
         case "NEXT":
           return typeNextDart(state);
         case "UNDO":
@@ -121,11 +81,8 @@ export const GameContextProvider = (props) => {
             action.nodRequired,
             action.settings,
           );
-        case "SAVE_MATCH":
-          return {
-            ...state,
-            isMatchOver: false,
-          };
+        case "FINISH_MATCH":
+          return finishMatch(state, username, matches, friends, userOverall);
         case "REMATCH":
           return Rematch(
             action.activePlayer,
@@ -133,13 +90,62 @@ export const GameContextProvider = (props) => {
             action.activePlayer,
             action.inactivePlayer,
             action.startingScore,
+            state,
             GAME_DEFAULT_STATE,
           );
+        case "CHOOSE_OPPONENT":
+          return {
+            ...state,
+            settings: {
+              ...state.settings,
+              p2: action.value,
+            },
+          };
+        case "CHANGE_LAYOUT":
+          return {
+            ...state,
+            settings: {
+              ...state.settings,
+              layout: action.value,
+            },
+          };
+        case "CHANGE_ANIMATION":
+          return {
+            ...state,
+            settings: {
+              ...state.settings,
+              animation: action.value,
+            },
+          };
+        case "CHANGE_BACKGROUND":
+          return {
+            ...state,
+            settings: {
+              ...state.settings,
+              background: action.value,
+            },
+          };
+        case "CHANGE_OPACITY":
+          return {
+            ...state,
+            settings: {
+              ...state.settings,
+              opacity: action.value,
+            },
+          };
+        case "CHANGE_THEME":
+          return {
+            ...state,
+            settings: {
+              ...state.settings,
+              theme: THEMES[action.value],
+            },
+          };
         default:
           return state;
       }
     },
-    [DEFAULT_SETTINGS, MATCHES, username],
+    [THEMES, userOverall, default_settings, matches, username, friends],
   );
 
   const [gameData, dispatchGameData] = useReducer(

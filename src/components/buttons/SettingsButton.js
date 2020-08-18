@@ -41,8 +41,11 @@ const SETTINGS_BUTTON = ({
   icon = null,
   size = null,
   checkbox = false,
+  inGameTheme = null,
 }) => {
   const { theme } = useContext(ThemeContext);
+
+  const themeToUse = inGameTheme ? inGameTheme : theme;
 
   return (
     <Button_Settings
@@ -50,18 +53,18 @@ const SETTINGS_BUTTON = ({
       active={active}
       length={length}
       onPress={action}
-      theme={theme}
+      theme={themeToUse}
       checkbox={checkbox}
     >
       <TextAndIcon>
-        <Text_Button size={size} active={active} theme={theme}>
+        <Text_Button size={size} active={active} theme={themeToUse}>
           {value}
         </Text_Button>
-        {icon ? <Icon name={icon} size={35} color={theme.text2} /> : null}
+        {icon ? <Icon name={icon} size={35} color={themeToUse.text2} /> : null}
         {checkbox ? (
           <CheckBox
-            tintColors={{ true: theme.bg3, false: theme.text }}
-            onCheckColor={theme.bg1}
+            tintColors={{ true: themeToUse.bg3, false: themeToUse.text }}
+            onCheckColor={themeToUse.bg1}
             value={active}
             onChange={action}
           />

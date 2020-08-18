@@ -14,14 +14,26 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
   const { theme } = useContext(ThemeContext);
 
   const STATS = () => {
-    const { p1, p1_DATA, p2_DATA, opponent, date } = lastMatch;
+    const {
+      settings: { legOrSet, p1 },
+      p1_DATA,
+      p2_DATA,
+      opponent,
+      date,
+    } = lastMatch;
 
     const userData = p1.key === username ? p1_DATA : p2_DATA;
+
+    const opponentData = p1.key === username ? p2_DATA : p1_DATA;
+    const standing =
+      legOrSet === "set"
+        ? `(${userData.legsWon}) ${userData.setsWon} - ${opponentData.setsWon} (${opponentData.legsWon})`
+        : `${userData.legsWon} - ${opponentData.legsWon}`;
 
     return lastMatch && unfinished
       ? [
           {
-            stat: "last palyed on:",
+            stat: "started",
             value: date,
           },
           {
@@ -30,7 +42,7 @@ const HOME_INFO = React.memo(({ unfinished, lastMatch, username }) => {
           },
           {
             stat: "match standing",
-            value: "3-2",
+            value: standing,
           },
           {
             stat: "match average",

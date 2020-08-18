@@ -7,14 +7,12 @@ import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { BackHandler } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { BottomButtons } from "./StyledPreGame";
-import { InGameSettingsContext } from "../../contexts/InGameSettingsContext";
 import CHOOSE_PLAYER_MODAL from "../../components/modals/ChoosePlayerModal";
 import { useIsFocused } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
-  const { dispatchInGameSettings } = useContext(InGameSettingsContext);
   const { dispatchGameData } = useContext(GameContext);
   const isFocused = useIsFocused();
 
@@ -104,12 +102,8 @@ const PREGAME_SETTINGS = ({ navigation }) => {
       type: "START_NEW_GAME",
       value: newGameSettings,
     });
-    dispatchInGameSettings({
-      type: "LOAD_INGAME_SETTINGS",
-      value: newGameSettings,
-    });
     navigation.navigate("game");
-  }, [newGameSettings, navigation, dispatchGameData, dispatchInGameSettings]);
+  }, [newGameSettings, navigation, dispatchGameData]);
 
   const changeOpponent = (back = false) => {
     if (back) {

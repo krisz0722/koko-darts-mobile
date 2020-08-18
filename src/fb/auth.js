@@ -39,47 +39,58 @@ export const logOut = async (navigation) => {
 };
 
 export const LogIn = async (email, password, id, navigation, reducers) => {
-  console.log("logging in...");
-  await auth().signInWithEmailAndPassword(email, password);
-  console.log("log in successful");
-  if (email === id) {
-    await (async () => {
-      try {
-        const userData = await getProfileByEmail(id).then((querySnapshot) => {
-          return querySnapshot.docs[0].data();
-        });
-        await loadAppData(userData, navigation, reducers);
-      } catch (err) {
-        alert(err);
-      }
-    })();
-  } else {
-    await (async () => {
-      try {
-        const userData = await getProfileByUsername(id).then(
-          (documentSnapshot) => {
-            return documentSnapshot.data();
-          },
-        );
-        await loadAppData(userData, navigation, reducers);
-      } catch (err) {
-        alert(err);
-      }
-    })();
+  try {
+    console.log("logging in...");
+    await auth().signInWithEmailAndPassword(email, password);
+    console.log("log in successful");
+    if (email === id) {
+      await (async () => {
+        try {
+          const userData = await getProfileByEmail(id).then((querySnapshot) => {
+            return querySnapshot.docs[0].data();
+          });
+          await loadAppData(userData, navigation, reducers);
+        } catch (err) {
+          alert(err);
+        }
+      })();
+    } else {
+      await (async () => {
+        try {
+          const userData = await getProfileByUsername(id).then(
+            (documentSnapshot) => {
+              return documentSnapshot.data();
+            },
+          );
+          await loadAppData(userData, navigation, reducers);
+        } catch (err) {
+          alert(err);
+        }
+      })();
+    }
+  } catch (err) {
+    alert(err);
   }
 };
 
 export const loadAppData = async (userData, navigation, reducers) => {
-  const {
-    user,
-    settings,
-    game,
-    ingamesettings,
-    theme,
-    animation,
-    background,
-  } = reducers;
-  const userSettings = userData.settings;
+  const { user, settings, game, theme, animation, background } = reducers;
+  const lastMatch = userData.matches[0];
+  const friends = userData.friends;
+
+  const lastOpponent = lastMatch ? lastMatch.opponent : null;
+
+  const getSettings = () => {
+    if (lastOpponent) {
+      const opponentProfile = userData.friends.find(
+        (item) => item.key === lastOpponent,
+      );
+      return { ...userData.settings, p2: opponentProfile };
+    } else {
+      return userData.settings;
+    }
+  };
+  const userSettings = getSettings();
   const userMatches = userData.matches;
 
   console.log("creating profile...");
@@ -94,11 +105,7 @@ export const loadAppData = async (userData, navigation, reducers) => {
     type: "LOAD_SETTINGS",
     value: userSettings,
   });
-  await ingamesettings({
-    type: "LOAD_INGAME_SETTINGS",
-    value: userSettings,
-  });
-  if (userMatches.length === 0) {
+  if (userMatches.length === 0 || lastMatch.status === "finished") {
     await game({
       type: "LOAD_SETTINGS",
       value: userSettings,

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import GAME_CLASSIC from "../screens/gamewindow/Classic";
 import { View } from "react-native";
@@ -7,9 +7,7 @@ import styled from "styled-components";
 import { FlexCol } from "../styles/css_mixins";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
-import { ThemeContext } from "../contexts/ThemeContext";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
-import LEAVE_MATCH_ALERT from "../components/modals/LeaveMatchAlert";
 import { CommonActions } from "@react-navigation/native";
 import STATS from "../screens/stats/Stats";
 import { Authcontext } from "../contexts/AuthContext";
@@ -27,12 +25,10 @@ const { Navigator, Screen } = createDrawerNavigator();
 
 const DRAWER_CONTENT = ({
   navigation,
-  gameData,
-  toggleModal,
+  handleLeaveMatch,
   inactivePlayer,
+  theme,
 }) => {
-  const { theme } = useContext(ThemeContext);
-
   const DRAWER_ITEMS = [
     {
       route: "settings",
@@ -47,7 +43,7 @@ const DRAWER_CONTENT = ({
     {
       route: "home",
       icon: "home",
-      action: toggleModal,
+      action: () => handleLeaveMatch(),
     },
   ];
 
@@ -64,6 +60,7 @@ const DRAWER_CONTENT = ({
           icon={item.icon}
           action={item.action}
           inap={inactivePlayer}
+          inGameTheme={theme}
         />
       ))}
     </DrawerContent>
@@ -71,11 +68,13 @@ const DRAWER_CONTENT = ({
 };
 
 const DrawerNavigator = ({ navigation }) => {
-  const { theme } = useContext(ThemeContext);
-
   const {
     gameData,
-    gameData: { activePlayer, inactivePlayer },
+    gameData: {
+      settings: { theme },
+      activePlayer,
+      inactivePlayer,
+    },
   } = useContext(GameContext);
   const {
     dispatchUserData,
@@ -87,14 +86,10 @@ const DrawerNavigator = ({ navigation }) => {
     backgroundColor: "transparent",
   };
 
-  const [modal, setModal] = useState(false);
-
   const handleLeaveMatch = async () => {
-    //TODO save match here to db!
-    matches[0] = gameData;
+    matches[0] = { ...gameData, status: "pending" };
     await updateMatches(username, matches);
     await dispatchUserData({ type: "UPDATE_MATCHES", value: matches });
-    setModal(false);
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
@@ -110,7 +105,8 @@ const DrawerNavigator = ({ navigation }) => {
         screenOptions={{ swipeEnabled: false }}
         drawerContent={(props) => (
           <DRAWER_CONTENT
-            toggleModal={() => setModal(!modal)}
+            theme={theme}
+            handleLeaveMatch={handleLeaveMatch}
             gameData={gameData}
             inactivePlayer={inactivePlayer}
             {...props}
@@ -125,11 +121,11 @@ const DrawerNavigator = ({ navigation }) => {
         <Screen name="settings-ingame" component={SETTINGS_INGAME} />
         <Screen name="stats" component={STATS} />
       </Navigator>
-      <LEAVE_MATCH_ALERT
-        action1={() => setModal(!modal)}
-        action2={handleLeaveMatch}
-        visible={modal}
-      />
+      {/*<LEAVE_MATCH_ALERT*/}
+      {/*  action1={() => setModal(!modal)}*/}
+      {/*  action2={handleLeaveMatch}*/}
+      {/*  visible={modal}*/}
+      {/*/>*/}
     </>
   );
 };

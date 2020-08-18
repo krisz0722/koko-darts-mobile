@@ -58,7 +58,7 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
-  const active = player === gameData[activePlayer].key;
+  const active = player === gameData.settings[activePlayer].key;
 
   const inputScore =
     inputMethod === "byDart" ? inputArray.join("") : inputByRound.join("");
@@ -86,6 +86,7 @@ const PLAYER_INPUT_INFO = React.memo((props) => {
           active={active}
           ap={activePlayer}
           style={{ borderColor }}
+          theme={theme}
         >
           <>
             <Text_Function theme={theme}>{value}</Text_Function>

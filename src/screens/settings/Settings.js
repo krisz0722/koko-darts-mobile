@@ -8,7 +8,7 @@ import { OptionsScore } from "./OptionsScore";
 import { OptionsLegOrSet } from "./OptionsLegOrSet";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "./Preview";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
 import { updateSettings } from "../../fb/crud";
@@ -21,8 +21,8 @@ const SETTINGS = () => {
   } = useContext(SettingsContext);
   const {
     setBackground,
-    setAnimation,
     background,
+    setAnimation,
     selectedTheme,
     setSelectedTheme,
   } = useContext(ThemeContext);
@@ -57,6 +57,7 @@ const SETTINGS = () => {
   };
 
   const isFocused = useIsFocused();
+  const route = useRoute().name;
 
   useEffect(() => {
     if (isFocused) {
@@ -149,9 +150,20 @@ const SETTINGS = () => {
     setStateAnimation(!animation);
   }, [animation, setStateAnimation]);
 
+  const toggleBackground = useCallback(() => {
+    setBackground(!background);
+  }, [setBackground, background]);
+
   const toggleOpacity = useCallback(() => {
     setOpacity(!opacity);
   }, [opacity, setOpacity]);
+
+  const toggleTheme = useCallback(
+    (value) => {
+      setSelectedTheme(value);
+    },
+    [setSelectedTheme],
+  );
 
   const reset = useCallback(() => {
     const {
@@ -182,12 +194,14 @@ const SETTINGS = () => {
   return (
     <>
       <OptionsLayout layout={layout} toggleLayout={toggleLayout} />
-      <COLOR />
+      <COLOR toggleTheme={toggleTheme} />
       <OptionsEffects
         animation={animation}
-        toggleAnimation={toggleAnimation}
         opacity={opacity}
+        background={background}
+        toggleAnimation={toggleAnimation}
         toggleOpacity={toggleOpacity}
+        toggleBackground={toggleBackground}
       />
       <OptionsScore
         page={"main"}

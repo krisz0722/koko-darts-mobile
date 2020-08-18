@@ -45,26 +45,32 @@ const THEMED_BUTTON = ({
   type = "basic",
   icon = null,
   disabled = false,
+  inGameTheme = null,
 }) => {
   const { theme } = useContext(ThemeContext);
+  const themeToUse = inGameTheme ? inGameTheme : theme;
 
   return (
     <Button_Login
       size={size}
       length={length}
       type={type}
-      theme={theme}
+      theme={themeToUse}
       onPress={action}
       disabled={disabled}
     >
       <>
         {icon ? (
           icon === "dart" ? (
-            <IconDart fill={theme.text} size={15} />
+            <IconDart fill={themeToUse.text} size={15} />
           ) : icon === "threedart" ? (
-            <IconThreeDart fill={theme.text} size={15} />
+            <IconThreeDart fill={themeToUse.text} size={15} />
           ) : (
-            <Icon name={icon} size={25} color={theme.buttonType[type].color} />
+            <Icon
+              name={icon}
+              size={25}
+              color={themeToUse.buttonType[type].color}
+            />
           )
         ) : null}
         {text ? (
@@ -73,7 +79,7 @@ const THEMED_BUTTON = ({
             size={size}
             icon={icon}
             type={type}
-            heme={theme}
+            theme={themeToUse}
           >
             {text}
           </Text_Button_Login>

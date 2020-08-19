@@ -18,15 +18,37 @@ import {
 } from "./StyledStats";
 import { GameContext } from "../../contexts/GameContext";
 
-const STATS = React.memo(({ navigation }) => {
-  const {
-    settings: { legOrSet },
-  } = useContext(SettingsContext);
+const STATS = React.memo(({ navigation, route }) => {
+  const { settings } = useContext(SettingsContext);
 
   const { theme } = useContext(ThemeContext);
   const { gameData } = useContext(GameContext);
 
-  const { p1_DATA, p2_DATA } = gameData;
+  const stats = route.params ? route.params.gameData : gameData;
+  const back = route.params ? route.params.back : "home";
+
+  const { p1_DATA, p2_DATA } = stats;
+
+  const legOrSet = route.params
+    ? route.name === "stats_saved"
+      ? stats.matchSummary.legOrSet
+      : settings.legOrSet
+    : null;
+
+  const p1 = route.params
+    ? route.name === "stats_saved"
+      ? stats.p1
+      : gameData.settings.p1
+    : {
+        key: null,
+      };
+  const p2 = route.params
+    ? route.name === "stats_saved"
+      ? stats.p2
+      : gameData.settings.p2
+    : {
+        key: null,
+      };
 
   const isSet = legOrSet === "set";
   const p1Main = isSet ? p1_DATA.setsWon : p1_DATA.legsWon;
@@ -57,25 +79,25 @@ const STATS = React.memo(({ navigation }) => {
     "avgScoring",
     "highestCheckout",
     "doublePercentage",
-    "60",
-    "80",
-    "100",
-    "140",
-    "180",
+    60,
+    80,
+    100,
+    140,
+    180,
   ];
   return (
     <>
       <Players theme={theme}>
         <PlayerInfo>
           <Avatar />
-          <Name theme={theme}>{"laci"}</Name>
+          <Name theme={theme}>{p1.key}</Name>
         </PlayerInfo>
         <Div>
           <Div2>
             <Main theme={theme}>{p1Main}</Main>
             <Main theme={theme}>{p2Main}</Main>
           </Div2>
-          {legOrSet === "set" ? (
+          {legOrSet === "set" && route.name !== "stats_saved" ? (
             <Div2>
               <Sub theme={theme}>({p1Sub})</Sub>
               <Sub theme={theme}>({p2Sub})</Sub>
@@ -84,18 +106,26 @@ const STATS = React.memo(({ navigation }) => {
         </Div>
         <PlayerInfo>
           <Avatar />
-          <Name>{"michael schumacher"}</Name>
+          <Name>{p2.key}</Name>
         </PlayerInfo>
       </Players>
       {TEXT.map((item) => {
         const index = TEXT.indexOf(item);
         const data = DATA[index];
+        const p1 =
+          typeof p1_DATA[data] === "number" && typeof data !== "number"
+            ? p1_DATA[data].toFixed(1)
+            : p1_DATA[data];
+        const p2 =
+          typeof p2_DATA[data] === "number" && typeof data !== "number"
+            ? p2_DATA[data].toFixed(1)
+            : p2_DATA[data];
 
         return (
           <Row>
-            <StatSide theme={theme}>{p1_DATA[data]}</StatSide>
+            <StatSide theme={theme}>{p1}</StatSide>
             <Stat theme={theme}>{item}</Stat>
-            <StatSide theme={theme}>{p2_DATA[data]}</StatSide>
+            <StatSide theme={theme}>{p2}</StatSide>
           </Row>
         );
       })}
@@ -106,7 +136,7 @@ const STATS = React.memo(({ navigation }) => {
           type={"active"}
           length={2}
           action={() => {
-            navigation.navigate("game");
+            navigation.navigate(back);
           }}
         />
       </BottomButtons>

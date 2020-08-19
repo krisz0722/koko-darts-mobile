@@ -11,8 +11,14 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
     legsWon,
     setsWon,
     dartsUsedInLeg,
+    dartsUsedInMatch,
     bestLegByDartsUsed,
     avgLeg,
+    avgMatch,
+    norMatch,
+    norLeg,
+    tsMatch,
+    tsLeg,
     bestAvgLeg,
     numOfCoDarts,
     lastScore,
@@ -23,11 +29,13 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
   setsWon = legsWon === legsPerSet ? setsWon + 1 : setsWon;
   numOfCoDarts = numOfCoDarts + nodUsed - nodRequired + 1;
   dartsUsedInLeg += nodUsed;
+  avgMatch = tsMatch / ((dartsUsedInMatch + nodUsed) / 3);
+  avgLeg = tsLeg / (dartsUsedInLeg / 3);
   bestLegByDartsUsed =
     dartsUsedInLeg < bestLegByDartsUsed || bestLegByDartsUsed === 0
       ? dartsUsedInLeg
       : bestLegByDartsUsed;
-  bestAvgLeg = avgLeg < bestAvgLeg || bestAvgLeg === 0 ? avgLeg : bestAvgLeg;
+  bestAvgLeg = avgLeg > bestAvgLeg || bestAvgLeg === 0 ? avgLeg : bestAvgLeg;
   highestCheckout = lastScore > highestCheckout ? lastScore : highestCheckout;
 
   const doublePercentage = `${((legsWon / numOfCoDarts) * 100).toFixed(1)}%`;
@@ -46,13 +54,15 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
     ...state,
     [inapKey]: {
       ...inapData,
-      legsWon: legsWon,
+      legsWon: legsWon === legsPerSet ? 0 : legsWon,
       setsWon: setsWon,
       score: startingScore,
       tsLeg: 0,
       norLeg: 0,
       avgLeg: 0,
+      avgMatch,
       dartsUsedInLeg: 0,
+      dartsUsedInMatch: dartsUsedInMatch + nodUsed,
       onCheckout: false,
       numOfCoDarts: numOfCoDarts,
       doublePercentage: doublePercentage,

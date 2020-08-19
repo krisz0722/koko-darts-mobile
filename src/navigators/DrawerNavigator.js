@@ -27,6 +27,7 @@ const DRAWER_CONTENT = ({
   navigation,
   handleLeaveMatch,
   inactivePlayer,
+  gameData,
   theme,
 }) => {
   const DRAWER_ITEMS = [
@@ -38,7 +39,7 @@ const DRAWER_CONTENT = ({
     {
       route: "stats",
       icon: "show-chart",
-      action: () => navigation.navigate("stats"),
+      action: () => navigation.navigate("stats", { gameData, back: "game" }),
     },
     {
       route: "home",
@@ -78,7 +79,7 @@ const DrawerNavigator = ({ navigation }) => {
   } = useContext(GameContext);
   const {
     dispatchUserData,
-    userData: { username, matches },
+    userData: { matches },
   } = useContext(Authcontext);
 
   const drawerstyle = {
@@ -87,9 +88,17 @@ const DrawerNavigator = ({ navigation }) => {
   };
 
   const handleLeaveMatch = async () => {
-    matches[0] = { ...gameData, status: "pending" };
-    await updateMatches(username, matches);
-    await dispatchUserData({ type: "UPDATE_MATCHES", value: matches });
+    try {
+      if (matches[0] && matches[0].status === "pending") {
+        matches[0] = { ...gameData, status: "pending" };
+      } else {
+        matches.unshift({ ...gameData, status: "pending" });
+      }
+      await dispatchUserData({ type: "UPDATE_MATCHES_SAVE", value: matches });
+    } catch (err) {
+      alert("ERROR WHILE SAVING MATCH: ", err);
+    }
+
     navigation.dispatch(
       CommonActions.reset({
         index: 1,

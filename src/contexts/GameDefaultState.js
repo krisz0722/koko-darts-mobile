@@ -47,7 +47,7 @@ const DEFAULT_PLAYER_DATA = {
 };
 
 export const GAME_DEFAULT_STATE = {
-  status: "initialize",
+  status: "initialized",
   activePlayer: "p1",
   inactivePlayer: "p2",
   showStats: false,

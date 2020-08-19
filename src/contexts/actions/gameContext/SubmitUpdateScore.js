@@ -14,6 +14,7 @@ const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
     norFirstNine,
     norScoring,
     dartsUsedInLeg,
+    dartsUsedInMatch,
     numOfCoDarts,
   } = playerData;
 
@@ -43,14 +44,16 @@ const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
   norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
   norScoring = !wasOnCheckout ? norScoring + num : norScoring;
 
-  const avgLeg = norLeg === 0 ? 0 : (tsLeg / norLeg).toFixed(1);
-  const avgMatch = norMatch === 0 ? 0 : (tsMatch / norMatch).toFixed(1);
-  const avgFirstNine =
-    norFirstNine === 0 ? 0 : (tsFirstNine / norFirstNine).toFixed(1);
-  const avgScoring = norScoring === 0 ? 0 : (tsScoring / norScoring).toFixed(1);
-
   const isLegOver = newScore === 0;
   const winner = isLegOver ? state.activePlayer : null;
+
+  dartsUsedInLeg = !isLegOver ? dartsUsedInLeg + 3 : dartsUsedInLeg;
+  dartsUsedInMatch = !isLegOver ? dartsUsedInMatch + 3 : dartsUsedInMatch;
+
+  const avgLeg = norLeg === 0 ? 0 : tsLeg / (dartsUsedInLeg / 3);
+  const avgMatch = norMatch === 0 ? 0 : tsMatch / (dartsUsedInMatch / 3);
+  const avgFirstNine = norFirstNine === 0 ? 0 : tsFirstNine / norFirstNine;
+  const avgScoring = norScoring === 0 ? 0 : tsScoring / norScoring;
 
   const missedDoubles = () => {
     switch (prevScoreNumOfDarts) {
@@ -65,7 +68,6 @@ const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
     }
   };
 
-  dartsUsedInLeg = !isLegOver ? norLeg * 3 : dartsUsedInLeg;
   numOfCoDarts = !isLegOver ? numOfCoDarts + missedDoubles() : numOfCoDarts;
 
   const lastScore = (type) => {
@@ -103,6 +105,7 @@ const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
       avgFirstNine,
       avgScoring,
       dartsUsedInLeg,
+      dartsUsedInMatch,
       onCheckout,
       numOfCoDarts,
       score: newScore,

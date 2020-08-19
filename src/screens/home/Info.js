@@ -13,6 +13,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 const HOME_INFO = React.memo(({ lastMatch, username }) => {
   const { theme } = useContext(ThemeContext);
   const status = lastMatch ? lastMatch.status : null;
+
   const STATS = () => {
     const { p1_DATA, p2_DATA, opponent, date, status } = lastMatch;
     const p1 = status === "finished" ? lastMatch.p1 : lastMatch.settings.p1;
@@ -45,7 +46,7 @@ const HOME_INFO = React.memo(({ lastMatch, username }) => {
           },
           {
             stat: "match average",
-            value: userData.avgMatch,
+            value: userData.avgMatch.toFixed(1),
           },
         ]
       : lastMatch && status === "finished"
@@ -60,7 +61,7 @@ const HOME_INFO = React.memo(({ lastMatch, username }) => {
           },
           {
             stat: "match average",
-            value: userData.avgMatch,
+            value: userData.avgMatch.toFixed(1),
           },
           {
             stat: "double percentage",
@@ -75,7 +76,7 @@ const HOME_INFO = React.memo(({ lastMatch, username }) => {
 
   return (
     <>
-      {!lastMatch ? (
+      {!lastMatch || lastMatch.status === "initialized" ? (
         <>
           <InfoTitle unfinished={status === "pending"}>
             you haven't played a game yet

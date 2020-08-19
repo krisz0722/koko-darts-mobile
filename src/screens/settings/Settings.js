@@ -8,10 +8,9 @@ import { OptionsScore } from "./OptionsScore";
 import { OptionsLegOrSet } from "./OptionsLegOrSet";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import PREVIEW from "./Preview";
-import { useIsFocused, useRoute } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
-import { updateSettings } from "../../fb/crud";
 
 const SETTINGS = () => {
   const {
@@ -57,7 +56,6 @@ const SETTINGS = () => {
   };
 
   const isFocused = useIsFocused();
-  const route = useRoute().name;
 
   useEffect(() => {
     if (isFocused) {
@@ -85,7 +83,6 @@ const SETTINGS = () => {
         value: newSettings,
       });
       setAnimation(animation);
-      updateSettings(username, newSettings);
     }
   }, [
     background,

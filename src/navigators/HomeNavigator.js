@@ -8,6 +8,7 @@ import SETTINGS from "../screens/settings/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PROFILE from "../screens/profile/Profile";
 import { ThemeContext } from "../contexts/ThemeContext";
+import STATS from "../screens/stats/Stats";
 
 export const NavBar = styled(View)`
   ${BorderVertical(({ theme, color }) =>
@@ -25,8 +26,7 @@ export const NavBar = styled(View)`
 const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   const { theme } = useContext(ThemeContext);
 
-  const navigation = props.navigation;
-  const state = props.state;
+  const { state, navigation, route } = props;
 
   const TABBAR_ITEMS = [
     {
@@ -52,19 +52,23 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   const index = state.index;
 
   return (
-    <NavBar position={"bottom"} theme={theme}>
-      {TABBAR_ITEMS.map((item) => (
-        <NavButton
-          key={item.route}
-          length={3}
-          direction={"column"}
-          text={item.route}
-          icon={item.icon}
-          action={item.action}
-          active={index === item.index}
-        />
-      ))}
-    </NavBar>
+    <>
+      {index === 3 ? null : (
+        <NavBar position={"bottom"} theme={theme}>
+          {TABBAR_ITEMS.map((item) => (
+            <NavButton
+              key={item.route}
+              length={3}
+              direction={"column"}
+              text={item.route}
+              icon={item.icon}
+              action={item.action}
+              active={index === item.index}
+            />
+          ))}
+        </NavBar>
+      )}
+    </>
   );
 });
 
@@ -81,6 +85,7 @@ const HomeNavigator = () => {
         <Screen name="home" component={HOME} />
         <Screen name="settings" component={SETTINGS} />
         <Screen name="profile" component={PROFILE} />
+        <Screen name="stats_saved" component={STATS} />
       </Navigator>
     </>
   );

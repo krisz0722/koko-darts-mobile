@@ -6,19 +6,19 @@ import React, {
   useContext,
 } from "react";
 import GAME_DEFAULT_STATE from "./GameDefaultState";
-import finishLeg from "./actions/FinishLeg";
-import Rematch from "./actions/Rematch";
-import undo from "./actions/Undo";
-import bust from "./actions/Bust";
-import typeNextDart from "./actions/TypeNextDart";
-import submitUpdateScore from "./actions/SubmitUpdateScore";
-import UpdateByDart from "./actions/UpdateByDart";
+import finishLeg from "./actions/gameContext/FinishLeg";
+import Rematch from "./actions/gameContext/Rematch";
+import undo from "./actions/gameContext/Undo";
+import bust from "./actions/gameContext/Bust";
+import typeNextDart from "./actions/inputContext/TypeNextDart";
+import submitUpdateScore from "./actions/gameContext/SubmitUpdateScore";
+import UpdateByDart from "./actions/gameContext/UpdateByDart";
 import { Authcontext } from "./AuthContext";
-import finishMatch from "./actions/FinishMatch";
+import finishMatch from "./actions/gameContext/FinishMatch";
 import Theme_Default from "../styles/theme-default.json";
 import Theme_Contrast from "../styles/theme-contrast.json";
-import startNewGame from "./actions/StartNewGame";
-import loadSettings from "./actions/LoadSettings";
+import startNewGame from "./actions/gameContext/StartNewGame";
+import loadSettings from "./actions/gameContext/LoadSettings";
 export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
@@ -84,7 +84,7 @@ export const GameContextProvider = (props) => {
             action.settings,
           );
         case "FINISH_MATCH":
-          return finishMatch(state, username, matches, friends, userOverall);
+          return finishMatch(state);
         case "REMATCH":
           return Rematch(
             action.activePlayer,
@@ -147,7 +147,7 @@ export const GameContextProvider = (props) => {
           return state;
       }
     },
-    [THEMES, userOverall, default_settings, matches, username, friends],
+    [THEMES, default_settings, matches, username],
   );
 
   const [gameData, dispatchGameData] = useReducer(

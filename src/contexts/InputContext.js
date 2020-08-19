@@ -1,7 +1,7 @@
 import React, { useReducer, createContext } from "react";
-import typeByDart from "./actions/TypeByDart";
-import ClearByDart from "./actions/ClearByDart";
-import typeByRound from "./actions/TypeByRound";
+import typeByDart from "./actions/inputContext/TypeByDart";
+import ClearByDart from "./actions/inputContext/ClearByDart";
+import typeByRound from "./actions/inputContext/TypeByRound";
 
 export const InputContext = createContext({});
 

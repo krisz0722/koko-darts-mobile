@@ -1,4 +1,4 @@
-import GAME_DEFAULT_STATE from "../GameDefaultState";
+import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
 const loadSettings = (settings, THEMES) => {
   return {

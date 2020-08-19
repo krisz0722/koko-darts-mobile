@@ -11,12 +11,15 @@ import {
   StatValue,
 } from "./StyledProfile";
 import { BackHandler } from "react-native";
-import PROFILE_STATS from "./DataProfile";
 import ProfileNavigator from "../../navigators/ProfileTopNavigator";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const PROFILE = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
+  const {
+    userData: { userOverall },
+  } = useContext(Authcontext);
 
   useEffect(() => {
     const backAction = () => {
@@ -30,6 +33,27 @@ const PROFILE = ({ navigation }) => {
     return () => backHandler.remove();
   }, [navigation]);
 
+  const { overallAvg, totalGames, winningPercentage, bestMatch } = userOverall;
+
+  const DATA = [
+    {
+      stat: "total games played",
+      value: totalGames,
+    },
+    {
+      stat: "winning percentage",
+      value: winningPercentage,
+    },
+    {
+      stat: "overall average",
+      value: overallAvg.toFixed(1),
+    },
+    {
+      stat: "best match average",
+      value: bestMatch.toFixed(1),
+    },
+  ];
+
   return (
     <>
       <Header>
@@ -38,7 +62,7 @@ const PROFILE = ({ navigation }) => {
           <Name theme={theme}>Jose armando</Name>
         </Container>
         <Container2 theme={theme}>
-          {PROFILE_STATS.map((item) => (
+          {DATA.map((item) => (
             <Field theme={theme} key={item.stat}>
               <Stat theme={theme}>{item.stat}</Stat>
               <StatValue>{item.value}</StatValue>

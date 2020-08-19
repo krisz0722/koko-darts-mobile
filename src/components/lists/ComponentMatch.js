@@ -4,7 +4,9 @@ import styled from "styled-components";
 import { BasicText, FlexRowBetween, Window } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";
-export const Match = styled(View)`
+import { useNavigation } from "@react-navigation/native";
+
+export const Match = styled(TouchableOpacity)`
   ${FlexRowBetween};
   width: 100%;
   margin-top: 10;
@@ -50,18 +52,27 @@ export const MatchAvg = styled(Text)`
 
 const MATCH_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
+  const gameData = item.item;
+  const matchSummary = gameData.matchSummary;
+
+  const navigation = useNavigation();
+
+  const { date, opponent, avg, result, wonOrLost } = matchSummary;
+
+  const openMatchStats = () =>
+    navigation.navigate("stats_saved", { gameData, back: "profile" });
 
   return (
-    <Match theme={theme}>
-      <MatchDate theme={theme}>{item.key}</MatchDate>
+    <Match theme={theme} onPress={openMatchStats}>
+      <MatchDate theme={theme}>{date}</MatchDate>
 
-      <Name>{item.opponent}</Name>
-      <Result1>{item.result1}</Result1>
+      <Name>{opponent}</Name>
+      <Result1>{result}</Result1>
 
-      <Result2 theme={theme} result={item.result2}>
-        {item.result2}
+      <Result2 theme={theme} result={wonOrLost}>
+        {wonOrLost}
       </Result2>
-      <MatchAvg theme={theme}>152.2</MatchAvg>
+      <MatchAvg theme={theme}>{avg.toFixed(1)}</MatchAvg>
       <TouchableOpacity onPress={() => alert("remove friend")}>
         <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.03} />
       </TouchableOpacity>

@@ -5,6 +5,7 @@ import { BottomButtons } from "./StyledModal";
 import { Header2, ModalContainerAlert } from "./StyledModal";
 import { GameContext } from "../../contexts/GameContext";
 import { CommonActions, useNavigation } from "@react-navigation/native";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const FINISH_MATCH_MODAL = ({
   theme,
@@ -24,6 +25,8 @@ const FINISH_MATCH_MODAL = ({
     gameData: { winner },
   } = useContext(GameContext);
 
+  const { dispatchUserData } = useContext(Authcontext);
+
   const winnerName = winner ? gameData.settings[winner].key : "";
 
   const animationType = animation
@@ -32,8 +35,10 @@ const FINISH_MATCH_MODAL = ({
       : "slide"
     : "none";
 
-  const quitMatch = () => {
-    dispatchGameData({ type: "FINISH_MATCH" });
+  const quitMatch = async () => {
+    await dispatchGameData({ type: "FINISH_MATCH" });
+    await dispatchUserData({ type: "UPDATE_PROFILE", value: gameData });
+
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
@@ -47,11 +52,11 @@ const FINISH_MATCH_MODAL = ({
   //   navigation.navigate("stats");
   // };
 
-  const initiateRematch = () => {
-    console.log("saving match here....");
+  const initiateRematch = async () => {
+    await dispatchGameData({ type: "FINISH_MATCH" });
+    await dispatchUserData({ type: "UPDATE_PROFILE", value: gameData });
     action();
     action2();
-    dispatchGameData({ type: "FINISH_MATCH" });
   };
 
   return (

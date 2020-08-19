@@ -7,7 +7,7 @@ import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { VALIDSCORES } from "../../../calc/scores";
-import nextValidation from "../../../contexts/actions/nextValidation";
+import nextValidation from "../../../contexts/actions/gameContext/nextValidation";
 
 export const ClassicBottom = styled(Animated.View)`
   ${FlexRow};

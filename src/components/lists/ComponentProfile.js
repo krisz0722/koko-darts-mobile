@@ -30,17 +30,18 @@ export const Name = styled(Text)`
 const PROFILE_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
 
+  console.log("PROFILE COMPOENTN", item);
+
   const [active, setActive] = useState(false);
 
   const toggleChecked = (item) => {
-    //use ASyncStorage here
     setActive(!active);
   };
 
   return (
     <Profile onPress={() => toggleChecked(item)} theme={theme}>
       <ProfileAvatar theme={theme} resizeMode={"cover"} source={item.img} />
-      <Name>{item.key}</Name>
+      <Name>{item.username}</Name>
       <CheckBox
         tintColors={{ true: theme.text, false: theme.text }}
         onCheckColor={theme.bg3}

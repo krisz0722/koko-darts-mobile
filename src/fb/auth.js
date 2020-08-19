@@ -20,22 +20,24 @@ export const signUp = async (
   } else {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
-
       console.log("sign up successful");
       await createProfile(email, username);
-
       LogIn(email, password, username, navigation, reducers);
     } catch (err) {
-      alert(err);
+      alert("ERROR WHILE SIGNING UP: ", err);
     }
   }
 };
 
 export const logOut = async (navigation) => {
-  console.log("logging out...");
-  await auth().signOut();
-  console.log("logged out");
-  navigation.navigate("authnavigator", { screen: "login" });
+  try {
+    console.log("logging out...");
+    await auth().signOut();
+    console.log("logged out");
+    navigation.navigate("authnavigator", { screen: "login" });
+  } catch (err) {
+    alert("ERROR WHILE LOGGING OUT: ", err);
+  }
 };
 
 export const LogIn = async (email, password, id, navigation, reducers) => {
@@ -47,11 +49,12 @@ export const LogIn = async (email, password, id, navigation, reducers) => {
       await (async () => {
         try {
           const userData = await getProfileByEmail(id).then((querySnapshot) => {
+            console.log("QUERY SNAPSHOTS", querySnapshot.docs);
             return querySnapshot.docs[0].data();
           });
           await loadAppData(userData, navigation, reducers);
         } catch (err) {
-          alert(err);
+          alert("ERROR WHILE LOADING APPDATA IN: ", err);
         }
       })();
     } else {
@@ -64,12 +67,12 @@ export const LogIn = async (email, password, id, navigation, reducers) => {
           );
           await loadAppData(userData, navigation, reducers);
         } catch (err) {
-          alert(err);
+          alert("ERROR WHILE LOADING APPDATA IN: ", err);
         }
       })();
     }
   } catch (err) {
-    alert(err);
+    alert("ERROR WHILE LOGGING IN: ", err);
   }
 };
 
@@ -130,7 +133,7 @@ export const deleteAccount = async (username, navigation) => {
     console.log("deleted from database");
     navigation.navigate("authnavigator");
   } catch (err) {
-    alert(err);
+    alert("ERROR WHILE DELETING ACCOUNT: ", err);
   }
 };
 

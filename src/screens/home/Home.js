@@ -23,18 +23,19 @@ const HOME = React.memo(({ navigation }) => {
     userData: { username, matches, requestReceived },
   } = useContext(Authcontext);
 
-  const lastMatch = matches[0];
-  const status = lastMatch ? lastMatch.status : null;
-  const request = requestReceived.length > 0;
-
+  const [lastMatch, setLastMatch] = useState(matches[0]);
   const [friendRequest, setFriendRequest] = useState(request);
   const [overflow, setOverflow] = useState(false);
   const [newGameModal, setNewGameModal] = useState(status === "pending");
 
+  const status = lastMatch ? lastMatch.status : null;
+  const request = requestReceived.length > 0;
+
   useEffect(() => {
     setNewGameModal(false);
+    setLastMatch(matches[0]);
     return () => setOverflow(false);
-  }, []);
+  }, [matches]);
 
   const handleNewGame = () => {
     if (status === "pending" && status !== "empty") {
@@ -47,8 +48,7 @@ const HOME = React.memo(({ navigation }) => {
   const handleNewGameModal = async () => {
     const newmatches = [...matches];
     newmatches.shift();
-    await updateMatches(username, newmatches);
-    dispatchUserData({ type: "UPDATE_MATCHES", value: newmatches });
+    await dispatchUserData({ type: "UPDATE_MATCHES_SAVE", value: newmatches });
     navigation.navigate("drawernavigator");
     setTimeout(() => {
       setNewGameModal(!newGameModal);

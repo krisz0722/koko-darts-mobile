@@ -11,9 +11,10 @@ import CHOOSE_PLAYER_MODAL from "../../components/modals/ChoosePlayerModal";
 import { useIsFocused } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
+import { Authcontext } from "../../contexts/AuthContext";
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
-  const { dispatchGameData } = useContext(GameContext);
+  const { dispatchGameData, gameData } = useContext(GameContext);
   const isFocused = useIsFocused();
 
   const {
@@ -21,6 +22,8 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     dispatchSettings,
     settings: { p1, p2, legOrSet, toWin, legsPerSet, startingScore },
   } = useContext(SettingsContext);
+
+  const { dispatchUserData } = useContext(Authcontext);
 
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
   const [stateStartingScore, setStartingScore] = useState(startingScore);
@@ -97,13 +100,14 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     [setLegsPerSet],
   );
 
-  const startGame = useCallback(() => {
-    dispatchGameData({
+  const startGame = useCallback(async () => {
+    await dispatchGameData({
       type: "START_NEW_GAME",
       value: newGameSettings,
     });
+    await dispatchUserData({ type: "UPDATE_MATCHES", value: newGameSettings });
     navigation.navigate("game");
-  }, [newGameSettings, navigation, dispatchGameData]);
+  }, [dispatchUserData, newGameSettings, navigation, dispatchGameData]);
 
   const changeOpponent = (back = false) => {
     if (back) {

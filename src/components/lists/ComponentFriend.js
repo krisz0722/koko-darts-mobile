@@ -45,14 +45,14 @@ export const RemoveButton = styled(TouchableOpacity)``;
 const FRIEND_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
 
-  const { wins, losses } = item;
+  const { winsAgainst, lossesAgainst } = item;
 
   const record = () => {
-    if (wins === losses) {
+    if (winsAgainst === lossesAgainst) {
       return theme.bgActive;
-    } else if (wins > losses) {
+    } else if (winsAgainst > lossesAgainst) {
       return theme.bgGreen;
-    } else if (wins < losses) {
+    } else if (winsAgainst < lossesAgainst) {
       return theme.bgRed;
     } else {
       return null;
@@ -66,7 +66,7 @@ const FRIEND_COMPONENT = ({ item }) => {
       <Record
         record={record()}
         theme={theme}
-      >{`${item.wins} - ${item.losses}`}</Record>
+      >{`${item.winsAgainst} - ${item.lossesAgainst}`}</Record>
       <RemoveButton theme={theme} onPress={() => alert("remove friend")}>
         <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.06} />
       </RemoveButton>

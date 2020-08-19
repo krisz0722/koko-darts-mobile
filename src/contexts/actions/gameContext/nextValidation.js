@@ -1,4 +1,4 @@
-import { SCORINGDARTS } from "../../calc/const";
+import { SCORINGDARTS } from "../../../calc/const";
 
 const nextValidation = (inputByDart, whichDart, playerScore) => {
   let { first, second, third } = inputByDart;

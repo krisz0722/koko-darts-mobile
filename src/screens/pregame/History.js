@@ -41,26 +41,53 @@ const HISTORY_ROW = ({ p1, title, p2 }) => (
 
 export const HISTORY = ({ p1, p2 }) => {
   const {
-    userData: { username },
+    userData: { username, friends },
   } = useContext(Authcontext);
 
-  const DATA = [
-    {
-      p1: username === p1.key ? p2.losses : p1.wins,
-      title: "total wins",
-      p2: username === p1.key ? p2.wins : p1.losses,
-    },
-    {
-      p1: p1.overallAvg,
-      title: "overall average",
-      p2: p2.overallAvg,
-    },
-    {
-      p1: p1.bestMatch,
-      title: "best match",
-      p2: p2.bestMatch,
-    },
-  ];
+  const DATA = () => {
+    if (p2.key !== "") {
+      const data =
+        username === p1.key
+          ? friends.find((item) => item.key === p2.key)
+          : friends.find((item) => item.key === p1.key);
+
+      let {
+        winsAgainst,
+        lossesAgainst,
+        avgAgainst,
+        avgFriend,
+        bestMatchAgainst,
+        bestMatchFriend,
+      } = data;
+
+      winsAgainst = winsAgainst.toFixed();
+      lossesAgainst = lossesAgainst.toFixed();
+      avgAgainst = avgAgainst.toFixed(1);
+      avgFriend = avgFriend.toFixed(1);
+      bestMatchAgainst = bestMatchAgainst.toFixed(1);
+      bestMatchFriend = bestMatchFriend.toFixed(1);
+
+      return [
+        {
+          p1: username === p1.key ? winsAgainst : lossesAgainst,
+          title: "matches won",
+          p2: username === p2.key ? winsAgainst : lossesAgainst,
+        },
+        {
+          p1: username === p1.key ? avgAgainst : avgFriend,
+          title: "overall average",
+          p2: username === p2.key ? avgAgainst : avgFriend,
+        },
+        {
+          p1: username === p1.key ? bestMatchAgainst : bestMatchFriend,
+          title: "best match",
+          p2: username === p2.key ? bestMatchAgainst : bestMatchFriend,
+        },
+      ];
+    } else {
+      return null;
+    }
+  };
 
   return (
     <>
@@ -72,9 +99,9 @@ export const HISTORY = ({ p1, p2 }) => {
         />
       </RowMod>
       <HistoryContainer>
-        {p2 ? (
+        {p2.key !== "" ? (
           <>
-            {DATA.map((item) => (
+            {DATA().map((item) => (
               <HISTORY_ROW
                 key={item.title}
                 p1={item.p1}

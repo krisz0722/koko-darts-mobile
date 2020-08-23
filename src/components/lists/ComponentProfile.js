@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { BasicText, FlexRowAround, Window } from "../../styles/css_mixins";
 import CheckBox from "@react-native-community/checkbox";
@@ -27,15 +27,19 @@ export const Name = styled(Text)`
   font-size: ${({ theme }) => theme.opponent};
 `;
 
-const PROFILE_COMPONENT = ({ item }) => {
+const PROFILE_COMPONENT = React.memo(({ item, add, remove }) => {
   const { theme } = useContext(ThemeContext);
-
-  console.log("PROFILE COMPOENTN", item);
 
   const [active, setActive] = useState(false);
 
   const toggleChecked = (item) => {
-    setActive(!active);
+    if (active) {
+      setActive(false);
+      remove(item);
+    } else {
+      setActive(true);
+      add(item);
+    }
   };
 
   return (
@@ -50,6 +54,6 @@ const PROFILE_COMPONENT = ({ item }) => {
       />
     </Profile>
   );
-};
+});
 
 export default PROFILE_COMPONENT;

@@ -8,27 +8,35 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:559933853025:android:0f5065b050efa1f6008920",
+        "mobilesdk_app_id": "1:559933853025:android:9496ee6831300e7c008920",
         "android_client_info": {
           "package_name": "com.kokodarts"
         }
       },
       "oauth_client": [
         {
-          "client_id": "559933853025-3l9pkeogjnreck98q49nuf3fnevlf22q.apps.googleusercontent.com",
+          "client_id": "559933853025-s8sucrmraein05i7hs8i6t1akli8dqsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kokodarts",
+            "certificate_hash": "44684fbe78c7f2cca9352b0f9f2aca80a795de63"
+          }
+        },
+        {
+          "client_id": "559933853025-veb4b0dkpcmf28bkule0je5o7eqt58cr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCECPJnmCQbMVAtThSGNieKcSR1njy43oY"
+          "current_key": "AIzaSyBB6ipKqQW_2CCywWnYNSRorA5Y5rQRrE0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "559933853025-3l9pkeogjnreck98q49nuf3fnevlf22q.apps.googleusercontent.com",
+              "client_id": "559933853025-veb4b0dkpcmf28bkule0je5o7eqt58cr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

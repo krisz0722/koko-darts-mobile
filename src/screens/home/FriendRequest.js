@@ -8,9 +8,24 @@ import {
 } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Authcontext } from "../../contexts/AuthContext";
+import acceptAuthRequest from "../../contexts/actions/authContext/AcceptRequest";
+import declineAuthRequest from "../../contexts/actions/authContext/DeclineRequest";
 
-const FRIEND_REQUEST = React.memo(({ navigation, action }) => {
+const FRIEND_REQUEST = React.memo(({}) => {
   const { theme } = useContext(ThemeContext);
+  const {
+    userData,
+    userData: { friendRequestReceived },
+  } = useContext(Authcontext);
+
+  const accept = async () => {
+    await acceptAuthRequest(userData, friendRequestReceived[0]);
+  };
+
+  const decline = async () => {
+    await declineAuthRequest(userData, friendRequestReceived[0]);
+  };
 
   return (
     <Friendrequest theme={theme}>
@@ -18,9 +33,9 @@ const FRIEND_REQUEST = React.memo(({ navigation, action }) => {
         <FriendAvatar
           theme={theme}
           resizeMode={"cover"}
-          source={require("../../../assets/bg.png")}
+          source={friendRequestReceived[0].img}
         />
-        <FriendName>michael schimacher jose armando</FriendName>
+        <FriendName>{friendRequestReceived[0].username}</FriendName>
       </Friend>
 
       <TopButtons>
@@ -29,14 +44,14 @@ const FRIEND_REQUEST = React.memo(({ navigation, action }) => {
           size={"small"}
           type={"danger"}
           icon={"clear"}
-          action={() => action(false)}
+          action={() => decline()}
         />
         <THEMED_BUTTON
           length={2}
           size={"small"}
           type={"success"}
           icon={"check"}
-          action={() => action(false)}
+          action={() => accept()}
         />
       </TopButtons>
     </Friendrequest>
@@ -44,5 +59,3 @@ const FRIEND_REQUEST = React.memo(({ navigation, action }) => {
 });
 
 export default FRIEND_REQUEST;
-
-//TODO friend request info bar at the top, app update info bar top

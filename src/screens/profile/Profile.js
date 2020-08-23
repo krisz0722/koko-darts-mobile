@@ -18,7 +18,7 @@ import { Authcontext } from "../../contexts/AuthContext";
 const PROFILE = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const {
-    userData: { userOverall },
+    userData: { username, img, userOverall },
   } = useContext(Authcontext);
 
   useEffect(() => {
@@ -58,8 +58,8 @@ const PROFILE = ({ navigation }) => {
     <>
       <Header>
         <Container>
-          <SubContainer />
-          <Name theme={theme}>Jose armando</Name>
+          <SubContainer source={{ uri: img }} />
+          <Name theme={theme}>{username}</Name>
         </Container>
         <Container2 theme={theme}>
           {DATA.map((item) => (

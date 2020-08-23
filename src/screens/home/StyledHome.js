@@ -23,16 +23,19 @@ export const HomeContainer = styled(View)`
 export const TopBar = styled(View)`
   top: 0;
   position: absolute;
-  height: ${({ friendRequest }) => (friendRequest ? "10%" : "5%")};
-  width: ${({ friendRequest }) => (friendRequest ? "100%" : "100%")};
+  height: ${({ friendRequestReceived }) =>
+    friendRequestReceived ? "10%" : "5%"};
+  width: ${({ friendRequestReceived }) =>
+    friendRequestReceived ? "100%" : "100%"};
   ${FlexRowEnd};
 
-  background-color: ${({ theme, friendRequest }) =>
-    friendRequest ? theme.bg2 : "transparent"};
-  border-bottom-width: ${({ theme, friendRequest }) =>
-    friendRequest ? theme.borderWidth : 0};
+  background-color: ${({ theme, friendRequestReceived }) =>
+    friendRequestReceived ? theme.bg2 : "transparent"};
+  border-bottom-width: ${({ theme, friendRequestReceived }) =>
+    friendRequestReceived ? theme.borderWidth : 0};
   border-color: ${({ theme }) => theme.borderColor};
-  flex-direction: ${({ friendRequest }) => (friendRequest ? "column" : "row")};
+  flex-direction: ${({ friendRequestReceived }) =>
+    friendRequestReceived ? "column" : "row"};
 `;
 
 export const OverflowMenu = styled(View)`

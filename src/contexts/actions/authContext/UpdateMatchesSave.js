@@ -1,12 +1,12 @@
 import { updateMatches } from "../../../fb/crud";
 
-const updateAuthMatchesSave = (state, matches) => {
-  const { username } = state;
-  updateMatches(username, matches);
-  return {
-    ...state,
-    matches,
-  };
+const updateAuthMatchesSave = (userData, gameData) => {
+  const { username } = userData;
+
+  const {
+    settings: { p1, p2 },
+  } = gameData;
+  updateMatches(username, gameData);
 };
 
 export default updateAuthMatchesSave;

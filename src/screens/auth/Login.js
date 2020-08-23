@@ -27,7 +27,7 @@ const LOGIN = ({ navigation }) => {
   };
 
   const [password, setPassword] = useState("111111");
-  const [email, setEmail] = useState("krisz0722@gmail.com");
+  const [email, setEmail] = useState("test1@gmail.com");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);

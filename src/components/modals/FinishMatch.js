@@ -1,31 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, ModalContainerAlert } from "./StyledModal";
 import { GameContext } from "../../contexts/GameContext";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { Authcontext } from "../../contexts/AuthContext";
+import updateAuthProfile from "../../contexts/actions/authContext/UpdateProfile";
 
-const FINISH_MATCH_MODAL = ({
-  theme,
-  animation,
-  action,
-  action2,
-  action3,
-  visible,
-}) => {
+const FINISH_MATCH_MODAL = ({ theme, animation, action, action2, visible }) => {
   const navigation = useNavigation();
-
-  // const [statsModal, setStatsModal] = useState(false);
 
   const {
     dispatchGameData,
     gameData,
-    gameData: { winner },
+    gameData: {
+      settings: { p1, p2 },
+      winner,
+    },
   } = useContext(GameContext);
-
-  const { dispatchUserData } = useContext(Authcontext);
 
   const winnerName = winner ? gameData.settings[winner].key : "";
 
@@ -37,7 +29,7 @@ const FINISH_MATCH_MODAL = ({
 
   const quitMatch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH" });
-    await dispatchUserData({ type: "UPDATE_PROFILE", value: gameData });
+    await updateAuthProfile(p1.key, p2.key, gameData);
 
     navigation.dispatch(
       CommonActions.reset({
@@ -47,14 +39,9 @@ const FINISH_MATCH_MODAL = ({
     );
   };
 
-  // const showStats = () => {
-  //   action();
-  //   navigation.navigate("stats");
-  // };
-
   const initiateRematch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH" });
-    await dispatchUserData({ type: "UPDATE_PROFILE", value: gameData });
+    await updateAuthProfile(p1.key, p2.key, gameData);
     action();
     action2();
   };
@@ -79,15 +66,6 @@ const FINISH_MATCH_MODAL = ({
               action={quitMatch}
               inGameTheme={theme}
             />
-            {/*<THEMED_BUTTON*/}
-            {/*  text={"show stats"}*/}
-            {/*  length={3}*/}
-            {/*  size={"small"}*/}
-            {/*  icon={"show-chart"}*/}
-            {/*  type={"active"}*/}
-            {/*  action={showStats}*/}
-            {/*inGameTheme={theme}*/}
-            {/*/>*/}
             <THEMED_BUTTON
               size={"small"}
               text={"rematch"}
@@ -100,11 +78,6 @@ const FINISH_MATCH_MODAL = ({
           </BottomButtons>
         </ModalContainerAlert>
       </Modal>
-      {/*<STATS_MODAL*/}
-      {/*  gameData={gameData}*/}
-      {/*  action={() => setStatsModal(false)}*/}
-      {/*  visible={statsModal}*/}
-      {/*/>*/}
     </>
   );
 };

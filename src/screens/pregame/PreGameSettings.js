@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { OptionsScore } from "../settings/OptionsScore";
 import { OptionsLegOrSet } from "../settings/OptionsLegOrSet";
 import HISTORY from "./History";
@@ -12,9 +18,13 @@ import { useIsFocused } from "@react-navigation/native";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import { Authcontext } from "../../contexts/AuthContext";
+import updateAuthMatchesAdd from "../../contexts/actions/authContext/UpdateMatchesAdd";
+import Theme_Default from "../../styles/theme-default.json";
+import Theme_Contrast from "../../styles/theme-contrast.json";
+
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
-  const { dispatchGameData, gameData } = useContext(GameContext);
+  const { dispatchGameData } = useContext(GameContext);
   const isFocused = useIsFocused();
 
   const {
@@ -23,7 +33,10 @@ const PREGAME_SETTINGS = ({ navigation }) => {
     settings: { p1, p2, legOrSet, toWin, legsPerSet, startingScore },
   } = useContext(SettingsContext);
 
-  const { dispatchUserData } = useContext(Authcontext);
+  const {
+    userData,
+    userData: { friends },
+  } = useContext(Authcontext);
 
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
   const [stateStartingScore, setStartingScore] = useState(startingScore);
@@ -33,6 +46,14 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   const [stateP2, setP2] = useState(p2);
   const [modal, setModal] = useState(
     p2 === "GUEST" || (p2.key === "" && isFocused) ? true : false,
+  );
+
+  const THEMES = useMemo(
+    () => ({
+      default: Theme_Default,
+      contrast: Theme_Contrast,
+    }),
+    [],
   );
 
   const newGameSettings = {
@@ -105,9 +126,12 @@ const PREGAME_SETTINGS = ({ navigation }) => {
       type: "START_NEW_GAME",
       value: newGameSettings,
     });
-    await dispatchUserData({ type: "UPDATE_MATCHES", value: newGameSettings });
-    navigation.navigate("game");
-  }, [dispatchUserData, newGameSettings, navigation, dispatchGameData]);
+    await updateAuthMatchesAdd(userData, newGameSettings, THEMES);
+    navigation.navigate("drawernavigator", {
+      screen: "game",
+      flag: "new",
+    });
+  }, [THEMES, userData, newGameSettings, navigation, dispatchGameData]);
 
   const changeOpponent = (back = false) => {
     if (back) {
@@ -119,7 +143,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   };
 
   const chooseGuest = () => {
-    const guest = { key: "GUEST", img: "" };
+    const guest = friends.find((item) => item.key === "GUEST");
     setModal(false);
     if (stateP2 === p1) {
       setP1(guest);

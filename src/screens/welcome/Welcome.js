@@ -3,15 +3,37 @@ import ShapeThrow from "../../../assets/shapeThrow";
 import { View_Headers, View_Shape, View_Buttons } from "./StyledWelcome";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import { signUpGoogle } from "../../fb/auth";
+import { GameContext } from "../../contexts/GameContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const WELCOME = ({ navigation }) => {
-  const { theme } = useContext(ThemeContext);
+  const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
+    ThemeContext,
+  );
+  const { dispatchGameData } = useContext(GameContext);
+  const { dispatchSettings } = useContext(SettingsContext);
+  const { dispatchUserData } = useContext(Authcontext);
+
+  const reducers = {
+    game: dispatchGameData,
+    settings: dispatchSettings,
+    user: dispatchUserData,
+    theme: setSelectedTheme,
+    animation: setAnimation,
+    background: setBackground,
+  };
 
   return (
     <>
       <View_Headers theme={theme}></View_Headers>
       <View_Buttons>
-        <THEMED_BUTTON type={"basic"} text={"sign up with google"} />
+        <THEMED_BUTTON
+          action={() => signUpGoogle(navigation, reducers)}
+          type={"basic"}
+          text={"sign up with google"}
+        />
         <THEMED_BUTTON type={"basic"} text={"sign up with facebook"} />
         <THEMED_BUTTON
           type={"basic"}

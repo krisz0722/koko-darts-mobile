@@ -24,6 +24,13 @@ export const ModalContainerAlert = styled(ModalContainerBasic)`
 export const ModalContainerSearch = styled(ScrollView)`
   background-color: rgba(255, 255, 255, 0.95);
 `;
+export const ModalContainerLoading = styled(ModalContainerBasic)`
+  background-color: transparent;
+  height: 25%;
+  width: 90%;
+  ${FlexColAround};
+  border-radius: ${({ filled }) => (filled ? "15px" : "0px")};
+`;
 
 export const Header = styled(Text)`
 ${BasicTextBold}

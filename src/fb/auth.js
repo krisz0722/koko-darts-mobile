@@ -6,6 +6,49 @@ import {
   checkUsernameAvailability,
   createProfile,
 } from "./crud";
+import { GoogleSignin } from "@react-native-community/google-signin";
+
+export const signUpGoogle = async (navigation, reducers) => {
+  try {
+    await GoogleSignin.configure({
+      webClientId:
+        "559933853025-veb4b0dkpcmf28bkule0je5o7eqt58cr.apps.googleusercontent.com",
+    });
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    const {
+      idToken,
+      user: { name, photo, email },
+    } = userInfo;
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    const userNameTaken = await checkUsernameAvailability(name);
+    let userData = await getProfileByEmail(email);
+    userData = userData ? userData : null;
+
+    if (userData) {
+      console.log("alreadt signed up with this email");
+      LogIn(
+        email,
+        null,
+        userData.username,
+        navigation,
+        reducers,
+        googleCredential,
+      );
+    } else {
+      let username;
+      if (userNameTaken > 0) {
+        username = `${name} ${userNameTaken + 1}`;
+      } else {
+        username = name;
+      }
+      await createProfile(email, username, photo);
+      LogIn(email, null, username, navigation, reducers, googleCredential);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const signUp = async (
   email,
@@ -15,15 +58,18 @@ export const signUp = async (
   reducers,
 ) => {
   const userNameTaken = await checkUsernameAvailability(username);
-  if (userNameTaken) {
+  console.log("USERNAMETAKEN", userNameTaken);
+
+  if (userNameTaken > 0) {
     return alert("username is taken");
   } else {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
       console.log("sign up successful");
-      await createProfile(email, username);
+      await createProfile(email, username, "../../assets/bg.png");
       LogIn(email, password, username, navigation, reducers);
     } catch (err) {
+      console.log(err);
       alert("ERROR WHILE SIGNING UP: ", err);
     }
   }
@@ -40,33 +86,41 @@ export const logOut = async (navigation) => {
   }
 };
 
-export const LogIn = async (email, password, id, navigation, reducers) => {
+export const LogIn = async (
+  email,
+  password,
+  id,
+  navigation,
+  reducers,
+  credential,
+) => {
   try {
     console.log("logging in...");
-    await auth().signInWithEmailAndPassword(email, password);
+
+    if (credential) {
+      await auth().signInWithCredential(credential);
+    } else {
+      await auth().signInWithEmailAndPassword(email, password);
+    }
     console.log("log in successful");
     if (email === id) {
       await (async () => {
         try {
-          const userData = await getProfileByEmail(id).then((querySnapshot) => {
-            console.log("QUERY SNAPSHOTS", querySnapshot.docs);
-            return querySnapshot.docs[0].data();
-          });
+          const userData = await getProfileByEmail(id);
+
           await loadAppData(userData, navigation, reducers);
         } catch (err) {
+          console.log(err);
           alert("ERROR WHILE LOADING APPDATA IN: ", err);
         }
       })();
     } else {
       await (async () => {
         try {
-          const userData = await getProfileByUsername(id).then(
-            (documentSnapshot) => {
-              return documentSnapshot.data();
-            },
-          );
+          const userData = await getProfileByUsername(id);
           await loadAppData(userData, navigation, reducers);
         } catch (err) {
+          console.log(err);
           alert("ERROR WHILE LOADING APPDATA IN: ", err);
         }
       })();
@@ -119,7 +173,6 @@ export const loadAppData = async (userData, navigation, reducers) => {
       value: userMatches[0],
     });
   }
-
   navigation.navigate("homenavigator");
 };
 
@@ -131,7 +184,7 @@ export const deleteAccount = async (username, navigation) => {
     console.log("user has been deleted");
     await deleteProfile(username);
     console.log("deleted from database");
-    navigation.navigate("authnavigator");
+    navigation.navigate("authnavigator", { screen: "welcome" });
   } catch (err) {
     alert("ERROR WHILE DELETING ACCOUNT: ", err);
   }

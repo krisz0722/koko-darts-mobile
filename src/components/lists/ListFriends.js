@@ -13,7 +13,9 @@ export const FriendsContainer = styled(FlatList)`
 
 const LIST_FRIENDS = () => {
   const { theme } = useContext(ThemeContext);
-  const FRIENDS_LIST = useContext(Authcontext).userData.friends;
+  const FRIENDS_LIST = useContext(Authcontext).userData.friends.filter(
+    (item) => item.key !== "GUEST",
+  );
 
   const renderItem = ({ item }) => <FRIEND_COMPONENT item={item} />;
 

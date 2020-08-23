@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
 import styled from "styled-components";
 import {
   BasicText,
@@ -28,7 +28,7 @@ export const Container2 = styled(Container)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
-export const SubContainer = styled(View)`
+export const SubContainer = styled(Image)`
   width: 60%;
   height: ${() => Window.width * 0.4 * 0.6};
   border-radius: 4px;

@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { SafeAreaView, ActivityIndicator } from "react-native";
 import styled from "styled-components";
 import { FlatList } from "react-native";
 import PROFILE_COMPONENT from "./ComponentProfile";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { getUsers } from "../../fb/crud";
 import { FlexCol } from "../../styles/css_mixins";
 export const Safe = styled(SafeAreaView)`
   height: 40%;
@@ -20,30 +19,17 @@ export const ProfilesContainer = styled(FlatList)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
-const LIST_PROFILES = ({ regexp }) => {
+const LIST_PROFILES = React.memo(({ add, remove, profiles, regexp }) => {
   const { theme } = useContext(ThemeContext);
 
-  const [profiles, setProfiles] = useState(null);
-
-  const renderItem = ({ item }) => <PROFILE_COMPONENT item={item.data()} />;
-
-  const PROFILES_LIST = async () => {
-    try {
-      const profiles = await getUsers().then((querySnapshot) => {
-        console.log("PROFILES", querySnapshot.docs);
-        console.log("PROFILESLIST", typeof querySnapshot.docs);
-        return querySnapshot.docs;
-      });
-      setProfiles(profiles);
-    } catch (err) {
-      console.log(err);
-      alert("ERROR WHILE GETTING USERS: ", err);
-    }
-  };
-
-  useEffect(() => {
-    PROFILES_LIST();
-  }, []);
+  const renderItem = ({ item }) => (
+    <PROFILE_COMPONENT
+      profile={profiles}
+      add={add}
+      remove={remove}
+      item={item.data()}
+    />
+  );
 
   return (
     <Safe>
@@ -61,7 +47,7 @@ const LIST_PROFILES = ({ regexp }) => {
       </>
     </Safe>
   );
-};
+});
 
 export default LIST_PROFILES;
 

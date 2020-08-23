@@ -149,7 +149,7 @@ android {
         debug {
             storeFile file('kokodarts.keystore')
             storePassword 'Radiohead2012>'
-            keyAlias 'kokodarts'
+            keyAlias 'Radiohead2012'
             keyPassword 'Radiohead2012>'
         }
     }
@@ -191,7 +191,7 @@ android {
 
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

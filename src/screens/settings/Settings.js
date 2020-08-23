@@ -11,6 +11,7 @@ import PREVIEW from "./Preview";
 import { useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
+import updateAuthSettings from "../../contexts/actions/authContext/UpdateSettings";
 
 const SETTINGS = () => {
   const {
@@ -29,7 +30,6 @@ const SETTINGS = () => {
   const {
     userData,
     userData: { username },
-    dispatchUserData,
   } = useContext(Authcontext);
   const USER_SETTINGS = userData.settings;
 
@@ -78,15 +78,12 @@ const SETTINGS = () => {
         type: "SAVE_SETTINGS",
         value: newSettings,
       });
-      dispatchUserData({
-        type: "UPDATE_SETTINGS",
-        value: newSettings,
-      });
+      updateAuthSettings(userData, newSettings);
       setAnimation(animation);
     }
   }, [
     background,
-    dispatchUserData,
+    userData,
     selectedTheme,
     username,
     p1,
@@ -247,6 +244,3 @@ const SETTINGS = () => {
 };
 
 export default SETTINGS;
-
-// TODO animation toggle, visual effecet info modal or tooltip, ASYM component, PREVIEW visibilityi icon
-// TODO reset has to set the users saved settins to default in the database too

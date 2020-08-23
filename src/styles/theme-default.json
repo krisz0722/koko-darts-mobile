@@ -8,8 +8,7 @@
   "transitionEasing": "linear",
   "transitionDelay": "300",
   "bgOverlay": "rgba(8, 89, 89, 0.9)",
-
-  "bgOverlay2": "rgba(255,255,255, 0.8)",
+  "bgOverlay2":"rgba(8, 89, 89, 0.9)",
   "bgActive": "rgb(255,255,255)",
   "bgRed": "rgb(235, 87, 87)",
   "bgGreen": "rgb(33, 150, 83)",

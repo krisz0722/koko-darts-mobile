@@ -21,7 +21,7 @@ const startNewGame = (username, settings, matches, THEMES) => {
       theme: THEMES[settings.theme],
     },
     status: "pending",
-    key: `${opponent} ${date2}`,
+    key: `${p1.key} vs ${p2.key} - ${date2}`,
     opponent,
     date,
   };

@@ -32,8 +32,8 @@ const REGISTER = ({ navigation }) => {
     background: setBackground,
   };
 
-  const [username, setUsername] = useState("easternpotato");
-  const [email, setEmail] = useState("krisz0722@gmail.com");
+  const [username, setUsername] = useState("test_01");
+  const [email, setEmail] = useState("test1@gmail.com");
   const [password, setPassword] = useState("111111");
   const [confirmPassword, setConfirmPassword] = useState("111111");
   const [passwordHidden, setPasswordHidden] = useState(true);

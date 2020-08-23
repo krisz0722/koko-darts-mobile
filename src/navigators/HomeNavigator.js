@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { View } from "react-native";
@@ -9,6 +9,9 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import PROFILE from "../screens/profile/Profile";
 import { ThemeContext } from "../contexts/ThemeContext";
 import STATS from "../screens/stats/Stats";
+import { usersCollection } from "../fb/crud";
+import { Authcontext } from "../contexts/AuthContext";
+import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
 
 export const NavBar = styled(View)`
   ${BorderVertical(({ theme, color }) =>
@@ -26,7 +29,7 @@ export const NavBar = styled(View)`
 const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   const { theme } = useContext(ThemeContext);
 
-  const { state, navigation, route } = props;
+  const { state, navigation } = props;
 
   const TABBAR_ITEMS = [
     {
@@ -74,19 +77,60 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
 
 const HomeNavigator = () => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
+  const {
+    dispatchUserData,
+    userData: { username },
+  } = useContext(Authcontext);
+  const { theme, animation } = useContext(ThemeContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = usersCollection
+      .where("username", "==", username)
+      .onSnapshot((snapshot) => {
+        if (snapshot.size) {
+          // console.log("SNAPSOT", snapshot);
+          // console.log("SNAPSHOT SIZE", snapshot.size);
+          // const profile = snapshot.docs
+          //   .find((item) => item.data().username === username)
+          //   .data();
+          // console.log("PROFILE", profile);
+          // dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
+          // we have something,
+          setLoading(false);
+        } else {
+          // it's empty
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatchUserData, username]);
 
   return (
     <>
-      <Navigator
-        timingConfig={{ duration: 1 }}
-        tabBarPosition={"bottom"}
-        tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
-      >
-        <Screen name="home" component={HOME} />
-        <Screen name="settings" component={SETTINGS} />
-        <Screen name="profile" component={PROFILE} />
-        <Screen name="stats_saved" component={STATS} />
-      </Navigator>
+      {loading ? (
+        <ACTIVITY_INDICATOR
+          visible={loading}
+          animation={animation}
+          text={"Loading profile..."}
+          theme={theme}
+          filled={false}
+        />
+      ) : (
+        <Navigator
+          timingConfig={{ duration: 1 }}
+          tabBarPosition={"bottom"}
+          tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
+        >
+          <Screen name="home" component={HOME} />
+          <Screen name="settings" component={SETTINGS} />
+          <Screen name="profile" component={PROFILE} />
+          <Screen name="stats_saved" component={STATS} />
+        </Navigator>
+      )}
     </>
   );
 };

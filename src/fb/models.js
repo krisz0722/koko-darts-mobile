@@ -32,6 +32,7 @@ export const userModel = (username, email, photo) => ({
   },
   friends: [friendModel("GUEST", require("../../assets/bg.png"))],
   inGame: false,
+  inGameKey: null,
   matches: [],
   unfinishedMatches: [],
   matchRequestReceived: [],

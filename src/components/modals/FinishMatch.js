@@ -29,7 +29,7 @@ const FINISH_MATCH_MODAL = ({ theme, animation, action, action2, visible }) => {
 
   const quitMatch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH" });
-    await updateAuthProfile(p1.key, p2.key, gameData);
+    await updateAuthProfile(p1.key, p2.key, gameData, false);
 
     navigation.dispatch(
       CommonActions.reset({
@@ -40,8 +40,8 @@ const FINISH_MATCH_MODAL = ({ theme, animation, action, action2, visible }) => {
   };
 
   const initiateRematch = async () => {
-    await dispatchGameData({ type: "FINISH_MATCH" });
-    await updateAuthProfile(p1.key, p2.key, gameData);
+    await dispatchGameData({ type: "FINISH_MATCH", isRematch: true });
+    await updateAuthProfile(p1.key, p2.key, gameData, true);
     action();
     action2();
   };
@@ -58,10 +58,10 @@ const FINISH_MATCH_MODAL = ({ theme, animation, action, action2, visible }) => {
           <Header2>{winnerName} has won the match!</Header2>
           <BottomButtons theme={theme}>
             <THEMED_BUTTON
-              text={"quit match"}
+              text={"back to home"}
               length={2}
               size={"small"}
-              icon={"arrow-back"}
+              icon={"home"}
               type={"danger"}
               action={quitMatch}
               inGameTheme={theme}

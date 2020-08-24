@@ -1,6 +1,6 @@
 import { getProfileByUsername, updateProfile } from "../../../fb/crud";
 
-const updateAuthProfile = async (p1, p2, gameData) => {
+const updateAuthProfile = async (p1, p2, gameData, inGame) => {
   const update = async (p) => {
     const {
       settings: { p1, p2, legOrSet },
@@ -158,6 +158,7 @@ const updateAuthProfile = async (p1, p2, gameData) => {
       updateUserFriends(),
       updateUserOverall(),
       key,
+      inGame,
     );
   };
 

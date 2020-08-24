@@ -56,13 +56,13 @@ const ListMatches = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Header theme={theme}>
-        <Col1>Date</Col1>
-        <Col2>Opponent</Col2>
-        <Col3>Result</Col3>
-        <Col4>Avg.</Col4>
-        <Col5></Col5>
-      </Header>
+      {/*<Header theme={theme}>*/}
+      {/*<Col1>Date</Col1>*/}
+      {/*<Col2>Opponent</Col2>*/}
+      {/*<Col3>Result</Col3>*/}
+      {/*<Col4>Avg.</Col4>*/}
+      {/*<Col5></Col5>*/}
+      {/*</Header>*/}
       <MatchesContainer
         data={MATCHES_LIST()}
         renderItem={(item) => renderItem(item)}

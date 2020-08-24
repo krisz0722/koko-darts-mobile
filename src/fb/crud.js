@@ -70,8 +70,37 @@ export const getProfileByEmail = async (id) => {
 
 export const deleteProfile = async (username) => {
   try {
-    console.log("deleting profile from databse...");
+    console.log("deleting profile from database...");
+
+    const userProfile = await getProfileByUsername(username);
+    const usersFriends = userProfile.friends;
+    console.log("USERSFRIENDS", usersFriends);
+    usersFriends.forEach((friend) => {
+      if (friend.key !== "GUEST") {
+        (async () => {
+          try {
+            const profile = await getProfileByUsername(friend.key);
+            const friends = profile.friends;
+            console.log("FRIENDPROFIE", profile);
+            console.log("FRIENDS", friends);
+            const findProfile = friends.find((item) => item.key === username);
+            const index = friends.indexOf(findProfile);
+            findProfile["key"] = "DELETED USER";
+            friends[index] = findProfile;
+
+            console.log("newfriendarra", friends);
+            await usersCollection.doc(friend.key).update({
+              friends,
+            });
+          } catch (err) {
+            console.log(err);
+            alert(err);
+          }
+        })();
+      }
+    });
     await usersCollection.doc(username).delete();
+    console.log("deleted from database");
   } catch (err) {
     console.log(err);
     alert("ERROR WHILE DELETING ACCOUNT: ", err);
@@ -91,25 +120,47 @@ export const updateSettings = async (username, settings) => {
   }
 };
 
-export const updateUnfinishedMatches = async (p1, p2, p1Match, p2Match) => {
+export const updateUnfinishedMatches = async (
+  p1,
+  p2,
+  p1Match,
+  p2Match,
+  type,
+  key,
+  inGame,
+) => {
   const p1Profile = await getProfileByUsername(p1.key);
   const p2Profile = await getProfileByUsername(p2.key);
 
   const p1Matches = p1Profile.unfinishedMatches;
   const p2Matches = p2Profile.unfinishedMatches;
-  console.log("p1 MATCHES...", p1Matches);
-  console.log("p2 MATCHES...", p2Matches);
 
-  p1Matches.unshift(p1Match);
-  p2Matches.unshift(p2Match);
+  if (type === "add") {
+    p1Matches.unshift(p1Match);
+    p2Matches.unshift(p2Match);
+  } else {
+    const p1MatchIndex = p1Matches.indexOf(
+      p1Matches.find((item) => item.key === key),
+    );
+    const p2MatchIndex = p2Matches.indexOf(
+      p2Matches.find((item) => item.key === key),
+    );
+
+    p1Matches[p1MatchIndex] = p1Match;
+    p2Matches[p2MatchIndex] = p2Match;
+  }
 
   try {
     await usersCollection.doc(p1.key).update({
       unfinishedMatches: p1Matches,
+      inGame,
+      inGameKey: key,
     });
 
     await usersCollection.doc(p2.key).update({
       unfinishedMatches: p2Matches,
+      inGame,
+      inGameKey: key,
     });
     console.log("matches updated!");
   } catch (err) {
@@ -149,9 +200,7 @@ export const updatefriendRequestReceived = async (
       .then((documentSnapshot) => {
         return documentSnapshot.data().friendRequestReceived;
       });
-    console.log("REQUEST RECEIVED BEFORE", friendRequestReceived);
     friendRequestReceived.unshift({ username, img });
-    console.log("REQUEST RECEIVED AFTER", friendRequestReceived);
     console.log("updating received request...");
     await usersCollection.doc(usernameRequested).update({
       friendRequestReceived,
@@ -169,15 +218,33 @@ export const updateProfile = async (
   unfinishedMatches,
   friends,
   userOverall,
+  key,
+  inGame,
 ) => {
   try {
     console.log("updating profile...");
-    console.log(username, matches, friends, userOverall);
     await usersCollection.doc(username).update({
       userOverall,
       matches,
       unfinishedMatches,
       friends,
+      inGame,
+    });
+    console.log("profile updated!");
+  } catch (err) {
+    console.log(err);
+    alert("ERROR WHILE UPDATING PROFILE: ", err);
+  }
+};
+
+export const updateStatus = async (p1, p2, inGame) => {
+  try {
+    console.log("updating profile...");
+    await usersCollection.doc(p1).update({
+      inGame,
+    });
+    await usersCollection.doc(p2).update({
+      inGame,
     });
     console.log("profile updated!");
   } catch (err) {

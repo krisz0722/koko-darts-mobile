@@ -21,6 +21,7 @@ import { Authcontext } from "../../contexts/AuthContext";
 import updateAuthMatchesAdd from "../../contexts/actions/authContext/UpdateMatchesAdd";
 import Theme_Default from "../../styles/theme-default.json";
 import Theme_Contrast from "../../styles/theme-contrast.json";
+import moment from "moment";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
@@ -34,8 +35,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   } = useContext(SettingsContext);
 
   const {
-    userData,
-    userData: { friends },
+    userData: { username, friends },
   } = useContext(Authcontext);
 
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
@@ -68,13 +68,25 @@ const PREGAME_SETTINGS = ({ navigation }) => {
 
   useEffect(() => {
     if (isFocused) {
+      setLegOrSet(legOrSet);
+      setStartingScore(startingScore);
+      setTowin(toWin);
+      setLegsPerSet(legsPerSet);
     } else {
       dispatchSettings({
         type: "CHOOSE_OPPONENT",
         value: p2,
       });
     }
-  }, [p2, dispatchSettings, isFocused]);
+  }, [
+    legOrSet,
+    legsPerSet,
+    toWin,
+    startingScore,
+    p2,
+    dispatchSettings,
+    isFocused,
+  ]);
 
   useEffect(() => {
     const backAction = () => {
@@ -122,16 +134,33 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   );
 
   const startGame = useCallback(async () => {
+    const date = moment().format("MM-DD-YYYY");
+    const date2 = moment().format("MMMM Do YYYY, h:mm:ss a");
+    const key = `${p1.key} vs ${p2.key} - ${date2}`;
+    const newMatch = {
+      username,
+      settings: newGameSettings,
+      date,
+      key,
+    };
     await dispatchGameData({
       type: "START_NEW_GAME",
-      value: newGameSettings,
+      value: newMatch,
     });
-    await updateAuthMatchesAdd(userData, newGameSettings, THEMES);
+    await updateAuthMatchesAdd(newMatch, THEMES);
     navigation.navigate("drawernavigator", {
       screen: "game",
       flag: "new",
     });
-  }, [THEMES, userData, newGameSettings, navigation, dispatchGameData]);
+  }, [
+    p1.key,
+    p2.key,
+    THEMES,
+    username,
+    newGameSettings,
+    navigation,
+    dispatchGameData,
+  ]);
 
   const changeOpponent = (back = false) => {
     if (back) {
@@ -194,7 +223,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           size={"small"}
           icon={"arrow-back"}
           type={"danger"}
-          action={() => navigation.navigate("homenavigator")}
+          action={() => navigation.navigate("home")}
         />
         <THEMED_BUTTON
           size={"small"}

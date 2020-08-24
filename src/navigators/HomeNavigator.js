@@ -1,107 +1,58 @@
-import React, { useContext, useEffect, useState } from "react";
-import NavButton from "../components/buttons/NavButton";
-import styled from "styled-components";
-import { View } from "react-native";
-import { BorderVertical, FlexRowAround, Window } from "../styles/css_mixins";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import HOME from "../screens/home/Home";
 import SETTINGS from "../screens/settings/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PROFILE from "../screens/profile/Profile";
+import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import { ThemeContext } from "../contexts/ThemeContext";
 import STATS from "../screens/stats/Stats";
 import { usersCollection } from "../fb/crud";
 import { Authcontext } from "../contexts/AuthContext";
 import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
+import BOTTOM_TABBAR_CONTENT from "./HomeNavigatorContent";
+import STATS2 from "../screens/stats/Stats2";
+import { AppState } from "react-native";
+import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
+import { CommonActions, useRoute } from "@react-navigation/native";
 
-export const NavBar = styled(View)`
-  ${BorderVertical(({ theme, color }) =>
-    color === "dark" ? theme.bg3 : theme.borderColor,
-  )};
-  border-bottom-width: ${({ theme, position }) =>
-    position === "top" ? theme.borderWidth : 0};
-  position: ${({ position }) => (position === "top" ? "relative" : "absolute")};
-  bottom: 0;
-  width: 100%;
-  height: ${() => Window.height * 0.08};
-  ${FlexRowAround};
-`;
-
-const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
-  const { theme } = useContext(ThemeContext);
-
-  const { state, navigation } = props;
-
-  const TABBAR_ITEMS = [
-    {
-      index: 0,
-      route: "home",
-      icon: "home",
-      action: () => navigation.navigate("home"),
-    },
-    {
-      index: 1,
-      route: "settings",
-      icon: "tune",
-      action: () => navigation.navigate("settings"),
-    },
-    {
-      index: 2,
-      route: "profile",
-      icon: "person",
-      action: () => navigation.navigate("profile"),
-    },
-  ];
-
-  const index = state.index;
-
-  return (
-    <>
-      {index === 3 ? null : (
-        <NavBar position={"bottom"} theme={theme}>
-          {TABBAR_ITEMS.map((item) => (
-            <NavButton
-              key={item.route}
-              length={3}
-              direction={"column"}
-              text={item.route}
-              icon={item.icon}
-              action={item.action}
-              active={index === item.index}
-            />
-          ))}
-        </NavBar>
-      )}
-    </>
-  );
-});
-
-const HomeNavigator = () => {
+const HomeNavigator = ({ navigation }) => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
   const {
     dispatchUserData,
+    userData,
     userData: { username },
   } = useContext(Authcontext);
+
+  const route = useRoute().state;
+  const index = route ? route.index : null;
+  console.log(route);
+  const appState = useRef(AppState.currentState);
+
   const { theme, animation } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
+  const [inGame, setInGame] = useState(false);
+  const [gameData, setGameData] = useState(null);
 
   useEffect(() => {
     const unsubscribe = usersCollection
       .where("username", "==", username)
       .onSnapshot((snapshot) => {
-        if (snapshot.size) {
-          // console.log("SNAPSOT", snapshot);
-          // console.log("SNAPSHOT SIZE", snapshot.size);
-          // const profile = snapshot.docs
-          //   .find((item) => item.data().username === username)
-          //   .data();
-          // console.log("PROFILE", profile);
-          // dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
-          // we have something,
-          setLoading(false);
-        } else {
-          // it's empty
-          setLoading(false);
-        }
+        const profile = snapshot.docs
+          .find((item) => item.data().username === username)
+          .data();
+        console.log("PROFILE", profile);
+
+        const { inGameKey, inGame, unfinishedMatches } = profile;
+
+        const gameData = unfinishedMatches.find(
+          (item) => item.key === inGameKey,
+        );
+        const initializedBy = gameData ? gameData.initializedBy : null;
+
+        dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
+        setGameData(gameData);
+        setLoading(false);
+        setInGame(inGame && initializedBy !== username);
       });
 
     return () => {
@@ -109,26 +60,71 @@ const HomeNavigator = () => {
     };
   }, [dispatchUserData, username]);
 
+  useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
+
+  const _handleAppStateChange = async (nextAppState) => {
+    appState.current = nextAppState;
+    console.log("STATECHANGE GAMEDATA", gameData);
+    if (
+      appState.current === "background" &&
+      gameData.initializedBy === username &&
+      gameData.p1_DATA.score !== 0 &&
+      gameData.p2_DATA.score !== 0
+    ) {
+      // updateAuthMatchesSave(gameData, username, true);
+      console.log("IF");
+
+      updateAuthMatchesSave(gameData, username, false);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: "homenavigator" }],
+        }),
+      );
+    }
+    console.log(nextAppState);
+  };
+
   return (
     <>
       {loading ? (
         <ACTIVITY_INDICATOR
           visible={loading}
           animation={animation}
-          text={"Loading profile..."}
+          text={loading ? "Loading profile..." : ""}
           theme={theme}
           filled={false}
         />
+      ) : inGame ? (
+        <>
+          {gameData ? (
+            <STATS2 username={username} gameData={gameData} theme={theme} />
+          ) : (
+            <STATS2
+              username={username}
+              lastMatch={true}
+              gameData={userData.matches[0]}
+              theme={theme}
+            />
+          )}
+        </>
       ) : (
         <Navigator
           timingConfig={{ duration: 1 }}
           tabBarPosition={"bottom"}
-          tabBar={(props) => <BOTTOM_TABBAR_CONTENT {...props} />}
+          tabBar={(props) => <BOTTOM_TABBAR_CONTENT index={index} {...props} />}
         >
           <Screen name="home" component={HOME} />
           <Screen name="settings" component={SETTINGS} />
           <Screen name="profile" component={PROFILE} />
           <Screen name="stats_saved" component={STATS} />
+          <Screen name="pregame" component={PREGAME_SETTINGS} />
         </Navigator>
       )}
     </>

@@ -1,122 +1,109 @@
-import React, { useMemo, useState, useEffect, useContext } from "react";
+import React, { useRef, useMemo, useState, useEffect, useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import GAME_CLASSIC from "../screens/gamewindow/Classic";
-import { View } from "react-native";
-import NavButton from "../components/buttons/NavButton";
-import styled from "styled-components";
-import { FlexCol } from "../styles/css_mixins";
+import { AppState } from "react-native";
+import DRAWER_CONTENT from "./DrawerContent";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
-import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import { CommonActions, useRoute } from "@react-navigation/native";
 import STATS from "../screens/stats/Stats";
 import { Authcontext } from "../contexts/AuthContext";
 import { usersCollection } from "../fb/crud";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
-
-export const DrawerContent = styled(View)`
-  ${FlexCol};
-  width: 100%;
-  top: 30%;
-  height: 40%;
-  background-color: ${({ theme, inap }) => theme.game[inap + "Bg"]};
-`;
+import STATS2 from "../screens/stats/Stats2";
 
 const { Navigator, Screen } = createDrawerNavigator();
-
-const DRAWER_CONTENT = ({
-  navigation,
-  handleLeaveMatch,
-  inactivePlayer,
-  gameData,
-  theme,
-}) => {
-  const DRAWER_ITEMS = [
-    {
-      route: "settings",
-      icon: "tune",
-      action: () => navigation.navigate("settings-ingame"),
-    },
-    {
-      route: "stats",
-      icon: "show-chart",
-      action: () => navigation.navigate("stats", { gameData, back: "game" }),
-    },
-    {
-      route: "home",
-      icon: "home",
-      action: () => handleLeaveMatch(),
-    },
-  ];
-
-  return (
-    <DrawerContent theme={theme} inap={inactivePlayer}>
-      {DRAWER_ITEMS.map((item) => (
-        <NavButton
-          key={item.route}
-          color={"drawer"}
-          height={10}
-          length={3}
-          direction={"row"}
-          text={item.route}
-          icon={item.icon}
-          action={item.action}
-          inap={inactivePlayer}
-          inGameTheme={theme}
-        />
-      ))}
-    </DrawerContent>
-  );
-};
 
 const DrawerNavigator = ({ navigation }) => {
   const {
     gameData,
+    dispatchGameData,
     gameData: {
       settings: { theme, animation },
       activePlayer,
       inactivePlayer,
+      initializedBy,
     },
   } = useContext(GameContext);
   const {
-    // dispatchUserData,
-    userData,
     dispatchUserData,
+    userData,
     userData: { username },
   } = useContext(Authcontext);
 
-  const flag = useRoute().params.flag;
+  const params = useRoute().params;
+  const { flag } = params;
   const flag2 = useMemo(() => flag, [flag]);
 
   const [loading, setLoading] = useState(flag === "continue" || flag === "new");
+  const [inGame, setInGame] = useState(false);
+
+  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
-    if (flag2 === "new" || flag2 === "continue") {
-      setLoading(true);
-    }
-  }, [flag2]);
+    (async () => {
+      if (flag2 === "new" || flag2 === "continue") {
+        setLoading(true);
+      }
+
+      if (flag2 === "continue") {
+        await dispatchGameData({
+          type: "CONTINUE_MATCH",
+          value: params.gameData,
+        });
+      }
+    })();
+  }, [dispatchGameData, params.gameData, flag2]);
 
   useEffect(() => {
     const unsubscribe = usersCollection
       .where("username", "==", username)
       .onSnapshot((snapshot) => {
-        if (snapshot.size) {
-          // we have something,
-          setLoading(false);
-        } else {
-          // it's empty
-          setLoading(false);
-        }
         const profile = snapshot.docs
           .find((item) => item.data().username === username)
           .data();
+        setLoading(false);
+        setInGame(profile.inGame && initializedBy !== username);
       });
 
     return () => {
       unsubscribe();
     };
-  }, [dispatchUserData, username]);
+  }, [initializedBy, dispatchUserData, username]);
+
+  useEffect(() => {
+    const _handleAppStateChange = async (nextAppState) => {
+      appState.current = nextAppState;
+      console.log("STATECHANGE GAMEDATA", gameData);
+      if (
+        appState.current === "background" &&
+        gameData.initializedBy === username &&
+        !gameData.isLegOver &&
+        !gameData.isMatchOver &&
+        !gameData.isRematch
+      ) {
+        console.log("IF");
+        // updateAuthMatchesSave(gameData, username, true);
+        updateAuthMatchesSave(gameData, username, false);
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [{ name: "homenavigator" }],
+          }),
+        );
+      }
+      console.log(nextAppState);
+    };
+
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, [gameData]);
+
+  console.log("DRAWER GAMEDATA", gameData);
 
   const drawerstyle = {
     width: "40%",
@@ -125,13 +112,9 @@ const DrawerNavigator = ({ navigation }) => {
 
   const handleLeaveMatch = async () => {
     try {
-      // if (matches[0] && matches[0].status === "pending") {
-      //   matches[0] = { ...gameData, status: "pending" };
-      // } else {
-      //   matches.unshift({ ...gameData, status: "pending" });
-      // }
-      await updateAuthMatchesSave(userData, gameData);
+      await updateAuthMatchesSave(gameData, username, false);
     } catch (err) {
+      console.log(err);
       alert("ERROR WHILE SAVING MATCH: ", err);
     }
 
@@ -145,27 +128,6 @@ const DrawerNavigator = ({ navigation }) => {
 
   return (
     <>
-      <Navigator
-        backBehavior={"initialRoute"}
-        screenOptions={{ swipeEnabled: false }}
-        drawerContent={(props) => (
-          <DRAWER_CONTENT
-            theme={theme}
-            handleLeaveMatch={handleLeaveMatch}
-            gameData={gameData}
-            inactivePlayer={inactivePlayer}
-            {...props}
-          />
-        )}
-        drawerStyle={drawerstyle}
-        drawerPosition={"right"}
-        overlayColor={theme.game[activePlayer + "Overlay"]}
-      >
-        <Screen name="pregame" component={PREGAME_SETTINGS} />
-        <Screen name="game" component={GAME_CLASSIC} />
-        <Screen name="settings-ingame" component={SETTINGS_INGAME} />
-        <Screen name="stats" component={STATS} />
-      </Navigator>
       <ACTIVITY_INDICATOR
         visible={loading}
         animation={animation}
@@ -173,16 +135,46 @@ const DrawerNavigator = ({ navigation }) => {
         theme={theme}
         filled={true}
       />
-      {/*<LEAVE_MATCH_ALERT*/}
-      {/*  action1={() => setModal(!modal)}*/}
-      {/*  action2={handleLeaveMatch}*/}
-      {/*  visible={modal}*/}
-      {/*/>*/}
+      <>
+        {inGame ? (
+          <>
+            {gameData ? (
+              <STATS2 username={username} gameData={gameData} theme={theme} />
+            ) : (
+              <STATS2
+                username={username}
+                lastMatch={true}
+                gameData={userData.matches[0]}
+                theme={theme}
+              />
+            )}
+          </>
+        ) : (
+          <Navigator
+            backBehavior={"initialRoute"}
+            screenOptions={{ swipeEnabled: false }}
+            drawerContent={(props) => (
+              <DRAWER_CONTENT
+                theme={theme}
+                handleLeaveMatch={handleLeaveMatch}
+                gameData={gameData}
+                inactivePlayer={inactivePlayer}
+                {...props}
+              />
+            )}
+            drawerStyle={drawerstyle}
+            drawerPosition={"right"}
+            overlayColor={theme.game[activePlayer + "Overlay"]}
+          >
+            {/*<Screen name="pregame" component={PREGAME_SETTINGS} />*/}
+            <Screen name="game" component={GAME_CLASSIC} />
+            <Screen name="settings-ingame" component={SETTINGS_INGAME} />
+            <Screen name="stats" component={STATS} />
+          </Navigator>
+        )}
+      </>
     </>
   );
 };
 
 export default DrawerNavigator;
-
-//TODO navigatio transition!!!
-//TODO inactiveplayer prop?

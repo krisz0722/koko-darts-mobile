@@ -1,11 +1,10 @@
-import moment from "moment";
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
-const startNewGame = (username, settings, matches, THEMES) => {
+const startNewGame = (newMatch, THEMES) => {
+  const { date, key, username, settings } = newMatch;
+
   const { p1, p2 } = settings;
   const opponent = p1.key === username ? p2.key : p1.key;
-  const date = moment().format("MM-DD-YYYY");
-  const date2 = moment().format("MMMM Do YYYY, h:mm a");
   const matchToSave = {
     ...GAME_DEFAULT_STATE,
     p1_DATA: {
@@ -18,12 +17,15 @@ const startNewGame = (username, settings, matches, THEMES) => {
     },
     settings: {
       ...settings,
+      p1: { ...p1 },
+      p2: { ...p2 },
       theme: THEMES[settings.theme],
     },
     status: "pending",
-    key: `${p1.key} vs ${p2.key} - ${date2}`,
+    key,
     opponent,
     date,
+    initializedBy: username,
   };
   return matchToSave;
 };

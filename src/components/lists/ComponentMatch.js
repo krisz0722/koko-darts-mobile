@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { BasicText, FlexRowBetween, Window } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -10,6 +10,7 @@ export const Match = styled(TouchableOpacity)`
   ${FlexRowBetween};
   width: 100%;
   margin-top: 10;
+  height: ${() => Window.height * 0.06};
   padding: 3% 2%;
   background-color: rgba(255, 255, 255, 0.1);
 `;

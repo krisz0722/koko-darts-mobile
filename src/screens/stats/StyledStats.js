@@ -17,11 +17,23 @@ export const Players = styled(View)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
+export const Players2 = styled(Players)`
+  position: absolute;
+  top: 10%;
+  border-bottom-width: 0;
+  height: 80%;
+  ${FlexColAround};
+`;
+
 export const PlayerInfo = styled(View)`
   width: ${() => 100 / 3 + "%"};
   height: 90%;
   border-radius: 4px;
   ${FlexColAround}
+`;
+
+export const PlayerInfo2 = styled(PlayerInfo)`
+  height: 25%;
 `;
 
 export const Avatar = styled(View)`
@@ -38,9 +50,20 @@ export const Name = styled(Text)`
 `;
 
 export const Main = styled(Text)`
-  color: white;
+  color: ${({ theme }) => theme.text};
   font-size: ${({ theme }) => theme.stats.scoreMain};
   ${BasicTextBold};
+`;
+
+export const Main2 = styled(Main)`
+  width: 100%;
+  padding: 5%;
+  font-size: ${({ theme }) => theme.stats.scoreSub};
+  line-height: ${({ theme }) => theme.stats.scoreSub * 2};
+  border-bottom-width: ${({ theme }) => theme.borderWidth};
+  border-top-width: ${({ theme }) => theme.borderWidth};
+
+  border-color: ${({ theme }) => theme.borderColor};
 `;
 
 export const Sub = styled(Text)`

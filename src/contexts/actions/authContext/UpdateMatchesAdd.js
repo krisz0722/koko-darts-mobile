@@ -1,12 +1,9 @@
 import { updateUnfinishedMatches } from "../../../fb/crud";
-import moment from "moment";
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
-const updateAuthMatchesAdd = (userData, settings, THEMES) => {
+const updateAuthMatchesAdd = (newMatch, THEMES) => {
+  const { username, settings, date, key } = newMatch;
   const { p1, p2 } = settings;
-
-  const date = moment().format("MM-DD-YYYY");
-  const date2 = moment().format("MMMM Do YYYY, h:mm a");
 
   const matchToSave = (player) => {
     const opponent = p1.key === player.key ? p2.key : p1.key;
@@ -22,16 +19,27 @@ const updateAuthMatchesAdd = (userData, settings, THEMES) => {
       },
       settings: {
         ...settings,
+        p1: { ...p1 },
+        p2: { ...p2 },
         theme: THEMES[settings.theme],
       },
       status: "pending",
-      key: `${p1.key} vs ${p2.key} - ${date2}`,
+      key,
       opponent,
       date,
+      initializedBy: username,
     };
   };
 
-  updateUnfinishedMatches(p1, p2, matchToSave(p1), matchToSave(p2));
+  updateUnfinishedMatches(
+    p1,
+    p2,
+    matchToSave(p1),
+    matchToSave(p2),
+    "add",
+    key,
+    true,
+  );
 };
 
 export default updateAuthMatchesAdd;

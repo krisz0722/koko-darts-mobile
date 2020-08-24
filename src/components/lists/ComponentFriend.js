@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 import { BasicText, FlexRowBetween, Window } from "../../styles/css_mixins";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";
 export const Friend = styled(View)`
   ${FlexRowBetween};
@@ -10,6 +9,7 @@ export const Friend = styled(View)`
   width: 100%;
   margin-top: 10;
   background-color: rgba(255, 255, 255, 0.1);
+  height: ${() => Window.height * 0.06};
 `;
 
 export const FriendAvatar = styled(Image)`
@@ -25,7 +25,9 @@ export const Name = styled(Text)`
   ${BasicText};
   text-align:left;
   color: ${({ theme }) => theme.text}
-  width: 40%;
+  width: 65%;
+  margin-right:5%;
+  
   font-size: ${({ theme }) => theme.friends.name} ;
 `;
 
@@ -39,8 +41,6 @@ export const Record = styled(Text)`
   font-size: ${({ theme }) => theme.friends.name} ;
   background-color: ${({ record }) => record}
 `;
-
-export const RemoveButton = styled(TouchableOpacity)``;
 
 const FRIEND_COMPONENT = ({ item }) => {
   const { theme } = useContext(ThemeContext);
@@ -67,9 +67,9 @@ const FRIEND_COMPONENT = ({ item }) => {
         record={record()}
         theme={theme}
       >{`${item.winsAgainst} - ${item.lossesAgainst}`}</Record>
-      <RemoveButton theme={theme} onPress={() => alert("remove friend")}>
-        <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.06} />
-      </RemoveButton>
+      {/*<RemoveButton theme={theme} onPress={() => alert("remove friend")}>*/}
+      {/*  <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.06} />*/}
+      {/*</RemoveButton>*/}
     </Friend>
   );
 };

@@ -1,21 +1,26 @@
-const Rematch = (
-  activePlayer,
-  inactivePlayer,
-  p1,
-  p2,
-  startingScore,
-  state,
-  GAME_DEFAULT_STATE,
-) => {
+import GAME_DEFAULT_STATE from "../../GameDefaultState";
+
+const Rematch = (rematch) => {
+  const {
+    username,
+    activePlayer,
+    inactivePlayer,
+    startingScore,
+    settings,
+    opponent,
+    date,
+    key,
+  } = rematch;
+
   return {
-    ...state,
     ...GAME_DEFAULT_STATE,
     settings: {
-      ...state.settings,
+      ...settings,
       p1: activePlayer,
       p2: inactivePlayer,
+      theme: settings.theme,
     },
-    status: "started",
+    status: "pending",
     activePlayer: "p1",
     inactivePlayer: "p2",
     rematchInitiated: false,
@@ -27,7 +32,10 @@ const Rematch = (
       ...GAME_DEFAULT_STATE.p2_DATA,
       score: startingScore,
     },
-    opponent: state.opponent,
+    key,
+    opponent,
+    date,
+    initializedBy: username,
   };
 };
 

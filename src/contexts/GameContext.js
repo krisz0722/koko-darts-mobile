@@ -23,10 +23,6 @@ export const GameContext = createContext({});
 
 export const GameContextProvider = (props) => {
   const default_settings = useContext(Authcontext).userData.settings;
-  const matches = useContext(Authcontext).userData.matches;
-  const username = useContext(Authcontext).userData.username;
-  const friends = useContext(Authcontext).userData.friends;
-  const userOverall = useContext(Authcontext).userData.userOverall;
 
   const initialGameState = {
     ...GAME_DEFAULT_STATE,
@@ -63,7 +59,7 @@ export const GameContextProvider = (props) => {
             1,
           );
         case "START_NEW_GAME":
-          return startNewGame(username, action.value, matches, THEMES);
+          return startNewGame(action.value, THEMES);
         case "CONTINUE_MATCH":
           return action.value;
         case "LOAD_SETTINGS":
@@ -84,17 +80,10 @@ export const GameContextProvider = (props) => {
             action.settings,
           );
         case "FINISH_MATCH":
-          return finishMatch(state);
+          return finishMatch(state, action.isRematch);
         case "REMATCH":
-          return Rematch(
-            action.activePlayer,
-            action.inactivePlayer,
-            action.activePlayer,
-            action.inactivePlayer,
-            action.startingScore,
-            state,
-            GAME_DEFAULT_STATE,
-          );
+          console.log(action.value);
+          return Rematch(action.value, THEMES);
         case "CHOOSE_OPPONENT":
           return {
             ...state,
@@ -147,7 +136,7 @@ export const GameContextProvider = (props) => {
           return state;
       }
     },
-    [THEMES, default_settings, matches, username],
+    [THEMES, default_settings],
   );
 
   const [gameData, dispatchGameData] = useReducer(

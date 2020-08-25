@@ -11,7 +11,6 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import NavButton from "../../components/buttons/NavButton";
 import { Authcontext } from "../../contexts/AuthContext";
 import HOME_INFO from "./Info";
-import OVERFLOW_MENU from "./OverflowMenu";
 import FRIEND_REQUEST from "./FriendRequest";
 import LIST_UNFINISHED_MATCHES from "../../components/lists/ListUnfinishedMatches";
 import { checkOpponentsStatus } from "../../fb/crud";
@@ -23,7 +22,6 @@ const HOME = React.memo(({ navigation }) => {
     userData: { username, matches, unfinishedMatches, friendRequestReceived },
   } = useContext(Authcontext);
 
-  const [overflow, setOverflow] = useState(false);
   const [gameToContinue, setGameToContinue] = useState(null);
 
   const handleGameToContinue = useCallback((item) => {
@@ -53,9 +51,6 @@ const HOME = React.memo(({ navigation }) => {
 
   return (
     <>
-      {overflow ? (
-        <OVERFLOW_MENU username={username} navigation={navigation} />
-      ) : null}
       <TopBar
         friendRequestReceived={friendRequestReceived.length > 0}
         theme={theme}
@@ -69,9 +64,9 @@ const HOME = React.memo(({ navigation }) => {
               active={false}
               direction={"column"}
               height={"auto"}
-              icon={"more-vert"}
+              icon={"menu"}
               color={"light"}
-              action={() => setOverflow(!overflow)}
+              action={() => navigation.toggleDrawer()}
             />
           </>
         )}

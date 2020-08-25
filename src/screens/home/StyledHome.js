@@ -38,19 +38,6 @@ export const TopBar = styled(View)`
     friendRequestReceived ? "column" : "row"};
 `;
 
-export const OverflowMenu = styled(View)`
-  position: absolute;
-  top: 5%;
-  right: 10%;
-  height: 30%;
-  width: 50%;
-  padding: 0 15%;
-  border-radius: 4px;
-  z-index: 2;
-  ${FlexColAround};
-  background-color: ${({ theme }) => theme.bg2};
-`;
-
 export const Header = styled(View)`
   height: 20%;
   width: 100%;

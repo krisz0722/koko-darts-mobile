@@ -51,6 +51,7 @@ const DRAWER_CONTENT = ({
           action={item.action}
           inap={inactivePlayer}
           inGameTheme={theme}
+          type={"drawer"}
         />
       ))}
     </DrawerContent>

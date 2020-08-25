@@ -21,15 +21,17 @@ const Button_Nav = styled(TouchableOpacity)`
 
 const Text_Button = styled(Text)`
   ${BasicText};
+  text-align: ${({ type }) => (type === "drawer" ? "left" : "center")}
   display: ${({ text }) => (text === "" ? "none" : "flex")};
   font-weight: ${({ direction }) => (direction === "row" ? "bold" : "normal")};
-  width: 100%;
+  width: ${({ type }) => (type === "drawer" ? "70%" : "100%")};
   color: ${({ color }) => color}
   font-size: ${({ direction, theme }) =>
     direction === "row" || direction === "row-reverse"
       ? theme.nav.fontSize2
       : theme.nav.fontSize1};
   border-radius: 4px;
+  margin-left: ${({ type }) => (type === "drawer" ? "5%" : "0%")}
 `;
 
 const NavButton = React.memo(
@@ -44,6 +46,7 @@ const NavButton = React.memo(
     icon = null,
     inap = null,
     inGameTheme = null,
+    type = null,
   }) => {
     const { theme, animation } = useContext(ThemeContext);
 
@@ -98,6 +101,7 @@ const NavButton = React.memo(
           ) : null}
           {text ? (
             <Text_Button
+              type={type}
               color={textColor()}
               active={active}
               icon={icon}

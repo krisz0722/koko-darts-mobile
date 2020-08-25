@@ -13,6 +13,7 @@ import transitionNone from "../styles/navNoTransition";
 import HomeNavigator from "./HomeNavigator";
 import DrawerNavigator from "./DrawerNavigator";
 import AuthNavigator from "./AuthNavigator";
+import HomeDrawerNavigator from "./HomeDrawerNavigator";
 
 export const ScreenContainer = styled(SafeAreaView)`
   width: 100%;
@@ -29,8 +30,8 @@ const AppNavigator = () => {
       name: "authnavigator",
     },
     {
-      component: HomeNavigator,
-      name: "homenavigator",
+      component: HomeDrawerNavigator,
+      name: "homedrawernavigator",
     },
     {
       component: DrawerNavigator,

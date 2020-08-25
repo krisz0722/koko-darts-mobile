@@ -61,7 +61,7 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: "homenavigator" }],
+        routes: [{ name: "homedrawernavigator" }],
       }),
     );
   };

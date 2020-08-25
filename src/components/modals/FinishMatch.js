@@ -28,7 +28,7 @@ const FINISH_MATCH_MODAL = React.memo(({ navigation }) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: "homenavigator" }],
+        routes: [{ name: "homdrawerenavigator" }],
       }),
     );
   };

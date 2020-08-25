@@ -86,7 +86,7 @@ const DrawerNavigator = ({ navigation }) => {
         navigation.dispatch(
           CommonActions.reset({
             index: 1,
-            routes: [{ name: "homenavigator" }],
+            routes: [{ name: "homedrawernavigator" }],
           }),
         );
         dispatchGameData({ type: "LOAD_SETTINGS" });
@@ -116,7 +116,7 @@ const DrawerNavigator = ({ navigation }) => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [{ name: "homenavigator" }],
+        routes: [{ name: "homedrawernavigator" }],
       }),
     );
   };

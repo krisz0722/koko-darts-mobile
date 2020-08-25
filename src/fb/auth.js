@@ -173,7 +173,7 @@ export const loadAppData = async (userData, navigation, reducers) => {
       value: userMatches[0],
     });
   }
-  navigation.navigate("homenavigator");
+  navigation.navigate("homedrawernavigator");
 };
 
 export const deleteAccount = async (username, navigation) => {

@@ -12,6 +12,9 @@ import { usersCollection } from "../fb/crud";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
 import STATS2 from "../screens/stats/Stats2";
+import FINISH_LEG_MODAL from "../components/modals/FinishLeg";
+import FINISH_MATCH_MODAL from "../components/modals/FinishMatch";
+import REMATCH_MODAL from "../components/modals/Rematch";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -75,25 +78,19 @@ const DrawerNavigator = ({ navigation }) => {
   useEffect(() => {
     const _handleAppStateChange = async (nextAppState) => {
       appState.current = nextAppState;
-      console.log("STATECHANGE GAMEDATA", gameData);
       if (
         appState.current === "background" &&
-        gameData.initializedBy === username &&
-        !gameData.isLegOver &&
-        !gameData.isMatchOver &&
-        !gameData.isRematch
+        gameData.initializedBy === username
       ) {
-        console.log("IF");
-        // updateAuthMatchesSave(gameData, username, true);
-        updateAuthMatchesSave(gameData, username, false);
+        await updateAuthMatchesSave(gameData, username, false);
         navigation.dispatch(
           CommonActions.reset({
             index: 1,
             routes: [{ name: "homenavigator" }],
           }),
         );
+        dispatchGameData({ type: "LOAD_SETTINGS" });
       }
-      console.log(nextAppState);
     };
 
     AppState.addEventListener("change", _handleAppStateChange);
@@ -102,8 +99,6 @@ const DrawerNavigator = ({ navigation }) => {
       AppState.removeEventListener("change", _handleAppStateChange);
     };
   }, [gameData]);
-
-  console.log("DRAWER GAMEDATA", gameData);
 
   const drawerstyle = {
     width: "40%",
@@ -166,10 +161,12 @@ const DrawerNavigator = ({ navigation }) => {
             drawerPosition={"right"}
             overlayColor={theme.game[activePlayer + "Overlay"]}
           >
-            {/*<Screen name="pregame" component={PREGAME_SETTINGS} />*/}
             <Screen name="game" component={GAME_CLASSIC} />
             <Screen name="settings-ingame" component={SETTINGS_INGAME} />
             <Screen name="stats" component={STATS} />
+            <Screen name="legover" component={FINISH_LEG_MODAL} />
+            <Screen name={"matchover"} component={FINISH_MATCH_MODAL} />
+            <Screen name={"rematch"} component={REMATCH_MODAL} />
           </Navigator>
         )}
       </>

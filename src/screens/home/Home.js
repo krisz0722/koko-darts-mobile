@@ -14,6 +14,7 @@ import HOME_INFO from "./Info";
 import OVERFLOW_MENU from "./OverflowMenu";
 import FRIEND_REQUEST from "./FriendRequest";
 import LIST_UNFINISHED_MATCHES from "../../components/lists/ListUnfinishedMatches";
+import { checkOpponentsStatus } from "../../fb/crud";
 import updateAuthMatchesSave from "../../contexts/actions/authContext/UpdateMatchesSave";
 
 const HOME = React.memo(({ navigation }) => {
@@ -29,8 +30,6 @@ const HOME = React.memo(({ navigation }) => {
     setGameToContinue(item);
   }, []);
 
-  console.log(gameToContinue);
-
   const handleNewGame = () => {
     navigation.navigate("pregame", {
       flag: "pregame",
@@ -39,16 +38,17 @@ const HOME = React.memo(({ navigation }) => {
 
   const handleContinueGame = async () => {
     const gameData = { ...gameToContinue, initializedBy: username };
-
-    console.log("CONTINUE GAMEDATA", gameData);
-
-    await updateAuthMatchesSave(gameData, username, true);
-
-    navigation.navigate("drawernavigator", {
-      screen: "game",
-      flag: "continue",
-      gameData,
-    });
+    const opponentStatus = await checkOpponentsStatus(gameData.opponent);
+    if (!opponentStatus) {
+      await updateAuthMatchesSave(gameData, username, true);
+      navigation.navigate("drawernavigator", {
+        screen: "game",
+        flag: "continue",
+        gameData,
+      });
+    } else {
+      alert("Your opponent is in another match at the moment");
+    }
   };
 
   return (

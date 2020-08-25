@@ -253,6 +253,21 @@ export const updateStatus = async (p1, p2, inGame) => {
   }
 };
 
+export const checkOpponentsStatus = async (opponent) => {
+  try {
+    const opponentProfile = await usersCollection
+      .doc(opponent)
+      .get()
+      .then((documentSnapshot) => documentSnapshot.data());
+    const status = opponentProfile.inGame;
+
+    return status;
+  } catch (err) {
+    console.log(err);
+    alert("ERROR: ", err);
+  }
+};
+
 export const acceptFriendRequest = async (
   acceptor,
   friendRequestReceived,

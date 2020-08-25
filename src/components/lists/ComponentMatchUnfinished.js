@@ -85,7 +85,6 @@ const UNFINISHED_MATCH_COMPONENT = ({
 
   const setGameToContinue = async () => {
     const gameToContinue = { ...gameData, initializedBy: username };
-    await dispatchGameData({ type: "CONTINUE_MATCH", value: gameToContinue });
     handleGameToContinue(gameToContinue);
   };
 

@@ -1,25 +1,20 @@
 import React, { useState, useContext } from "react";
-import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
-import { BottomButtons, ModalContainerBasic } from "./StyledModal";
-import { Header2, Header3, Header4, ModalContainerAlert } from "./StyledModal";
+import { BottomButtons } from "./StyledModal";
+import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 import { CHECKOUTS } from "../../calc/scores";
 import { GameContext } from "../../contexts/GameContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
-const FINISH_LEG_MODAL = ({ animation, theme, action, visible }) => {
+const FINISH_LEG_MODAL = React.memo(({ navigation }) => {
   const {
     dispatchGameData,
     gameData,
-    gameData: {
-      settings,
-      activePlayer,
-      inactivePlayer,
-      isLegOver,
-      isMatchOver,
-      winner,
-    },
+    gameData: { settings, activePlayer, inactivePlayer, isLegOver, winner },
   } = useContext(GameContext);
+
+  const { theme } = useContext(ThemeContext);
 
   const winnerName = winner ? gameData.settings[winner].key : "";
   const inapKey = `${inactivePlayer}_DATA`;
@@ -28,12 +23,6 @@ const FINISH_LEG_MODAL = ({ animation, theme, action, visible }) => {
   const apKey = `${activePlayer}_DATA`;
   const apData = gameData[apKey];
   const apOnCheckout = apData.onCheckout;
-
-  const animationType = animation
-    ? theme.name === "default"
-      ? "fade"
-      : "slide"
-    : "none";
 
   const nod = () => {
     if (isLegOver) {
@@ -64,48 +53,43 @@ const FINISH_LEG_MODAL = ({ animation, theme, action, visible }) => {
     }
   };
 
-  const back = () => {
-    setLastRoundNod(null), dispatchGameData({ type: "UNDO" });
+  const back = async () => {
+    setLastRoundNod(null);
+    await dispatchGameData({ type: "UNDO" });
+    navigation.goBack();
   };
 
   return (
-    <Modal
-      animationType={animationType}
-      transparent={true}
-      presentationStyle={"pageSheet"}
-      visible={visible}
-    >
-      <ModalContainerAlert theme={theme}>
-        <Header2>{winnerName} has won the leg!</Header2>
-        <Header3>Number of darts used in last round:</Header3>
-        <RADIO_BUTTON_SET
-          length={3}
-          direction={"row"}
-          options={OPTIONS}
-          action={handleLastDartNod}
-          activeValue={lastRoundNod}
+    <ModalContainerAlert theme={theme}>
+      <Header2>{winnerName} has won the leg!</Header2>
+      <Header3>Number of darts used in last round:</Header3>
+      <RADIO_BUTTON_SET
+        length={3}
+        direction={"row"}
+        options={OPTIONS}
+        action={handleLastDartNod}
+        activeValue={lastRoundNod}
+      />
+      <BottomButtons theme={theme}>
+        <THEMED_BUTTON
+          text={"back"}
+          length={2}
+          size={"small"}
+          icon={"arrow-back"}
+          type={"danger"}
+          action={back}
         />
-        <BottomButtons theme={theme}>
-          <THEMED_BUTTON
-            text={"back"}
-            length={2}
-            size={"small"}
-            icon={"arrow-back"}
-            type={"danger"}
-            action={back}
-          />
-          <THEMED_BUTTON
-            size={"small"}
-            text={lastRoundNod ? "ok" : "select"}
-            type={lastRoundNod ? "success" : "danger"}
-            length={2}
-            icon={lastRoundNod ? "check" : "dart"}
-            action={finishLeg}
-          />
-        </BottomButtons>
-      </ModalContainerAlert>
-    </Modal>
+        <THEMED_BUTTON
+          size={"small"}
+          text={lastRoundNod ? "ok" : "select"}
+          type={lastRoundNod ? "success" : "danger"}
+          length={2}
+          icon={lastRoundNod ? "check" : "dart"}
+          action={finishLeg}
+        />
+      </BottomButtons>
+    </ModalContainerAlert>
   );
-};
+});
 
 export default FINISH_LEG_MODAL;

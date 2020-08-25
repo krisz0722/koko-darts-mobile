@@ -1,43 +1,19 @@
-import React, { useEffect, useState, useContext, useMemo } from "react";
-import { Text, Modal } from "react-native";
+import React, { useState, useContext, useMemo } from "react";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 import { GameContext } from "../../contexts/GameContext";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { Authcontext } from "../../contexts/AuthContext";
 import moment from "moment";
 import Theme_Default from "../../styles/theme-default.json";
 import Theme_Contrast from "../../styles/theme-contrast.json";
 import updateAuthMatchesRematch from "../../contexts/actions/authContext/UpdateMatchesRematch";
 import { updateStatus } from "../../fb/crud";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
-const TIMER = ({ quitGame }) => {
-  const navigation = useNavigation();
-  const [count, setCount] = useState(10);
-  const timer = () => setCount(count - 1);
-
-  useEffect(() => {
-    if (count <= 0) {
-      (async () => {
-        await quitGame();
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{ name: "homenavigator" }],
-          }),
-        );
-      })();
-    }
-    const id = setInterval(() => timer(), 1000);
-    return () => clearInterval(id);
-  }, [count]);
-
-  return <Text>{count}</Text>;
-};
-
-const REMATCH_MODAL = React.memo(({ animation, theme, action, visible }) => {
+const REMATCH_MODAL = React.memo(({ navigation }) => {
   const THEMES = useMemo(
     () => ({
       default: Theme_Default,
@@ -46,11 +22,10 @@ const REMATCH_MODAL = React.memo(({ animation, theme, action, visible }) => {
     [],
   );
 
-  const navigation = useNavigation();
+  const { theme } = useContext(ThemeContext);
 
   const {
     dispatchGameData,
-    gameData,
     gameData: {
       settings,
       opponent,
@@ -61,12 +36,6 @@ const REMATCH_MODAL = React.memo(({ animation, theme, action, visible }) => {
   const {
     userData: { username },
   } = useContext(Authcontext);
-
-  const animationType = animation
-    ? theme.name === "default"
-      ? "fade"
-      : "slide"
-    : "none";
 
   const [activePlayer, setActivePlayer] = useState(null);
   const [inactivePlayer, setInactivePlayer] = useState(null);
@@ -89,8 +58,6 @@ const REMATCH_MODAL = React.memo(({ animation, theme, action, visible }) => {
     } else {
       await updateStatus(p1.key, p2.key, false);
     }
-
-    action();
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
@@ -121,58 +88,43 @@ const REMATCH_MODAL = React.memo(({ animation, theme, action, visible }) => {
       });
 
       await updateAuthMatchesRematch(rematch, THEMES);
-
-      action();
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: "game" }],
-        }),
-      );
+      navigation.navigate("game");
     }
     return null;
   };
 
   return (
-    <Modal
-      animationType={animationType}
-      transparent={true}
-      presentationStyle={"pageSheet"}
-      visible={visible}
-    >
-      <ModalContainerAlert theme={theme}>
-        {visible ? <TIMER quitGame={quitGame} /> : null}
-        <Header2>throw for the start!</Header2>
-        <Header3>selec the player to start the next match</Header3>
-        <RADIO_BUTTON_SET
+    <ModalContainerAlert theme={theme}>
+      <Header2>throw for the start!</Header2>
+      <Header3>selec the player to start the next match</Header3>
+      <RADIO_BUTTON_SET
+        length={2}
+        direction={"row"}
+        options={OPTIONS}
+        action={handlePLayerToStart}
+        activeValue={activePlayerName}
+      />
+      <BottomButtons theme={theme}>
+        <THEMED_BUTTON
+          text={"quit game"}
           length={2}
-          direction={"row"}
-          options={OPTIONS}
-          action={handlePLayerToStart}
-          activeValue={activePlayerName}
+          size={"small"}
+          icon={"arrow-back"}
+          type={"danger"}
+          action={quitGame}
+          inGameTheme={theme}
         />
-        <BottomButtons theme={theme}>
-          <THEMED_BUTTON
-            text={"quit game"}
-            length={2}
-            size={"small"}
-            icon={"arrow-back"}
-            type={"danger"}
-            action={quitGame}
-            inGameTheme={theme}
-          />
-          <THEMED_BUTTON
-            size={"small"}
-            text={activePlayer ? "game on!" : "select"}
-            type={"success"}
-            length={2}
-            icon={activePlayer ? "check" : "person"}
-            action={rematch}
-            inGameTheme={theme}
-          />
-        </BottomButtons>
-      </ModalContainerAlert>
-    </Modal>
+        <THEMED_BUTTON
+          size={"small"}
+          text={activePlayer ? "game on!" : "select"}
+          type={"success"}
+          length={2}
+          icon={activePlayer ? "check" : "person"}
+          action={rematch}
+          inGameTheme={theme}
+        />
+      </BottomButtons>
+    </ModalContainerAlert>
   );
 });
 

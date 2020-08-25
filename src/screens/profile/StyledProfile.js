@@ -1,9 +1,9 @@
-import { Text, View, Image } from "react-native";
+import { Text, TouchableOpacity, View, Image } from "react-native";
 import styled from "styled-components";
 import {
-  BasicText,
   BasicTextBold,
   Border,
+  FlexCol,
   FlexColAround,
   FlexRow,
   FlexRowBetween,
@@ -17,12 +17,13 @@ export const Header = styled(View)`
 `;
 
 export const Container = styled(View)`
-  ${FlexColAround};
+  ${FlexCol};
   width: 40%;
   height: 100%;
 `;
 
 export const Container2 = styled(Container)`
+  ${FlexColAround};
   width: 60%;
   padding: 5% 0;
   border-color: ${({ theme }) => theme.borderColor};
@@ -33,13 +34,26 @@ export const SubContainer = styled(Image)`
   height: ${() => Window.width * 0.4 * 0.6};
   border-radius: 4px;
   ${Border(({ theme }) => theme.borderColor)};
+  margin-bottom: 10%;
 `;
 
-export const Name = styled(Text)`
+export const Name = styled(View)`
+  width: 80%;
+  ${FlexColAround};
+`;
+
+export const NameText = styled(Text)`
   ${BasicTextBold};
   font-size: 15;
   font-size: ${({ theme }) => theme.profile.name};
   color: ${({ theme }) => theme.text};
+  margin-bottom: 10%;
+`;
+
+export const EditButton = styled(TouchableOpacity)`
+  padding: 3%;
+  background-color: ${({ theme }) => theme.text};
+  border-radius: 4px;
 `;
 
 export const Field = styled(View)`
@@ -50,6 +64,8 @@ export const Field = styled(View)`
   height: 15%;
   color: ${({ theme }) => theme.text2};
   background-color: ${({ theme }) => theme.text};
+
+  border-radius: 4px;
 `;
 
 export const Stat = styled(Text)`

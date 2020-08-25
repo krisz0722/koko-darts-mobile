@@ -3,7 +3,6 @@ import { View } from "react-native";
 import NavButton from "../components/buttons/NavButton";
 import styled from "styled-components";
 import { FlexCol } from "../styles/css_mixins";
-import { logOut, deleteAccount } from "../fb/auth";
 
 export const HomeDrawerContent = styled(View)`
   ${FlexCol};
@@ -12,7 +11,7 @@ export const HomeDrawerContent = styled(View)`
   background-color: ${({ theme }) => theme.bgOverlay};
 `;
 
-const HOME_DRAWER_CONTENT = ({ navigation, username, theme }) => {
+const HOME_DRAWER_CONTENT = ({ logOut, deleteAccount, navigation, theme }) => {
   const HOME_DRAWER_ITEMS = [
     {
       route: "about",
@@ -32,12 +31,12 @@ const HOME_DRAWER_CONTENT = ({ navigation, username, theme }) => {
     {
       route: "log out",
       icon: "exit-to-app",
-      action: () => logOut(navigation),
+      action: () => logOut(),
     },
     {
       route: "delete account",
       icon: "delete",
-      action: () => deleteAccount(username, navigation),
+      action: () => deleteAccount(),
     },
   ];
 

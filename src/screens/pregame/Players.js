@@ -68,7 +68,7 @@ export const PLAYERS = ({ toggleSwap, p1, p2 }) => {
           <Icon name={"sync"} size={20} />
         </Swap>
         <PlayerInfo>
-          {p1.img === "" ? (
+          {p2.img === "" ? (
             <Avatar source={require("../../../assets/bg.png")} />
           ) : (
             <Avatar source={{ uri: p2Img }} />

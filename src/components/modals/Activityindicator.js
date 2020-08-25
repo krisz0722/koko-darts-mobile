@@ -1,14 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  Text,
-  Modal,
-  BackHandler,
-  SafeAreaView,
-  ActivityIndicator,
-} from "react-native";
-import { BasicTextBold, FlexCol, FlexColAround } from "../../styles/css_mixins";
-import { ModalContainerBasic, ModalContainerLoading } from "./StyledModal";
+import { Text, Modal, SafeAreaView, ActivityIndicator } from "react-native";
+import { BasicTextBold, FlexCol } from "../../styles/css_mixins";
+import { ModalContainerLoading } from "./StyledModal";
 
 export const Safe = styled(SafeAreaView)`
   height: 100%;

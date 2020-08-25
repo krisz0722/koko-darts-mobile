@@ -11,7 +11,7 @@ export const Match = styled(TouchableOpacity)`
   width: 100%;
   margin-top: 10;
   height: ${() => Window.height * 0.06};
-  padding: 3% 2%;
+  padding: 2% 2%;
   background-color: rgba(255, 255, 255, 0.1);
 `;
 
@@ -74,9 +74,9 @@ const MATCH_COMPONENT = ({ item }) => {
         {wonOrLost}
       </Result2>
       <MatchAvg theme={theme}>{avg.toFixed(1)}</MatchAvg>
-      <TouchableOpacity onPress={() => alert("remove friend")}>
-        <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.03} />
-      </TouchableOpacity>
+      {/*<TouchableOpacity onPress={() => alert("remove friend")}>*/}
+      {/*  <Icon name={"remove"} color={theme.bgRed} size={Window.height * 0.03} />*/}
+      {/*</TouchableOpacity>*/}
     </Match>
   );
 };

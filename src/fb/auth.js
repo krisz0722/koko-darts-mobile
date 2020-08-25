@@ -3,6 +3,8 @@ import { deleteProfile, createProfile } from "./crud";
 import { getProfileByUsername, getProfileByEmail } from "./get";
 import { checkUsernameAvailability } from "./check";
 import { GoogleSignin } from "@react-native-community/google-signin";
+import throwError from "./authError";
+import { CommonActions } from "@react-navigation/native";
 
 export const signUpGoogle = async (navigation, reducers) => {
   try {
@@ -41,8 +43,8 @@ export const signUpGoogle = async (navigation, reducers) => {
       await createProfile(email, username, photo);
       LogIn(email, null, username, navigation, reducers, googleCredential);
     }
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    throwError(err.code, "signInGoogle");
   }
 };
 
@@ -57,7 +59,7 @@ export const signUp = async (
   console.log("USERNAMETAKEN", userNameTaken);
 
   if (userNameTaken > 0) {
-    return alert("username is taken");
+    return throwError("usernametaken", "signUp");
   } else {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
@@ -66,7 +68,13 @@ export const signUp = async (
       LogIn(email, password, username, navigation, reducers);
     } catch (err) {
       console.log(err);
-      alert("ERROR WHILE SIGNING UP: ", err);
+      throwError(err.code, "signUp");
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: "authnavigator" }],
+        }),
+      );
     }
   }
 };
@@ -76,9 +84,20 @@ export const logOut = async (navigation) => {
     console.log("logging out...");
     await auth().signOut();
     console.log("logged out");
-    navigation.navigate("authnavigator", { screen: "login" });
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "authnavigator" }],
+      }),
+    );
   } catch (err) {
-    alert("ERROR WHILE LOGGING OUT: ", err);
+    throwError(err.code, "logout");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "authnavigator" }],
+      }),
+    );
   }
 };
 
@@ -108,6 +127,12 @@ export const LogIn = async (
         } catch (err) {
           console.log(err);
           alert("ERROR WHILE LOADING APPDATA IN: ", err);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{ name: "authnavigator" }],
+            }),
+          );
         }
       })();
     } else {
@@ -118,11 +143,23 @@ export const LogIn = async (
         } catch (err) {
           console.log(err);
           alert("ERROR WHILE LOADING APPDATA IN: ", err);
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{ name: "authnavigator" }],
+            }),
+          );
         }
       })();
     }
   } catch (err) {
-    alert("ERROR WHILE LOGGING IN: ", err);
+    throwError(err.code, "login");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "authnavigator" }],
+      }),
+    );
   }
 };
 
@@ -180,9 +217,20 @@ export const deleteAccount = async (username, navigation) => {
     console.log("user has been deleted");
     await deleteProfile(username);
     console.log("deleted from database");
-    navigation.navigate("authnavigator", { screen: "welcome" });
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "authnavigator" }],
+      }),
+    );
   } catch (err) {
-    alert("ERROR WHILE DELETING ACCOUNT: ", err);
+    throwError(err.code, "delete");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "authnavigator" }],
+      }),
+    );
   }
 };
 

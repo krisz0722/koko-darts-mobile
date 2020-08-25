@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import {
@@ -17,11 +16,8 @@ import {
   StatSide,
 } from "./StyledStats";
 import { GameContext } from "../../contexts/GameContext";
-import { ScreenContainer } from "../../navigators/AppNavigator";
 
 const STATS = React.memo(({ navigation, route }) => {
-  const { settings } = useContext(SettingsContext);
-
   let { theme } = useContext(ThemeContext);
   const { gameData } = useContext(GameContext);
 
@@ -35,7 +31,7 @@ const STATS = React.memo(({ navigation, route }) => {
   const legOrSet = route.params
     ? route.name === "stats_saved"
       ? stats.matchSummary.legOrSet
-      : settings.legOrSet
+      : gameData.settings.legOrSet
     : null;
 
   const p1 = route.params
@@ -56,8 +52,8 @@ const STATS = React.memo(({ navigation, route }) => {
   const isSet = legOrSet === "set";
   const p1Main = isSet ? p1_DATA.setsWon : p1_DATA.legsWon;
   const p2Main = isSet ? p2_DATA.setsWon : p2_DATA.legsWon;
-  const p1Sub = isSet ? null : p1_DATA.legsWon;
-  const p2Sub = isSet ? null : p2_DATA.legsWon;
+  const p1Sub = isSet ? p1_DATA.legsWon : null;
+  const p2Sub = isSet ? p2_DATA.legsWon : null;
 
   const TEXT = [
     "match average",
@@ -88,12 +84,13 @@ const STATS = React.memo(({ navigation, route }) => {
     140,
     180,
   ];
+
   return (
-    <ScreenContainer theme={theme}>
+    <>
       <Players theme={theme}>
         <PlayerInfo>
           <>
-            {p1.img === "" ? (
+            {/assets/.test(p1.img) || p1.img === "" ? (
               <Avatar source={require("../../../assets/bg.png")} />
             ) : (
               <Avatar source={{ uri: p1.img }} />
@@ -106,7 +103,7 @@ const STATS = React.memo(({ navigation, route }) => {
             <Main theme={theme}>{p1Main}</Main>
             <Main theme={theme}>{p2Main}</Main>
           </Div2>
-          {legOrSet === "set" && route.name !== "stats_saved" ? (
+          {isSet && route.name !== "stats_saved" ? (
             <Div2>
               <Sub theme={theme}>({p1Sub})</Sub>
               <Sub theme={theme}>({p2Sub})</Sub>
@@ -115,7 +112,7 @@ const STATS = React.memo(({ navigation, route }) => {
         </Div>
         <PlayerInfo>
           <>
-            {p2.img === "" ? (
+            {/assets/.test(p2.img) || p2.img === "" ? (
               <Avatar source={require("../../../assets/bg.png")} />
             ) : (
               <Avatar source={{ uri: p2.img }} />
@@ -156,7 +153,7 @@ const STATS = React.memo(({ navigation, route }) => {
           inGameTheme={theme}
         />
       </BottomButtons>
-    </ScreenContainer>
+    </>
   );
 });
 export default STATS;

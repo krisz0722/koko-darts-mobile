@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import {
   Header,
+  NameText,
   Name,
   Container,
   Container2,
@@ -9,11 +10,13 @@ import {
   Field,
   Stat,
   StatValue,
+  EditButton,
 } from "./StyledProfile";
-import { BackHandler } from "react-native";
+import { BackHandler, TouchableOpacity } from "react-native";
 import ProfileNavigator from "../../navigators/ProfileTopNavigator";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const PROFILE = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -59,7 +62,10 @@ const PROFILE = ({ navigation }) => {
       <Header>
         <Container>
           <SubContainer source={{ uri: img }} />
-          <Name theme={theme}>{username}</Name>
+          <NameText theme={theme}>{username}</NameText>
+          {/*<EditButton onPress={() => alert("gyaaa")} theme={theme}>*/}
+          {/*  <Icon name={"create"} size={20} color={theme.text2} />*/}
+          {/*</EditButton>*/}
         </Container>
         <Container2 theme={theme}>
           {DATA.map((item) => (

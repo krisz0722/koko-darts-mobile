@@ -24,7 +24,7 @@ export const TopBar = styled(View)`
   top: 0;
   position: absolute;
   height: ${({ friendRequestReceived }) =>
-    friendRequestReceived ? "10%" : "5%"};
+    friendRequestReceived ? "10%" : "7.5%"};
   width: ${({ friendRequestReceived }) =>
     friendRequestReceived ? "100%" : "100%"};
   ${FlexRowEnd};

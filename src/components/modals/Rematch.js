@@ -10,7 +10,7 @@ import moment from "moment";
 import Theme_Default from "../../styles/theme-default.json";
 import Theme_Contrast from "../../styles/theme-contrast.json";
 import updateAuthMatchesRematch from "../../contexts/actions/authContext/UpdateMatchesRematch";
-import { updateStatus } from "../../fb/crud";
+import { updateStatus } from "../../fb/update";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const REMATCH_MODAL = React.memo(({ navigation }) => {

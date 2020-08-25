@@ -23,12 +23,7 @@ const LIST_PROFILES = React.memo(({ add, remove, profiles, regexp }) => {
   const { theme } = useContext(ThemeContext);
 
   const renderItem = ({ item }) => (
-    <PROFILE_COMPONENT
-      profile={profiles}
-      add={add}
-      remove={remove}
-      item={item.data()}
-    />
+    <PROFILE_COMPONENT add={add} remove={remove} item={item.data()} />
   );
 
   return (
@@ -36,7 +31,7 @@ const LIST_PROFILES = React.memo(({ add, remove, profiles, regexp }) => {
       <>
         {!profiles ? (
           <ActivityIndicator color={theme.text} size={"large"} />
-        ) : (
+        ) : profiles.length === 0 ? null : (
           <ProfilesContainer
             data={profiles}
             renderItem={renderItem}

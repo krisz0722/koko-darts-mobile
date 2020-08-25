@@ -60,7 +60,7 @@ const HOME = React.memo(({ navigation }) => {
         ) : (
           <>
             <NavButton
-              length={"8"}
+              length={"7"}
               active={false}
               direction={"column"}
               height={"auto"}

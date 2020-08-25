@@ -15,6 +15,7 @@ import {
   BasicText,
   BasicTextBold,
   FlexCol,
+  FlexRowBetween,
   Window,
 } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -22,24 +23,33 @@ import { getUsers } from "../../fb/get";
 import { Authcontext } from "../../contexts/AuthContext";
 import updateRequests from "../../contexts/actions/authContext/UpdateRequests";
 import ACTIVITY_INDICATOR from "./Activityindicator";
+import Icon from "react-native-vector-icons/MaterialIcons";
 export const ModalContainerSearch = styled(ScrollView)`
   background-color: rgba(255, 255, 255, 0.95);
 `;
 
-export const SearchBar = styled(TextInput)`
-  ${BasicText}
+export const SearchBar = styled(View)`
   width: 80%;
   margin: auto;
-  height: 10%;
+  height: 8%;
   border-color: ${({ theme }) => theme.text2};
+  background-color: ${({ theme, active }) =>
+    active ? theme.bgRed : theme.bg2};
   border-radius: 30;
   border-width: 2;
-  color: ${({ theme }) => theme.text2};
+  padding: 0 5%;
+  ${FlexRowBetween};
+`;
+
+export const SearchInput = styled(TextInput)`
+  ${BasicText}
+  color: ${({ theme, active }) => (active ? theme.text : theme.text2)};
+  width:100%;
 `;
 
 export const Container = styled(View)`
   width: 100%;
-  height: ${() => Window.height * 0.9};
+  height: ${() => Window.height};
   ${FlexCol};
 `;
 
@@ -67,10 +77,13 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
     userData: { username, friends, friendRequestSent, friendRequestReceived },
   } = useContext(Authcontext);
 
-  const [regexp, setRegexp] = useState("");
+  const [regexp, setRegexp] = useState(new RegExp(".*", "i"));
   const [profiles, setProfiles] = useState(null);
+  const [filteredProfiles, setFilteredProfiles] = useState(null);
   const [checkedProfiles, setCheckedProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [searchActive, setSearchActive] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -108,6 +121,7 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
           });
 
           setProfiles(profiles);
+          setFilteredProfiles(profiles);
         } catch (err) {
           console.log(err);
           alert("ERROR WHILE GETTING USERS: ", err);
@@ -143,7 +157,32 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
     action1();
   };
 
-  const handleRegExp = (val) => setRegexp(val);
+  const handleRegExp = (val) => {
+    if (val === "") {
+      setRegexp(new RegExp(".*", "i"));
+    } else {
+      setRegexp(new RegExp(val, "i"));
+    }
+  };
+
+  const handleSearchActive = () => {
+    setSearchActive(true);
+  };
+
+  useEffect(() => {
+    if (profiles) {
+      const filtered = profiles.filter((item) => {
+        const username = item.data().username;
+        console.log(regexp);
+        return regexp.test(username);
+      });
+      setFilteredProfiles(filtered);
+    }
+
+    if (!visible) {
+      setSearchActive(false);
+    }
+  }, [visible, regexp]);
 
   return (
     <Modal
@@ -160,13 +199,24 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
         >
           <Container>
             <Header>FIND YOUR FRIEND</Header>
-            <SearchBar
-              placeholderTextColor={theme.borderColor}
-              theme={theme}
-              onChangeText={handleRegExp}
-            />
+            <SearchBar active={searchActive} theme={theme}>
+              <Icon
+                color={searchActive ? theme.text : theme.text2}
+                name={"search"}
+                size={25}
+              />
+              <SearchInput
+                active={searchActive}
+                onFocus={handleSearchActive}
+                placeholderTextColor={theme.text2}
+                theme={theme}
+                onChangeText={handleRegExp}
+                placeholder={searchActive ? null : "SEARCH FOR USERS..."}
+              />
+            </SearchBar>
+
             <LIST_PROFILES
-              profiles={profiles}
+              profiles={filteredProfiles}
               add={add}
               remove={remove}
               regexp={regexp}

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, TouchableWithoutFeedback, View } from "react-native";
+import { Text, View } from "react-native";
 import styled from "styled-components";
 import { AlignText, FlexRow } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -20,13 +19,7 @@ const Header = styled(Text)`
   color: ${({ theme }) => theme.text};
 `;
 
-const SETTINGS_HEADER = ({
-  inGameTheme,
-  text,
-  action,
-  icon = null,
-  header = false,
-}) => {
+const SETTINGS_HEADER = ({ inGameTheme, text, header = false }) => {
   const { theme } = useContext(ThemeContext);
 
   const themeToUse = inGameTheme ? inGameTheme : theme;
@@ -34,16 +27,6 @@ const SETTINGS_HEADER = ({
   return (
     <HeaderContainer header={header}>
       <Header theme={themeToUse}>{text}</Header>
-      {icon ? (
-        <TouchableWithoutFeedback onPress={action}>
-          <Icon
-            style={{ alignSelf: "flex-start", margin: 5 }}
-            name={icon}
-            size={15}
-            color={themeToUse.text}
-          />
-        </TouchableWithoutFeedback>
-      ) : null}
     </HeaderContainer>
   );
 };

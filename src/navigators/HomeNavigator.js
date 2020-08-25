@@ -14,6 +14,7 @@ import STATS2 from "../screens/stats/Stats2";
 import { AppState } from "react-native";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 import { CommonActions, useRoute } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 
 const HomeNavigator = ({ navigation }) => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
@@ -32,6 +33,8 @@ const HomeNavigator = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [inGame, setInGame] = useState(false);
   const [gameData, setGameData] = useState(null);
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const unsubscribe = usersCollection
@@ -61,6 +64,7 @@ const HomeNavigator = ({ navigation }) => {
 
     return () => {
       unsubscribe();
+      setLoading(false);
     };
   }, [dispatchUserData, username]);
 
@@ -97,7 +101,7 @@ const HomeNavigator = ({ navigation }) => {
 
   return (
     <>
-      {loading ? (
+      {loading && isFocused ? (
         <ACTIVITY_INDICATOR
           visible={loading}
           animation={animation}
@@ -118,7 +122,7 @@ const HomeNavigator = ({ navigation }) => {
             />
           )}
         </>
-      ) : (
+      ) : !isFocused ? null : (
         <Navigator
           timingConfig={{ duration: 1 }}
           tabBarPosition={"bottom"}

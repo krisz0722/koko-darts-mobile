@@ -28,7 +28,6 @@ export const OptionsEffects = React.memo((props) => {
     <Row theme={themeToUse} layout="asym">
       <SETTINGS_HEADER
         text={"visual effects"}
-        icon={"help-outline"}
         action={() => alert("action")}
         inGameTheme={themeToUse}
       />

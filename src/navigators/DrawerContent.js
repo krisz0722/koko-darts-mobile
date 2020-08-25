@@ -28,7 +28,8 @@ const DRAWER_CONTENT = ({
     {
       route: "stats",
       icon: "show-chart",
-      action: () => navigation.navigate("stats", { gameData, back: "game" }),
+      action: () =>
+        navigation.navigate("stats", { gameData, theme, back: "game" }),
     },
     {
       route: "home",

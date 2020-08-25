@@ -17,14 +17,17 @@ import {
   StatSide,
 } from "./StyledStats";
 import { GameContext } from "../../contexts/GameContext";
+import { ScreenContainer } from "../../navigators/AppNavigator";
 
 const STATS = React.memo(({ navigation, route }) => {
   const { settings } = useContext(SettingsContext);
 
-  const { theme } = useContext(ThemeContext);
+  let { theme } = useContext(ThemeContext);
   const { gameData } = useContext(GameContext);
 
   const stats = route.params ? route.params.gameData : gameData;
+  theme = route.params ? route.params.theme : theme;
+
   const back = route.params ? route.params.back : "home";
 
   const { p1_DATA, p2_DATA } = stats;
@@ -86,7 +89,7 @@ const STATS = React.memo(({ navigation, route }) => {
     180,
   ];
   return (
-    <>
+    <ScreenContainer theme={theme}>
       <Players theme={theme}>
         <PlayerInfo>
           <Avatar />
@@ -138,9 +141,10 @@ const STATS = React.memo(({ navigation, route }) => {
           action={() => {
             navigation.navigate(back);
           }}
+          inGameTheme={theme}
         />
       </BottomButtons>
-    </>
+    </ScreenContainer>
   );
 });
 export default STATS;

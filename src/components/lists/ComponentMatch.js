@@ -61,7 +61,7 @@ const MATCH_COMPONENT = ({ item }) => {
   const { date, opponent, avg, result, wonOrLost } = matchSummary;
 
   const openMatchStats = () =>
-    navigation.navigate("stats_saved", { gameData, back: "profile" });
+    navigation.navigate("stats_saved", { gameData, theme, back: "profile" });
 
   return (
     <Match theme={theme} onPress={openMatchStats}>

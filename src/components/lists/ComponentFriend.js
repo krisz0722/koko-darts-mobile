@@ -61,7 +61,20 @@ const FRIEND_COMPONENT = ({ item }) => {
 
   return (
     <Friend theme={theme}>
-      <FriendAvatar theme={theme} resizeMode={"cover"} source={item.img} />
+      {item.img === "" ? (
+        <FriendAvatar
+          theme={theme}
+          resizeMode={"cover"}
+          source={require("../../../assets/bg.png")}
+        />
+      ) : (
+        <FriendAvatar
+          theme={theme}
+          resizeMode={"cover"}
+          source={{ uri: item.img }}
+        />
+      )}
+
       <Name theme={theme}>{item.key}</Name>
       <Record
         record={record()}

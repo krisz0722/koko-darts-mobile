@@ -1,7 +1,7 @@
 import {
   updatefriendRequestReceived,
   updatefriendRequestSent,
-} from "../../../fb/crud";
+} from "../../../fb/update";
 
 const updateRequests = (state, checkedProfiles) => {
   const { username, img, friendRequestSent } = state;

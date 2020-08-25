@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { GameContext } from "../../../contexts/GameContext";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Animated } from "react-native";
 import { Window } from "../../../styles/css_mixins";
 
-const PlayerInfoAvatar = styled(Animated.View)`
+const PlayerInfoAvatar = styled(Animated.Image)`
   height: 100%;
   position: absolute;
   top: 0;
@@ -21,7 +20,7 @@ export const Avatar2 = styled(PlayerInfoAvatar)`
 `;
 
 const AVATAR = React.memo((props) => {
-  const { player, showStats, activePlayer, theme, animation } = props;
+  const { player, showStats, img, activePlayer, theme, animation } = props;
 
   const animationValue = useRef(
     new Animated.Value(activePlayer === "p1" ? 1 : 0),
@@ -58,20 +57,45 @@ const AVATAR = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
+  console.log("P1", img);
   return (
     <>
       {player === "p1" ? (
-        <Avatar1
-          style={{ width, borderColor }}
-          ap={activePlayer}
-          showStats={showStats}
-        />
+        <>
+          {img === "" ? (
+            <Avatar1
+              source={require("../../../../assets/bg.png")}
+              style={{ width, borderColor }}
+              ap={activePlayer}
+              showStats={showStats}
+            />
+          ) : (
+            <Avatar1
+              source={{ uri: img }}
+              style={{ width, borderColor }}
+              ap={activePlayer}
+              showStats={showStats}
+            />
+          )}
+        </>
       ) : (
-        <Avatar2
-          style={{ width, borderColor }}
-          ap={activePlayer}
-          showStats={showStats}
-        />
+        <>
+          {img === "" ? (
+            <Avatar2
+              source={require("../../../../assets/bg.png")}
+              style={{ width, borderColor }}
+              ap={activePlayer}
+              showStats={showStats}
+            />
+          ) : (
+            <Avatar2
+              source={{ uri: img }}
+              style={{ width, borderColor }}
+              ap={activePlayer}
+              showStats={showStats}
+            />
+          )}
+        </>
       )}
     </>
   );

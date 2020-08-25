@@ -100,6 +100,7 @@ const CLASSIC_TOP = React.memo((props) => {
             activePlayer={activePlayer}
             showStats={showStats}
             player={"p1"}
+            img={p1.img}
             animation={animation}
             theme={theme}
           />
@@ -131,6 +132,7 @@ const CLASSIC_TOP = React.memo((props) => {
             activePlayer={activePlayer}
             showStats={showStats}
             player={"p2"}
+            img={p2.img}
           />
           <LEGSET
             animation={animation}

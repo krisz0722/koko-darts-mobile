@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Image, Text, TouchableHighlight, View } from "react-native";
 import {
@@ -47,21 +47,32 @@ const Swap = styled(TouchableHighlight)`
 
 export const PLAYERS = ({ toggleSwap, p1, p2 }) => {
   const p1Name = p1 ? p1.key : "";
-  const p1Img = p1 ? p1.img : null;
+  const p1Img = p1 ? p1.img : "";
   const p2Name = p2 ? p2.key : "";
-  const p2Img = p2 ? p2.img : null;
+  const p2Img = p2 ? p2.img : "";
+
+  console.log(p1, p2);
   return (
     <>
       <Players>
         <PlayerInfo>
-          <Avatar source={p1Img} />
+          {p1.img === "" ? (
+            <Avatar source={require("../../../assets/bg.png")} />
+          ) : (
+            <Avatar source={{ uri: p1Img }} />
+          )}
+
           <Name>{p1Name}</Name>
         </PlayerInfo>
         <Swap onPress={toggleSwap}>
           <Icon name={"sync"} size={20} />
         </Swap>
         <PlayerInfo>
-          <Avatar source={p2Img} />
+          {p1.img === "" ? (
+            <Avatar source={require("../../../assets/bg.png")} />
+          ) : (
+            <Avatar source={{ uri: p2Img }} />
+          )}
           <Name>{p2Name}</Name>
         </PlayerInfo>
       </Players>

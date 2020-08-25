@@ -1,4 +1,4 @@
-import { updateUnfinishedMatches } from "../../../fb/crud";
+import { updateUnfinishedMatches } from "../../../fb/update";
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
 const updateAuthMatchesAdd = (newMatch, THEMES) => {

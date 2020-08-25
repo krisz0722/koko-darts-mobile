@@ -92,7 +92,13 @@ const STATS = React.memo(({ navigation, route }) => {
     <ScreenContainer theme={theme}>
       <Players theme={theme}>
         <PlayerInfo>
-          <Avatar />
+          <>
+            {p1.img === "" ? (
+              <Avatar source={require("../../../assets/bg.png")} />
+            ) : (
+              <Avatar source={{ uri: p1.img }} />
+            )}
+          </>
           <Name theme={theme}>{p1.key}</Name>
         </PlayerInfo>
         <Div>
@@ -108,7 +114,13 @@ const STATS = React.memo(({ navigation, route }) => {
           ) : null}
         </Div>
         <PlayerInfo>
-          <Avatar />
+          <>
+            {p2.img === "" ? (
+              <Avatar source={require("../../../assets/bg.png")} />
+            ) : (
+              <Avatar source={{ uri: p2.img }} />
+            )}
+          </>
           <Name>{p2.key}</Name>
         </PlayerInfo>
       </Players>

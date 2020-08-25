@@ -37,22 +37,26 @@ const HomeNavigator = ({ navigation }) => {
     const unsubscribe = usersCollection
       .where("username", "==", username)
       .onSnapshot((snapshot) => {
-        const profile = snapshot.docs
-          .find((item) => item.data().username === username)
-          .data();
+        const profile =
+          snapshot.docs.length > 0
+            ? snapshot.docs
+                .find((item) => item.data().username === username)
+                .data()
+            : null;
         console.log("PROFILE", profile);
+        if (profile) {
+          const { inGameKey, inGame, unfinishedMatches } = profile;
 
-        const { inGameKey, inGame, unfinishedMatches } = profile;
+          const gameData = unfinishedMatches.find(
+            (item) => item.key === inGameKey,
+          );
+          const initializedBy = gameData ? gameData.initializedBy : null;
 
-        const gameData = unfinishedMatches.find(
-          (item) => item.key === inGameKey,
-        );
-        const initializedBy = gameData ? gameData.initializedBy : null;
-
-        dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
-        setGameData(gameData);
-        setLoading(false);
-        setInGame(inGame && initializedBy !== username);
+          dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
+          setGameData(gameData);
+          setLoading(false);
+          setInGame(inGame && initializedBy !== username);
+        }
       });
 
     return () => {

@@ -36,7 +36,20 @@ const OPPONENT_COMPONENT = ({ chooseProfile, opponent, item }) => {
 
   return (
     <Opponent active={active} onPress={() => chooseProfile(item)} theme={theme}>
-      <OpponentAvatar theme={theme} resizeMode={"cover"} source={item.img} />
+      {item.img === "" ? (
+        <OpponentAvatar
+          theme={theme}
+          resizeMode={"cover"}
+          source={require("../../../assets/bg.png")}
+        />
+      ) : (
+        <OpponentAvatar
+          theme={theme}
+          resizeMode={"cover"}
+          source={{ uri: item.img }}
+        />
+      )}
+
       <Name active={active}>{item.key}</Name>
     </Opponent>
   );

@@ -30,7 +30,7 @@ export const userModel = (username, email, photo) => ({
     overallAvg: 0,
     bestMatch: 0,
   },
-  friends: [friendModel("GUEST", require("../../assets/bg.png"))],
+  friends: [friendModel("GUEST", "")],
   inGame: false,
   inGameKey: null,
   matches: [],
@@ -42,7 +42,7 @@ export const userModel = (username, email, photo) => ({
   settings: {
     p1: {
       key: username,
-      img: "../../assets/bg.png",
+      img: "",
       gamesPlayed: 0,
       winningPercentage: 0,
       overallAvg: 0,

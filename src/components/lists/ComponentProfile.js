@@ -44,7 +44,20 @@ const PROFILE_COMPONENT = React.memo(({ item, add, remove }) => {
 
   return (
     <Profile onPress={() => toggleChecked(item)} theme={theme}>
-      <ProfileAvatar theme={theme} resizeMode={"cover"} source={item.img} />
+      {item.img === "" ? (
+        <ProfileAvatar
+          theme={theme}
+          resizeMode={"cover"}
+          source={require("../../../assets/bg.png")}
+        />
+      ) : (
+        <ProfileAvatar
+          theme={theme}
+          resizeMode={"cover"}
+          source={{ uri: item.img }}
+        />
+      )}
+
       <Name>{item.username}</Name>
       <CheckBox
         tintColors={{ true: theme.text, false: theme.text }}

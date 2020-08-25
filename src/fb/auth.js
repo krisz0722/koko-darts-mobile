@@ -1,11 +1,7 @@
 import auth from "@react-native-firebase/auth";
-import {
-  deleteProfile,
-  getProfileByUsername,
-  getProfileByEmail,
-  checkUsernameAvailability,
-  createProfile,
-} from "./crud";
+import { deleteProfile, createProfile } from "./crud";
+import { getProfileByUsername, getProfileByEmail } from "./get";
+import { checkUsernameAvailability } from "./check";
 import { GoogleSignin } from "@react-native-community/google-signin";
 
 export const signUpGoogle = async (navigation, reducers) => {
@@ -66,7 +62,7 @@ export const signUp = async (
     try {
       await auth().createUserWithEmailAndPassword(email, password);
       console.log("sign up successful");
-      await createProfile(email, username, "../../assets/bg.png");
+      await createProfile(email, username, "");
       LogIn(email, password, username, navigation, reducers);
     } catch (err) {
       console.log(err);

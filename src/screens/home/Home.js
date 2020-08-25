@@ -13,7 +13,7 @@ import { Authcontext } from "../../contexts/AuthContext";
 import HOME_INFO from "./Info";
 import FRIEND_REQUEST from "./FriendRequest";
 import LIST_UNFINISHED_MATCHES from "../../components/lists/ListUnfinishedMatches";
-import { checkOpponentsStatus } from "../../fb/crud";
+import { checkOpponentsStatus } from "../../fb/check";
 import updateAuthMatchesSave from "../../contexts/actions/authContext/UpdateMatchesSave";
 
 const HOME = React.memo(({ navigation }) => {

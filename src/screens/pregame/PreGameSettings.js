@@ -44,9 +44,13 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   const [stateLegsPerSet, setLegsPerSet] = useState(legsPerSet);
   const [stateP1, setP1] = useState(p1);
   const [stateP2, setP2] = useState(p2);
-  const [modal, setModal] = useState(
-    p2.key === "GUEST" || p2.key === "" ? true : false,
-  );
+  const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    if (p2.key === "" && isFocused) {
+      setModal(true);
+    }
+  }, [p2.key, isFocused]);
 
   const THEMES = useMemo(
     () => ({

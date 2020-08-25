@@ -18,7 +18,7 @@ import {
   Window,
 } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { getUsers } from "../../fb/crud";
+import { getUsers } from "../../fb/get";
 import { Authcontext } from "../../contexts/AuthContext";
 import updateRequests from "../../contexts/actions/authContext/UpdateRequests";
 import ACTIVITY_INDICATOR from "./Activityindicator";

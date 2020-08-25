@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
 import {
   BasicTextBold,
   Border,
@@ -19,9 +19,9 @@ export const Players = styled(View)`
 
 export const Players2 = styled(Players)`
   position: absolute;
-  top: 10%;
+  top: 30%;
+  height: 40%;
   border-bottom-width: 0;
-  height: 80%;
   ${FlexColAround};
 `;
 
@@ -33,10 +33,10 @@ export const PlayerInfo = styled(View)`
 `;
 
 export const PlayerInfo2 = styled(PlayerInfo)`
-  height: 25%;
+  height: 50%;
 `;
 
-export const Avatar = styled(View)`
+export const Avatar = styled(Image)`
   width: ${() => Window.width * 0.2};
   height: ${() => Window.width * 0.2};
   border-radius: 4px;

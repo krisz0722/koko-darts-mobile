@@ -5,6 +5,63 @@ import { checkUsernameAvailability } from "./check";
 import { GoogleSignin } from "@react-native-community/google-signin";
 import throwError from "./authError";
 import { CommonActions } from "@react-navigation/native";
+import { LoginManager, AccessToken } from "react-native-fbsdk";
+import { GraphRequest, GraphRequestManager } from "react-native-fbsdk";
+
+export const signUpFacebook = async (navigation, reducers) => {
+  try {
+    const result = await LoginManager.logInWithPermissions([
+      "public_profile",
+      "email",
+    ]);
+
+    if (result.isCancelled) {
+      throw "User cancelled the login process";
+    }
+
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw "Something went wrong obtaining access token";
+    }
+
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    console.log("FACEBOOK DATA", data);
+    console.log("FACEBOOK CREDENT", facebookCredential);
+    console.log(
+      "FACEBOOK CREDENT2",
+      auth.FacebookAuthProvider.credential(data),
+    );
+
+    const responseInfoCallback = async (error, result) => {
+      if (error) {
+        console.log("Error fetching data: " + error);
+      } else {
+        console.log("Success fetching data: " + result);
+        console.log(result);
+        const { name } = result;
+        const userNameTaken = await checkUsernameAvailability(name);
+
+        let username;
+        if (userNameTaken > 0) {
+          username = `${name} ${userNameTaken + 1}`;
+        } else {
+          username = name;
+        }
+        await createProfile(null, username, "");
+        LogIn(null, null, username, navigation, reducers, facebookCredential);
+      }
+    };
+    const infoRequest = new GraphRequest("/me", null, responseInfoCallback);
+    await new GraphRequestManager().addRequest(infoRequest).start();
+  } catch (err) {
+    console.log(err);
+    throwError(err.code, "signInGoogle");
+  }
+};
 
 export const signUpGoogle = async (navigation, reducers) => {
   try {
@@ -44,6 +101,7 @@ export const signUpGoogle = async (navigation, reducers) => {
       LogIn(email, null, username, navigation, reducers, googleCredential);
     }
   } catch (err) {
+    console.log(err);
     throwError(err.code, "signInGoogle");
   }
 };
@@ -153,6 +211,7 @@ export const LogIn = async (
       })();
     }
   } catch (err) {
+    console.log(err);
     throwError(err.code, "login");
     navigation.dispatch(
       CommonActions.reset({
@@ -170,14 +229,22 @@ export const loadAppData = async (userData, navigation, reducers) => {
 
   const lastOpponent = lastMatch ? lastMatch.opponent : null;
 
+  const authUser = auth().currentUser;
+  console.log("USERDATA SETTINGS", userData.settings);
+  console.log("AUTHUSER", authUser._user);
+
+  const img = authUser._user.photoURL;
+
   const getSettings = () => {
+    const p1 = { ...userData.settings.p1, img };
+    console.log("P!SETTINGS", p1);
     if (lastOpponent) {
       const opponentProfile = userData.friends.find(
         (item) => item.key === lastOpponent,
       );
-      return { ...userData.settings, p2: opponentProfile };
+      return { ...userData.settings, p1, p2: opponentProfile };
     } else {
-      return userData.settings;
+      return { ...userData.settings, p1 };
     }
   };
   const userSettings = getSettings();
@@ -186,7 +253,7 @@ export const loadAppData = async (userData, navigation, reducers) => {
   console.log("creating profile...");
   await user({
     type: "CREATE_PROFILE",
-    value: userData,
+    value: { ...userData, img },
   });
   await theme(userSettings.theme);
   await animation(userSettings.animation);
@@ -196,8 +263,9 @@ export const loadAppData = async (userData, navigation, reducers) => {
     value: userSettings,
   });
   if (userMatches.length === 0 || lastMatch.status === "finished") {
+    console.log("GAME LOAD SETTINGS ", userSettings);
     await game({
-      type: "LOAD_SETTINGS",
+      type: "LOAD_SETTINGS_AFTER_LOGIN",
       value: userSettings,
     });
   } else {

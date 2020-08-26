@@ -28,6 +28,8 @@ const throwError = (err, type) => {
         return "The password is invalid or does not match the password corresponding to the e-mail address. ";
       case "auth/invalid-email":
         return "The e-mail address is invalid.";
+      case "auth/invalid-credential":
+        return "The supplied authentication credential is malformed or has expired.";
       case "auth/email-already-in-use":
         return "There is an account already registered with this e-mail. Try to log in.";
     }

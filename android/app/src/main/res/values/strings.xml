@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">kokodarts</string>
+    <string name="facebook_app_id">639979133321717</string>
+    <string name="fb_login_protocol_scheme">fb639979133321717</string>
+
 </resources>

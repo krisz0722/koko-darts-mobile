@@ -3,7 +3,7 @@ import ShapeThrow from "../../../assets/shapeThrow";
 import { View_Headers, View_Shape, View_Buttons } from "./StyledWelcome";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { signUpGoogle } from "../../fb/auth";
+import { signUpFacebook, signUpGoogle } from "../../fb/auth";
 import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Authcontext } from "../../contexts/AuthContext";
@@ -46,6 +46,11 @@ const WELCOME = ({ navigation }) => {
     signUpGoogle(navigation, reducers);
   };
 
+  const pressSignUpFacebook = () => {
+    setLoading(true);
+    signUpFacebook(navigation, reducers);
+  };
+
   return (
     <>
       {loading ? (
@@ -65,7 +70,11 @@ const WELCOME = ({ navigation }) => {
                   type={"basic"}
                   text={"sign up with google"}
                 />
-                <THEMED_BUTTON type={"basic"} text={"sign up with facebook"} />
+                <THEMED_BUTTON
+                  type={"basic"}
+                  text={"sign up with facebook"}
+                  action={() => pressSignUpFacebook()}
+                />
                 <THEMED_BUTTON
                   type={"basic"}
                   text={"sign up with email"}

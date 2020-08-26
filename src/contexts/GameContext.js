@@ -62,6 +62,8 @@ export const GameContextProvider = (props) => {
           return startNewGame(action.value, THEMES);
         case "CONTINUE_MATCH":
           return action.value;
+        case "LOAD_SETTINGS_AFTER_LOGIN":
+          return loadSettings(action.value, THEMES);
         case "LOAD_SETTINGS":
           return loadSettings(default_settings, THEMES);
         case "RESET":

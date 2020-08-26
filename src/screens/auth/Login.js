@@ -4,7 +4,7 @@ import { Buttons, Form2, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { LogIn } from "../../fb/auth";
+import LogIn from "../../_backend/auth/authLogIn";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";

@@ -6,7 +6,7 @@ import transitionDefault from "../styles/navTransitionDefault";
 import transitionNone from "../styles/navNoTransition";
 import REGISTER from "../screens/auth/SignUp";
 import LOGIN from "../screens/auth/Login";
-import WELCOME from "../screens/welcome/Welcome";
+import WELCOME from "../screens/auth/Welcome";
 import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
 
 const { Navigator, Screen } = createStackNavigator();

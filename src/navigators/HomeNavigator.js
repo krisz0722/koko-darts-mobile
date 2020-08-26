@@ -6,7 +6,7 @@ import PROFILE from "../screens/profile/Profile";
 import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
 import { ThemeContext } from "../contexts/ThemeContext";
 import STATS from "../screens/stats/Stats";
-import { usersCollection } from "../fb/crud";
+import { usersCollection } from "../_backend/db/crudOther";
 import { Authcontext } from "../contexts/AuthContext";
 import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
 import BOTTOM_TABBAR_CONTENT from "./HomeNavigatorContent";

@@ -1,4 +1,4 @@
-import { updateSettings } from "../../../fb/update";
+import { updateSettings } from "../../../_backend/db/crudUpdate";
 
 const updateAuthSettings = (state, settings) => {
   const { username } = state;

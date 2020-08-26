@@ -8,7 +8,7 @@ import SETTINGS_INGAME from "../screens/settings-ingame/SettingsInGame";
 import { CommonActions, useRoute } from "@react-navigation/native";
 import STATS from "../screens/stats/Stats";
 import { Authcontext } from "../contexts/AuthContext";
-import { usersCollection } from "../fb/crud";
+import { usersCollection } from "../_backend/db/crudOther";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
 import STATS2 from "../screens/stats/Stats2";

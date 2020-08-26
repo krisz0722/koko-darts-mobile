@@ -7,7 +7,8 @@ import HOME_DRAWER_CONTENT from "./HomeDrawerContent";
 import HomeNavigator from "./HomeNavigator";
 import { ThemeContext } from "../contexts/ThemeContext";
 import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
-import { logOut, deleteAccount } from "../fb/auth";
+import logOut from "../_backend/auth/authLogOut";
+import deleteAccount from "../_backend/auth/authDelete";
 
 const ABOUT = ({ navigation }) => (
   <View>

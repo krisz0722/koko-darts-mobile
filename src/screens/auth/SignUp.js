@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   Keyboard,
@@ -9,10 +9,13 @@ import { Buttons, Form, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { signUp } from "../../fb/auth";
+import signUp from "../../_backend/auth/authSignUpEmail";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
+import ACTIVITY_INDICATOR from "../../components/modals/Activityindicator";
+import auth from "@react-native-firebase/auth";
+import signUpFacebook from "../../_backend/auth/authSignUpFacebook";
 
 const REGISTER = ({ navigation }) => {
   const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
@@ -39,6 +42,23 @@ const REGISTER = ({ navigation }) => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  auth().onAuthStateChanged((user) => {
+    setUser(user);
+  });
+
+  useEffect(() => {
+    if (user) {
+      setLoading(false);
+    }
+  }, [user]);
+
+  const pressSignUp = () => {
+    setLoading(true);
+    signUp(email, password, username, navigation, reducers);
+  };
 
   const enableSignUp =
     [email, password, username, confirmPassword].filter(
@@ -106,43 +126,58 @@ const REGISTER = ({ navigation }) => {
   ];
 
   return (
-    <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
-      <KeyboardAvoidingView
-        behavior={"padding"}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-        keyboardShouldPersistTaps={"always"}
-      >
-        <Text>valami</Text>
-        <Form theme={theme} isKeyboardUp={isKeyboardUp}>
-          <Inputs>
-            {INPUTS.map((item) => (
-              <LoginInput
-                key={item.name}
-                valid={item.value.length > 5}
-                input={item}
-                handleFocus={handleFocus}
-                focused={focus === item.name}
-              />
-            ))}
-            <THEMED_BUTTON
-              type={enableSignUp ? "active" : "basic"}
-              disabled={!enableSignUp}
-              text={"Sign Up"}
-              action={() =>
-                signUp(email, password, username, navigation, reducers)
-              }
-            />
-          </Inputs>
-          <Buttons>
-            <THEMED_BUTTON
-              text={"Already have an account?\ntap here to log in!"}
-              action={() => navigation.navigate("login")}
-              type={"ghost"}
-            />
-          </Buttons>
-        </Form>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <>
+      {loading ? (
+        <ACTIVITY_INDICATOR
+          text="signing in with email..."
+          theme={theme}
+          size="large"
+        />
+      ) : (
+        <>
+          {user ? null : (
+            <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
+              <KeyboardAvoidingView
+                behavior={"padding"}
+                contentContainerStyle={{
+                  flexGrow: 1,
+                  justifyContent: "center",
+                }}
+                keyboardShouldPersistTaps={"always"}
+              >
+                <Text>valami</Text>
+                <Form theme={theme} isKeyboardUp={isKeyboardUp}>
+                  <Inputs>
+                    {INPUTS.map((item) => (
+                      <LoginInput
+                        key={item.name}
+                        valid={item.value.length > 5}
+                        input={item}
+                        handleFocus={handleFocus}
+                        focused={focus === item.name}
+                      />
+                    ))}
+                    <THEMED_BUTTON
+                      type={enableSignUp ? "active" : "basic"}
+                      disabled={!enableSignUp}
+                      text={"Sign Up"}
+                      action={() => pressSignUp()}
+                    />
+                  </Inputs>
+                  <Buttons>
+                    <THEMED_BUTTON
+                      text={"Already have an account?\ntap here to log in!"}
+                      action={() => navigation.navigate("login")}
+                      type={"ghost"}
+                    />
+                  </Buttons>
+                </Form>
+              </KeyboardAvoidingView>
+            </SafeAreaView>
+          )}
+        </>
+      )}
+    </>
   );
 };
 

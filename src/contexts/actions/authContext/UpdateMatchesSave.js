@@ -1,4 +1,4 @@
-import { updateUnfinishedMatches } from "../../../fb/update";
+import { updateUnfinishedMatches } from "../../../_backend/db/crudUpdate";
 
 const updateAuthMatchesSave = (gameData, username, inGame) => {
   const {

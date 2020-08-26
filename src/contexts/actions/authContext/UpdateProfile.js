@@ -1,5 +1,5 @@
-import { updateProfile } from "../../../fb/update";
-import { getProfileByUsername } from "../../../fb/get";
+import { updateProfile } from "../../../_backend/db/crudUpdate";
+import { getProfileByUsername } from "../../../_backend/db/crudGet";
 
 const updateAuthProfile = async (p1, p2, gameData, inGame) => {
   const update = async (p) => {

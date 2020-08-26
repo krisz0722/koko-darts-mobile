@@ -1,4 +1,4 @@
-import { acceptFriendRequest } from "../../../fb/crud";
+import { acceptFriendRequest } from "../../../_backend/db/crudOther";
 
 const acceptAuthRequest = (state, sender) => {
   const { username, friendRequestReceived } = state;

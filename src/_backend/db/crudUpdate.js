@@ -1,5 +1,5 @@
 import firestore from "@react-native-firebase/firestore";
-import { getProfileByUsername } from "./get";
+import { getProfileByUsername } from "./crudGet";
 
 const db = firestore();
 export const usersCollection = db.collection("users");

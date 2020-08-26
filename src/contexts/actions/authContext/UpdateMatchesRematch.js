@@ -1,4 +1,4 @@
-import { updateUnfinishedMatches } from "../../../fb/update";
+import { updateUnfinishedMatches } from "../../../_backend/db/crudUpdate";
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
 const updateAuthMatchesRematch = (rematch) => {

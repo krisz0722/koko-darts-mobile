@@ -8,6 +8,7 @@ import { BackHandler } from "react-native";
 import { COLOR } from "../settings/OptionsColor";
 import { GameContext } from "../../contexts/GameContext";
 import { ScreenContainer } from "../../navigators/AppNavigator";
+import { AppBackground } from "../../../App";
 
 const SETTINGS_INGAME = ({ navigation }) => {
   const { dispatchGameData, gameData } = useContext(GameContext);
@@ -54,42 +55,48 @@ const SETTINGS_INGAME = ({ navigation }) => {
   }, [navigation]);
 
   return (
-    <ScreenContainer theme={theme}>
-      <OptionsLayout
-        layout={layout}
-        toggleLayout={toggleLayout}
-        ingame={true}
+    <>
+      <AppBackground
+        source={require("../../../assets/bg.png")}
+        resizeMode="cover"
       />
-      <COLOR toggleTheme={toggleTheme} ingame={true} />
-      <OptionsEffects
-        background={background}
-        animation={animation}
-        opacity={opacity}
-        toggleAnimation={toggleAnimation}
-        toggleOpacity={toggleOpacity}
-        toggleBackground={toggleBackground}
-        ingame={true}
-      />
-
-      <PREVIEW
-        animation={animation}
-        settings={inGameSettings}
-        preview={true}
-        ingame={true}
-        layout={layout}
-      />
-      <BottomButtons theme={theme}>
-        <THEMED_BUTTON
-          type={"basic"}
-          size={"small"}
-          icon={"dart"}
-          text={"back"}
-          length={2}
-          action={() => navigation.navigate("game")}
-          inGameTheme={theme}
+      <ScreenContainer theme={theme}>
+        <OptionsLayout
+          layout={layout}
+          toggleLayout={toggleLayout}
+          ingame={true}
         />
-      </BottomButtons>
-    </ScreenContainer>
+        <COLOR toggleTheme={toggleTheme} ingame={true} />
+        <OptionsEffects
+          background={background}
+          animation={animation}
+          opacity={opacity}
+          toggleAnimation={toggleAnimation}
+          toggleOpacity={toggleOpacity}
+          toggleBackground={toggleBackground}
+          ingame={true}
+        />
+
+        <PREVIEW
+          animation={animation}
+          settings={inGameSettings}
+          preview={true}
+          ingame={true}
+          layout={layout}
+        />
+        <BottomButtons theme={theme}>
+          <THEMED_BUTTON
+            type={"basic"}
+            size={"small"}
+            icon={"dart"}
+            text={"back"}
+            length={2}
+            action={() => navigation.navigate("game")}
+            inGameTheme={theme}
+          />
+        </BottomButtons>
+      </ScreenContainer>
+    </>
   );
 };
 

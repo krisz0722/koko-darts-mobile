@@ -85,8 +85,6 @@ const HomeNavigator = ({ navigation }) => {
       gameData.p1_DATA.score !== 0 &&
       gameData.p2_DATA.score !== 0
     ) {
-      // updateAuthMatchesSave(gameData, username, true);
-      console.log("IF");
 
       updateAuthMatchesSave(gameData, username, false);
       navigation.dispatch(
@@ -127,6 +125,7 @@ const HomeNavigator = ({ navigation }) => {
           timingConfig={{ duration: 1 }}
           tabBarPosition={"bottom"}
           tabBar={(props) => <BOTTOM_TABBAR_CONTENT index={index} {...props} />}
+          swipeEnabled={false}
         >
           <Screen name="home" component={HOME} />
           <Screen name="settings" component={SETTINGS} />

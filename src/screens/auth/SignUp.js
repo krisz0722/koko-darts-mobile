@@ -15,7 +15,6 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import ACTIVITY_INDICATOR from "../../components/modals/Activityindicator";
 import auth from "@react-native-firebase/auth";
-import signUpFacebook from "../../_backend/auth/authSignUpFacebook";
 
 const REGISTER = ({ navigation }) => {
   const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
@@ -135,7 +134,7 @@ const REGISTER = ({ navigation }) => {
         />
       ) : (
         <>
-          {user ? null : (
+          {user && loading ? null : (
             <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
               <KeyboardAvoidingView
                 behavior={"padding"}

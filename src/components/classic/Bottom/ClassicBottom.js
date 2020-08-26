@@ -126,11 +126,8 @@ const CLASSIC_BOTTOM = (props) => {
           method: "SUBMIT",
         });
         dispatchInput({ type: "SET_DEFAULT" });
-        // if (playerScore === scoreToSubmit) {
-        //   action();
-        // }
       } else {
-        dispatchInput({ type: "INVALID" });
+        dispatchInput({ type: "INVALID", inputMethod });
       }
     }
   };

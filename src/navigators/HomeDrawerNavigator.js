@@ -6,9 +6,10 @@ import { Authcontext } from "../contexts/AuthContext";
 import HOME_DRAWER_CONTENT from "./HomeDrawerContent";
 import HomeNavigator from "./HomeNavigator";
 import { ThemeContext } from "../contexts/ThemeContext";
-import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
 import logOut from "../_backend/auth/authLogOut";
 import deleteAccount from "../_backend/auth/authDelete";
+import DELETE_ALERT from "../components/modals/DeleteAlert";
+import LOADING_SCREEN from "../screens/auth/LoadingScreen";
 
 const ABOUT = ({ navigation }) => (
   <View>
@@ -33,7 +34,7 @@ const CONTACT = ({ navigation }) => (
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const HomeDrawerNavigator = ({ navigation }) => {
+const HomeDrawerNavigator = React.memo(({ navigation }) => {
   const {
     gameData: { activePlayer },
   } = useContext(GameContext);
@@ -41,9 +42,11 @@ const HomeDrawerNavigator = ({ navigation }) => {
     userData: { username },
   } = useContext(Authcontext);
 
-  const { theme } = useContext(ThemeContext);
-  const [loadingDelete, setLoadingDelete] = useState(false);
-  const [loadingLogOut, setLoadingLogOut] = useState(false);
+  const {
+    theme,
+    themeContext: { animation },
+  } = useContext(ThemeContext);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const drawerstyle = {
     width: "auto",
@@ -51,38 +54,37 @@ const HomeDrawerNavigator = ({ navigation }) => {
   };
 
   const handleLogOut = async () => {
-    setLoadingLogOut(true);
     await logOut(navigation);
-    setLoadingLogOut(false);
   };
 
   const handleDelete = async () => {
-    setLoadingDelete(true);
     await deleteAccount(username, navigation);
-    setLoadingDelete(false);
+  };
+
+  const cancelDelete = () => {
+    navigation.navigate("home");
+    setDeleteModal(false);
   };
 
   return (
     <>
-      {loadingDelete || loadingLogOut ? (
-        <ACTIVITY_INDICATOR
-          text={
-            loadingDelete
-              ? "DELETING PROFILE..."
-              : loadingLogOut
-              ? "LOGGING OUT..."
-              : "he???"
-          }
+      {deleteModal ? (
+        <DELETE_ALERT
+          animation={animation}
           theme={theme}
+          action1={cancelDelete}
+          action2={handleDelete}
+          visible={deleteModal}
         />
-      ) : (
+      ) : null}
+      <>
         <Navigator
           backBehavior={"initialRoute"}
           screenOptions={{ swipeEnabled: false }}
           drawerContent={(props) => (
             <HOME_DRAWER_CONTENT
               logOut={handleLogOut}
-              deleteAccount={handleDelete}
+              deleteAccount={() => setDeleteModal(true)}
               theme={theme}
               username={username}
               {...props}
@@ -96,10 +98,11 @@ const HomeDrawerNavigator = ({ navigation }) => {
           <Screen name="about" component={ABOUT} />
           <Screen name="report" component={REPORT_BUG} />
           <Screen name="contact" component={CONTACT} />
+          <Screen name="loadingscreen" component={LOADING_SCREEN} />
         </Navigator>
-      )}
+      </>
     </>
   );
-};
+});
 
 export default HomeDrawerNavigator;

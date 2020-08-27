@@ -7,30 +7,11 @@ import transitionNone from "../styles/navNoTransition";
 import REGISTER from "../screens/auth/SignUp";
 import LOGIN from "../screens/auth/Login";
 import WELCOME from "../screens/auth/Welcome";
-import FORGOT_PASSWORD from "../screens/auth/ForgotPassword";
+import LOADING_SCREEN from "../screens/auth/LoadingScreen";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const AuthNavigator = () => {
-  const SCREENS = [
-    {
-      component: WELCOME,
-      name: "welcome",
-    },
-    {
-      component: REGISTER,
-      name: "register",
-    },
-    {
-      component: LOGIN,
-      name: "login",
-    },
-    {
-      component: FORGOT_PASSWORD,
-      name: "forgotpassword",
-    },
-  ];
-
   const { theme, animation } = useContext(ThemeContext);
 
   const transition = (theme) => {
@@ -52,9 +33,10 @@ const AuthNavigator = () => {
         ...transition(theme.name),
       }}
     >
-      {SCREENS.map((item) => (
-        <Screen key={item.name} name={item.name} component={item.component} />
-      ))}
+      <Screen name={"welcome"} component={WELCOME} />
+      <Screen name={"register"} component={REGISTER} />
+      <Screen name={"login"} component={LOGIN} />
+      <Screen name={"loadingscreen"} component={LOADING_SCREEN} />
     </Navigator>
   );
 };

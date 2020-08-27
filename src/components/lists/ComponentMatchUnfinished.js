@@ -3,7 +3,8 @@ import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { BasicText, FlexRow, FlexRowBetween } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { GameContext } from "../../contexts/GameContext";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import deleteMatch from "../../contexts/actions/authContext/DeleteUnfinishedMatch";
 
 export const Match = styled(TouchableOpacity)`
   ${FlexRowBetween};
@@ -51,6 +52,12 @@ export const Result2 = styled(Result1)`
   color: ${({ active, theme }) => (active ? theme.text2 : theme.text)};
 `;
 
+export const ClearButton = styled(TouchableOpacity)`
+  background-color: ${({ theme }) => theme.bgRed};
+  border-radius: 4px;
+  margin-left: 2%;
+`;
+
 export const MatchAvg = styled(Text)`
   ${BasicText};
   ${FlexRow};
@@ -68,8 +75,6 @@ const UNFINISHED_MATCH_COMPONENT = ({
   const { theme } = useContext(ThemeContext);
   const gameData = item.item;
 
-  const { dispatchGameData } = useContext(GameContext);
-
   const {
     date,
     opponent,
@@ -86,6 +91,10 @@ const UNFINISHED_MATCH_COMPONENT = ({
   const setGameToContinue = async () => {
     const gameToContinue = { ...gameData, initializedBy: username };
     handleGameToContinue(gameToContinue);
+  };
+
+  const deleteUnfinishedMatch = async () => {
+    await deleteMatch(gameData, username, null, null, null);
   };
 
   return (
@@ -123,6 +132,9 @@ const UNFINISHED_MATCH_COMPONENT = ({
       <MatchAvg active={active} theme={theme}>{`avg: ${avg.toFixed(
         1,
       )}`}</MatchAvg>
+      <ClearButton theme={theme} onPress={() => deleteUnfinishedMatch()}>
+        <Icon name={"clear"} size={20} color={theme.text} />
+      </ClearButton>
     </Match>
   );
 };

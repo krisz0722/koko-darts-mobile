@@ -10,7 +10,6 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
 import transitionNone from "../styles/navNoTransition";
-import HomeNavigator from "./HomeNavigator";
 import DrawerNavigator from "./DrawerNavigator";
 import AuthNavigator from "./AuthNavigator";
 import HomeDrawerNavigator from "./HomeDrawerNavigator";
@@ -24,22 +23,10 @@ export const ScreenContainer = styled(SafeAreaView)`
 const { Navigator, Screen } = createStackNavigator();
 
 const AppNavigator = () => {
-  const SCREENS = [
-    {
-      component: AuthNavigator,
-      name: "authnavigator",
-    },
-    {
-      component: HomeDrawerNavigator,
-      name: "homedrawernavigator",
-    },
-    {
-      component: DrawerNavigator,
-      name: "drawernavigator",
-    },
-  ];
-
-  const { theme, animation, background } = useContext(ThemeContext);
+  const {
+    theme,
+    themeContext: { animation, background },
+  } = useContext(ThemeContext);
 
   const navigationTheme = {
     dark: false,
@@ -81,13 +68,12 @@ const AppNavigator = () => {
                 ...transition(theme.name),
               }}
             >
-              {SCREENS.map((item) => (
-                <Screen
-                  key={item.name}
-                  name={item.name}
-                  component={item.component}
-                />
-              ))}
+              <Screen name={"authnavigator"} component={AuthNavigator} />
+              <Screen
+                name={"homedrawernavigator"}
+                component={HomeDrawerNavigator}
+              />
+              <Screen name={"drawernavigator"} component={DrawerNavigator} />
             </Navigator>
           </NavigationContainer>
         </ScreenContainer>

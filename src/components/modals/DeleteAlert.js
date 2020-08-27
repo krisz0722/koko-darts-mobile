@@ -4,7 +4,7 @@ import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 
-const EXIT_APP_ALERT = ({ animation, theme, action1, action2, visible }) => {
+const DELETE_ALERT = ({ animation, theme, action1, action2, visible }) => {
   const animationType = animation
     ? theme.name === "default"
       ? "fade"
@@ -19,8 +19,8 @@ const EXIT_APP_ALERT = ({ animation, theme, action1, action2, visible }) => {
       visible={visible}
     >
       <ModalContainerAlert theme={theme}>
-        <Header2>EXIT APP</Header2>
-        <Header3>Are you sure you want to exit the application?</Header3>
+        <Header2>DELETING ACCOUNT AND PROFILE</Header2>
+        <Header3>Are you sure you want to delete your account?</Header3>
         <BottomButtons theme={theme}>
           <THEMED_BUTTON
             text={"cancel"}
@@ -44,4 +44,4 @@ const EXIT_APP_ALERT = ({ animation, theme, action1, action2, visible }) => {
   );
 };
 
-export default EXIT_APP_ALERT;
+export default DELETE_ALERT;

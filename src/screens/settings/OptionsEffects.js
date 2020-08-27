@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Row, Div } from "./StyledSettings";
+import { Row, Div } from "./home/StyledSettings";
 import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
 import SETTINGS_HEADER from "./Header";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -23,6 +23,7 @@ export const OptionsEffects = React.memo((props) => {
   } = useContext(GameContext);
 
   const themeToUse = ingame ? settings.theme : theme;
+  const length = ingame ? 2 : 3;
 
   return (
     <Row theme={themeToUse} layout="asym">
@@ -35,26 +36,29 @@ export const OptionsEffects = React.memo((props) => {
         <SETTINGS_BUTTON
           value={"animation"}
           active={animation}
-          length={3}
+          length={length}
           size={"small"}
           action={toggleAnimation}
           checkbox={true}
           inGameTheme={themeToUse}
         />
-        <SETTINGS_BUTTON
-          value={"background"}
-          active={background}
-          length={3}
-          size={"small"}
-          action={toggleBackground}
-          checkbox={true}
-          inGameTheme={themeToUse}
-        />
+        {!ingame ? (
+          <SETTINGS_BUTTON
+            value={"background"}
+            active={background}
+            length={3}
+            size={"small"}
+            action={toggleBackground}
+            checkbox={true}
+            inGameTheme={themeToUse}
+          />
+        ) : null}
+
         <SETTINGS_BUTTON
           value={"opacity"}
           size={"small"}
           active={opacity}
-          length={3}
+          length={length}
           action={toggleOpacity}
           checkbox={true}
           inGameTheme={themeToUse}
@@ -63,5 +67,3 @@ export const OptionsEffects = React.memo((props) => {
     </Row>
   );
 });
-
-//TODO async?

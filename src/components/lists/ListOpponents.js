@@ -20,12 +20,20 @@ export const ProfilesContainer = styled(FlatList)`
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
-const LIST_OPPONENTS = ({ opponent, chooseProfile, regexp }) => {
+const LIST_OPPONENTS = React.memo(({ opponent, chooseProfile }) => {
   const { theme } = useContext(ThemeContext);
-  const FRIENDS_LIST = useContext(Authcontext).userData.friends.filter(
-    (item) =>
-      item.key !== "GUEST" && item.key !== "DELETED USER" && !item.inGame,
-  );
+  const {
+    userData: { friends, unfinishedMatches },
+  } = useContext(Authcontext);
+  const FRIENDS_LIST = friends.filter((friend) => {
+    const hasUnfinished = unfinishedMatches.find((match) => {
+      return match.opponent === friend.key;
+    });
+    const isGuest = friend.key === "GUEST";
+    const isDeleted = friend.key === "DELETED USER";
+
+    return !hasUnfinished && !isGuest && !isDeleted && !friend.inGame;
+  });
 
   const renderItem = ({ item }) => (
     <OPPONENT_COMPONENT
@@ -45,8 +53,6 @@ const LIST_OPPONENTS = ({ opponent, chooseProfile, regexp }) => {
       />
     </Safe>
   );
-};
+});
 
 export default LIST_OPPONENTS;
-
-//TODO filter by a regExp

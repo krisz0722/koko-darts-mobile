@@ -1,12 +1,15 @@
 import { Alert } from "react-native";
+import { CommonActions } from "@react-navigation/native";
 
-const throwError = (err, type) => {
+const throwError = (err, type, navigation) => {
   const alertTitle = () => {
     switch (type) {
       case "signUp":
         return "Error while signing up with email and password";
       case "signInGoogle":
         return "Error while signing up with Google credentials";
+      case "signInFacebook":
+        return "Error while signing up with Facebook credentials";
       case "login":
         return "Error while logging in with email and password";
       case "delete":
@@ -32,6 +35,14 @@ const throwError = (err, type) => {
         return "The supplied authentication credential is malformed or has expired.";
       case "auth/email-already-in-use":
         return "There is an account already registered with this e-mail. Try to log in.";
+      case "auth/network-request-failed":
+        return "A network error (such as timeout, interrupted connection or unreachable host) has occurred";
+      case "auth/cancel":
+        return "Authentication process has been cancelled by the user";
+      case "auth/token":
+        return "Something went wrong obtaining access token";
+      default:
+        return "Unknown error. Something went wrong. If you are experiencing problems with the app often, please report a bug.";
     }
   };
 
@@ -40,6 +51,13 @@ const throwError = (err, type) => {
     alertMessage(),
     [{ text: "OK", onPress: () => console.log("OK Pressed") }],
     { cancelable: false },
+  );
+
+  return navigation.dispatch(
+    CommonActions.reset({
+      index: 1,
+      routes: [{ name: "authnavigator" }],
+    }),
   );
 };
 

@@ -8,19 +8,22 @@ import LogIn from "./authLogIn";
 
 const signUpFacebook = async (navigation, reducers) => {
   try {
+    navigation.navigate("loadingscreen", {
+      text: "signing in with facebook...",
+    });
     const result = await LoginManager.logInWithPermissions([
       "public_profile",
       "email",
     ]);
 
     if (result.isCancelled) {
-      throw "User cancelled the login process";
+      return throwError("auth/cancel", "signInFacebook", navigation);
     }
 
     const data = await AccessToken.getCurrentAccessToken();
 
     if (!data) {
-      throw "Something went wrong obtaining access token";
+      return throwError("auth/token", "signInFacebook", navigation);
     }
 
     const facebookCredential = auth.FacebookAuthProvider.credential(
@@ -37,6 +40,7 @@ const signUpFacebook = async (navigation, reducers) => {
     const responseInfoCallback = async (error, result) => {
       if (error) {
         console.log("Error fetching data: " + error);
+        return throwError(error.code, "signInFacebook", navigation);
       } else {
         console.log("Success fetching data: " + result);
         console.log(result);
@@ -56,8 +60,9 @@ const signUpFacebook = async (navigation, reducers) => {
     const infoRequest = new GraphRequest("/me", null, responseInfoCallback);
     await new GraphRequestManager().addRequest(infoRequest).start();
   } catch (err) {
+    console.log(err.code);
     console.log(err);
-    throwError(err.code, "signInGoogle");
+    return throwError(err.code, "signInFacebook", navigation);
   }
 };
 

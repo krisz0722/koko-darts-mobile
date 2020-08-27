@@ -8,7 +8,7 @@ import {
   FlexColAround,
   FlexRowAround,
   Window,
-} from "../../styles/css_mixins";
+} from "../../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Players = styled(View)`
@@ -51,13 +51,13 @@ export const PLAYERS = ({ toggleSwap, p1, p2 }) => {
   const p2Name = p2 ? p2.key : "";
   const p2Img = p2 ? p2.img : "";
 
-  console.log(p1, p2);
+  // console.log(p1, p2);
   return (
     <>
       <Players>
         <PlayerInfo>
           {p1.img === "" ? (
-            <Avatar source={require("../../../assets/bg.png")} />
+            <Avatar source={require("../../../../assets/bg.png")} />
           ) : (
             <Avatar source={{ uri: p1Img }} />
           )}
@@ -69,7 +69,7 @@ export const PLAYERS = ({ toggleSwap, p1, p2 }) => {
         </Swap>
         <PlayerInfo>
           {p2.img === "" ? (
-            <Avatar source={require("../../../assets/bg.png")} />
+            <Avatar source={require("../../../../assets/bg.png")} />
           ) : (
             <Avatar source={{ uri: p2Img }} />
           )}

@@ -6,10 +6,18 @@ import { CommonActions } from "@react-navigation/native";
 import LogIn from "./authLogIn";
 
 const signUp = async (email, password, username, navigation, reducers) => {
+  navigation.navigate("loadingscreen", { text: "signing up with email..." });
+
   const userNameTaken = await checkUsernameAvailability(username);
   console.log("USERNAMETAKEN", userNameTaken);
 
   if (userNameTaken > 0) {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "authnavigator" }],
+      }),
+    );
     return throwError("usernametaken", "signUp");
   } else {
     try {
@@ -19,13 +27,7 @@ const signUp = async (email, password, username, navigation, reducers) => {
       LogIn(email, password, username, navigation, reducers);
     } catch (err) {
       console.log(err);
-      throwError(err.code, "signUp");
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: "authnavigator" }],
-        }),
-      );
+      return throwError(err.code, "signUp", navigation);
     }
   }
 };

@@ -1,22 +1,21 @@
 import React, { useRef, useContext, useEffect, useState } from "react";
 import HOME from "../screens/home/Home";
-import SETTINGS from "../screens/settings/Settings";
+import SETTINGS from "../screens/settings/home/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PROFILE from "../screens/profile/Profile";
-import PREGAME_SETTINGS from "../screens/pregame/PreGameSettings";
+import PREGAME_SETTINGS from "../screens/settings/pregame/PreGameSettings";
 import { ThemeContext } from "../contexts/ThemeContext";
 import STATS from "../screens/stats/Stats";
 import { usersCollection } from "../_backend/db/crudOther";
 import { Authcontext } from "../contexts/AuthContext";
-import ACTIVITY_INDICATOR from "../components/modals/Activityindicator";
 import BOTTOM_TABBAR_CONTENT from "./HomeNavigatorContent";
 import STATS2 from "../screens/stats/Stats2";
 import { AppState } from "react-native";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
-import { CommonActions, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";
 
-const HomeNavigator = ({ navigation }) => {
+const HomeNavigator = React.memo(() => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
   const {
     dispatchUserData,
@@ -26,10 +25,9 @@ const HomeNavigator = ({ navigation }) => {
 
   const route = useRoute().state;
   const index = route ? route.index : null;
-  console.log(route);
   const appState = useRef(AppState.currentState);
 
-  const { theme, animation } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
   const [inGame, setInGame] = useState(false);
   const [gameData, setGameData] = useState(null);
@@ -80,34 +78,20 @@ const HomeNavigator = ({ navigation }) => {
     appState.current = nextAppState;
     console.log("STATECHANGE GAMEDATA", gameData);
     if (
-      appState.current === "background" &&
-      gameData.initializedBy === username &&
-      gameData.p1_DATA.score !== 0 &&
-      gameData.p2_DATA.score !== 0
+      appState.current === "background" ||
+      (appState.current === "inactive" &&
+        gameData.initializedBy === username &&
+        gameData.p1_DATA.score !== 0 &&
+        gameData.p2_DATA.score !== 0)
     ) {
-
-      updateAuthMatchesSave(gameData, username, false);
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [{ name: "homenavigator" }],
-        }),
-      );
+      await updateAuthMatchesSave(gameData, username, false, "leave");
     }
     console.log(nextAppState);
   };
 
   return (
     <>
-      {loading && isFocused ? (
-        <ACTIVITY_INDICATOR
-          visible={loading}
-          animation={animation}
-          text={loading ? "Loading profile..." : ""}
-          theme={theme}
-          filled={false}
-        />
-      ) : inGame ? (
+      {inGame ? (
         <>
           {gameData ? (
             <STATS2 username={username} gameData={gameData} theme={theme} />
@@ -136,6 +120,6 @@ const HomeNavigator = ({ navigation }) => {
       )}
     </>
   );
-};
+});
 
 export default HomeNavigator;

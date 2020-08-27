@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Row, Div } from "./StyledSettings";
+import { Row, Div } from "./home/StyledSettings";
 import SETTINGS_HEADER from "./Header";
 import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
 import { ThemeContext } from "../../contexts/ThemeContext";

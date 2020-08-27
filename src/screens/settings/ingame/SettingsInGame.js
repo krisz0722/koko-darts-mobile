@@ -1,14 +1,14 @@
 import React, { useContext, useCallback, useEffect } from "react";
 import { BottomButtons } from "./StyledSettingsInGame";
-import { OptionsLayout } from "../settings/OptionsLayout";
-import { OptionsEffects } from "../settings/OptionsEffects";
-import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import PREVIEW from "../settings/Preview";
+import { OptionsLayout } from "../OptionsLayout";
+import { OptionsEffects } from "../OptionsEffects";
+import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
+import PREVIEW from "../Preview";
 import { BackHandler } from "react-native";
-import { COLOR } from "../settings/OptionsColor";
-import { GameContext } from "../../contexts/GameContext";
-import { ScreenContainer } from "../../navigators/AppNavigator";
-import { AppBackground } from "../../../App";
+import { COLOR } from "../OptionsColor";
+import { GameContext } from "../../../contexts/GameContext";
+import { ScreenContainer } from "../../../navigators/AppNavigator";
+import { AppBackground } from "../../../../App";
 
 const SETTINGS_INGAME = ({ navigation }) => {
   const { dispatchGameData, gameData } = useContext(GameContext);
@@ -57,7 +57,7 @@ const SETTINGS_INGAME = ({ navigation }) => {
   return (
     <>
       <AppBackground
-        source={require("../../../assets/bg.png")}
+        source={require("../../../../assets/bg.png")}
         resizeMode="cover"
       />
       <ScreenContainer theme={theme}>
@@ -86,9 +86,8 @@ const SETTINGS_INGAME = ({ navigation }) => {
         />
         <BottomButtons theme={theme}>
           <THEMED_BUTTON
-            type={"basic"}
+            type={"active"}
             size={"small"}
-            icon={"dart"}
             text={"back"}
             length={2}
             action={() => navigation.navigate("game")}

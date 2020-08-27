@@ -7,6 +7,8 @@ import throwError from "./authError";
 import LogIn from "./authLogIn";
 
 const signUpGoogle = async (navigation, reducers) => {
+  navigation.navigate("loadingscreen", { text: "signing in with google..." });
+
   try {
     await GoogleSignin.configure({
       webClientId:
@@ -45,7 +47,8 @@ const signUpGoogle = async (navigation, reducers) => {
     }
   } catch (err) {
     console.log(err);
-    throwError(err.code, "signInGoogle");
+    console.log(err.code);
+    return throwError(err.code, "signInGoogle", navigation);
   }
 };
 

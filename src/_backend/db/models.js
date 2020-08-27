@@ -61,6 +61,6 @@ export const userModel = (username, email, photo) => ({
     opacity: true,
     animation: true,
     background: true,
-    theme: "default",
+    theme: "contrast",
   },
 });

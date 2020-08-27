@@ -13,25 +13,19 @@ import signUp from "../../_backend/auth/authSignUpEmail";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import ACTIVITY_INDICATOR from "../../components/modals/Activityindicator";
 import auth from "@react-native-firebase/auth";
 
 const REGISTER = ({ navigation }) => {
-  const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
-    ThemeContext,
-  );
-
   const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchGameData } = useContext(GameContext);
   const { dispatchUserData } = useContext(Authcontext);
+  const { dispatchTheme, theme } = useContext(ThemeContext);
 
   const reducers = {
     game: dispatchGameData,
     settings: dispatchSettings,
     user: dispatchUserData,
-    theme: setSelectedTheme,
-    animation: setAnimation,
-    background: setBackground,
+    theme: dispatchTheme,
   };
 
   const [username, setUsername] = useState("test_01");
@@ -126,55 +120,45 @@ const REGISTER = ({ navigation }) => {
 
   return (
     <>
-      {loading ? (
-        <ACTIVITY_INDICATOR
-          text="signing in with email..."
-          theme={theme}
-          size="large"
-        />
-      ) : (
-        <>
-          {user && loading ? null : (
-            <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
-              <KeyboardAvoidingView
-                behavior={"padding"}
-                contentContainerStyle={{
-                  flexGrow: 1,
-                  justifyContent: "center",
-                }}
-                keyboardShouldPersistTaps={"always"}
-              >
-                <Text>valami</Text>
-                <Form theme={theme} isKeyboardUp={isKeyboardUp}>
-                  <Inputs>
-                    {INPUTS.map((item) => (
-                      <LoginInput
-                        key={item.name}
-                        valid={item.value.length > 5}
-                        input={item}
-                        handleFocus={handleFocus}
-                        focused={focus === item.name}
-                      />
-                    ))}
-                    <THEMED_BUTTON
-                      type={enableSignUp ? "active" : "basic"}
-                      disabled={!enableSignUp}
-                      text={"Sign Up"}
-                      action={() => pressSignUp()}
-                    />
-                  </Inputs>
-                  <Buttons>
-                    <THEMED_BUTTON
-                      text={"Already have an account?\ntap here to log in!"}
-                      action={() => navigation.navigate("login")}
-                      type={"ghost"}
-                    />
-                  </Buttons>
-                </Form>
-              </KeyboardAvoidingView>
-            </SafeAreaView>
-          )}
-        </>
+      {user && loading ? null : (
+        <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
+          <KeyboardAvoidingView
+            behavior={"padding"}
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "center",
+            }}
+            keyboardShouldPersistTaps={"always"}
+          >
+            <Text>valami</Text>
+            <Form theme={theme} isKeyboardUp={isKeyboardUp}>
+              <Inputs>
+                {INPUTS.map((item) => (
+                  <LoginInput
+                    key={item.name}
+                    valid={item.value.length > 5}
+                    input={item}
+                    handleFocus={handleFocus}
+                    focused={focus === item.name}
+                  />
+                ))}
+                <THEMED_BUTTON
+                  type={enableSignUp ? "active" : "basic"}
+                  disabled={!enableSignUp}
+                  text={"Sign Up"}
+                  action={() => pressSignUp()}
+                />
+              </Inputs>
+              <Buttons>
+                <THEMED_BUTTON
+                  text={"Already have an account?\ntap here to log in!"}
+                  action={() => navigation.navigate("login")}
+                  type={"ghost"}
+                />
+              </Buttons>
+            </Form>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
       )}
     </>
   );

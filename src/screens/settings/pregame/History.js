@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { Row2 } from "../settings/StyledSettings";
-import SETTINGS_HEADER from "../settings/Header";
+import { Row2 } from "../home/StyledSettings";
+import SETTINGS_HEADER from "../Header";
 import styled from "styled-components";
 import { Text, View } from "react-native";
 import {
@@ -8,8 +8,8 @@ import {
   FlexColAround,
   FlexRow,
   Window,
-} from "../../styles/css_mixins";
-import { Authcontext } from "../../contexts/AuthContext";
+} from "../../../styles/css_mixins";
+import { Authcontext } from "../../../contexts/AuthContext";
 
 const RowMod = styled(Row2)``;
 

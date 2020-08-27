@@ -6,6 +6,8 @@ import loadAppData from "./authLoadAppData";
 
 const LogIn = async (email, password, id, navigation, reducers, credential) => {
   try {
+    navigation.navigate("loadingscreen", { text: "logging in..." });
+
     console.log("logging in...");
 
     if (credential) {
@@ -50,13 +52,7 @@ const LogIn = async (email, password, id, navigation, reducers, credential) => {
     }
   } catch (err) {
     console.log(err);
-    throwError(err.code, "login");
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "authnavigator" }],
-      }),
-    );
+    return throwError(err.code, "login", navigation);
   }
 };
 

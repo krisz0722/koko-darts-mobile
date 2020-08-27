@@ -1,27 +1,16 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useContext } from "react";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
 import { GameContext } from "../../contexts/GameContext";
-import { CommonActions } from "@react-navigation/native";
 import { Authcontext } from "../../contexts/AuthContext";
 import moment from "moment";
-import Theme_Default from "../../styles/theme-default.json";
-import Theme_Contrast from "../../styles/theme-contrast.json";
 import updateAuthMatchesRematch from "../../contexts/actions/authContext/UpdateMatchesRematch";
 import { updateStatus } from "../../_backend/db/crudUpdate";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const REMATCH_MODAL = React.memo(({ navigation }) => {
-  const THEMES = useMemo(
-    () => ({
-      default: Theme_Default,
-      contrast: Theme_Contrast,
-    }),
-    [],
-  );
-
   const { theme } = useContext(ThemeContext);
 
   const {
@@ -54,16 +43,16 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
   const quitGame = async () => {
     await dispatchGameData({ type: "LOAD_SETTINGS" });
     if (activePlayer) {
-      await updateStatus(activePlayer.key, inactivePlayer.key, false);
+      await updateStatus(
+        activePlayer.key,
+        inactivePlayer.key,
+        false,
+        navigation,
+        "leave",
+      );
     } else {
-      await updateStatus(p1.key, p2.key, false);
+      await updateStatus(p1.key, p2.key, false, navigation, "leave");
     }
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "homedrawernavigator" }],
-      }),
-    );
   };
 
   const rematch = async () => {
@@ -87,8 +76,7 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
         value: rematch,
       });
 
-      await updateAuthMatchesRematch(rematch, THEMES);
-      navigation.navigate("game");
+      await updateAuthMatchesRematch(rematch, navigation, "rematch");
     }
     return null;
   };
@@ -106,10 +94,9 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
       />
       <BottomButtons theme={theme}>
         <THEMED_BUTTON
-          text={"quit game"}
+          text={"back to home"}
           length={2}
           size={"small"}
-          icon={"arrow-back"}
           type={"danger"}
           action={quitGame}
           inGameTheme={theme}
@@ -119,7 +106,7 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
           text={activePlayer ? "game on!" : "select"}
           type={"success"}
           length={2}
-          icon={activePlayer ? "check" : "person"}
+          disabled={activePlayer ? false : true}
           action={rematch}
           inGameTheme={theme}
         />

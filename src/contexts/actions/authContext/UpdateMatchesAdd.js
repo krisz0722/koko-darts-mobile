@@ -1,7 +1,7 @@
-import { updateUnfinishedMatches } from "../../../_backend/db/crudUpdate";
+import { updateUnfinishedMatches } from "../../../_backend/db/crudUpdateUnfinishedMatches";
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
-const updateAuthMatchesAdd = (newMatch, THEMES) => {
+const updateAuthMatchesAdd = (newMatch, THEMES, navigation, navigationType) => {
   const { username, settings, date, key } = newMatch;
   const { p1, p2 } = settings;
 
@@ -39,6 +39,8 @@ const updateAuthMatchesAdd = (newMatch, THEMES) => {
     "add",
     key,
     true,
+    navigation,
+    navigationType,
   );
 };
 

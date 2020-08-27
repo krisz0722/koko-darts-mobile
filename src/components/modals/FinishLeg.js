@@ -72,10 +72,9 @@ const FINISH_LEG_MODAL = React.memo(({ navigation }) => {
       />
       <BottomButtons theme={theme}>
         <THEMED_BUTTON
-          text={"back"}
+          text={"undo"}
           length={2}
           size={"small"}
-          icon={"arrow-back"}
           type={"danger"}
           action={back}
         />
@@ -84,7 +83,6 @@ const FINISH_LEG_MODAL = React.memo(({ navigation }) => {
           text={lastRoundNod ? "ok" : "select"}
           type={lastRoundNod ? "success" : "danger"}
           length={2}
-          icon={lastRoundNod ? "check" : "dart"}
           action={finishLeg}
         />
       </BottomButtons>

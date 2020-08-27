@@ -90,7 +90,6 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
       (async () => {
         try {
           const profiles = await getUsers().then((querySnapshot) => {
-            console.log("PROFILES", querySnapshot.docs);
             return querySnapshot.docs.filter((item) => {
               const profileUsername = item.data().username;
               const isFriend = () =>
@@ -100,7 +99,6 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
                 friendRequestSent.find(
                   (request) => request === profileUsername,
                 );
-              console.log("HAS REQUST SENT", hasfriendRequestSent());
               const hasfriendRequestReceived = () =>
                 friendRequestReceived.find(
                   (request) => request.username === profileUsername,
@@ -116,7 +114,6 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
           });
 
           profiles.sort((a, b) => {
-            console.log(a.data().username, b.data().username);
             return b.data().username - a.data().username;
           });
 
@@ -173,7 +170,6 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
     if (profiles) {
       const filtered = profiles.filter((item) => {
         const username = item.data().username;
-        console.log(regexp);
         return regexp.test(username);
       });
       setFilteredProfiles(filtered);
@@ -226,7 +222,6 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
                 text={"back"}
                 length={2}
                 size={"small"}
-                icon={"arrow-back"}
                 type={"danger"}
                 action={() => back()}
               />
@@ -258,6 +253,3 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
 });
 
 export default SEARCH_MODAL;
-
-// TODO keyboard avoiding view... or just simply put it in a scrollview
-// TODO icons and button titles

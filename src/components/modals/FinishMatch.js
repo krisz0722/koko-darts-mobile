@@ -3,7 +3,6 @@ import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import { Header2, ModalContainerAlert } from "./StyledModal";
 import { GameContext } from "../../contexts/GameContext";
-import { CommonActions } from "@react-navigation/native";
 import updateAuthProfile from "../../contexts/actions/authContext/UpdateProfile";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
@@ -23,19 +22,19 @@ const FINISH_MATCH_MODAL = React.memo(({ navigation }) => {
 
   const quitMatch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH" });
-    await updateAuthProfile(p1.key, p2.key, gameData, false);
-
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "homedrawernavigator" }],
-      }),
+    await updateAuthProfile(
+      p1.key,
+      p2.key,
+      gameData,
+      false,
+      navigation,
+      "updateProfile",
     );
   };
 
   const initiateRematch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH", isRematch: true });
-    await updateAuthProfile(p1.key, p2.key, gameData, true);
+    await updateAuthProfile(p1.key, p2.key, gameData, true, navigation, null);
   };
 
   return (
@@ -47,7 +46,6 @@ const FINISH_MATCH_MODAL = React.memo(({ navigation }) => {
             text={"back to home"}
             length={2}
             size={"small"}
-            icon={"home"}
             type={"danger"}
             action={quitMatch}
             inGameTheme={theme}
@@ -57,7 +55,6 @@ const FINISH_MATCH_MODAL = React.memo(({ navigation }) => {
             text={"rematch"}
             type={"success"}
             length={2}
-            icon={"dart"}
             action={initiateRematch}
             inGameTheme={theme}
           />

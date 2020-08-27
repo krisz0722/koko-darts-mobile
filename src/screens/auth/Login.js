@@ -8,24 +8,18 @@ import LogIn from "../../_backend/auth/authLogIn";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
-import ACTIVITY_INDICATOR from "../../components/modals/Activityindicator";
-import auth from "@react-native-firebase/auth";
 
-const LOGIN = ({ navigation }) => {
-  const { theme, setSelectedTheme, setAnimation, setBackground } = useContext(
-    ThemeContext,
-  );
+const LOGIN = React.memo(({ navigation }) => {
   const { dispatchGameData } = useContext(GameContext);
   const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchUserData, userData } = useContext(Authcontext);
+  const { dispatchTheme, theme } = useContext(ThemeContext);
 
   const reducers = {
     game: dispatchGameData,
     settings: dispatchSettings,
     user: dispatchUserData,
-    theme: setSelectedTheme,
-    animation: setAnimation,
-    background: setBackground,
+    theme: dispatchTheme,
   };
 
   const [password, setPassword] = useState("111111");
@@ -88,59 +82,49 @@ const LOGIN = ({ navigation }) => {
     },
   ];
 
-  const user = auth().currentUser;
-
   return (
     <>
-      {loading ? (
-        <ACTIVITY_INDICATOR text="logging in..." theme={theme} size="large" />
-      ) : (
-        <>
-          {user ? null : (
-            <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
-              <KeyboardAvoidingView
-                behavior={"padding"}
-                contentContainerStyle={{
-                  flexGrow: 1,
-                  justifyContent: "center",
-                }}
-                keyboardShouldPersistTaps={"always"}
-              >
-                <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
-                  <Inputs>
-                    {INPUTS.map((item) => {
-                      return (
-                        <LoginInput
-                          key={item.name}
-                          valid={item.value.length > 5}
-                          value={item.value}
-                          input={item}
-                          handleFocus={handleFocus}
-                          focused={focus === item.name}
-                        />
-                      );
-                    })}
-                  </Inputs>
-                  <THEMED_BUTTON
-                    type={enableSignUp ? "active" : "basic"}
-                    disabled={!enableSignUp}
-                    text={"log in"}
-                    action={() => pressLogin()}
+      <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
+        <KeyboardAvoidingView
+          behavior={"padding"}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: "center",
+          }}
+          keyboardShouldPersistTaps={"always"}
+        >
+          <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
+            <Inputs>
+              {INPUTS.map((item) => {
+                return (
+                  <LoginInput
+                    key={item.name}
+                    valid={item.value.length > 5}
+                    value={item.value}
+                    input={item}
+                    handleFocus={handleFocus}
+                    focused={focus === item.name}
                   />
-                  <Buttons>
-                    <THEMED_BUTTON
-                      text={"forgotten password"}
-                      action={() => navigation.navigate("forgotpassword")}
-                      type={"ghost"}
-                    />
-                  </Buttons>
-                </Form2>
-              </KeyboardAvoidingView>
-            </SafeAreaView>
-          )}
-        </>
-      )}
+                );
+              })}
+            </Inputs>
+            <THEMED_BUTTON
+              type={enableSignUp ? "active" : "basic"}
+              disabled={!enableSignUp}
+              text={"log in"}
+              action={() => pressLogin()}
+            />
+            <Buttons>
+              <THEMED_BUTTON
+                text={"forgotten password"}
+                action={() => navigation.navigate("forgotpassword")}
+                type={"ghost"}
+              />
+            </Buttons>
+          </Form2>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </>
   );
-};
+});
 export default LOGIN;

@@ -91,7 +91,6 @@ const CHOOSE_PLAYER_MODAL = React.memo(
                   text={"play with guest"}
                   type={"danger"}
                   length={2}
-                  icon={"person"}
                   action={chooseGuest}
                 />
                 <THEMED_BUTTON
@@ -99,8 +98,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
                   text={"choose"}
                   type={"success"}
                   length={2}
-                  icon={"check"}
-                  disabled={!p2.key || p2.key === ""}
+                  disabled={!p2.key || p2.key === "" || p2.key === "GUEST"}
                   action={() => handleModal(p2.key)}
                 />
               </BottomButtons>

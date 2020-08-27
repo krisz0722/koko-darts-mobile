@@ -38,12 +38,13 @@ const HOME = React.memo(({ navigation }) => {
     const gameData = { ...gameToContinue, initializedBy: username };
     const opponentStatus = await checkOpponentsStatus(gameData.opponent);
     if (!opponentStatus) {
-      await updateAuthMatchesSave(gameData, username, true);
-      navigation.navigate("drawernavigator", {
-        screen: "game",
-        flag: "continue",
+      await updateAuthMatchesSave(
         gameData,
-      });
+        username,
+        true,
+        navigation,
+        "continue",
+      );
     } else {
       alert("Your opponent is in another match at the moment");
     }

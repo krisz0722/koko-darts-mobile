@@ -1,7 +1,14 @@
 import { updateProfile } from "../../../_backend/db/crudUpdate";
 import { getProfileByUsername } from "../../../_backend/db/crudGet";
 
-const updateAuthProfile = async (p1, p2, gameData, inGame) => {
+const updateAuthProfile = async (
+  p1,
+  p2,
+  gameData,
+  inGame,
+  navigation,
+  navigationType,
+) => {
   const update = async (p) => {
     const {
       settings: { p1, p2, legOrSet },
@@ -61,7 +68,6 @@ const updateAuthProfile = async (p1, p2, gameData, inGame) => {
       const newUnfinishedMatches = unfinishedMatches.filter(
         (item) => item.key !== key,
       );
-      console.log("UNFINISHED MATCHS AFTEr", newUnfinishedMatches);
       return newUnfinishedMatches;
     };
 
@@ -160,6 +166,8 @@ const updateAuthProfile = async (p1, p2, gameData, inGame) => {
       updateUserOverall(),
       key,
       inGame,
+      navigation,
+      navigationType,
     );
   };
 

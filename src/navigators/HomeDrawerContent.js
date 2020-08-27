@@ -36,7 +36,7 @@ const HOME_DRAWER_CONTENT = ({ logOut, deleteAccount, navigation, theme }) => {
     {
       route: "delete account",
       icon: "delete",
-      action: () => deleteAccount(),
+      action: deleteAccount,
     },
   ];
 

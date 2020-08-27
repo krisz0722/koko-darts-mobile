@@ -5,22 +5,22 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { OptionsScore } from "../settings/OptionsScore";
-import { OptionsLegOrSet } from "../settings/OptionsLegOrSet";
+import { OptionsScore } from "../OptionsScore";
+import { OptionsLegOrSet } from "../OptionsLegOrSet";
 import HISTORY from "./History";
 import PLAYERS from "./Players";
-import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import { BackHandler } from "react-native";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 import { BottomButtons } from "./StyledPreGame";
-import CHOOSE_PLAYER_MODAL from "../../components/modals/ChoosePlayerModal";
+import CHOOSE_PLAYER_MODAL from "../../../components/modals/ChoosePlayerModal";
 import { useIsFocused } from "@react-navigation/native";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { GameContext } from "../../contexts/GameContext";
-import { Authcontext } from "../../contexts/AuthContext";
-import updateAuthMatchesAdd from "../../contexts/actions/authContext/UpdateMatchesAdd";
-import Theme_Default from "../../styles/theme-default.json";
-import Theme_Contrast from "../../styles/theme-contrast.json";
+import { SettingsContext } from "../../../contexts/SettingsContext";
+import { GameContext } from "../../../contexts/GameContext";
+import { Authcontext } from "../../../contexts/AuthContext";
+import updateAuthMatchesAdd from "../../../contexts/actions/authContext/UpdateMatchesAdd";
+import Theme_Default from "../../../styles/theme-default.json";
+import Theme_Contrast from "../../../styles/theme-contrast.json";
 import moment from "moment";
 
 const PREGAME_SETTINGS = ({ navigation }) => {
@@ -35,7 +35,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   } = useContext(SettingsContext);
 
   const {
-    userData: { username, friends },
+    userData: { username, unfinishedMatches, friends },
   } = useContext(Authcontext);
 
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
@@ -47,10 +47,15 @@ const PREGAME_SETTINGS = ({ navigation }) => {
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    if (p2.key === "" && isFocused) {
+    const isEmpty = p2.key === "";
+    const hasUnfinished = unfinishedMatches.find(
+      (item) => item.opponent === p2.key,
+    );
+    if ((isEmpty || hasUnfinished) && isFocused) {
       setModal(true);
+      setP2({ key: "", img: "" });
     }
-  }, [p2.key, isFocused]);
+  }, [unfinishedMatches, p2.key, isFocused]);
 
   const THEMES = useMemo(
     () => ({
@@ -151,11 +156,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
       type: "START_NEW_GAME",
       value: newMatch,
     });
-    await updateAuthMatchesAdd(newMatch, THEMES);
-    navigation.navigate("drawernavigator", {
-      screen: "game",
-      flag: "new",
-    });
+    await updateAuthMatchesAdd(newMatch, THEMES, navigation, "new");
   }, [
     p1.key,
     p2.key,
@@ -225,7 +226,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           text={"back"}
           length={3}
           size={"small"}
-          icon={"arrow-back"}
           type={"danger"}
           action={() => navigation.navigate("home")}
         />
@@ -241,7 +241,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           text={"game on!"}
           type={"success"}
           length={3}
-          icon={"dart"}
           action={startGame}
         />
       </BottomButtons>

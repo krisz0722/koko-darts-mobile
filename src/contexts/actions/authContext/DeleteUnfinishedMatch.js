@@ -1,6 +1,6 @@
 import { updateUnfinishedMatches } from "../../../_backend/db/crudUpdateUnfinishedMatches";
 
-const updateAuthMatchesSave = (
+const deleteMatch = (
   gameData,
   username,
   inGame,
@@ -12,21 +12,12 @@ const updateAuthMatchesSave = (
     settings: { p1, p2 },
   } = gameData;
 
-  const matchToSave = (player) => {
-    const opponent = p1.key === player.key ? p2.key : p1.key;
-    return {
-      ...gameData,
-      opponent,
-      initializedBy: username,
-    };
-  };
-
   updateUnfinishedMatches(
     p1,
     p2,
-    matchToSave(p1),
-    matchToSave(p2),
-    "save",
+    null,
+    null,
+    "delete",
     key,
     inGame,
     navigation,
@@ -35,4 +26,4 @@ const updateAuthMatchesSave = (
   );
 };
 
-export default updateAuthMatchesSave;
+export default deleteMatch;

@@ -4,7 +4,7 @@ import {
   FlexColStart,
   FlexRowAround,
   Window,
-} from "../../styles/css_mixins";
+} from "../../../styles/css_mixins";
 import { View } from "react-native";
 
 export const Options = styled(View)`

@@ -1,17 +1,17 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Bottom, BottomButtons } from "./StyledSettings";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { OptionsLayout } from "./OptionsLayout";
-import { COLOR } from "./OptionsColor";
-import { OptionsEffects } from "./OptionsEffects";
-import { OptionsScore } from "./OptionsScore";
-import { OptionsLegOrSet } from "./OptionsLegOrSet";
-import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import PREVIEW from "./Preview";
+import { SettingsContext } from "../../../contexts/SettingsContext";
+import { OptionsLayout } from "../OptionsLayout";
+import { COLOR } from "../OptionsColor";
+import { OptionsEffects } from "../OptionsEffects";
+import { OptionsScore } from "../OptionsScore";
+import { OptionsLegOrSet } from "../OptionsLegOrSet";
+import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
+import PREVIEW from "../Preview";
 import { useIsFocused } from "@react-navigation/native";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import { Authcontext } from "../../contexts/AuthContext";
-import updateAuthSettings from "../../contexts/actions/authContext/UpdateSettings";
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import { Authcontext } from "../../../contexts/AuthContext";
+import updateAuthSettings from "../../../contexts/actions/authContext/UpdateSettings";
 
 const SETTINGS = () => {
   const {
@@ -20,11 +20,9 @@ const SETTINGS = () => {
     settings: { p1, p2 },
   } = useContext(SettingsContext);
   const {
-    setBackground,
-    background,
-    setAnimation,
-    selectedTheme,
-    setSelectedTheme,
+    themeContext,
+    themeContext: { background, selectedTheme },
+    dispatchTheme,
   } = useContext(ThemeContext);
 
   const {
@@ -79,7 +77,7 @@ const SETTINGS = () => {
         value: newSettings,
       });
       updateAuthSettings(userData, newSettings);
-      setAnimation(animation);
+      dispatchTheme({ type: "CHANGE_ANIMATION", value: !animation });
     }
   }, [
     background,
@@ -98,7 +96,7 @@ const SETTINGS = () => {
     legsPerSet,
     opacity,
     animation,
-    setAnimation,
+    dispatchTheme,
   ]);
 
   const togglePreview = useCallback(() => {
@@ -145,8 +143,8 @@ const SETTINGS = () => {
   }, [animation, setStateAnimation]);
 
   const toggleBackground = useCallback(() => {
-    setBackground(!background);
-  }, [setBackground, background]);
+    dispatchTheme({ type: "CHANGE_BACKGROUND", value: !background });
+  }, [dispatchTheme, background]);
 
   const toggleOpacity = useCallback(() => {
     setOpacity(!opacity);
@@ -154,9 +152,9 @@ const SETTINGS = () => {
 
   const toggleTheme = useCallback(
     (value) => {
-      setSelectedTheme(value);
+      dispatchTheme({ type: "CHANGE_THEME", value });
     },
-    [setSelectedTheme],
+    [dispatchTheme],
   );
 
   const reset = useCallback(() => {
@@ -180,10 +178,12 @@ const SETTINGS = () => {
     setTowin(toWin);
     setLegOrSet(legOrSet);
     setStartingScore(startingScore);
-    setSelectedTheme(theme);
-    setBackground(background);
+    dispatchTheme({
+      type: "LOAD_THEME",
+      value: { ...themeContext, background, selectedTheme: theme },
+    });
     dispatchSettings({ type: "RESET", value: USER_SETTINGS });
-  }, [USER_SETTINGS, setBackground, setSelectedTheme, dispatchSettings]);
+  }, [USER_SETTINGS, themeContext, dispatchTheme, dispatchSettings]);
 
   return (
     <>
@@ -223,7 +223,6 @@ const SETTINGS = () => {
         <BottomButtons>
           <THEMED_BUTTON
             size={"small"}
-            icon={preview ? "visibility-off" : "visibility"}
             text={preview ? "hide preview" : "show preview"}
             type={"success"}
             length={2}
@@ -232,7 +231,6 @@ const SETTINGS = () => {
           <THEMED_BUTTON
             type={"danger"}
             size={"small"}
-            icon={"undo"}
             text={"reset"}
             length={2}
             action={reset}

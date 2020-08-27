@@ -162,7 +162,6 @@ const STATS = React.memo(({ navigation, route }) => {
           </PlayerInfo>
         </Players>
         {DATA.map((item) => {
-          console.log("ITEM", item);
           const p1 = item.rounding
             ? p1_DATA[item.data].toFixed(item.rounding)
             : p1_DATA[item.data];

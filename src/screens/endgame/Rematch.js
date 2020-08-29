@@ -1,20 +1,24 @@
 import React, { useState, useContext } from "react";
-import THEMED_BUTTON from "../buttons/ThemedButton";
-import { BottomButtons } from "./StyledModal";
-import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
-import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
+import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import RADIO_BUTTON_SET from "../../components/buttons/RadioButtonSet";
 import { GameContext } from "../../contexts/GameContext";
 import { Authcontext } from "../../contexts/AuthContext";
 import moment from "moment";
 import updateAuthMatchesRematch from "../../contexts/actions/authContext/UpdateMatchesRematch";
 import { updateStatus } from "../../_backend/db/crudUpdate";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import STATS_PLAYERS from "../stats/StatsPlayers";
+import { AppBackground } from "../../../App";
+import { ScreenContainer } from "../../navigators/AppNavigator";
+import { Header } from "../stats/StyledStats";
+import { BottomButtons2 } from "../stats/StyledStats";
 
 const REMATCH_MODAL = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const {
     dispatchGameData,
+    gameData,
     gameData: {
       settings,
       opponent,
@@ -82,36 +86,43 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
   };
 
   return (
-    <ModalContainerAlert theme={theme}>
-      <Header2>throw for the start!</Header2>
-      <Header3>selec the player to start the next match</Header3>
-      <RADIO_BUTTON_SET
-        length={2}
-        direction={"row"}
-        options={OPTIONS}
-        action={handlePLayerToStart}
-        activeValue={activePlayerName}
+    <>
+      <AppBackground
+        source={require("../../../assets/bg.png")}
+        resizeMode="cover"
       />
-      <BottomButtons theme={theme}>
-        <THEMED_BUTTON
-          text={"back to home"}
+      <ScreenContainer theme={theme}>
+        <Header>throw for the start!</Header>
+        <Header>select the player to start the next match</Header>
+        <STATS_PLAYERS rematch={true} theme={theme} gameData={gameData} />
+        <RADIO_BUTTON_SET
           length={2}
-          size={"small"}
-          type={"danger"}
-          action={quitGame}
-          inGameTheme={theme}
+          direction={"row"}
+          options={OPTIONS}
+          action={handlePLayerToStart}
+          activeValue={activePlayerName}
         />
-        <THEMED_BUTTON
-          size={"small"}
-          text={activePlayer ? "game on!" : "select"}
-          type={"success"}
-          length={2}
-          disabled={activePlayer ? false : true}
-          action={rematch}
-          inGameTheme={theme}
-        />
-      </BottomButtons>
-    </ModalContainerAlert>
+        <BottomButtons2 theme={theme}>
+          <THEMED_BUTTON
+            text={"back to home"}
+            length={2}
+            size={"small"}
+            type={"danger"}
+            action={quitGame}
+            inGameTheme={theme}
+          />
+          <THEMED_BUTTON
+            size={"small"}
+            text={activePlayer ? "game on!" : "select"}
+            type={"success"}
+            length={2}
+            disabled={activePlayer ? false : true}
+            action={rematch}
+            inGameTheme={theme}
+          />
+        </BottomButtons2>
+      </ScreenContainer>
+    </>
   );
 });
 

@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { View, Text, TouchableOpacity, TouchableHighlight } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import {
   BasicTextBold,
   FlexAround,
   FlexRowAround,
-  Window,
 } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import CheckBox from "@react-native-community/checkbox";
 
 const Options = styled(View)`
-  width: ${({ direction }) => (direction === "column" ? "40%" : "100%")};
-  height: ${({ direction }) => (direction === "column" ? "70%" : "40%")};
+  width: ${({ direction }) => (direction === "row" ? "100%" : "40%")};
+  height: ${({ direction }) => (direction === "row" ? "25%" : "70%")};
   ${FlexAround};
   flex-direction: ${({ direction }) => direction};
 `;
@@ -26,23 +26,17 @@ const Option = styled(TouchableHighlight)`
   flex-direction: ${({ direction }) =>
     direction === "column" ? "row" : "column-reverse"};
   justify-content: space-around;
+  background-color: ${({ theme, active }) =>
+    active ? theme.bgGreen : "transparent"};
 `;
 
 const Label = styled(Text)`
   ${BasicTextBold};
   height: 50%;
   width: ${({ direction }) => (direction === "column" ? "50%" : "90%")};
-  color: ${({ theme }) => theme.bg1};
-`;
-
-const Radio = styled(TouchableOpacity)`
-  border-radius: ${() => (Window.height * 0.075) / 3};
-  background-color: ${({ active, theme }) =>
-    active ? theme.bg3 : "transparent"};
-  border-color: ${({ theme }) => theme.bg1};
-  border-width: ${({ theme }) => theme.borderWidth};
-  height: ${() => (Window.height * 0.075) / 3};
-  width: ${() => (Window.height * 0.075) / 3};
+  color: ${({ theme, active, direction }) =>
+    active || direction === "row" ? theme.text : theme.bg1};
+  font-size: 15;
 `;
 
 const RADIO_BUTTON_SET = ({
@@ -51,6 +45,7 @@ const RADIO_BUTTON_SET = ({
   activeValue,
   direction,
   length,
+  rematch = false,
 }) => {
   const { theme } = useContext(ThemeContext);
 
@@ -63,13 +58,26 @@ const RADIO_BUTTON_SET = ({
           length={length}
           key={item}
           onPress={() => action(item)}
+          active={activeValue === item}
         >
           <>
-            <Label direction={direction}>{item}</Label>
-            <Radio
-              onPress={() => action(item)}
+            <Label
               active={activeValue === item}
+              rematch={rematch}
+              direction={direction}
+            >
+              {item}
+            </Label>
+            <CheckBox
+              disabled={true}
+              onChange={() => action(item)}
+              tintColors={{
+                true: theme.text,
+                false: direction === "row" ? theme.text : theme.bg1,
+              }}
+              value={activeValue === item}
               theme={theme}
+              onCheckColor={theme.bg1}
             />
           </>
         </Option>

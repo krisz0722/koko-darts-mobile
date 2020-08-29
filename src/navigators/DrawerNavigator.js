@@ -10,11 +10,11 @@ import STATS from "../screens/stats/Stats";
 import { Authcontext } from "../contexts/AuthContext";
 import { usersCollection } from "../_backend/db/crudOther";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
-import STATS2 from "../screens/stats/Stats2";
-import FINISH_LEG_MODAL from "../components/modals/FinishLeg";
-import FINISH_MATCH_MODAL from "../components/modals/FinishMatch";
-import REMATCH_MODAL from "../components/modals/Rematch";
-import LOADING_SCREEN from "../screens/auth/LoadingScreen";
+import PLAYER_IS_IN_GAME from "../screens/info/InGame";
+import FINISH_LEG from "../screens/endgame/FinishLeg";
+import FINISH_MATCH from "../screens/endgame/FinishMatch";
+import REMATCH_MODAL from "../screens/endgame/Rematch";
+import LOADING_SCREEN from "../screens/info/LoadingScreen";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -125,9 +125,13 @@ const DrawerNavigator = ({ navigation }) => {
       {inGame ? (
         <>
           {gameData ? (
-            <STATS2 username={username} gameData={gameData} theme={theme} />
+            <PLAYER_IS_IN_GAME
+              username={username}
+              gameData={gameData}
+              theme={theme}
+            />
           ) : (
-            <STATS2
+            <PLAYER_IS_IN_GAME
               username={username}
               lastMatch={true}
               gameData={userData.matches[0]}
@@ -155,8 +159,8 @@ const DrawerNavigator = ({ navigation }) => {
           <Screen name="game" component={GAME_CLASSIC} />
           <Screen name="settings-ingame" component={SETTINGS_INGAME} />
           <Screen name="stats" component={STATS} />
-          <Screen name="legover" component={FINISH_LEG_MODAL} />
-          <Screen name={"matchover"} component={FINISH_MATCH_MODAL} />
+          <Screen name="legover" component={FINISH_LEG} />
+          <Screen name={"matchover"} component={FINISH_MATCH} />
           <Screen name={"rematch"} component={REMATCH_MODAL} />
           <Screen name={"loadingscreen"} component={LOADING_SCREEN} />
         </Navigator>

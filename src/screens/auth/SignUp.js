@@ -6,7 +6,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Buttons, Form, Inputs } from "./StyledAuth";
-import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import LOGIN_BUTTON from "../../components/buttons/LoginButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import signUp from "../../_backend/auth/authSignUpEmail";
@@ -142,7 +142,7 @@ const REGISTER = ({ navigation }) => {
                     focused={focus === item.name}
                   />
                 ))}
-                <THEMED_BUTTON
+                <LOGIN_BUTTON
                   type={enableSignUp ? "active" : "basic"}
                   disabled={!enableSignUp}
                   text={"Sign Up"}
@@ -150,7 +150,7 @@ const REGISTER = ({ navigation }) => {
                 />
               </Inputs>
               <Buttons>
-                <THEMED_BUTTON
+                <LOGIN_BUTTON
                   text={"Already have an account?\ntap here to log in!"}
                   action={() => navigation.navigate("login")}
                   type={"ghost"}

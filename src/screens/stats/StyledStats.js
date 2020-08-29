@@ -7,6 +7,7 @@ import {
   Window,
   FlexColAround,
   FlexRowAround,
+  FlexCol,
 } from "../../styles/css_mixins";
 
 export const Players = styled(View)`
@@ -14,6 +15,7 @@ export const Players = styled(View)`
   ${FlexRowAround};
   height: 25%;
   border-bottom-width: ${({ theme }) => theme.borderWidth};
+  border-top-width: ${({ theme }) => theme.borderWidth};
   border-color: ${({ theme }) => theme.borderColor};
 `;
 
@@ -37,14 +39,17 @@ export const PlayerInfo2 = styled(PlayerInfo)`
 `;
 
 export const Avatar = styled(Image)`
-  width: ${() => Window.width * 0.2};
-  height: ${() => Window.width * 0.2};
+  width: ${({ rematch }) =>
+    rematch ? Window.width * 0.3 : Window.width * 0.2};
+  height: ${({ rematch }) =>
+    rematch ? Window.width * 0.3 : Window.width * 0.2};
   border-radius: 4px;
   ${Border(({ theme }) => theme.text)};
 `;
 
 export const Name = styled(Text)`
   color: white;
+  display:${({ rematch }) => (rematch ? "none" : "flex")}
   font-size: ${({ theme }) => theme.stats.name};
   ${BasicTextBold};
 `;
@@ -112,5 +117,22 @@ export const BottomButtons = styled(View)`
   height: 12.5%;
   width: 100%;
   border-top-width: ${({ theme }) => theme.borderWidth};
+  border-bottom-width: ${({ theme }) => theme.borderWidth};
   border-color: ${({ theme }) => theme.borderColor};
+`;
+
+export const BottomButtons2 = styled(BottomButtons)`
+  position: relative;
+  height: 20%;
+  width: 100%;
+`;
+
+export const Header = styled(Text)`
+  ${BasicTextBold};
+  height: 17.5%;
+  ${FlexCol};
+  width: 100%;
+  padding: 0 2%;
+  color: ${({ theme }) => theme.text};
+  font-size: ${({ theme }) => theme.stats.header};
 `;

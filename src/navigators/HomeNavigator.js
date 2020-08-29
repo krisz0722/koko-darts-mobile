@@ -9,7 +9,7 @@ import STATS from "../screens/stats/Stats";
 import { usersCollection } from "../_backend/db/crudOther";
 import { Authcontext } from "../contexts/AuthContext";
 import BOTTOM_TABBAR_CONTENT from "./HomeNavigatorContent";
-import STATS2 from "../screens/stats/Stats2";
+import PLAYER_IS_IN_GAME from "../screens/info/InGame";
 import { AppState } from "react-native";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 import { useRoute } from "@react-navigation/native";
@@ -94,9 +94,13 @@ const HomeNavigator = React.memo(() => {
       {inGame ? (
         <>
           {gameData ? (
-            <STATS2 username={username} gameData={gameData} theme={theme} />
+            <PLAYER_IS_IN_GAME
+              username={username}
+              gameData={gameData}
+              theme={theme}
+            />
           ) : (
-            <STATS2
+            <PLAYER_IS_IN_GAME
               username={username}
               lastMatch={true}
               gameData={userData.matches[0]}

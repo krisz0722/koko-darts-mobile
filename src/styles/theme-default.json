@@ -21,6 +21,7 @@
   "border": "0.07 rgba(255,255,255,0.5)",
   "borderWidth": 1,
   "borderColor": "rgba(255,255,255,0.5)",
+
   "buttonType": {
     "basic": {
       "bg": "transparent",
@@ -48,12 +49,12 @@
     }
   },
 
-
   "buttonSize": {
     "small": 0.075,
     "medium": 0.1,
     "large": 0.2
   },
+
   "buttonFontSize": {
     "small":10,
     "medium": 15,
@@ -78,6 +79,7 @@
     "fontSize1": 12.5,
     "fontSize2": 10
   },
+
   "menu": {
     "fontSize": 15,
     "fontSizeLogin": 10,
@@ -91,7 +93,9 @@
     "bgActive": "rgb(255, 255, 255)",
     "fontSizeHeader":17.5,
     "fontSizeButton": 13,
-    "fontSizeButton2": 10
+    "fontSizeButton2": 10,
+    "fontSizeOption": 15,
+    "fontSizeOption2": 15
   },
 
   "profile": {
@@ -111,12 +115,16 @@
     "record": 10
   },
 
-
   "stats": {
     "name": 12.5,
     "scoreMain": 30,
     "scoreSub": 15,
-    "stat": 10
+    "stat": 10,
+    "header": 18
+  },
+
+  "info": {
+    "loading": 20
   },
 
   "game":{
@@ -134,16 +142,17 @@
     "p2Text": "rgb(255, 255, 255)",
     "p1Border": "rgb(8, 89, 89)",
     "p2Border":"rgb(255,255,255)",
-    "text2": "rgb(8, 89, 89)",
 
     "buttonFontSize": {
       "num":35,
       "function": 12
     },
+
     "stats":{
       "classic": 7,
       "asym": 10
     },
+
     "score": {
       "classic":{
         "fs1": 80,
@@ -157,26 +166,17 @@
       "classic2": 15,
       "asym": 20
     },
+
     "legset": {
       "classic": {
         "fs1": 25,
         "fs2": 20
       }
     },
+
     "middle": {
-      "bgMid":"rgb(137, 160, 159)",
-      "classic": {
-      },
-      "asym": {
-      }
-    },
-    "bottom": {
-      "classic": {
-      },
-      "asym": {
-      }
+      "bgMid":"rgb(137, 160, 159)"
     }
   }
-
   }
 

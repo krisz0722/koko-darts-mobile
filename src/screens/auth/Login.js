@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { Buttons, Form2, Inputs } from "./StyledAuth";
-import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import LOGIN_BUTTON from "../../components/buttons/LoginButton";
 import LoginInput from "../../components/buttons/LoginInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import LogIn from "../../_backend/auth/authLogIn";
@@ -108,14 +108,14 @@ const LOGIN = React.memo(({ navigation }) => {
                 );
               })}
             </Inputs>
-            <THEMED_BUTTON
+            <LOGIN_BUTTON
               type={enableSignUp ? "active" : "basic"}
               disabled={!enableSignUp}
               text={"log in"}
               action={() => pressLogin()}
             />
             <Buttons>
-              <THEMED_BUTTON
+              <LOGIN_BUTTON
                 text={"forgotten password"}
                 action={() => navigation.navigate("forgotpassword")}
                 type={"ghost"}

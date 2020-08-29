@@ -9,7 +9,7 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import logOut from "../_backend/auth/authLogOut";
 import deleteAccount from "../_backend/auth/authDelete";
 import DELETE_ALERT from "../components/modals/DeleteAlert";
-import LOADING_SCREEN from "../screens/auth/LoadingScreen";
+import LOADING_SCREEN from "../screens/info/LoadingScreen";
 
 const ABOUT = ({ navigation }) => (
   <View>

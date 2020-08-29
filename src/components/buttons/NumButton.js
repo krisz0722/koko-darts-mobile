@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, TouchableOpacity } from "react-native";
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
+import { BasicTextBold, FlexCol, FlexRowAround } from "../../styles/css_mixins";
 import { useRoute } from "@react-navigation/native";
 
 export const Button_Num_Classic = styled(TouchableOpacity)`
@@ -14,9 +14,8 @@ export const Button_Num_Classic = styled(TouchableOpacity)`
 
 export const Text_Number = styled(Animated.Text)`
   ${BasicTextBold};
-  height: 100%;
-  width: 100%;
   font-size: ${({ theme }) => theme.game.buttonFontSize.num};
+  ${FlexCol};
 `;
 
 const NUM_BUTTON = React.memo(

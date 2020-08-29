@@ -9,7 +9,6 @@
   "transitionDelay": "300",
   "bgOverlay": "rgba(0,15,10,0.9)",
   "bgOverlay2": "rgba(0,0,0, 0.8)",
-  "bgChecked": "rgb(235, 87, 87)",
   "bgActive": "rgb(255, 255, 255)",
   "bgRed": "rgb(235, 87, 87)",
   "bgGreen": "rgb(33, 150, 83)",
@@ -17,16 +16,8 @@
   "bg1": "rgb(51, 51, 51)",
   "bg2": "rgb(255,255,255)",
   "bg3": "rgb(235, 87, 87)",
-  "fontWeight": "bold",
-  "textHover": "rgb(0, 0, 0)",
-  "textHover2": "rgb(242, 242, 242)",
-  "textActive": "rgb(255, 255, 255)",
   "text": "rgb(255, 255, 255)",
   "text2": "rgb(0, 0, 0)",
-  "text3": "rgb(255, 255, 255)",
-  "stroke": "rgb(235, 87, 87)",
-  "stroke2": "rgb(235, 87, 87)",
-  "textLight": "rgb(255, 255, 255)",
   "border": "0.07 rgba(255,255,255,0.5)",
   "borderWidth": 1,
   "borderColor": "rgb(235, 87, 87)",
@@ -57,11 +48,13 @@
       "color": "rgb(255,255,255)"
     }
   },
+
   "buttonSize": {
     "small": 0.075,
     "medium": 0.1,
     "large": 0.2
   },
+
   "buttonFontSize": {
     "small":15,
     "medium": 20,
@@ -81,11 +74,11 @@
   "pregame": {
     "fontSize":14
   },
+
   "nav": {
     "fontSize1": 15,
     "fontSize2": 12
   },
-
 
   "menu": {
     "fontSize": 20,
@@ -98,12 +91,11 @@
 
   "settings": {
     "bgActive": "rgb(33, 150, 83)",
-    "textHeader": "rgb(255, 255, 255)",
-    "textChecked": "rgb(242, 242, 242)",
-    "textLabel": "rgb(0, 0, 0)",
     "fontSizeHeader":25,
     "fontSizeButton": 17.5,
-    "fontSizeButton2": 14.5
+    "fontSizeButton2": 14.5,
+    "fontSizeOption": 25,
+    "fontSizeOption2": 15
   },
 
   "profile": {
@@ -113,11 +105,11 @@
 
   "opponent": 17.5,
 
-
   "friends": {
     "name": 15,
     "record": 15
   },
+
   "matches": {
     "name": 15,
     "record": 15
@@ -127,7 +119,12 @@
     "name": 15,
     "scoreMain": 35,
     "scoreSub": 20,
-    "stat": 14
+    "stat": 14,
+    "header": 25
+  },
+
+  "info": {
+    "loading": 24
   },
 
   "game": {
@@ -150,10 +147,12 @@
       "num":45,
       "function": 15
     },
+
     "stats":{
       "classic": 10,
       "asym": 10
     },
+
     "score": {
       "classic":{
         "fs1": 80,
@@ -167,36 +166,17 @@
       "classic2": 15,
       "asym": 20
     },
+
     "legset": {
       "classic": {
         "fs1": 25,
         "fs2": 20
       }
     },
+
     "middle": {
-      "bgMid":"rgb(235, 87, 87)",
-      "fwMiddle": 900,
-      "classic": {
-        "fsPortrait": "0.15",
-        "fsLandscape": "0.17"
-      },
-      "asym": {
-        "fsPortrait": "0.15",
-        "fsLandscape": "0.15"
-      }
-    },
-    "bottom": {
-      "fwBottom": 800,
-      "classic": {
-        "fsPortrait": "0.45",
-        "fsLandscape": "0.45"
-      },
-      "asym": {
-        "fsPortrait": "0.5",
-        "fsLandscape": "0.5"
-      }
+      "bgMid":"rgb(235, 87, 87)"
     }
   }
-
   }
 

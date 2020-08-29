@@ -1,13 +1,16 @@
 import React, { useState, useContext } from "react";
-import THEMED_BUTTON from "../buttons/ThemedButton";
-import { BottomButtons } from "./StyledModal";
-import { Header2, Header3, ModalContainerAlert } from "./StyledModal";
-import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";
+import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import { BottomButtons2 } from "../stats/StyledStats";
+import RADIO_BUTTON_SET from "../../components/buttons/RadioButtonSet";
 import { CHECKOUTS } from "../../calc/scores";
 import { GameContext } from "../../contexts/GameContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { AppBackground } from "../../../App";
+import { ScreenContainer } from "../../navigators/AppNavigator";
+import STATS_PLAYERS from "../stats/StatsPlayers";
+import { Header } from "../stats/StyledStats";
 
-const FINISH_LEG_MODAL = React.memo(({ navigation }) => {
+const FINISH_LEG = React.memo(({ navigation }) => {
   const {
     dispatchGameData,
     gameData,
@@ -56,38 +59,45 @@ const FINISH_LEG_MODAL = React.memo(({ navigation }) => {
   const back = async () => {
     setLastRoundNod(null);
     await dispatchGameData({ type: "UNDO" });
-    navigation.goBack();
+    navigation.navigate("game");
   };
 
   return (
-    <ModalContainerAlert theme={theme}>
-      <Header2>{winnerName} has won the leg!</Header2>
-      <Header3>Number of darts used in last round:</Header3>
-      <RADIO_BUTTON_SET
-        length={3}
-        direction={"row"}
-        options={OPTIONS}
-        action={handleLastDartNod}
-        activeValue={lastRoundNod}
+    <>
+      <AppBackground
+        source={require("../../../assets/bg.png")}
+        resizeMode="cover"
       />
-      <BottomButtons theme={theme}>
-        <THEMED_BUTTON
-          text={"undo"}
-          length={2}
-          size={"small"}
-          type={"danger"}
-          action={back}
+      <ScreenContainer theme={theme}>
+        <Header>{winnerName} has won the leg!</Header>
+        <STATS_PLAYERS theme={theme} gameData={gameData} />
+        <Header>Number of darts used in last round:</Header>
+        <RADIO_BUTTON_SET
+          length={3}
+          direction={"row"}
+          options={OPTIONS}
+          action={handleLastDartNod}
+          activeValue={lastRoundNod}
         />
-        <THEMED_BUTTON
-          size={"small"}
-          text={lastRoundNod ? "ok" : "select"}
-          type={lastRoundNod ? "success" : "danger"}
-          length={2}
-          action={finishLeg}
-        />
-      </BottomButtons>
-    </ModalContainerAlert>
+        <BottomButtons2 theme={theme}>
+          <THEMED_BUTTON
+            text={"undo"}
+            length={2}
+            size={"small"}
+            type={"danger"}
+            action={back}
+          />
+          <THEMED_BUTTON
+            size={"small"}
+            text={lastRoundNod ? "ok" : "select"}
+            type={lastRoundNod ? "success" : "danger"}
+            length={2}
+            action={finishLeg}
+          />
+        </BottomButtons2>
+      </ScreenContainer>
+    </>
   );
 });
 
-export default FINISH_LEG_MODAL;
+export default FINISH_LEG;

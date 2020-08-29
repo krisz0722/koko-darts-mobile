@@ -13,7 +13,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import IconDart from "../../../assets/iconDart";
 
-export const ThemedButton = styled(TouchableHighlight)`
+export const LoginButton = styled(TouchableHighlight)`
   text-decoration: none;
   width: ${({ length }) => 80 / length + "%"};
   height: ${({ size, theme }) => Window.height * theme.buttonSize[size]};
@@ -22,7 +22,7 @@ export const ThemedButton = styled(TouchableHighlight)`
   background-color: ${({ theme, type }) => theme.buttonType[type].bg};
   border-width: ${({ theme, type }) =>
     type !== "ghost" ? theme.borderWidth : 0};
-  border-color:${({ theme, type }) => theme.buttonType[type].bg};
+  border-color: ${({ theme }) => theme.text};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)}
   padding: ${({ theme }) => (theme.name === "default" ? "0 2%" : "0 5%")};
   ${FlexRowAround};
@@ -37,7 +37,7 @@ export const Text_Button_Login = styled(Text)`
   color: ${({ theme, type }) => theme.buttonType[type].color};
 `;
 
-const THEMED_BUTTON = ({
+const LOGIN_BUTTON = ({
   text,
   action,
   length = 1,
@@ -51,7 +51,7 @@ const THEMED_BUTTON = ({
   const themeToUse = inGameTheme ? inGameTheme : theme;
 
   return (
-    <ThemedButton
+    <LoginButton
       size={size}
       length={length}
       type={type}
@@ -85,8 +85,8 @@ const THEMED_BUTTON = ({
           </Text_Button_Login>
         ) : null}
       </>
-    </ThemedButton>
+    </LoginButton>
   );
 };
 
-export default THEMED_BUTTON;
+export default LOGIN_BUTTON;

@@ -18,7 +18,7 @@ export const Safe = styled(SafeAreaView)`
 
 export const Loading = styled(Text)`
   color: ${({ theme, filled }) => (filled ? theme.text : theme.text)};
-  font-size: 24;
+  font-size: ${({ theme }) => theme.info.loading};
   ${BasicTextBold};
 `;
 

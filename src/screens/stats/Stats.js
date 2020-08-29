@@ -1,23 +1,12 @@
 import React, { useContext } from "react";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import {
-  Players,
-  Name,
-  Avatar,
-  Main,
-  PlayerInfo,
-  Sub,
-  Div,
-  BottomButtons,
-  Row,
-  Div2,
-  Stat,
-  StatSide,
-} from "./StyledStats";
+import { BottomButtons, Row, Stat, StatSide } from "./StyledStats";
 import { GameContext } from "../../contexts/GameContext";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/AppNavigator";
+import STATS_PLAYERS from "./StatsPlayers";
+
 const DATA = [
   {
     name: "match average",
@@ -93,33 +82,6 @@ const STATS = React.memo(({ navigation, route }) => {
   const back = route.params ? route.params.back : "home";
   const { p1_DATA, p2_DATA } = gameData;
 
-  const legOrSet = route.params
-    ? route.name === "stats_saved"
-      ? gameData.matchSummary.legOrSet
-      : gameData.settings.legOrSet
-    : null;
-
-  const p1 = route.params
-    ? route.name === "stats_saved"
-      ? gameData.p1
-      : gameData.settings.p1
-    : {
-        key: null,
-      };
-  const p2 = route.params
-    ? route.name === "stats_saved"
-      ? gameData.p2
-      : gameData.settings.p2
-    : {
-        key: null,
-      };
-
-  const isSet = legOrSet === "set";
-  const p1Main = isSet ? p1_DATA.setsWon : p1_DATA.legsWon;
-  const p2Main = isSet ? p2_DATA.setsWon : p2_DATA.legsWon;
-  const p1Sub = isSet ? p1_DATA.legsWon : null;
-  const p2Sub = isSet ? p2_DATA.legsWon : null;
-
   return (
     <>
       <AppBackground
@@ -127,40 +89,7 @@ const STATS = React.memo(({ navigation, route }) => {
         resizeMode="cover"
       />
       <ScreenContainer theme={theme}>
-        <Players theme={theme}>
-          <PlayerInfo>
-            <>
-              {/assets/.test(p1.img) || p1.img === "" ? (
-                <Avatar source={require("../../../assets/bg.png")} />
-              ) : (
-                <Avatar source={{ uri: p1.img }} />
-              )}
-            </>
-            <Name theme={theme}>{p1.key}</Name>
-          </PlayerInfo>
-          <Div>
-            <Div2>
-              <Main theme={theme}>{p1Main}</Main>
-              <Main theme={theme}>{p2Main}</Main>
-            </Div2>
-            {isSet && route.name !== "stats_saved" ? (
-              <Div2>
-                <Sub theme={theme}>({p1Sub})</Sub>
-                <Sub theme={theme}>({p2Sub})</Sub>
-              </Div2>
-            ) : null}
-          </Div>
-          <PlayerInfo>
-            <>
-              {/assets/.test(p2.img) || p2.img === "" ? (
-                <Avatar source={require("../../../assets/bg.png")} />
-              ) : (
-                <Avatar source={{ uri: p2.img }} />
-              )}
-            </>
-            <Name>{p2.key}</Name>
-          </PlayerInfo>
-        </Players>
+        <STATS_PLAYERS route={route} theme={theme} gameData={gameData} />
         {DATA.map((item) => {
           const p1 = item.rounding
             ? p1_DATA[item.data].toFixed(item.rounding)

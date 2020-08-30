@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Row, Div } from "./home/StyledSettings";
-import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
-import SETTINGS_HEADER from "./Header";
+import { Row, Div } from "./home/StyledOptions";
+import OPTION_BUTTON from "../../components/buttons/OptionButton";
+import SETTINGS_HEADER from "./SettingsHeader";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { GameContext } from "../../contexts/GameContext";
 
-export const COLOR = React.memo(({ toggleTheme, ingame = false }) => {
+const OPTIONS_COLOR = React.memo(({ toggleTheme, ingame = false }) => {
   const { theme } = useContext(ThemeContext);
   const {
     gameData: { settings },
@@ -24,7 +24,7 @@ export const COLOR = React.memo(({ toggleTheme, ingame = false }) => {
       />
       <Div theme={themeToUse}>
         {DATA.map((item) => (
-          <SETTINGS_BUTTON
+          <OPTION_BUTTON
             key={item}
             value={item}
             active={themeToUse.name === item}
@@ -37,3 +37,5 @@ export const COLOR = React.memo(({ toggleTheme, ingame = false }) => {
     </Row>
   );
 });
+
+export default OPTIONS_COLOR;

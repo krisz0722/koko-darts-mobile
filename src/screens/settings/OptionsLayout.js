@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Row, Div } from "./home/StyledSettings";
-import SETTINGS_HEADER from "./Header";
-import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
+import { Row, Div } from "./home/StyledOptions";
+import SETTINGS_HEADER from "./SettingsHeader";
+import OPTION_BUTTON from "../../components/buttons/OptionButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { GameContext } from "../../contexts/GameContext";
 
-export const OptionsLayout = React.memo((props) => {
+const OPTIONS_LAYOUT = React.memo((props) => {
   const { layout, toggleLayout, ingame } = props;
   const { theme } = useContext(ThemeContext);
   const {
@@ -22,7 +22,7 @@ export const OptionsLayout = React.memo((props) => {
 
       <Div theme={themeToUse}>
         {DATA.map((item) => (
-          <SETTINGS_BUTTON
+          <OPTION_BUTTON
             key={item}
             value={item}
             active={layout === item}
@@ -35,3 +35,5 @@ export const OptionsLayout = React.memo((props) => {
     </Row>
   );
 });
+
+export default OPTIONS_LAYOUT;

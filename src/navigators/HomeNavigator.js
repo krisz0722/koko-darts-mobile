@@ -15,7 +15,7 @@ import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatches
 import { useRoute } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";
 
-const HomeNavigator = React.memo(() => {
+const HOMENAVIGATOR = () => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
   const {
     dispatchUserData,
@@ -28,7 +28,6 @@ const HomeNavigator = React.memo(() => {
   const appState = useRef(AppState.currentState);
 
   const { theme } = useContext(ThemeContext);
-  const [loading, setLoading] = useState(true);
   const [inGame, setInGame] = useState(false);
   const [gameData, setGameData] = useState(null);
 
@@ -55,14 +54,12 @@ const HomeNavigator = React.memo(() => {
 
           dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
           setGameData(gameData);
-          setLoading(false);
           setInGame(inGame && initializedBy !== username);
         }
       });
 
     return () => {
       unsubscribe();
-      setLoading(false);
     };
   }, [dispatchUserData, username]);
 
@@ -110,7 +107,7 @@ const HomeNavigator = React.memo(() => {
         </>
       ) : !isFocused ? null : (
         <Navigator
-          timingConfig={{ duration: 1 }}
+          timingConfig={{ duration: 0.1 }}
           tabBarPosition={"bottom"}
           tabBar={(props) => <BOTTOM_TABBAR_CONTENT index={index} {...props} />}
           swipeEnabled={false}
@@ -124,6 +121,6 @@ const HomeNavigator = React.memo(() => {
       )}
     </>
   );
-});
+};
 
-export default HomeNavigator;
+export default HOMENAVIGATOR;

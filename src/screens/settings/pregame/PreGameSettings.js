@@ -5,25 +5,25 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { OptionsScore } from "../OptionsScore";
-import { OptionsLegOrSet } from "../OptionsLegOrSet";
-import HISTORY from "./History";
-import PLAYERS from "./Players";
-import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
+import moment from "moment";
 import { BackHandler } from "react-native";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-import { BottomButtons } from "./StyledPreGame";
-import CHOOSE_PLAYER_MODAL from "../../../components/modals/ChoosePlayerModal";
 import { useIsFocused } from "@react-navigation/native";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { Authcontext } from "../../../contexts/AuthContext";
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import { SettingsPreGameBottomButtons } from "./StyledPreGame";
 import updateAuthMatchesAdd from "../../../contexts/actions/authContext/UpdateMatchesAdd";
 import Theme_Default from "../../../styles/theme-default.json";
 import Theme_Contrast from "../../../styles/theme-contrast.json";
-import moment from "moment";
+import OPTIONS_SCORE from "../OptionsScore";
+import OPTIONS_LEGORSET from "../OptionsLegOrSet";
+import HISTORY from "./History";
+import PLAYERS from "./Players";
+import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
+import CHOOSE_PLAYER_MODAL from "../../../components/modals/ChoosePlayerModal";
 
-const PREGAME_SETTINGS = ({ navigation }) => {
+const PREGAME_SETTINGS = React.memo(({ navigation }) => {
   const { theme, animation } = useContext(ThemeContext);
   const { dispatchGameData } = useContext(GameContext);
   const isFocused = useIsFocused();
@@ -202,14 +202,19 @@ const PREGAME_SETTINGS = ({ navigation }) => {
 
   return (
     <>
-      <PLAYERS toggleSwap={toggleSwap} p1={stateP1} p2={stateP2} />
-      <OptionsScore
+      <PLAYERS
+        theme={theme}
+        toggleSwap={toggleSwap}
+        p1={stateP1}
+        p2={stateP2}
+      />
+      <OPTIONS_SCORE
         startingScore={stateStartingScore}
         toggleStartingScore={toggleStartingScore}
         page={"pregame"}
         theme={theme}
       />
-      <OptionsLegOrSet
+      <OPTIONS_LEGORSET
         legOrSet={stateLegOrSet}
         toggleLegOrSet={toggleLegOrSet}
         toWin={stateToWin}
@@ -221,7 +226,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
         animation={animation}
       />
       <HISTORY p1={stateP1} p2={stateP2} theme={theme} />
-      <BottomButtons theme={theme}>
+      <SettingsPreGameBottomButtons theme={theme}>
         <THEMED_BUTTON
           text={"back"}
           length={3}
@@ -243,7 +248,7 @@ const PREGAME_SETTINGS = ({ navigation }) => {
           length={3}
           action={startGame}
         />
-      </BottomButtons>
+      </SettingsPreGameBottomButtons>
       <CHOOSE_PLAYER_MODAL
         p1={stateP1}
         p2={stateP2}
@@ -254,6 +259,6 @@ const PREGAME_SETTINGS = ({ navigation }) => {
       />
     </>
   );
-};
+});
 
 export default PREGAME_SETTINGS;

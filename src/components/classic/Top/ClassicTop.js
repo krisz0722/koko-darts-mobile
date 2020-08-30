@@ -1,48 +1,14 @@
 import React, { useEffect, useRef } from "react";
-import styled from "styled-components/native/dist/styled-components.native.esm";
-import { Animated, View } from "react-native";
-import {
-  Absolute,
-  FlexCol,
-  FlexColStart,
-  FlexRow,
-} from "../../../styles/css_mixins";
+import { Animated } from "react-native";
 import AVATAR from "./ClassicAvatar";
 import LEGSET from "./ClassicLegSet";
 import NAME from "./ClassicName";
-
-export const ClassicTop = styled(Animated.View)`
-  ${FlexColStart};
-  ${Absolute};
-  width: 100%;
-`;
-
-const PlayerInfoContainer = styled(View)`
-  height: 100%;
-  width: 50%;
-  ${FlexCol};
-  position: absolute;
-  top: 0;
-`;
-
-export const PlayerInfo1 = styled(PlayerInfoContainer)`
-  background-color: ${({ theme }) => theme.game.p1Bg};
-  left: 0;
-`;
-export const PlayerInfo2 = styled(PlayerInfoContainer)`
-  background-color: ${({ theme }) => theme.game.p2Bg};
-  right: 0;
-`;
-
-export const PlayerInfoRow = styled(Animated.View)`
-  height: 50%;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  ${FlexRow};
-  border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
-  border-width: ${({ theme }) => theme.borderWidth};
-`;
+import {
+  ClassicTop,
+  PlayerInfo1,
+  PlayerInfo2,
+  PlayerInfoRow,
+} from "./StyledClassicTop";
 
 const CLASSIC_TOP = React.memo((props) => {
   const {

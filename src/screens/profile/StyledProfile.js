@@ -1,7 +1,6 @@
-import { Text, TouchableOpacity, View, Image } from "react-native";
+import { TouchableOpacity, View, Image } from "react-native";
 import styled from "styled-components";
 import {
-  BasicTextBold,
   Border,
   FlexCol,
   FlexColAround,
@@ -9,6 +8,7 @@ import {
   FlexRowBetween,
   Window,
 } from "../../styles/css_mixins";
+import { Header4, P3_Bold } from "../../components/headers/StyledHeaders";
 
 export const Header = styled(View)`
   ${FlexRow};
@@ -42,10 +42,7 @@ export const Name = styled(View)`
   ${FlexColAround};
 `;
 
-export const NameText = styled(Text)`
-  ${BasicTextBold};
-  font-size: 15;
-  font-size: ${({ theme }) => theme.profile.name};
+export const NameText = styled(Header4)`
   color: ${({ theme }) => theme.text};
   margin-bottom: 10%;
 `;
@@ -68,11 +65,9 @@ export const Field = styled(View)`
   border-radius: 4px;
 `;
 
-export const Stat = styled(Text)`
-  ${BasicTextBold};
+export const Stat = styled(P3_Bold)`
   text-align: left;
   width: 70%;
-  font-size: ${({ theme }) => theme.profile.stat};
   color: ${({ theme }) => theme.text2};
 `;
 
@@ -84,4 +79,8 @@ export const StatValue = styled(Stat)`
 export const NavigationWindow = styled(View)`
   height: 62%;
   width: 100%;
+`;
+
+export const AddButton = styled(View)`
+  ${FlexCol};
 `;

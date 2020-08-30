@@ -2,15 +2,16 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   Info,
   FirstMatch,
-  InfoTitle,
   InfoRow,
   InfoText,
   InfoText2,
   InfoStats,
-} from "./StyledHome";
+  HeaderCon,
+} from "./StyledInfo";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Header2 } from "../../components/headers/StyledHeaders";
 
-const HOME_INFO = React.memo(({ unfinishedMatches, matches, username }) => {
+const HOME_INFO = React.memo(({ matches, username }) => {
   const { theme } = useContext(ThemeContext);
 
   const [lastMatch, setLastMatch] = useState(null);
@@ -59,7 +60,9 @@ const HOME_INFO = React.memo(({ unfinishedMatches, matches, username }) => {
     <>
       {!lastMatch ? (
         <>
-          <InfoTitle unfinished={true}>you haven't played a game yet</InfoTitle>
+          <HeaderCon theme={theme}>
+            <Header2 unfinished={true}>you haven't played a game yet</Header2>
+          </HeaderCon>
           <Info>
             <InfoStats theme={theme}>
               <FirstMatch theme={theme}>
@@ -70,13 +73,16 @@ const HOME_INFO = React.memo(({ unfinishedMatches, matches, username }) => {
         </>
       ) : (
         <>
-          <InfoTitle unfinished={true}>{"your last match"}</InfoTitle>
+          <HeaderCon theme={theme}>
+            <Header2 unfinished={true}>{"your last match"}</Header2>
+          </HeaderCon>
+
           <Info unfinished={false}>
             <InfoStats theme={theme}>
               {STATS().map((item) => (
                 <React.Fragment key={item}>
                   <InfoRow>
-                    <InfoText>{item.stat}</InfoText>
+                    <InfoText theme={theme}>{item.stat}</InfoText>
                     <InfoText2>{item.value}</InfoText2>
                   </InfoRow>
                 </React.Fragment>

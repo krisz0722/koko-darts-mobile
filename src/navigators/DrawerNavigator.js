@@ -1,4 +1,11 @@
-import React, { useRef, useMemo, useState, useEffect, useContext } from "react";
+import React, {
+  useRef,
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+} from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import GAME_CLASSIC from "../screens/gamewindow/Classic";
 import { AppState } from "react-native";
@@ -6,7 +13,6 @@ import DRAWER_CONTENT from "./DrawerContent";
 import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings/ingame/SettingsInGame";
 import { useRoute } from "@react-navigation/native";
-import STATS from "../screens/stats/Stats";
 import { Authcontext } from "../contexts/AuthContext";
 import { usersCollection } from "../_backend/db/crudOther";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
@@ -15,10 +21,11 @@ import FINISH_LEG from "../screens/endgame/FinishLeg";
 import FINISH_MATCH from "../screens/endgame/FinishMatch";
 import REMATCH_MODAL from "../screens/endgame/Rematch";
 import LOADING_SCREEN from "../screens/info/LoadingScreen";
+import STATS_INMATCH from "../screens/stats/StatsInMatch";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
-const DrawerNavigator = ({ navigation }) => {
+const DRAWER_NAVIGATOR = ({ navigation }) => {
   const {
     gameData,
     dispatchGameData,
@@ -39,7 +46,6 @@ const DrawerNavigator = ({ navigation }) => {
   const { flag } = params;
   const flag2 = useMemo(() => flag, [flag]);
 
-  const [loading, setLoading] = useState(flag === "continue" || flag === "new");
   const [inGame, setInGame] = useState(false);
 
   const appState = useRef(AppState.currentState);
@@ -47,7 +53,6 @@ const DrawerNavigator = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       if (flag2 === "new" || flag2 === "continue") {
-        setLoading(true);
       }
 
       if (flag2 === "continue") {
@@ -66,7 +71,6 @@ const DrawerNavigator = ({ navigation }) => {
         const profile = snapshot.docs
           .find((item) => item.data().username === username)
           .data();
-        setLoading(false);
         setInGame(profile.inGame && initializedBy !== username);
       });
 
@@ -105,7 +109,7 @@ const DrawerNavigator = ({ navigation }) => {
     backgroundColor: "transparent",
   };
 
-  const handleLeaveMatch = async () => {
+  const handleLeaveMatch = useCallback(async () => {
     try {
       await updateAuthMatchesSave(
         gameData,
@@ -118,7 +122,7 @@ const DrawerNavigator = ({ navigation }) => {
       console.log(err);
       alert("ERROR WHILE SAVING MATCH: ", err);
     }
-  };
+  }, [gameData, navigation, username]);
 
   return (
     <>
@@ -157,8 +161,8 @@ const DrawerNavigator = ({ navigation }) => {
           overlayColor={theme.game[activePlayer + "Overlay"]}
         >
           <Screen name="game" component={GAME_CLASSIC} />
-          <Screen name="settings-ingame" component={SETTINGS_INGAME} />
-          <Screen name="stats" component={STATS} />
+          <Screen name="settings_ingame" component={SETTINGS_INGAME} />
+          <Screen name="stats_ingame" component={STATS_INMATCH} />
           <Screen name="legover" component={FINISH_LEG} />
           <Screen name={"matchover"} component={FINISH_MATCH} />
           <Screen name={"rematch"} component={REMATCH_MODAL} />
@@ -169,4 +173,4 @@ const DrawerNavigator = ({ navigation }) => {
   );
 };
 
-export default DrawerNavigator;
+export default DRAWER_NAVIGATOR;

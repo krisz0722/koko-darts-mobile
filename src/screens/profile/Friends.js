@@ -1,15 +1,10 @@
 import React, { useContext, useState } from "react";
-import { SafeAreaView, View, TouchableOpacity } from "react-native";
-import styled from "styled-components";
-import { FlexCol } from "../../styles/css_mixins";
+import { SafeAreaView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import SEARCH_MODAL from "../../components/modals/SeearchModal";
+import SEARCH_MODAL from "../../components/modals/SearchModal";
 import LIST_FRIENDS from "../../components/lists/ListFriends";
 import { ThemeContext } from "../../contexts/ThemeContext";
-
-export const AddButton = styled(View)`
-  ${FlexCol};
-`;
+import { AddButton } from "./StyledProfile";
 
 const Friends = () => {
   const { theme } = useContext(ThemeContext);

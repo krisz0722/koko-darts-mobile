@@ -4,6 +4,6 @@ module.exports = {
   rules: {
     quotes: ["error", "double"],
     radix: ["error", "as-needed"],
-
+    "no-alert": "off",
   },
 };

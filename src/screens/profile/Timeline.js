@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { HeaderText } from "../home/StyledHome";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import styled from "styled-components";
 import { FlexCol } from "../../styles/css_mixins";
+import { Header1 } from "../../components/headers/StyledHeaders";
 
-const Title = styled(HeaderText)`
+const Title = styled(Header1)`
   width: 100%;
   height: 100%;
   padding: 2%;
-  ${FlexCol}
+  ${FlexCol};
 `;
 
 const TIMELINE = () => {

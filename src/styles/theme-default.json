@@ -2,25 +2,31 @@
   "name":"default",
   "fontFamily": "Montserrat-Regular",
   "fontFamilyBold": "Montserrat-Bold",
-  "textTransform": "uppercase",
-  "transition": "all 300ms linear",
-  "transitionDuration": "300",
-  "transitionEasing": "linear",
-  "transitionDelay": "300",
   "bgOverlay": "rgba(8, 89, 89, 0.9)",
   "bgOverlay2":"rgba(8, 89, 89, 0.9)",
   "bgActive": "rgb(255,255,255)",
   "bgRed": "rgb(235, 87, 87)",
   "bgGreen": "rgb(33, 150, 83)",
-  "bgFocus":  "rgb(33, 150, 83)",
   "bg1": "rgb(2, 40, 36)",
   "bg2": "rgb(255,255,255)",
   "bg3": "rgb(8, 89, 89)",
   "text": "rgb(255, 255, 255)",
   "text2": "rgb(8, 89, 89)",
-  "border": "0.07 rgba(255,255,255,0.5)",
   "borderWidth": 1,
   "borderColor": "rgba(255,255,255,0.5)",
+
+  "header1":20,
+  "header2":17.5,
+  "header3":15,
+  "header4":10,
+  "p1":13,
+  "p2":10,
+  "p3":8,
+  "p4":7,
+  "fontSizeFunction": 12,
+  "fontSizeNum": 35,
+  "textInput": 15,
+
 
   "buttonType": {
     "basic": {
@@ -55,84 +61,12 @@
     "large": 0.2
   },
 
-  "buttonFontSize": {
-    "small":10,
-    "medium": 15,
-    "large": 25
-  },
-
-  "home": {
-    "fontSize1": 20,
-    "fontSize2": 15,
-    "fontSize3": 10
-  },
-  "welcome": {
-    "fontSize1": 22,
-    "fontSize2": 12.5,
-    "fontSize3": 11
-  },
-  "pregame": {
-    "fontSize":12.5
-  },
-
-  "nav": {
-    "fontSize1": 12.5,
-    "fontSize2": 10
-  },
-
-  "menu": {
-    "fontSize": 15,
-    "fontSizeLogin": 10,
-    "fontSizeHeader" : 30,
-    "fontSizeText": 10,
-    "fontWeight": "bold",
-    "bgBtn": "transparent"
-  },
-
-  "settings": {
-    "bgActive": "rgb(255, 255, 255)",
-    "fontSizeHeader":17.5,
-    "fontSizeButton": 13,
-    "fontSizeButton2": 10,
-    "fontSizeOption": 15,
-    "fontSizeOption2": 15
-  },
-
-  "profile": {
-    "name": 12.5,
-    "stat": 8
-  },
-
-  "opponent": 15,
-
-  "friends": {
-    "name": 10,
-    "record": 10
-  },
-
-  "matches": {
-    "name": 10,
-    "record": 10
-  },
-
   "stats": {
-    "name": 12.5,
-    "scoreMain": 30,
-    "scoreSub": 15,
-    "stat": 10,
-    "header": 18
-  },
-
-  "info": {
-    "loading": 20
+    "scoreSub": 15
   },
 
   "game":{
     "name": "default",
-    "transition": "all 300ms linear",
-    "fontSize": "1.2",
-    "text": "rgb(255, 255, 255)",
-    "bgActive": "rgb(137, 160, 159)",
     "bgOnCheckout": "rgb(33, 150, 83)",
     "p1Bg":"rgb(242, 242, 242)",
     "p2Bg": "rgb(2, 40, 36)",
@@ -142,16 +76,6 @@
     "p2Text": "rgb(255, 255, 255)",
     "p1Border": "rgb(8, 89, 89)",
     "p2Border":"rgb(255,255,255)",
-
-    "buttonFontSize": {
-      "num":35,
-      "function": 12
-    },
-
-    "stats":{
-      "classic": 7,
-      "asym": 10
-    },
 
     "score": {
       "classic":{

@@ -1,10 +1,28 @@
 import React, { useContext } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styled from "styled-components";
-import { BasicText, Flex, Window } from "../../styles/css_mixins";
+import { Flex, Window } from "../../styles/css_mixins";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import NAV_BUTTON_TEXT from "./NavButtonText";
+
+const iconColor = (active, color, theme, inap) => {
+  if (active) {
+    return theme.text2;
+  } else {
+    switch (color) {
+      case "dark":
+        return theme.bg3;
+      case "light":
+        return theme.text;
+      case "drawer":
+        return theme.game[inap + "Text"];
+      default:
+        return theme.text;
+    }
+  }
+};
 
 const Button_Nav = styled(TouchableOpacity)`
   ${Flex};
@@ -19,26 +37,11 @@ const Button_Nav = styled(TouchableOpacity)`
     active ? theme.bgActive : "transparent"};
 `;
 
-const Text_Button = styled(Text)`
-  ${BasicText};
-  text-align: ${({ type }) => (type === "drawer" ? "left" : "center")}
-  display: ${({ text }) => (text === "" ? "none" : "flex")};
-  font-weight: ${({ direction }) => (direction === "row" ? "bold" : "normal")};
-  width: ${({ type }) => (type === "drawer" ? "70%" : "100%")};
-  color: ${({ color }) => color}
-  font-size: ${({ direction, theme }) =>
-    direction === "row" || direction === "row-reverse"
-      ? theme.nav.fontSize2
-      : theme.nav.fontSize1};
-  border-radius: 4px;
-  margin-left: ${({ type }) => (type === "drawer" ? "5%" : "0%")}
-`;
-
-const NavButton = React.memo(
+const NAV_BUTTON = React.memo(
   ({
     text,
     length,
-    active,
+    active = false,
     direction,
     height = null,
     color = "light",
@@ -51,36 +54,6 @@ const NavButton = React.memo(
     const { theme, animation } = useContext(ThemeContext);
 
     const themeToUse = inGameTheme ? inGameTheme : theme;
-
-    const iconColor = () => {
-      if (active) {
-        return themeToUse.text2;
-      } else {
-        switch (color) {
-          case "dark":
-            return themeToUse.bg3;
-          case "light":
-            return themeToUse.text;
-          case "drawer":
-            return themeToUse.game[inap + "Text"];
-        }
-      }
-    };
-
-    const textColor = () => {
-      if (active) {
-        return themeToUse.text2;
-      } else {
-        switch (color) {
-          case "dark":
-            return themeToUse.text2;
-          case "light":
-            return themeToUse.text;
-          case "drawer":
-            return themeToUse.game[inap + "Text"];
-        }
-      }
-    };
 
     return (
       <Button_Nav
@@ -95,21 +68,30 @@ const NavButton = React.memo(
       >
         <>
           {icon === "dart" ? (
-            <IconThreeDart size={25} fill={iconColor()} />
+            <IconThreeDart
+              size={25}
+              fill={iconColor(active, color, themeToUse, inap)}
+            />
           ) : icon ? (
-            <Icon name={icon} size={25} color={iconColor()} />
+            <Icon
+              name={icon}
+              size={25}
+              color={iconColor(active, color, themeToUse, inap)}
+            />
           ) : null}
           {text ? (
-            <Text_Button
+            <NAV_BUTTON_TEXT
+              direction={direction}
               type={type}
-              color={textColor()}
+              color={color}
+              inap={inap}
               active={active}
               icon={icon}
               theme={themeToUse}
               text={text}
             >
               {text}
-            </Text_Button>
+            </NAV_BUTTON_TEXT>
           ) : null}
         </>
       </Button_Nav>
@@ -117,4 +99,4 @@ const NavButton = React.memo(
   },
 );
 
-export default NavButton;
+export default NAV_BUTTON;

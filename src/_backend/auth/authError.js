@@ -1,6 +1,3 @@
-import { Alert } from "react-native";
-import { CommonActions } from "@react-navigation/native";
-
 const throwError = (err, type, navigation) => {
   const alertTitle = () => {
     switch (type) {
@@ -46,19 +43,11 @@ const throwError = (err, type, navigation) => {
     }
   };
 
-  Alert.alert(
-    alertTitle(),
-    alertMessage(),
-    [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-    { cancelable: false },
-  );
-
-  return navigation.dispatch(
-    CommonActions.reset({
-      index: 1,
-      routes: [{ name: "authnavigator" }],
-    }),
-  );
+  navigation.navigate("authnavigator", {
+    screen: "errorscreen",
+    params: { title: alertTitle(), message: alertMessage() },
+  });
+  return;
 };
 
 export default throwError;

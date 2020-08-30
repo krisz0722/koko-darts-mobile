@@ -1,92 +1,100 @@
 import styled from "styled-components";
-import { Text, TouchableHighlight } from "react-native";
-import {
-  Window,
-  BasicTextBold,
-  FlexCol,
-  FlexRowAround,
-} from "../../styles/css_mixins";
+import { View, TouchableHighlight } from "react-native";
+import { Window, FlexRow } from "../../styles/css_mixins";
 
 import React, { useContext } from "react";
-import IconThreeDart from "../../../assets/iconThreeDart";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import IconDart from "../../../assets/iconDart";
+import FacebookIcon from "../../../assets/facebookIcon";
+import GoogleIcon from "../../../assets/googleIcon";
+import LOGIN_BUTTON_TEXT from "./LoginButtonText";
 
 export const LoginButton = styled(TouchableHighlight)`
   text-decoration: none;
   width: ${({ length }) => 80 / length + "%"};
   height: ${({ size, theme }) => Window.height * theme.buttonSize[size]};
-  margin: auto;
   border-radius: 4px;
-  background-color: ${({ theme, type }) => theme.buttonType[type].bg};
+  background-color: ${({ theme, fill, type }) =>
+    fill ? fill : theme.buttonType[type].bg};
   border-width: ${({ theme, type }) =>
     type !== "ghost" ? theme.borderWidth : 0};
-  border-color: ${({ theme }) => theme.text};
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)}
-  padding: ${({ theme }) => (theme.name === "default" ? "0 2%" : "0 5%")};
-  ${FlexRowAround};
+  border-color: ${({ theme, fill }) => (fill ? fill : theme.text)};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  ${FlexRow};
+  justify-content: ${({ align }) =>
+    align === "center" ? "center" : "flex-start"};
 `;
 
-export const Text_Button_Login = styled(Text)`
-  ${FlexCol};
-  ${BasicTextBold};
-  height: 100%;
-  width: ${({ icon, text }) => (text === "" ? "0%" : icon ? "70%" : "100%")};
-  font-size: ${({ theme, size }) => theme.buttonFontSize[size]};
-  color: ${({ theme, type }) => theme.buttonType[type].color};
+export const IconCon = styled(View)`
+  width: ${({ align, theme }) =>
+    align === "center" ? "auto" : theme.name === "contrast" ? "35%" : "30%"};
+  ${FlexRow};
 `;
 
-const LOGIN_BUTTON = ({
-  text,
-  action,
-  length = 1,
-  size = "medium",
-  type = "basic",
-  icon = null,
-  disabled = false,
-  inGameTheme = null,
-}) => {
-  const { theme } = useContext(ThemeContext);
-  const themeToUse = inGameTheme ? inGameTheme : theme;
-
-  return (
-    <LoginButton
-      size={size}
-      length={length}
-      type={type}
-      theme={themeToUse}
-      onPress={action}
-      disabled={disabled}
-    >
-      <>
-        {icon ? (
-          icon === "dart" ? (
-            <IconDart fill={themeToUse.text} size={15} />
-          ) : icon === "threedart" ? (
-            <IconThreeDart fill={themeToUse.text} size={15} />
-          ) : (
-            <Icon
-              name={icon}
-              size={25}
-              color={themeToUse.buttonType[type].color}
-            />
-          )
-        ) : null}
-        {text ? (
-          <Text_Button_Login
-            text={text}
-            size={size}
-            icon={icon}
-            type={type}
-            theme={themeToUse}
-          >
-            {text}
-          </Text_Button_Login>
-        ) : null}
-      </>
-    </LoginButton>
-  );
+export const loginIcons = (social, theme, type) => {
+  switch (social) {
+    case "google":
+      return <GoogleIcon />;
+    case "facebook":
+      return <FacebookIcon />;
+    default:
+      return (
+        <Icon
+          name={social}
+          size={25}
+          color={type === "active" ? theme.buttonType[type].color : theme.text}
+        />
+      );
+  }
 };
 
-export default LOGIN_BUTTON;
+const AUTH_BUTTON = React.memo(
+  ({
+    text,
+    action,
+    length = 1,
+    size = "medium",
+    type = "basic",
+    icon = null,
+    disabled = false,
+    inGameTheme = null,
+    social,
+    fill,
+    align = "left",
+  }) => {
+    const { theme } = useContext(ThemeContext);
+    const themeToUse = inGameTheme ? inGameTheme : theme;
+
+    return (
+      <LoginButton
+        size={size}
+        length={length}
+        type={type}
+        theme={themeToUse}
+        fill={fill}
+        onPress={action}
+        disabled={disabled}
+        align={align}
+      >
+        <>
+          {social ? (
+            <IconCon align={align}>{loginIcons(social, theme, type)}</IconCon>
+          ) : null}
+          {text ? (
+            <LOGIN_BUTTON_TEXT
+              text={text}
+              size={size}
+              icon={icon}
+              type={type}
+              theme={themeToUse}
+              social={social}
+              align={align}
+            />
+          ) : null}
+        </>
+      </LoginButton>
+    );
+  },
+);
+
+export default AUTH_BUTTON;

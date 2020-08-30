@@ -1,45 +1,17 @@
 import React, { useContext } from "react";
-import { Row2 } from "../home/StyledSettings";
-import SETTINGS_HEADER from "../Header";
-import styled from "styled-components";
-import { Text, View } from "react-native";
-import {
-  BasicTextBold,
-  FlexColAround,
-  FlexRow,
-  Window,
-} from "../../../styles/css_mixins";
+import SETTINGS_HEADER from "../SettingsHeader";
 import { Authcontext } from "../../../contexts/AuthContext";
+import { HistoryContainer, Data, HistoryRow, RowMod } from "./StyledHistory";
 
-const RowMod = styled(Row2)``;
-
-const HistoryContainer = styled(View)`
-  ${FlexColAround};
-  height: 18%;
-  width: 100%;
-`;
-
-const HistoryRow = styled(View)`
-  width: 100%;
-  ${FlexRow};
-`;
-
-const Data = styled(Text)`
-  width: ${() => Window.width / 3};
-  color: ${({ theme }) => theme.text};
-  font-size: ${({ theme }) => theme.settings.fontSizeButton2};
-  ${BasicTextBold};
-`;
-
-const HISTORY_ROW = ({ p1, title, p2 }) => (
+const HISTORY_ROW = React.memo(({ p1, title, p2 }) => (
   <HistoryRow>
     <Data>{p1}</Data>
     <Data>{title}</Data>
     <Data>{p2}</Data>
   </HistoryRow>
-);
+));
 
-export const HISTORY = ({ p1, p2 }) => {
+export const HISTORY = React.memo(({ p1, p2 }) => {
   const {
     userData: { username, friends },
   } = useContext(Authcontext);
@@ -114,6 +86,6 @@ export const HISTORY = ({ p1, p2 }) => {
       </HistoryContainer>
     </>
   );
-};
+});
 
 export default HISTORY;

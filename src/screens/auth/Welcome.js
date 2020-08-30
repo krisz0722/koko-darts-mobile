@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ShapeThrow from "../../../assets/shapeThrow";
 import { View_Headers, View_Shape, View_Buttons } from "./StyledWelcome";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import LOGIN_BUTTON from "../../components/buttons/LoginButton";
+import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import signUpGoogle from "../../_backend/auth/authSignInGoogle";
 import signUpFacebook from "../../_backend/auth/authSignUpFacebook";
 import { GameContext } from "../../contexts/GameContext";
@@ -11,7 +11,7 @@ import { Authcontext } from "../../contexts/AuthContext";
 import auth from "@react-native-firebase/auth";
 import { SafeAreaView } from "react-native";
 
-const WELCOME = ({ navigation }) => {
+const WELCOME = React.memo(({ navigation }) => {
   const { dispatchGameData } = useContext(GameContext);
   const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchUserData } = useContext(Authcontext);
@@ -51,27 +51,33 @@ const WELCOME = ({ navigation }) => {
     <>
       {user && loading ? null : (
         <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
-          <View_Headers theme={theme}></View_Headers>
+          <View_Headers theme={theme} />
           <View_Buttons>
-            <LOGIN_BUTTON
+            <AUTH_BUTTON
+              icon={"google"}
               action={() => pressGoogleSignUp()}
-              type={"basic"}
+              type={"active"}
               text={"sign up with google"}
+              social={"google"}
             />
-            <LOGIN_BUTTON
+            <AUTH_BUTTON
               type={"basic"}
               text={"sign up with facebook"}
               action={() => pressSignUpFacebook()}
+              social={"facebook"}
+              fill={"#475993"}
             />
-            <LOGIN_BUTTON
+            <AUTH_BUTTON
               type={"basic"}
               text={"sign up with email"}
               action={() => navigation.navigate("register")}
+              social={"email"}
             />
-            <LOGIN_BUTTON
+            <AUTH_BUTTON
               text={"Already have an account?\ntap here to log in!"}
               action={() => navigation.navigate("login")}
               type={"ghost"}
+              align={"center"}
             />
           </View_Buttons>
           <View_Shape theme={theme}>
@@ -81,6 +87,6 @@ const WELCOME = ({ navigation }) => {
       )}
     </>
   );
-};
+});
 
 export default WELCOME;

@@ -6,13 +6,7 @@ import {
 } from "../../../styles/css_mixins";
 import { View } from "react-native";
 
-export const Options = styled(View)`
-  width: 100%;
-  height: 70%;
-  ${FlexColStart};
-`;
-
-export const BottomButtons = styled(View)`
+export const SettingsInGameBottomButtons = styled(View)`
   ${FlexRowAround};
   height: 15%;
   width: 100%;

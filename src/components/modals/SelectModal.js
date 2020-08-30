@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { SettingsContext } from "../../contexts/SettingsContext";
 import { Modal } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import RADIO_BUTTON_SET from "../buttons/RadioButtonSet";

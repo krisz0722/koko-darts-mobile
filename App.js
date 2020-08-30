@@ -3,7 +3,7 @@ import { ThemeContextProvider } from "./src/contexts/ThemeContext";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { ImageBackground } from "react-native";
 import { Window } from "./src/styles/css_mixins";
-import AppNavigator from "./src/navigators/AppNavigator";
+import APP_NAVIGATOR from "./src/navigators/AppNavigator";
 import { AuthcontextProvider } from "./src/contexts/AuthContext";
 import { GameContextProvider } from "./src/contexts/GameContext";
 import { SettingsContextProvider } from "./src/contexts/SettingsContext";
@@ -25,7 +25,7 @@ const App = () => {
         <AuthcontextProvider>
           <SettingsContextProvider>
             <GameContextProvider>
-              <AppNavigator />
+              <APP_NAVIGATOR />
             </GameContextProvider>
           </SettingsContextProvider>
         </AuthcontextProvider>

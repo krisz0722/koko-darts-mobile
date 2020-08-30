@@ -1,22 +1,7 @@
 import React, { useContext } from "react";
-import NavButton from "../components/buttons/NavButton";
-import styled from "styled-components";
-import { View } from "react-native";
-import { BorderVertical, FlexRowAround, Window } from "../styles/css_mixins";
+import NAV_BUTTON from "../components/buttons/NavButton";
 import { ThemeContext } from "../contexts/ThemeContext";
-
-export const NavBar = styled(View)`
-  ${BorderVertical(({ theme, color }) =>
-    color === "dark" ? theme.bg3 : theme.borderColor,
-  )};
-  border-bottom-width: ${({ theme, position }) =>
-    position === "top" ? theme.borderWidth : 0};
-  position: ${({ position }) => (position === "top" ? "relative" : "absolute")};
-  bottom: 0;
-  width: 100%;
-  height: ${() => Window.height * 0.08};
-  ${FlexRowAround};
-`;
+import { NavBar } from "./StyledNav";
 
 const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
   const { theme } = useContext(ThemeContext);
@@ -51,7 +36,7 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
       {index === 3 || index === 4 ? null : (
         <NavBar position={"bottom"} theme={theme}>
           {TABBAR_ITEMS.map((item) => (
-            <NavButton
+            <NAV_BUTTON
               key={item.route}
               length={3}
               direction={"column"}

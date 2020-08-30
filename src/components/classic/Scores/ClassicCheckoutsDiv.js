@@ -1,23 +1,6 @@
 import React from "react";
-import { Text, View } from "react-native";
 import { CHECKOUTS } from "../../../calc/scores";
-
-import styled from "styled-components";
-import { FlexRowAround, AlignText } from "../../../styles/css_mixins";
-
-const Checkout_Row = styled(View)`
-  width: 100%;
-  height: 100%;
-  ${FlexRowAround};
-`;
-
-const Checkout_Text = styled(Text)`
-  ${AlignText};
-  color: ${({ theme }) => theme.text};
-  font-size: 15;
-  font-family: ${({ theme }) => theme.fontFamily};
-  width: ${() => 100 / 3 + "%"};
-`;
+import { Checkout_Row, Checkout_Text } from "./StyledClassicCheckoutsDiv";
 
 const PLAYER_CHECKOUTS = React.memo(({ playerData, theme }) => {
   const { score, onCheckout } = playerData;

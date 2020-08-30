@@ -1,37 +1,33 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { Text, Modal, SafeAreaView, ActivityIndicator } from "react-native";
-import { BasicTextBold, FlexCol } from "../../styles/css_mixins";
+import React, { useState, useEffect, useContext } from "react";
+import { Modal, ActivityIndicator } from "react-native";
 import { ModalContainerLoading } from "../../components/modals/StyledModal";
 import { useRoute } from "@react-navigation/native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { AppBackground } from "../../../App";
-import { ScreenContainer } from "../../navigators/AppNavigator";
+import { ScreenContainer } from "../../navigators/StyledNav";
+import { useIsFocused } from "@react-navigation/native";
+import { Loading, Safe } from "./StyledLoadingScreen";
 
-export const Safe = styled(SafeAreaView)`
-  height: 100%;
-  width: 100%;
-  ${FlexCol};
-  background-color: ${({ theme, filled }) =>
-    filled ? theme.bgOverlay2 : "transparent"};
-`;
-
-export const Loading = styled(Text)`
-  color: ${({ theme, filled }) => (filled ? theme.text : theme.text)};
-  font-size: ${({ theme }) => theme.info.loading};
-  ${BasicTextBold};
-`;
-
-const LOADING_SCREEN = React.memo(({ filled, visible }) => {
+const LOADING_SCREEN = React.memo(({ filled }) => {
   const {
     theme,
     themeContext: { background },
   } = useContext(ThemeContext);
   const params = useRoute().params;
-  console.log("ROUTE", useRoute());
   const text = params ? params.text : "NEMJO";
-  console.log("TEXT", text);
-  console.log("VISIBLE", visible);
+
+  const [visible, setVisible] = useState(false);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  }, [isFocused]);
+
   return (
     <Modal
       animationType={"fade"}

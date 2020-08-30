@@ -1,25 +1,14 @@
 import React, { useContext, useCallback, useEffect } from "react";
-import { Animated } from "react-native";
-import styled from "styled-components/native/dist/styled-components.native.esm";
-import { FlexRow } from "../../../styles/css_mixins";
 import NUM_BUTTON from "../../buttons/NumButton";
 import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
 import { GameContext } from "../../../contexts/GameContext";
 import { VALIDSCORES } from "../../../calc/scores";
 import nextValidation from "../../../contexts/actions/gameContext/nextValidation";
+import { ClassicBottom } from "./StyledClassicBottom";
 
-export const ClassicBottom = styled(Animated.View)`
-  ${FlexRow};
-  flex-wrap: wrap;
-  position: absolute;
-  top: 63%;
-  width: 100%;
-  height: 37%;
-`;
-
-const CLASSIC_BOTTOM = (props) => {
-  const { animation, theme, action, activePlayer, inactivePlayer } = props;
+const CLASSIC_BOTTOM = React.memo((props) => {
+  const { animation, theme, activePlayer, inactivePlayer } = props;
   const {
     inputContext: { inputMethod, inputByRound, inputByDart, whichDart },
     dispatchInput,
@@ -216,6 +205,6 @@ const CLASSIC_BOTTOM = (props) => {
       })}
     </ClassicBottom>
   );
-};
+});
 
 export default CLASSIC_BOTTOM;

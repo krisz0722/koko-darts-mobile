@@ -1,35 +1,13 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { GameContext } from "../../../contexts/GameContext";
-import styled from "styled-components/native/dist/styled-components.native.esm";
 import { Animated } from "react-native";
-import { FlexColAround } from "../../../styles/css_mixins";
 import PLAYER_CHECKOUTS from "./ClassicCheckoutsDiv";
 import PLAYER_SCORE from "./ClassicPlayerScore";
-
-export const ClassicScores = styled(Animated.View)`
-  ${FlexColAround};
-  position: absolute;
-  top: ${({ showStats }) => (showStats ? "10%" : "15%")};
-  width: 100%;
-  height: ${({ showStats }) => (showStats ? "25%" : "30%")};
-`;
-
-export const ClassicCheckoutsPlayer = styled(Animated.View)`
-  position: absolute;
-  width: 50%;
-  bottom: 0;
-  height: 50%;
-  ${FlexColAround};
-  background-color: ${({ theme }) => theme.game.bgOnCheckout};
-  border-width: ${({ theme }) => theme.borderWidth};
-`;
-export const ClassicCheckoutsP1 = styled(ClassicCheckoutsPlayer)`
-  left: 0;
-`;
-
-export const ClassicCheckoutsP2 = styled(ClassicCheckoutsPlayer)`
-  right: 0;
-`;
+import {
+  ClassicScores,
+  ClassicCheckoutsP1,
+  ClassicCheckoutsP2,
+} from "./StyledClassicScores";
 
 const CLASSIC_SCORES = React.memo((props) => {
   const {

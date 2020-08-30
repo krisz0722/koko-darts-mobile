@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import {
   Header,
   NameText,
-  Name,
   Container,
   Container2,
   NavigationWindow,
@@ -10,13 +9,11 @@ import {
   Field,
   Stat,
   StatValue,
-  EditButton,
 } from "./StyledProfile";
-import { BackHandler, TouchableOpacity } from "react-native";
-import ProfileNavigator from "../../navigators/ProfileTopNavigator";
+import { BackHandler } from "react-native";
+import PROFILE_NAVIGATOR from "../../navigators/ProfileTopNavigator";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 const PROFILE = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -63,9 +60,6 @@ const PROFILE = ({ navigation }) => {
         <Container>
           <SubContainer source={{ uri: img }} />
           <NameText theme={theme}>{username}</NameText>
-          {/*<EditButton onPress={() => alert("gyaaa")} theme={theme}>*/}
-          {/*  <Icon name={"create"} size={20} color={theme.text2} />*/}
-          {/*</EditButton>*/}
         </Container>
         <Container2 theme={theme}>
           {DATA.map((item) => (
@@ -77,12 +71,10 @@ const PROFILE = ({ navigation }) => {
         </Container2>
       </Header>
       <NavigationWindow>
-        <ProfileNavigator />
+        <PROFILE_NAVIGATOR />
       </NavigationWindow>
     </>
   );
 };
 
 export default PROFILE;
-
-//TODO profile stats font- size, matches font-size,

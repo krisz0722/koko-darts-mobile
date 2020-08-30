@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { Buttons, Form2, Inputs } from "./StyledAuth";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import LoginInput from "../../components/buttons/LoginInput";
+import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const FORGOT_PASSWORD = ({ navigation }) => {
@@ -48,7 +48,7 @@ const FORGOT_PASSWORD = ({ navigation }) => {
       >
         <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
           <Inputs>
-            <LoginInput
+            <TEXT_INPUT
               valid={email.length > 5}
               value={email}
               input={INPUT}

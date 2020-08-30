@@ -1,15 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Button, View, Text } from "react-native";
 import { GameContext } from "../contexts/GameContext";
 import { Authcontext } from "../contexts/AuthContext";
 import HOME_DRAWER_CONTENT from "./HomeDrawerContent";
-import HomeNavigator from "./HomeNavigator";
+import HOMENAVIGATOR from "./HomeNavigator";
 import { ThemeContext } from "../contexts/ThemeContext";
 import logOut from "../_backend/auth/authLogOut";
 import deleteAccount from "../_backend/auth/authDelete";
 import DELETE_ALERT from "../components/modals/DeleteAlert";
 import LOADING_SCREEN from "../screens/info/LoadingScreen";
+import CONTACT from "../screens/contact/Contact";
 
 const ABOUT = ({ navigation }) => (
   <View>
@@ -17,35 +18,20 @@ const ABOUT = ({ navigation }) => (
     <Button title="back" onPress={() => navigation.goBack()} />
   </View>
 );
-
-const REPORT_BUG = ({ navigation }) => (
-  <View>
-    <Text>report bug</Text>
-    <Button title="back" onPress={() => navigation.goBack()} />
-  </View>
-);
-
-const CONTACT = ({ navigation }) => (
-  <View>
-    <Text>contact</Text>
-    <Button title="back" onPress={() => navigation.goBack()} />
-  </View>
-);
-
 const { Navigator, Screen } = createDrawerNavigator();
 
-const HomeDrawerNavigator = React.memo(({ navigation }) => {
+const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
   const {
     gameData: { activePlayer },
   } = useContext(GameContext);
   const {
     userData: { username },
   } = useContext(Authcontext);
-
   const {
     theme,
     themeContext: { animation },
   } = useContext(ThemeContext);
+
   const [deleteModal, setDeleteModal] = useState(false);
 
   const drawerstyle = {
@@ -53,18 +39,18 @@ const HomeDrawerNavigator = React.memo(({ navigation }) => {
     backgroundColor: "transparent",
   };
 
-  const handleLogOut = async () => {
+  const handleLogOut = useCallback(async () => {
     await logOut(navigation);
-  };
+  }, [navigation]);
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     await deleteAccount(username, navigation);
-  };
+  }, [username, navigation]);
 
-  const cancelDelete = () => {
+  const cancelDelete = useCallback(() => {
     navigation.navigate("home");
     setDeleteModal(false);
-  };
+  }, [navigation]);
 
   return (
     <>
@@ -94,15 +80,15 @@ const HomeDrawerNavigator = React.memo(({ navigation }) => {
           drawerPosition={"right"}
           overlayColor={theme.game[activePlayer + "Overlay"]}
         >
-          <Screen name={"homenavigator"} component={HomeNavigator} />
+          <Screen name={"homenavigator"} component={HOMENAVIGATOR} />
           <Screen name="about" component={ABOUT} />
-          <Screen name="report" component={REPORT_BUG} />
           <Screen name="contact" component={CONTACT} />
           <Screen name="loadingscreen" component={LOADING_SCREEN} />
+          <Screen name="reportbug" component={CONTACT} />
         </Navigator>
       </>
     </>
   );
 });
 
-export default HomeDrawerNavigator;
+export default HOME_DRAWER_NAVIGATOR;

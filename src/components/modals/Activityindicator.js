@@ -1,22 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import { Text, Modal, SafeAreaView, ActivityIndicator } from "react-native";
-import { BasicTextBold, FlexCol } from "../../styles/css_mixins";
+import { Modal, ActivityIndicator } from "react-native";
 import { ModalContainerLoading } from "./StyledModal";
-
-export const Safe = styled(SafeAreaView)`
-  height: 100%;
-  width: 100%;
-  ${FlexCol};
-  background-color: ${({ theme, filled }) =>
-    filled ? theme.bgOverlay2 : "transparent"};
-`;
-
-export const Loading = styled(Text)`
-  color: ${({ theme, filled }) => (filled ? theme.text : theme.text)};
-  font-size: 24;
-  ${BasicTextBold};
-`;
+import { Safe, Loading } from "./StyledActivityindicator";
 
 const ACTIVITY_INDICATOR = React.memo(({ filled, visible, theme, text }) => {
   return (

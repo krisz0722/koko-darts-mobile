@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Div, Row2, Row, Div2 } from "./home/StyledSettings";
-import SETTINGS_HEADER from "./Header";
-import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
+import { Div, Row2, Row, Div2 } from "./home/StyledOptions";
+import SETTINGS_HEADER from "./SettingsHeader";
+import OPTION_BUTTON from "../../components/buttons/OptionButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import MODAL_SELECT from "../../components/modals/SelectModal";
 
-export const OptionsLegOrSet = React.memo((props) => {
+const OPTIONS_LEGORSET = React.memo((props) => {
   const {
     legOrSet,
     toggleLegOrSet,
@@ -45,7 +45,7 @@ export const OptionsLegOrSet = React.memo((props) => {
 
         <Div theme={theme}>
           {["leg", "set"].map((item) => (
-            <SETTINGS_BUTTON
+            <OPTION_BUTTON
               key={item}
               active={legOrSet === item}
               length={data.length}
@@ -57,12 +57,12 @@ export const OptionsLegOrSet = React.memo((props) => {
       </Row>
       <Row2 page={page} theme={theme}>
         <Div2>
-          <SETTINGS_BUTTON
+          <OPTION_BUTTON
             size={"small"}
             length={length}
             value={"first to win"}
           />
-          <SETTINGS_BUTTON
+          <OPTION_BUTTON
             size={"small"}
             length={length}
             value={toWin}
@@ -70,10 +70,10 @@ export const OptionsLegOrSet = React.memo((props) => {
             active={true}
             action={() => displayModal("main", legOrSet)}
           />
-          <SETTINGS_BUTTON size={"small"} length={length} value={legOrSet} />
+          <OPTION_BUTTON size={"small"} length={length} value={legOrSet} />
           {legOrSet === "set" ? (
             <>
-              <SETTINGS_BUTTON
+              <OPTION_BUTTON
                 size={"small"}
                 length={length}
                 value={legsPerSet}
@@ -81,7 +81,7 @@ export const OptionsLegOrSet = React.memo((props) => {
                 active={true}
                 action={() => displayModal("sub", "leg")}
               />
-              <SETTINGS_BUTTON
+              <OPTION_BUTTON
                 size={"small"}
                 length={length}
                 value={"leg per set"}
@@ -105,3 +105,5 @@ export const OptionsLegOrSet = React.memo((props) => {
     </>
   );
 });
+
+export default OPTIONS_LEGORSET;

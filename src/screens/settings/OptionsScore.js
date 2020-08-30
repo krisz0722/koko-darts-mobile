@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { Row, Div } from "./home/StyledSettings";
-import SETTINGS_HEADER from "./Header";
-import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
+import { Row, Div } from "./home/StyledOptions";
+import SETTINGS_HEADER from "./SettingsHeader";
+import OPTION_BUTTON from "../../components/buttons/OptionButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-export const OptionsScore = React.memo((props) => {
+const OPTIONS_SCORE = React.memo((props) => {
   const { startingScore, toggleStartingScore, page } = props;
   const { theme } = useContext(ThemeContext);
 
@@ -15,7 +15,7 @@ export const OptionsScore = React.memo((props) => {
       <SETTINGS_HEADER text={"starting score"} />
       <Div theme={theme}>
         {DATA.map((item) => (
-          <SETTINGS_BUTTON
+          <OPTION_BUTTON
             active={startingScore === item}
             length={DATA.length}
             key={item}
@@ -27,3 +27,5 @@ export const OptionsScore = React.memo((props) => {
     </Row>
   );
 });
+
+export default OPTIONS_SCORE;

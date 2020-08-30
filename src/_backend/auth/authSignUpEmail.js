@@ -2,7 +2,6 @@ import auth from "@react-native-firebase/auth";
 import createProfile from "../db/crudCreate";
 import { checkUsernameAvailability } from "../db/crudCheck";
 import throwError from "./authError";
-import { CommonActions } from "@react-navigation/native";
 import LogIn from "./authLogIn";
 
 const signUp = async (email, password, username, navigation, reducers) => {
@@ -12,13 +11,7 @@ const signUp = async (email, password, username, navigation, reducers) => {
   console.log("USERNAMETAKEN", userNameTaken);
 
   if (userNameTaken > 0) {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "authnavigator" }],
-      }),
-    );
-    return throwError("usernametaken", "signUp");
+    return throwError("usernametaken", "signUp", navigation);
   } else {
     try {
       await auth().createUserWithEmailAndPassword(email, password);

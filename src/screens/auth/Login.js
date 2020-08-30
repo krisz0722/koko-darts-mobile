@@ -1,8 +1,8 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
-import { Buttons, Form2, Inputs } from "./StyledAuth";
-import LOGIN_BUTTON from "../../components/buttons/LoginButton";
-import LoginInput from "../../components/buttons/LoginInput";
+import { Form2, Inputs2 } from "./StyledAuth";
+import AUTH_BUTTON from "../../components/buttons/LoginButton";
+import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import LogIn from "../../_backend/auth/authLogIn";
 import { Authcontext } from "../../contexts/AuthContext";
@@ -12,7 +12,7 @@ import { GameContext } from "../../contexts/GameContext";
 const LOGIN = React.memo(({ navigation }) => {
   const { dispatchGameData } = useContext(GameContext);
   const { dispatchSettings } = useContext(SettingsContext);
-  const { dispatchUserData, userData } = useContext(Authcontext);
+  const { dispatchUserData } = useContext(Authcontext);
   const { dispatchTheme, theme } = useContext(ThemeContext);
 
   const reducers = {
@@ -27,22 +27,15 @@ const LOGIN = React.memo(({ navigation }) => {
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (userData) {
-      setLoading(false);
-    }
-  }, [userData]);
 
   const enableSignUp =
     [password, email].filter((item) => item.length < 6).length === 0;
 
-  const keyboardDidShow = (e) => {
+  const keyboardDidShow = () => {
     setIsKeyboardUp(true);
   };
 
-  const keyboardDidHide = (e) => {
+  const keyboardDidHide = () => {
     setIsKeyboardUp(false);
     setFocus(undefined);
   };
@@ -58,7 +51,6 @@ const LOGIN = React.memo(({ navigation }) => {
   const toggleSecureEntry = () => setPasswordHidden(!passwordHidden);
 
   const pressLogin = () => {
-    setLoading(true);
     LogIn(email, password, email, navigation, reducers);
   };
 
@@ -94,10 +86,10 @@ const LOGIN = React.memo(({ navigation }) => {
           keyboardShouldPersistTaps={"always"}
         >
           <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
-            <Inputs>
+            <Inputs2>
               {INPUTS.map((item) => {
                 return (
-                  <LoginInput
+                  <TEXT_INPUT
                     key={item.name}
                     valid={item.value.length > 5}
                     value={item.value}
@@ -107,20 +99,21 @@ const LOGIN = React.memo(({ navigation }) => {
                   />
                 );
               })}
-            </Inputs>
-            <LOGIN_BUTTON
-              type={enableSignUp ? "active" : "basic"}
-              disabled={!enableSignUp}
-              text={"log in"}
-              action={() => pressLogin()}
-            />
-            <Buttons>
-              <LOGIN_BUTTON
+              <AUTH_BUTTON
+                type={enableSignUp ? "active" : "basic"}
+                disabled={!enableSignUp}
+                text={"log in"}
+                action={() => pressLogin()}
+                align={"center"}
+                social={"mail"}
+              />
+              <AUTH_BUTTON
                 text={"forgotten password"}
                 action={() => navigation.navigate("forgotpassword")}
                 type={"ghost"}
+                align={"center"}
               />
-            </Buttons>
+            </Inputs2>
           </Form2>
         </KeyboardAvoidingView>
       </SafeAreaView>

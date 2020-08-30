@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Bottom, BottomButtons } from "./StyledSettings";
+import { SettingsBottom, SettingsBottomButtons } from "./StyledSettings";
 import { SettingsContext } from "../../../contexts/SettingsContext";
-import { OptionsLayout } from "../OptionsLayout";
-import { COLOR } from "../OptionsColor";
-import { OptionsEffects } from "../OptionsEffects";
-import { OptionsScore } from "../OptionsScore";
-import { OptionsLegOrSet } from "../OptionsLegOrSet";
+import OPTIONS_LAYOUT from "../OptionsLayout";
+import OPTIONS_COLOR from "../OptionsColor";
+import OPTIONS_EFFECT from "../OptionsEffects";
+import OPTIONS_SCORE from "../OptionsScore";
+import OPTIONS_LEGORSET from "../OptionsLegOrSet";
 import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import PREVIEW from "../Preview";
 import { useIsFocused } from "@react-navigation/native";
@@ -13,7 +13,7 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 import { Authcontext } from "../../../contexts/AuthContext";
 import updateAuthSettings from "../../../contexts/actions/authContext/UpdateSettings";
 
-const SETTINGS = () => {
+const SETTINGS = React.memo(() => {
   const {
     dispatchSettings,
     settings,
@@ -77,7 +77,6 @@ const SETTINGS = () => {
         value: newSettings,
       });
       updateAuthSettings(userData, newSettings);
-      dispatchTheme({ type: "CHANGE_ANIMATION", value: !animation });
     }
   }, [
     background,
@@ -187,9 +186,9 @@ const SETTINGS = () => {
 
   return (
     <>
-      <OptionsLayout layout={layout} toggleLayout={toggleLayout} />
-      <COLOR toggleTheme={toggleTheme} />
-      <OptionsEffects
+      <OPTIONS_LAYOUT layout={layout} toggleLayout={toggleLayout} />
+      <OPTIONS_COLOR toggleTheme={toggleTheme} />
+      <OPTIONS_EFFECT
         animation={animation}
         opacity={opacity}
         background={background}
@@ -197,12 +196,12 @@ const SETTINGS = () => {
         toggleOpacity={toggleOpacity}
         toggleBackground={toggleBackground}
       />
-      <OptionsScore
+      <OPTIONS_SCORE
         page={"main"}
         startingScore={startingScore}
         toggleStartingScore={toggleStartingScore}
       />
-      <OptionsLegOrSet
+      <OPTIONS_LEGORSET
         page={"main"}
         animation={animation}
         legOrSet={legOrSet}
@@ -212,7 +211,7 @@ const SETTINGS = () => {
         legsPerSet={legsPerSet}
         toggleLegsPerSet={toggleLegsPerSet}
       />
-      <Bottom preview={preview}>
+      <SettingsBottom preview={preview}>
         <PREVIEW
           animation={animation}
           settings={newSettings}
@@ -220,7 +219,7 @@ const SETTINGS = () => {
           ingame={false}
           layout={layout}
         />
-        <BottomButtons>
+        <SettingsBottomButtons>
           <THEMED_BUTTON
             size={"small"}
             text={preview ? "hide preview" : "show preview"}
@@ -235,10 +234,10 @@ const SETTINGS = () => {
             length={2}
             action={reset}
           />
-        </BottomButtons>
-      </Bottom>
+        </SettingsBottomButtons>
+      </SettingsBottom>
     </>
   );
-};
+});
 
 export default SETTINGS;

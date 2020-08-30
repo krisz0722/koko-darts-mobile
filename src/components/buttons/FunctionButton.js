@@ -20,7 +20,7 @@ export const Text_Number = styled(Animated.Text)`
   ${BasicTextBold};
   height: 100%;
   width: ${({ icon }) => (icon ? "70%" : "100%")}
-  font-size: ${({ theme }) => theme.game.buttonFontSize.function};
+  font-size: ${({ theme }) => theme.fontSizeFunction};
   color: ${({ theme }) => theme.text}
 `;
 

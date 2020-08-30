@@ -1,13 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Text,
-  Keyboard,
-  KeyboardAvoidingView,
-  SafeAreaView,
-} from "react-native";
-import { Buttons, Form, Inputs } from "./StyledAuth";
-import LOGIN_BUTTON from "../../components/buttons/LoginButton";
-import LoginInput from "../../components/buttons/LoginInput";
+import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
+import { Form, Inputs } from "./StyledAuth";
+import AUTH_BUTTON from "../../components/buttons/LoginButton";
+import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import signUp from "../../_backend/auth/authSignUpEmail";
 import { Authcontext } from "../../contexts/AuthContext";
@@ -15,7 +10,7 @@ import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import auth from "@react-native-firebase/auth";
 
-const REGISTER = ({ navigation }) => {
+const REGISTER = React.memo(({ navigation }) => {
   const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchGameData } = useContext(GameContext);
   const { dispatchUserData } = useContext(Authcontext);
@@ -130,11 +125,10 @@ const REGISTER = ({ navigation }) => {
             }}
             keyboardShouldPersistTaps={"always"}
           >
-            <Text>valami</Text>
             <Form theme={theme} isKeyboardUp={isKeyboardUp}>
               <Inputs>
                 {INPUTS.map((item) => (
-                  <LoginInput
+                  <TEXT_INPUT
                     key={item.name}
                     valid={item.value.length > 5}
                     input={item}
@@ -142,26 +136,27 @@ const REGISTER = ({ navigation }) => {
                     focused={focus === item.name}
                   />
                 ))}
-                <LOGIN_BUTTON
+                <AUTH_BUTTON
                   type={enableSignUp ? "active" : "basic"}
                   disabled={!enableSignUp}
                   text={"Sign Up"}
+                  social={"exit-to-app"}
                   action={() => pressSignUp()}
+                  align={"center"}
                 />
-              </Inputs>
-              <Buttons>
-                <LOGIN_BUTTON
+                <AUTH_BUTTON
                   text={"Already have an account?\ntap here to log in!"}
                   action={() => navigation.navigate("login")}
                   type={"ghost"}
+                  align={"center"}
                 />
-              </Buttons>
+              </Inputs>
             </Form>
           </KeyboardAvoidingView>
         </SafeAreaView>
       )}
     </>
   );
-};
+});
 
 export default REGISTER;

@@ -1,20 +1,15 @@
 import React, { useContext, useCallback, useState } from "react";
-import {
-  HomeContainer,
-  HeaderText,
-  Header,
-  Buttons,
-  TopBar,
-} from "./StyledHome";
+import { HomeContainer, HeaderCon, Buttons, TopBar } from "./StyledHome";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import NavButton from "../../components/buttons/NavButton";
+import NAV_BUTTON from "../../components/buttons/NavButton";
 import { Authcontext } from "../../contexts/AuthContext";
 import HOME_INFO from "./Info";
 import FRIEND_REQUEST from "./FriendRequest";
 import LIST_UNFINISHED_MATCHES from "../../components/lists/ListUnfinishedMatches";
 import { checkOpponentsStatus } from "../../_backend/db/crudCheck";
 import updateAuthMatchesSave from "../../contexts/actions/authContext/UpdateMatchesSave";
+import { Header1 } from "../../components/headers/StyledHeaders";
 
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -60,7 +55,7 @@ const HOME = React.memo(({ navigation }) => {
           <FRIEND_REQUEST />
         ) : (
           <>
-            <NavButton
+            <NAV_BUTTON
               length={"7"}
               active={false}
               direction={"column"}
@@ -73,12 +68,13 @@ const HOME = React.memo(({ navigation }) => {
         )}
       </TopBar>
       <HomeContainer>
-        <Header>
-          <HeaderText theme={theme}>welcome</HeaderText>
-          <HeaderText theme={theme}>{username}</HeaderText>
-        </Header>
+        <HeaderCon theme={theme}>
+          <Header1 theme={theme}>welcome</Header1>
+          <Header1 theme={theme}>{username}</Header1>
+        </HeaderCon>
         {unfinishedMatches.length > 0 ? (
           <LIST_UNFINISHED_MATCHES
+            theme={theme}
             gameToContinue={gameToContinue}
             handleGameToContinue={handleGameToContinue}
           />

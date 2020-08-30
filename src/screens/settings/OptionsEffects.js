@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Row, Div } from "./home/StyledSettings";
-import SETTINGS_BUTTON from "../../components/buttons/SettingsButton";
-import SETTINGS_HEADER from "./Header";
+import { Row, Div } from "./home/StyledOptions";
+import OPTION_BUTTON from "../../components/buttons/OptionButton";
+import SETTINGS_HEADER from "./SettingsHeader";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { GameContext } from "../../contexts/GameContext";
 
-export const OptionsEffects = React.memo((props) => {
+const OPTIONS_EFFECT = React.memo((props) => {
   const {
     ingame,
     animation,
@@ -33,7 +33,7 @@ export const OptionsEffects = React.memo((props) => {
         inGameTheme={themeToUse}
       />
       <Div theme={theme}>
-        <SETTINGS_BUTTON
+        <OPTION_BUTTON
           value={"animation"}
           active={animation}
           length={length}
@@ -43,7 +43,7 @@ export const OptionsEffects = React.memo((props) => {
           inGameTheme={themeToUse}
         />
         {!ingame ? (
-          <SETTINGS_BUTTON
+          <OPTION_BUTTON
             value={"background"}
             active={background}
             length={3}
@@ -54,7 +54,7 @@ export const OptionsEffects = React.memo((props) => {
           />
         ) : null}
 
-        <SETTINGS_BUTTON
+        <OPTION_BUTTON
           value={"opacity"}
           size={"small"}
           active={opacity}
@@ -67,3 +67,5 @@ export const OptionsEffects = React.memo((props) => {
     </Row>
   );
 });
+
+export default OPTIONS_EFFECT;

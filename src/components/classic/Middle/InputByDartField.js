@@ -1,26 +1,9 @@
 import React, { useContext, useEffect, useRef } from "react";
-import styled from "styled-components";
 import { Animated } from "react-native";
-import { GameContext } from "../../../contexts/GameContext";
-import { BasicTextBold, FlexRowAround } from "../../../styles/css_mixins";
 import IconDart from "../../../../assets/iconDart";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { InputContext } from "../../../contexts/InputContext";
-
-export const Container = styled(Animated.View)`
-  ${FlexRowAround}
-  width: ${() => 100 / 3 + "%"};
-  padding:2%;
-  height:50%;  
-  background-color: ${({ theme }) => theme.bgGreen};
-  border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
-  border-width: ${({ theme }) => theme.borderWidth};
-`;
-export const Text_Function = styled(Animated.Text)`
-  ${BasicTextBold};
-  font-size: ${({ theme }) => theme.game.buttonFontSize.function};
-  color: ${({ theme }) => theme.text};
-`;
+import { Container, Text_Function } from "./StyledInputByDartField";
 
 const INPUT_BY_DART_FIELD = React.memo(({ activePlayer }) => {
   const { theme, animation } = useContext(ThemeContext);

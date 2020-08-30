@@ -1,21 +1,10 @@
 import React, { useCallback, useContext } from "react";
-import styled from "styled-components/native/dist/styled-components.native.esm";
-import { View } from "react-native";
-import { FlexRow } from "../../../styles/css_mixins";
 import PLAYER_INPUT_INFO from "./PlayerInputInfo";
 import { useNavigation } from "@react-navigation/native";
 import { GameContext } from "../../../contexts/GameContext";
 import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
-
-export const ClassicMiddle = styled(View)`
-  ${FlexRow};
-  position: absolute;
-  flex-wrap: wrap;
-  top: 45%;
-  width: 100%;
-  height: 18%;
-`;
+import { ClassicMiddle } from "./StyledClassicMiddle";
 
 const CLASSIC_MIDDLE = React.memo((props) => {
   const {

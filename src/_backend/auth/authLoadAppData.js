@@ -6,7 +6,6 @@ const loadAppData = async (userData, navigation, reducers) => {
 
   const { user, settings, game, theme } = reducers;
   const lastMatch = userData.matches[0];
-  const friends = userData.friends;
 
   const lastOpponent = lastMatch ? lastMatch.opponent : null;
 

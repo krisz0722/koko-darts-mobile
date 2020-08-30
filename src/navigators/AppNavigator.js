@@ -1,28 +1,21 @@
 import React, { useContext } from "react";
-import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
-import styled from "styled-components/native/dist/styled-components.native.esm";
 import { ThemeProvider } from "styled-components";
 import { AppBackground } from "../../App";
 import { ThemeContext } from "../contexts/ThemeContext";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
 import transitionNone from "../styles/navNoTransition";
-import DrawerNavigator from "./DrawerNavigator";
-import AuthNavigator from "./AuthNavigator";
-import HomeDrawerNavigator from "./HomeDrawerNavigator";
-
-export const ScreenContainer = styled(SafeAreaView)`
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.bgOverlay};
-`;
+import DRAWER_NAVIGATOR from "./DrawerNavigator";
+import AUTH_NAVIGATOR from "./AuthNavigator";
+import HOME_DRAWER_NAVIGATOR from "./HomeDrawerNavigator";
+import { ScreenContainer } from "./StyledNav";
 
 const { Navigator, Screen } = createStackNavigator();
 
-const AppNavigator = () => {
+const APP_NAVIGATOR = () => {
   const {
     theme,
     themeContext: { animation, background },
@@ -68,12 +61,12 @@ const AppNavigator = () => {
                 ...transition(theme.name),
               }}
             >
-              <Screen name={"authnavigator"} component={AuthNavigator} />
+              <Screen name={"authnavigator"} component={AUTH_NAVIGATOR} />
               <Screen
                 name={"homedrawernavigator"}
-                component={HomeDrawerNavigator}
+                component={HOME_DRAWER_NAVIGATOR}
               />
-              <Screen name={"drawernavigator"} component={DrawerNavigator} />
+              <Screen name={"drawernavigator"} component={DRAWER_NAVIGATOR} />
             </Navigator>
           </NavigationContainer>
         </ScreenContainer>
@@ -82,4 +75,4 @@ const AppNavigator = () => {
   );
 };
 
-export default AppNavigator;
+export default APP_NAVIGATOR;

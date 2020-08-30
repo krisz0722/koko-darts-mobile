@@ -1,14 +1,18 @@
 import styled from "styled-components";
-import React from "react";
-import { Text, View, Image } from "react-native";
+import { View, Image } from "react-native";
 import {
   BasicTextBold,
   Border,
   Window,
   FlexColAround,
   FlexRowAround,
-  FlexCol,
 } from "../../styles/css_mixins";
+import {
+  Header1,
+  Header2,
+  Header3,
+  P2_Bold,
+} from "../../components/headers/StyledHeaders";
 
 export const Players = styled(View)`
   width: 100%;
@@ -17,14 +21,6 @@ export const Players = styled(View)`
   border-bottom-width: ${({ theme }) => theme.borderWidth};
   border-top-width: ${({ theme }) => theme.borderWidth};
   border-color: ${({ theme }) => theme.borderColor};
-`;
-
-export const Players2 = styled(Players)`
-  position: absolute;
-  top: 30%;
-  height: 40%;
-  border-bottom-width: 0;
-  ${FlexColAround};
 `;
 
 export const PlayerInfo = styled(View)`
@@ -47,35 +43,13 @@ export const Avatar = styled(Image)`
   ${Border(({ theme }) => theme.text)};
 `;
 
-export const Name = styled(Text)`
-  color: white;
-  display:${({ rematch }) => (rematch ? "none" : "flex")}
-  font-size: ${({ theme }) => theme.stats.name};
-  ${BasicTextBold};
+export const Name = styled(P2_Bold)`
+  display: ${({ rematch }) => (rematch ? "none" : "flex")} ${BasicTextBold};
 `;
 
-export const Main = styled(Text)`
-  color: ${({ theme }) => theme.text};
-  font-size: ${({ theme }) => theme.stats.scoreMain};
-  ${BasicTextBold};
-`;
+export const Main = styled(Header1)``;
 
-export const Main2 = styled(Main)`
-  width: 100%;
-  padding: 5%;
-  font-size: ${({ theme }) => theme.stats.scoreSub};
-  line-height: ${({ theme }) => theme.stats.scoreSub * 2};
-  border-bottom-width: ${({ theme }) => theme.borderWidth};
-  border-top-width: ${({ theme }) => theme.borderWidth};
-
-  border-color: ${({ theme }) => theme.borderColor};
-`;
-
-export const Sub = styled(Text)`
-  color: white;
-  font-size: ${({ theme }) => theme.stats.scoreSub};
-  ${BasicTextBold};
-`;
+export const Sub = styled(Header3)``;
 
 export const Row = styled(View)`
   height: ${() => (100 - 37.5) / 12 + "%"};
@@ -90,13 +64,9 @@ export const Div = styled(View)`
   height: 60%;
 `;
 
-export const Stat = styled(Text)`
-  ${FlexColAround};
-  ${BasicTextBold};
-  color: white;
+export const Stat = styled(P2_Bold)`
   width: 50%;
   height: 80%;
-  font-size: ${({ theme }) => theme.stats.stat};
   background-color: rgba(255, 255, 255, 0.1);
 `;
 
@@ -127,12 +97,8 @@ export const BottomButtons2 = styled(BottomButtons)`
   width: 100%;
 `;
 
-export const Header = styled(Text)`
-  ${BasicTextBold};
+export const Header = styled(Header2)`
   height: 17.5%;
-  ${FlexCol};
   width: 100%;
   padding: 0 2%;
-  color: ${({ theme }) => theme.text};
-  font-size: ${({ theme }) => theme.stats.header};
 `;

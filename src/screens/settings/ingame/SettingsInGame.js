@@ -1,16 +1,16 @@
 import React, { useContext, useCallback, useEffect } from "react";
-import { BottomButtons } from "./StyledSettingsInGame";
-import { OptionsLayout } from "../OptionsLayout";
-import { OptionsEffects } from "../OptionsEffects";
-import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
-import PREVIEW from "../Preview";
 import { BackHandler } from "react-native";
-import { COLOR } from "../OptionsColor";
 import { GameContext } from "../../../contexts/GameContext";
-import { ScreenContainer } from "../../../navigators/AppNavigator";
+import { ScreenContainer } from "../../../navigators/StyledNav";
 import { AppBackground } from "../../../../App";
+import { SettingsInGameBottomButtons } from "./StyledSettingsInGame";
+import OPTIONS_LAYOUT from "../OptionsLayout";
+import OPTIONS_EFFECT from "../OptionsEffects";
+import OPTIONS_COLOR from "../OptionsColor";
+import PREVIEW from "../Preview";
+import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 
-const SETTINGS_INGAME = ({ navigation }) => {
+const SETTINGS_INGAME = React.memo(({ navigation }) => {
   const { dispatchGameData, gameData } = useContext(GameContext);
   const inGameSettings = gameData.settings;
 
@@ -61,13 +61,13 @@ const SETTINGS_INGAME = ({ navigation }) => {
         resizeMode="cover"
       />
       <ScreenContainer theme={theme}>
-        <OptionsLayout
+        <OPTIONS_LAYOUT
           layout={layout}
           toggleLayout={toggleLayout}
           ingame={true}
         />
-        <COLOR toggleTheme={toggleTheme} ingame={true} />
-        <OptionsEffects
+        <OPTIONS_COLOR toggleTheme={toggleTheme} ingame={true} />
+        <OPTIONS_EFFECT
           background={background}
           animation={animation}
           opacity={opacity}
@@ -84,7 +84,7 @@ const SETTINGS_INGAME = ({ navigation }) => {
           ingame={true}
           layout={layout}
         />
-        <BottomButtons theme={theme}>
+        <SettingsInGameBottomButtons theme={theme}>
           <THEMED_BUTTON
             type={"active"}
             size={"small"}
@@ -93,10 +93,10 @@ const SETTINGS_INGAME = ({ navigation }) => {
             action={() => navigation.navigate("game")}
             inGameTheme={theme}
           />
-        </BottomButtons>
+        </SettingsInGameBottomButtons>
       </ScreenContainer>
     </>
   );
-};
+});
 
 export default SETTINGS_INGAME;

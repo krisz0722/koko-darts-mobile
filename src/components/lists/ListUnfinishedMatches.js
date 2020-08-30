@@ -1,19 +1,11 @@
 import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
-import styled from "styled-components";
-import { FlatList } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
 import UNFINISHED_MATCH_COMPONENT from "./ComponentMatchUnfinished";
-import { InfoTitle } from "../../screens/home/StyledHome";
-
-export const MatchesContainer = styled(FlatList)`
-  width: 100%;
-  height: 100%;
-  border-top-width: ${({ theme }) => theme.borderWidth};
-  border-bottom-width: ${({ theme }) => theme.borderWidth};
-  border-color: ${({ theme }) => theme.borderColor};
-`;
+import { HeaderCon } from "../../screens/home/StyledInfo";
+import { MatchesContainer } from "./StyledListUnfinishedMatches";
+import { Header2 } from "../headers/StyledHeaders";
 
 const ListUnfinishedMatches = React.memo(
   ({ gameToContinue, handleGameToContinue }) => {
@@ -51,10 +43,12 @@ const ListUnfinishedMatches = React.memo(
 );
 
 const LIST_UNFINISHED_MATCHES = React.memo(
-  ({ gameToContinue, handleGameToContinue }) => {
+  ({ gameToContinue, handleGameToContinue, theme }) => {
     return (
       <>
-        <InfoTitle unfinished={true}>you have unfinished matches</InfoTitle>
+        <HeaderCon theme={theme}>
+          <Header2 unfinished={true}>you have unfinished matches</Header2>
+        </HeaderCon>
         <ListUnfinishedMatches
           gameToContinue={gameToContinue}
           handleGameToContinue={handleGameToContinue}

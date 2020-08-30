@@ -5,7 +5,7 @@ import {
   Friendrequest,
   FriendName,
   FriendAvatar,
-} from "./StyledHome";
+} from "./StyledFriendRequest";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";

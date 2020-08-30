@@ -2,21 +2,12 @@ import styled from "styled-components";
 import {
   FlexColBetween,
   FlexColStart,
+  FlexRow,
   FlexRowAround,
-  Window,
 } from "../../../styles/css_mixins";
-import { View } from "react-native";
+import { Animated, View } from "react-native";
 
-export const Options = styled(View)`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 0;
-  height: ${() => Window.height * 0.7};
-  ${FlexColStart};
-`;
-
-export const Bottom = styled(View)`
+export const SettingsBottom = styled(View)`
   ${FlexColBetween};
   position: absolute;
   bottom: 8%;
@@ -27,7 +18,7 @@ export const Bottom = styled(View)`
   z-index: ${({ preview }) => (preview ? 3 : -1)};
 `;
 
-export const BottomButtons = styled(View)`
+export const SettingsBottomButtons = styled(View)`
   ${FlexRowAround};
   position: absolute;
   bottom: 0;
@@ -59,4 +50,22 @@ export const Div = styled(View)`
 
 export const Div2 = styled(Div)`
   height: 100%;
+`;
+
+export const SettingsHeaderContainer = styled(View)`
+  ${FlexRow};
+  width: 100%;
+  height: ${({ header }) => (header ? "100%" : "50%")};
+  background-color: rgba(255, 255, 255, 0.1);
+`;
+
+export const PreviewContainer = styled(Animated.View)`
+  position: ${({ ingame }) => (ingame ? "relative" : "absolute")};
+  top: ${({ ingame }) => (ingame ? "0" : "0%")};
+  ${FlexRow};
+  height: ${({ ingame }) => (ingame ? "40%" : "70%")};
+  width: 100%;
+  z-index: ${({ visible }) => (visible ? 3 : -1)};
+  background-color: ${({ theme, ingame }) =>
+    ingame ? "transparent" : theme.bgOverlay};
 `;

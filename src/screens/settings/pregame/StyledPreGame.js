@@ -1,21 +1,13 @@
 import styled from "styled-components";
 import {
+  FlexCol,
   FlexColStart,
   FlexRowAround,
   Window,
 } from "../../../styles/css_mixins";
-import { View } from "react-native";
+import { TouchableHighlight, View } from "react-native";
 
-export const Options = styled(View)`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 0;
-  height: 85%;
-  ${FlexColStart};
-`;
-
-export const BottomButtons = styled(View)`
+export const SettingsPreGameBottomButtons = styled(View)`
   ${FlexRowAround};
   position:absolute;
   bottom: 0;
@@ -45,4 +37,18 @@ export const Div = styled(View)`
   ${FlexRowAround};
   width: 100%;
   height: 50%;
+`;
+
+export const Swap = styled(TouchableHighlight)`
+  width: 10%;
+  height: ${() => Window.width * 0.1};
+  background-color: ${({ theme }) => theme.bgActive};
+  border-radius: 4px;
+  ${FlexCol};
+`;
+
+export const SettingsPreGamePlayers = styled(View)`
+  width: 100%;
+  ${FlexRowAround};
+  height: 25%;
 `;

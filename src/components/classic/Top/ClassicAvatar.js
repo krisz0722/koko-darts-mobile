@@ -1,23 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import styled from "styled-components";
 import { Animated } from "react-native";
 import { Window } from "../../../styles/css_mixins";
-
-const PlayerInfoAvatar = styled(Animated.Image)`
-  height: 100%;
-  position: absolute;
-  top: 0;
-`;
-
-export const Avatar1 = styled(PlayerInfoAvatar)`
-  left: 0;
-  border-right-width: ${({ theme }) => theme.borderWidth};
-`;
-
-export const Avatar2 = styled(PlayerInfoAvatar)`
-  right: 0;
-  border-left-width: ${({ theme }) => theme.borderWidth};
-`;
+import { Avatar1, Avatar2 } from "./StyledAvatar";
 
 const AVATAR = React.memo((props) => {
   const { player, showStats, img, activePlayer, theme, animation } = props;

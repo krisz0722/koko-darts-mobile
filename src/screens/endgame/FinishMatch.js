@@ -1,22 +1,18 @@
 import React, { useContext } from "react";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { BottomButtons2 } from "../stats/StyledStats";
 import { GameContext } from "../../contexts/GameContext";
 import updateAuthProfile from "../../contexts/actions/authContext/UpdateProfile";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import STATS2 from "../stats/Stats2";
+import STATS_FINISH_MATCH from "../stats/StatsFinishMatch";
 import { AppBackground } from "../../../App";
-import { ScreenContainer } from "../../navigators/AppNavigator";
-import { Header } from "../stats/StyledStats";
+import { ScreenContainer } from "../../navigators/StyledNav";
+import { Header, BottomButtons2 } from "./StyledEndGame";
 
 const FINISH_MATCH = React.memo(({ navigation }) => {
-  const { theme } = useContext(ThemeContext);
-
   const {
     dispatchGameData,
     gameData,
     gameData: {
-      settings: { p1, p2 },
+      settings: { p1, p2, theme },
       winner,
     },
   } = useContext(GameContext);
@@ -48,8 +44,8 @@ const FINISH_MATCH = React.memo(({ navigation }) => {
           resizeMode="cover"
         />
         <ScreenContainer theme={theme}>
-          <Header>{winnerName} has won the match!</Header>
-          <STATS2 />
+          <Header theme={theme}>{winnerName} has won the match!</Header>
+          <STATS_FINISH_MATCH />
           <BottomButtons2 theme={theme}>
             <THEMED_BUTTON
               text={"back to home"}

@@ -1,67 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
-import {
-  View,
-  Modal,
-  SafeAreaView,
-  Text,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { Modal, SafeAreaView } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import LIST_PROFILES from "../lists/ListProfiles";
-import {
-  BasicText,
-  BasicTextBold,
-  FlexCol,
-  FlexRowBetween,
-  Window,
-} from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { getUsers } from "../../_backend/db/crudGet";
 import { Authcontext } from "../../contexts/AuthContext";
 import updateRequests from "../../contexts/actions/authContext/UpdateRequests";
 import ACTIVITY_INDICATOR from "./Activityindicator";
 import Icon from "react-native-vector-icons/MaterialIcons";
-export const ModalContainerSearch = styled(ScrollView)`
-  background-color: rgba(255, 255, 255, 0.95);
-`;
-
-export const SearchBar = styled(View)`
-  width: 80%;
-  margin: auto;
-  height: 8%;
-  border-color: ${({ theme }) => theme.text2};
-  background-color: ${({ theme, active }) =>
-    active ? theme.bgRed : theme.bg2};
-  border-radius: 30;
-  border-width: 2;
-  padding: 0 5%;
-  ${FlexRowBetween};
-`;
-
-export const SearchInput = styled(TextInput)`
-  ${BasicText}
-  color: ${({ theme, active }) => (active ? theme.text : theme.text2)};
-  width:100%;
-`;
-
-export const Container = styled(View)`
-  width: 100%;
-  height: ${() => Window.height};
-  ${FlexCol};
-`;
-
-export const Header = styled(Text)`
-${BasicTextBold}
-height:10%;
-width:100%;
-margin:auto;
-background-color: ${({ theme }) => theme.bg1};
-color: ${({ theme }) => theme.text}
-font-size:20;
-`;
+import {
+  ModalContainerSearch,
+  Container,
+  SearchBar,
+  SearchInput,
+} from "./StyledChoosePlayerModal";
 
 const SEARCH_MODAL = React.memo(({ action1, visible }) => {
   const { theme, animation } = useContext(ThemeContext);
@@ -194,7 +147,6 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
           theme={theme}
         >
           <Container>
-            <Header>FIND YOUR FRIEND</Header>
             <SearchBar active={searchActive} theme={theme}>
               <Icon
                 color={searchActive ? theme.text : theme.text2}
@@ -208,6 +160,11 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
                 theme={theme}
                 onChangeText={handleRegExp}
                 placeholder={searchActive ? null : "SEARCH FOR USERS..."}
+              />
+              <Icon
+                color={searchActive ? theme.text : theme.text2}
+                name={"clear"}
+                size={25}
               />
             </SearchBar>
 

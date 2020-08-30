@@ -1,16 +1,25 @@
 import styled from "styled-components";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import {
-  FlexColEnd,
-  BasicTextBold,
-  FlexColAround,
   FlexColBetween,
+  FlexCol,
+  FlexRowBetween,
 } from "../../styles/css_mixins";
+import { TitleBig } from "../../components/headers/StyledHeaders";
 
 export const View_Headers = styled(View)`
   width: 100%;
-  height: 10%;
-  ${FlexColAround};
+  margin: 15% 0;
+  height: 20%;
+  ${FlexRowBetween};
+`;
+
+export const WelcomeHeader = styled(TitleBig)`
+  width: 30%;
+  height: 100%;
+  color: ${({ fill, theme }) => (fill ? theme.text : theme.text)};
+  background-color: ${({ fill, theme }) =>
+    fill ? "transparent" : "transparent"};
 `;
 
 export const View_Buttons = styled(View)`
@@ -20,31 +29,14 @@ export const View_Buttons = styled(View)`
 `;
 
 export const View_Shape = styled(View)`
-  ${FlexColEnd};
-  width: 100%;
+  ${FlexCol};
   bottom: 0;
-  height: 40%;
+  width: 40%;
+  height: 100%;
 `;
 
-export const Text_Title = styled(Text)`
-  ${BasicTextBold}
+export const Text_Title = styled(TitleBig)`
   width: 100%;
   margin: 2% 0;
   color: ${({ theme, color }) => (color ? color : theme.text)};
-  font-size: ${({ theme }) => theme.welcome.fontSize1};
-`;
-
-export const Text_Subtitle = styled(Text_Title)`
-  ${BasicTextBold};
-  padding: 2.5% 5%;
-  background-color: ${({ theme }) => theme.bgActive};
-  color: ${({ theme }) => theme.text2};
-  font-size: ${({ theme }) => theme.welcome.fontSize2};
-`;
-
-export const Text_Subtitle2 = styled(Text_Subtitle)`
-  background-color: transparent;
-  bottom: 0;
-  color: ${({ theme }) => theme.text};
-  font-size: ${({ theme }) => theme.welcome.fontSize3};
 `;

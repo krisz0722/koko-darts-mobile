@@ -1,17 +1,12 @@
 import styled from "styled-components";
-import { Text, TouchableHighlight } from "react-native";
-import {
-  Window,
-  BasicTextBold,
-  FlexCol,
-  FlexRowAround,
-} from "../../styles/css_mixins";
-
+import { TouchableHighlight } from "react-native";
+import { Window, FlexRowAround } from "../../styles/css_mixins";
 import React, { useContext } from "react";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import IconDart from "../../../assets/iconDart";
+import BUTTON_TEXT from "./ThemedButtonText";
 
 export const ThemedButton = styled(TouchableHighlight)`
   text-decoration: none;
@@ -28,65 +23,56 @@ export const ThemedButton = styled(TouchableHighlight)`
   ${FlexRowAround};
 `;
 
-export const Text_Button_Login = styled(Text)`
-  ${FlexCol};
-  ${BasicTextBold};
-  height: 100%;
-  width: ${({ icon, text }) => (text === "" ? "0%" : icon ? "70%" : "100%")};
-  font-size: ${({ theme, size }) => theme.buttonFontSize[size]};
-  color: ${({ theme, type }) => theme.buttonType[type].color};
-`;
+const THEMED_BUTTON = React.memo(
+  ({
+    text,
+    action,
+    length = 1,
+    size = "medium",
+    type = "basic",
+    icon = null,
+    disabled = false,
+    inGameTheme = null,
+  }) => {
+    const { theme } = useContext(ThemeContext);
+    const themeToUse = inGameTheme ? inGameTheme : theme;
 
-const THEMED_BUTTON = ({
-  text,
-  action,
-  length = 1,
-  size = "medium",
-  type = "basic",
-  icon = null,
-  disabled = false,
-  inGameTheme = null,
-}) => {
-  const { theme } = useContext(ThemeContext);
-  const themeToUse = inGameTheme ? inGameTheme : theme;
-
-  return (
-    <ThemedButton
-      size={size}
-      length={length}
-      type={type}
-      theme={themeToUse}
-      onPress={action}
-      disabled={disabled}
-    >
-      <>
-        {icon ? (
-          icon === "dart" ? (
-            <IconDart fill={themeToUse.text} size={15} />
-          ) : icon === "threedart" ? (
-            <IconThreeDart fill={themeToUse.text} size={15} />
-          ) : (
-            <Icon
-              name={icon}
-              size={25}
-              color={themeToUse.buttonType[type].color}
+    return (
+      <ThemedButton
+        size={size}
+        length={length}
+        type={type}
+        theme={themeToUse}
+        onPress={action}
+        disabled={disabled}
+      >
+        <>
+          {icon ? (
+            icon === "dart" ? (
+              <IconDart fill={themeToUse.text} size={15} />
+            ) : icon === "threedart" ? (
+              <IconThreeDart fill={themeToUse.text} size={15} />
+            ) : (
+              <Icon
+                name={icon}
+                size={25}
+                color={themeToUse.buttonType[type].color}
+              />
+            )
+          ) : null}
+          {text ? (
+            <BUTTON_TEXT
+              text={text}
+              size={size}
+              icon={icon}
+              type={type}
+              theme={theme}
             />
-          )
-        ) : null}
-        {text ? (
-          <Text_Button_Login
-            text={text}
-            size={size}
-            icon={icon}
-            type={type}
-            theme={themeToUse}
-          >
-            {text}
-          </Text_Button_Login>
-        ) : null}
-      </>
-    </ThemedButton>
-  );
-};
+          ) : null}
+        </>
+      </ThemedButton>
+    );
+  },
+);
 
 export default THEMED_BUTTON;

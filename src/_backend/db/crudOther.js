@@ -81,7 +81,7 @@ export const declineFriendRequest = async (
 
 export const onStateChange = (username) => {
   usersCollection.doc(username).onSnapshot((doc) => {
-    var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+    const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
     console.log(source, " data: ", doc.data());
   });
 };

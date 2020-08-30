@@ -1,28 +1,39 @@
 import React, { useState, useContext } from "react";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { BottomButtons2 } from "../stats/StyledStats";
-import RADIO_BUTTON_SET from "../../components/buttons/RadioButtonSet";
 import { CHECKOUTS } from "../../calc/scores";
 import { GameContext } from "../../contexts/GameContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import { AppBackground } from "../../../App";
-import { ScreenContainer } from "../../navigators/AppNavigator";
-import STATS_PLAYERS from "../stats/StatsPlayers";
-import { Header } from "../stats/StyledStats";
+import { ScreenContainer } from "../../navigators/StyledNav";
+import {
+  OptionButton,
+  OptionText,
+  Header,
+  BottomButtons2,
+  Players,
+} from "./StyledEndGame";
+import PLAYER from "../../components/players/Player";
 
 const FINISH_LEG = React.memo(({ navigation }) => {
   const {
     dispatchGameData,
     gameData,
-    gameData: { settings, activePlayer, inactivePlayer, isLegOver, winner },
+    gameData: {
+      settings: { theme },
+      settings,
+      activePlayer,
+      inactivePlayer,
+      isLegOver,
+      winner,
+    },
   } = useContext(GameContext);
 
-  const { theme } = useContext(ThemeContext);
+  const winnerPlayer = winner
+    ? gameData.settings[winner]
+    : { key: "", img: "" };
+  const winnerName = winnerPlayer.key;
 
-  const winnerName = winner ? gameData.settings[winner].key : "";
   const inapKey = `${inactivePlayer}_DATA`;
   const inapData = gameData[inapKey];
-
   const apKey = `${activePlayer}_DATA`;
   const apData = gameData[apKey];
   const apOnCheckout = apData.onCheckout;
@@ -44,15 +55,16 @@ const FINISH_LEG = React.memo(({ navigation }) => {
 
   const handleLastDartNod = (val) => setLastRoundNod(val);
 
-  const finishLeg = () => {
+  const finishLeg = async () => {
     if (lastRoundNod) {
-      setLastRoundNod(null),
-        dispatchGameData({
-          type: "FINISH_LEG",
-          nodUsed: lastRoundNod,
-          nodRequired: parseInt(nod()),
-          settings: settings,
-        });
+      setLastRoundNod(null);
+      await dispatchGameData({
+        type: "FINISH_LEG",
+        nodUsed: lastRoundNod,
+        nodRequired: parseInt(nod()),
+        settings: settings,
+      });
+      navigation.navigate("game");
     }
   };
 
@@ -69,16 +81,27 @@ const FINISH_LEG = React.memo(({ navigation }) => {
         resizeMode="cover"
       />
       <ScreenContainer theme={theme}>
-        <Header>{winnerName} has won the leg!</Header>
-        <STATS_PLAYERS theme={theme} gameData={gameData} />
-        <Header>Number of darts used in last round:</Header>
-        <RADIO_BUTTON_SET
-          length={3}
-          direction={"row"}
-          options={OPTIONS}
-          action={handleLastDartNod}
-          activeValue={lastRoundNod}
-        />
+        <Header theme={theme}>{winnerName} has won the leg!</Header>
+        <Players theme={theme}>
+          <PLAYER name={false} large={true} player={winnerPlayer} />
+        </Players>
+
+        <Header theme={theme}>Number of darts used in last round:</Header>
+        <BottomButtons2 border={"none"} theme={theme}>
+          {OPTIONS.map((item) => (
+            <OptionButton
+              size={"large"}
+              onPress={() => handleLastDartNod(item)}
+              length={3}
+              theme={theme}
+              active={item === lastRoundNod}
+            >
+              <OptionText active={item === lastRoundNod} theme={theme}>
+                {item}
+              </OptionText>
+            </OptionButton>
+          ))}
+        </BottomButtons2>
         <BottomButtons2 theme={theme}>
           <THEMED_BUTTON
             text={"undo"}
@@ -86,6 +109,7 @@ const FINISH_LEG = React.memo(({ navigation }) => {
             size={"small"}
             type={"danger"}
             action={back}
+            inGameTheme={theme}
           />
           <THEMED_BUTTON
             size={"small"}
@@ -93,6 +117,7 @@ const FINISH_LEG = React.memo(({ navigation }) => {
             type={lastRoundNod ? "success" : "danger"}
             length={2}
             action={finishLeg}
+            inGameTheme={theme}
           />
         </BottomButtons2>
       </ScreenContainer>

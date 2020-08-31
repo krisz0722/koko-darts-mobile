@@ -13,6 +13,6 @@ export const Container = styled(Animated.View)`
 `;
 export const Text_Function = styled(Animated.Text)`
   ${BasicTextBold};
-  font-size: ${({ theme }) => theme.fontSizeFunction};
+  font-size: ${({ theme }) => theme.fonts.fontSizeFunction};
   color: ${({ theme }) => theme.text};
 `;

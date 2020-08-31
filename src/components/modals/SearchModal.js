@@ -183,7 +183,7 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
               <Icon
                 color={searchActive ? theme.text : theme.text2}
                 name={"search"}
-                size={25}
+                size={theme.fonts.icon1}
               />
               <SearchInput
                 active={searchActive}
@@ -198,7 +198,7 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
                 <Icon
                   color={searchActive ? theme.text : theme.text2}
                   name={"clear"}
-                  size={25}
+                  size={theme.fonts.icon1}
                 />
               </TouchableOpacity>
             </SearchBar>

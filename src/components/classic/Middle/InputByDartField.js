@@ -64,7 +64,7 @@ const INPUT_BY_DART_FIELD = React.memo(({ activePlayer }) => {
         {DATA.map((item) => (
           <React.Fragment key={item.key}>
             {item.showIcon ? (
-              <IconDart fill={theme.text} size={15} />
+              <IconDart fill={theme.text} size={theme.fonts.icon3} />
             ) : (
               <Text_Function icon={true}>{item.value}</Text_Function>
             )}

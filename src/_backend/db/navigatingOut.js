@@ -24,7 +24,6 @@ const navigatingOut = (navigation, navigationType, gameData) => {
       });
       break;
     case "rematch":
-      console.log("ITT REMATCH OUT");
       navigation.navigate("drawernavigator", {
         screen: "game",
         flag: "new",

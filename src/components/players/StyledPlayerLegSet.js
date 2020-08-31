@@ -8,7 +8,7 @@ export const Main = styled(Header1)``;
 export const Main2 = styled(Header3)`
   width: 100%;
   padding: 5%;
-  line-height: ${({ theme }) => theme.stats.scoreSub * 2};
+  line-height: ${({ theme }) => theme.fonts.stats.scoreSub * 2};
   border-bottom-width: ${({ theme }) => theme.borderWidth};
   border-top-width: ${({ theme }) => theme.borderWidth};
   border-color: ${({ theme }) => theme.borderColor};

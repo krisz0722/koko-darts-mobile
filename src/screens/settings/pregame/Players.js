@@ -8,7 +8,7 @@ export const PLAYERS = React.memo(({ theme, toggleSwap, p1, p2 }) => {
     <SettingsPreGamePlayers>
       <PLAYER large={true} player={p1} theme={theme} />
       <Swap onPress={toggleSwap}>
-        <Icon name={"sync"} size={20} />
+        <Icon name={"sync"} size={theme.fonts.icon2} />
       </Swap>
       <PLAYER large={true} player={p2} theme={theme} />
     </SettingsPreGamePlayers>

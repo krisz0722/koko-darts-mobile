@@ -1,24 +1,21 @@
-import React, { createContext, useCallback, useMemo, useReducer } from "react";
-import Theme_Default from "../styles/theme-default.json";
-import Theme_Contrast from "../styles/theme-contrast.json";
+import React, { createContext, useCallback,  useReducer } from "react";
+import Theme_Default from "../styles/theme-default.js";
+import Theme_Contrast from "../styles/theme-contrast.js";
+
+const THEMES = {
+  default: Theme_Default,
+  contrast: Theme_Contrast,
+};
+
+const initialTheme = {
+  selectedTheme: "contrast",
+  animation: true,
+  background: true,
+};
 
 export const ThemeContext = createContext("");
 
 export const ThemeContextProvider = (props) => {
-  const THEMES = useMemo(
-    () => ({
-      default: Theme_Default,
-      contrast: Theme_Contrast,
-    }),
-    [],
-  );
-
-  const initialTheme = {
-    selectedTheme: "contrast",
-    animation: true,
-    background: true,
-  };
-
   const themeReducer = useCallback((state, action) => {
     switch (action.type) {
       case "LOAD_THEME":

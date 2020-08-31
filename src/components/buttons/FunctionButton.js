@@ -20,7 +20,7 @@ export const Text_Number = styled(Animated.Text)`
   ${BasicTextBold};
   height: 100%;
   width: ${({ icon }) => (icon ? "70%" : "100%")}
-  font-size: ${({ theme }) => theme.fontSizeFunction};
+  font-size: ${({ theme }) => theme.fonts.fontSizeFunction};
   color: ${({ theme }) => theme.text}
 `;
 
@@ -61,7 +61,7 @@ const FUNCTION_BUTTON = React.memo(
       >
         <>
           {icon === "dart" ? (
-            <IconDart fill={theme.text} size={15} />
+            <IconDart fill={theme.text} size={theme.fonts.icon3} />
           ) : (
             <Icon name={icon} size={25} color={theme.text} />
           )}

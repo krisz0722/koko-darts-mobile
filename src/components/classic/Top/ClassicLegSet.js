@@ -53,8 +53,8 @@ const LEGSET = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
-  const fs1 = theme.game.legset.classic.fs1;
-  const fs2 = theme.game.legset.classic.fs2;
+  const fs1 = theme.fonts.legset.classic.fs1;
+  const fs2 = theme.fonts.legset.classic.fs2;
 
   const fontSize = animation
     ? resize.interpolate({

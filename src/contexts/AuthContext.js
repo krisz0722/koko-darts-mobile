@@ -14,9 +14,7 @@ export const AuthcontextProvider = (props) => {
     }
   }, []);
 
-  const initialAuth = {};
-
-  const [userData, dispatchUserData] = useReducer(authReducer, initialAuth);
+  const [userData, dispatchUserData] = useReducer(authReducer, {});
 
   console.log("CONTEXT", userData);
 

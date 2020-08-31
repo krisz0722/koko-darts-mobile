@@ -28,10 +28,6 @@ const submitUpdateScore = (
   const prevScore = score + scoreToSubmit;
   score = byDartScore ? scoreToSubmit : score;
 
-  console.log("SCORETOSUBMIT", scoreToSubmit);
-  console.log("PREVSCORE", prevScore);
-  console.log("SCORE", score);
-
   const newScore =
     type === "UNDO"
       ? score + scoreToSubmit

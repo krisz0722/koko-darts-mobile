@@ -49,13 +49,13 @@ const THEMED_BUTTON = React.memo(
         <>
           {icon ? (
             icon === "dart" ? (
-              <IconDart fill={themeToUse.text} size={15} />
+              <IconDart fill={themeToUse.text} size={theme.fonts.icon3} />
             ) : icon === "threedart" ? (
-              <IconThreeDart fill={themeToUse.text} size={15} />
+              <IconThreeDart fill={themeToUse.text} size={theme.fonts.icon3} />
             ) : (
               <Icon
                 name={icon}
-                size={25}
+                size={theme.fonts.icon1}
                 color={themeToUse.buttonType[type].color}
               />
             )

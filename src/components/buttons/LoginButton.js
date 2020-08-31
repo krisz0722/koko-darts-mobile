@@ -41,7 +41,7 @@ export const loginIcons = (social, theme, type) => {
       return (
         <Icon
           name={social}
-          size={25}
+          size={theme.fonts.icon1}
           color={type === "active" ? theme.buttonType[type].color : theme.text}
         />
       );

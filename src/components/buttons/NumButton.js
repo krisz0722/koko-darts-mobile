@@ -14,7 +14,7 @@ export const Button_Num_Classic = styled(TouchableOpacity)`
 
 export const Text_Number = styled(Animated.Text)`
   ${BasicTextBold};
-  font-size: ${({ theme }) => theme.fontSizeNum};
+  font-size: ${({ theme }) => theme.fonts.fontSizeNum};
   ${FlexCol};
 `;
 

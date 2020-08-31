@@ -41,7 +41,6 @@ const AVATAR = React.memo((props) => {
       })
     : theme.game[activePlayer + "Border"];
 
-  console.log("P1", img);
   return (
     <>
       {player === "p1" ? (

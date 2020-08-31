@@ -89,9 +89,9 @@ const PLAYER_SCORE = React.memo((props) => {
     ? "50%"
     : "100%";
 
-  const fs1 = theme.game.score.classic.fs1;
-  const fs2 = theme.game.score.classic.fs2;
-  const fs3 = theme.game.score.classic.fs3;
+  const fs1 = theme.fonts.score.classic.fs1;
+  const fs2 = theme.fonts.score.classic.fs2;
+  const fs3 = theme.fonts.score.classic.fs3;
 
   const fontSizeP1 = animation
     ? fontP1.interpolate({

@@ -72,13 +72,13 @@ const NAV_BUTTON = React.memo(
         <>
           {icon === "dart" ? (
             <IconThreeDart
-              size={25}
+              size={theme.fonts.icon1}
               fill={iconColor(active, color, themeToUse, inap)}
             />
           ) : icon ? (
             <Icon
               name={icon}
-              size={25}
+              size={theme.fonts.icon1}
               color={iconColor(active, color, themeToUse, inap)}
             />
           ) : null}

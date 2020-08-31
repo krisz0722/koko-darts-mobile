@@ -35,11 +35,11 @@ const NAME = React.memo((props) => {
   const fontSize = animation
     ? animationValueName.interpolate({
         inputRange: [0, 1],
-        outputRange: [theme.game.name.classic, theme.game.name.classic2],
+        outputRange: [theme.fonts.name.classic, theme.fonts.name.classic2],
       })
     : showStats
-    ? theme.game.name.classic2
-    : theme.game.name.classic;
+    ? theme.fonts.name.classic2
+    : theme.fonts.name.classic;
 
   return (
     <Text_Name

@@ -15,11 +15,16 @@ import submitUpdateScore from "./actions/gameContext/SubmitUpdateScore";
 import UpdateByDart from "./actions/gameContext/UpdateByDart";
 import { Authcontext } from "./AuthContext";
 import finishMatch from "./actions/gameContext/FinishMatch";
-import Theme_Default from "../styles/theme-default.json";
-import Theme_Contrast from "../styles/theme-contrast.json";
+import Theme_Default from "../styles/theme-default.js";
+import Theme_Contrast from "../styles/theme-contrast.js";
 import startNewGame from "./actions/gameContext/StartNewGame";
 import loadSettings from "./actions/gameContext/LoadSettings";
 export const GameContext = createContext({});
+
+const THEMES = {
+  default: Theme_Default,
+  contrast: Theme_Contrast,
+};
 
 export const GameContextProvider = (props) => {
   const default_settings = useContext(Authcontext).userData.settings;
@@ -36,14 +41,6 @@ export const GameContextProvider = (props) => {
       score: "",
     },
   };
-
-  const THEMES = useMemo(
-    () => ({
-      default: Theme_Default,
-      contrast: Theme_Contrast,
-    }),
-    [],
-  );
 
   const gameReducer = useCallback(
     (state, action = null) => {
@@ -85,7 +82,6 @@ export const GameContextProvider = (props) => {
         case "FINISH_MATCH":
           return finishMatch(state, action.isRematch);
         case "REMATCH":
-          console.log(action.value);
           return Rematch(action.value, THEMES);
         case "CHOOSE_OPPONENT":
           return {

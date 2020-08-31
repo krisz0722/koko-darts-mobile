@@ -72,8 +72,6 @@ const nextValidation = (inputByDart, whichDart, playerScore) => {
     }
   };
 
-  console.log(checkScoresIfLegOver());
-
   const valid =
     checkNewScore() && checkScoreToSubmit() && checkScoresIfLegOver();
 

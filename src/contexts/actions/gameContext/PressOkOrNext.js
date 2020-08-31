@@ -40,9 +40,7 @@ const dispatchOkOrNext = (
         third,
         newIndex,
       });
-      console.log(first, second, third);
       if (scoreToSubmit === playerScore) {
-        console.log("ITT");
         dispatchInput({ type: "CHANGE_INPUT" });
         dispatchGameData({
           type: "SUBMIT",

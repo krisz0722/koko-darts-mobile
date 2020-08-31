@@ -78,7 +78,7 @@ const UNFINISHED_MATCH_COMPONENT = ({
         1,
       )}`}</MatchAvg>
       <ClearButton theme={theme} onPress={() => deleteUnfinishedMatch()}>
-        <Icon name={"clear"} size={20} color={theme.text} />
+        <Icon name={"clear"} size={theme.fonts.icon2} color={theme.text} />
       </ClearButton>
     </Match>
   );

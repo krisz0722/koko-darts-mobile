@@ -52,7 +52,7 @@ const TEXT_INPUT = React.memo(
         >
           <Icon
             name={focused && value.length > 0 ? "clear" : icon}
-            size={25}
+            size={theme.fonts.icon1}
             color={focused ? theme.bg3 : valid ? theme.text : theme.borderColor}
           />
         </TouchableWithoutFeedback>

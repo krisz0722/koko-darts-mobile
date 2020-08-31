@@ -70,7 +70,11 @@ const OPTION_BUTTON = React.memo(
           )}
 
           {icon ? (
-            <Icon name={icon} size={35} color={themeToUse.text2} />
+            <Icon
+              name={icon}
+              size={theme.fonts.iconBig}
+              color={themeToUse.text2}
+            />
           ) : null}
           {checkbox ? (
             <CheckBox

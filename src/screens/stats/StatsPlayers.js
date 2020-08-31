@@ -5,8 +5,6 @@ import PLAYERS_LEGSET from "../../components/players/PlayersLegSet";
 
 const STATS_PLAYERS = React.memo(
   ({ gameData, route, theme, rematch = false, action = null }) => {
-    console.log("STAT PLAYER GAMEDATA", gameData);
-    console.log(route);
     const { settings } = gameData;
 
     const p1 = settings ? settings.p1 : gameData.p1;

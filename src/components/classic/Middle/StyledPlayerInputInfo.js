@@ -20,6 +20,6 @@ export const Text_Function = styled(Animated.Text)`
   ${BasicTextBold};
   height: 50%;
   width: 100%;
-  font-size: ${({ theme }) => theme.fontSizeFunction};
+  font-size: ${({ theme }) => theme.fonts.fontSizeFunction};
   color: ${({ theme }) => theme.text};
 `;

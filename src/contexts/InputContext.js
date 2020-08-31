@@ -3,22 +3,22 @@ import typeByDart from "./actions/inputContext/TypeByDart";
 import ResetInput from "./actions/inputContext/ResetInput";
 import typeByRound from "./actions/inputContext/TypeByRound";
 
-const initialState = {
-  inputMethod: "byRound",
-  inputIndex: 0,
-  inputArray: ["", "", "", "", "", ""],
-  inputByRound: ["", "", ""],
-  inputByDart: {
-    first: ["", ""],
-    second: ["", ""],
-    third: ["", ""],
-  },
-  whichDart: 1,
-};
-
 export const InputContext = createContext({});
 
 export const InputContextProvider = (props) => {
+  const initialState = {
+    inputMethod: "byRound",
+    inputIndex: 0,
+    inputArray: ["", "", "", "", "", ""],
+    inputByRound: ["", "", ""],
+    inputByDart: {
+      first: ["", ""],
+      second: ["", ""],
+      third: ["", ""],
+    },
+    whichDart: 1,
+  };
+
   const inputReducer = (state, action = null) => {
     const { inputMethod } = state;
     const newInputMethod = inputMethod === "byDart" ? "byRound" : "byDart";

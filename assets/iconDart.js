@@ -10,8 +10,8 @@ const IconDart = ({ fill, size }) => {
       y="0px"
       fill={fill}
       viewBox="0 0 1000 1000"
-      width={15}
-      height={15}
+      width={size}
+      height={size}
       enableBackground="new 0 0 1000 1000"
       xmlSpace="preserve"
     >

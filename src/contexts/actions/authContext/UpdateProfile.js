@@ -17,6 +17,7 @@ const updateAuthProfile = async (
       p2_DATA,
       date,
       key,
+      initializedBy,
     } = gameData;
     const userProfile = await getProfileByUsername(p);
     const { matches, unfinishedMatches, friends, userOverall } = userProfile;
@@ -57,6 +58,7 @@ const updateAuthProfile = async (
         opponent,
         key,
         status: "finished",
+        initializedBy,
       };
 
       matches.unshift(matchToSave);

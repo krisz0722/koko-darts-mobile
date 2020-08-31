@@ -61,9 +61,9 @@ const FUNCTION_BUTTON = React.memo(
       >
         <>
           {icon === "dart" ? (
-            <IconDart fill={theme.text} size={theme.fonts.icon3} />
+            <IconDart fill={theme.text} size={theme.fonts.icon1} />
           ) : (
-            <Icon name={icon} size={25} color={theme.text} />
+            <Icon name={icon} size={theme.fonts.icon1} color={theme.text} />
           )}
           <Text_Number
             icon={icon}

@@ -39,13 +39,13 @@ const HOMENAVIGATOR = ({ navigation }) => {
                 .find((item) => item.data().username === username)
                 .data()
             : null;
-        console.log("PROFILE", profile);
         if (profile) {
-          const { inGameKey, inGame, unfinishedMatches } = profile;
+          const { inGameKey, inGame, matches, unfinishedMatches } = profile;
 
-          const gameData = unfinishedMatches.find(
-            (item) => item.key === inGameKey,
-          );
+          const gameData =
+            unfinishedMatches.find((item) => item.key === inGameKey) ||
+            matches.find((item) => item.key === inGameKey);
+
           const initializedBy = gameData ? gameData.initializedBy : null;
 
           dispatchUserData({ type: "UPDATE_PROFILE", value: profile });

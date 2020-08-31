@@ -5,9 +5,8 @@ import { Checkout_Row, Checkout_Text } from "./StyledClassicCheckoutsDiv";
 const PLAYER_CHECKOUTS = React.memo(({ playerData, theme }) => {
   const { score, onCheckout } = playerData;
 
-  const checkouts = onCheckout
-    ? CHECKOUTS.find((co) => co.value === score).checkouts
-    : null;
+  const checkoutSeq = CHECKOUTS.find((co) => co.value === score);
+  const checkouts = onCheckout && checkoutSeq ? checkoutSeq.checkouts : null;
 
   return (
     <>

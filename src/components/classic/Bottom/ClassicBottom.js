@@ -3,13 +3,14 @@ import NUM_BUTTON from "../../buttons/NumButton";
 import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
 import { GameContext } from "../../../contexts/GameContext";
-import { VALIDSCORES } from "../../../calc/scores";
-import nextValidation from "../../../contexts/actions/gameContext/nextValidation";
 import { ClassicBottom } from "./StyledClassicBottom";
+import dispatchUndoOrClear from "../../../contexts/actions/gameContext/PressUndoOrClear";
+import dispatchOkOrNext from "../../../contexts/actions/gameContext/PressOkOrNext";
 
 const CLASSIC_BOTTOM = React.memo((props) => {
   const { animation, theme, activePlayer, inactivePlayer } = props;
   const {
+    inputContext,
     inputContext: { inputMethod, inputByRound, inputByDart, whichDart },
     dispatchInput,
   } = useContext(InputContext);
@@ -17,7 +18,6 @@ const CLASSIC_BOTTOM = React.memo((props) => {
   const { dispatchGameData, gameData } = useContext(GameContext);
 
   const playerKey = activePlayer + "_DATA";
-  const playerDATA = gameData[playerKey];
   const canGoBack = gameData[inactivePlayer + "_DATA"].canGoBack;
 
   const backOrClear =
@@ -26,100 +26,6 @@ const CLASSIC_BOTTOM = React.memo((props) => {
       : "CLEAR";
 
   const okOrNext = inputMethod === "byDart" && whichDart !== 3 ? "NEXT" : "OK";
-
-  const dispatchUndoOrClear = () => {
-    if (backOrClear === "CLEAR") {
-      if (inputMethod === "byDart") {
-        const apKey = gameData.activePlayer + "_DATA";
-        const apData = gameData[apKey];
-        const apScore = apData.score;
-        const { first, second } = inputByDart;
-
-        const newScore = () => {
-          switch (whichDart) {
-            case 1:
-              return apScore;
-            case 2:
-              return apScore + first;
-            case 3:
-              return apScore + first + second;
-          }
-        };
-        dispatchGameData({
-          type: "UPDATE_BY_DART",
-          scoreToSubmit: 0,
-          newScore: newScore(),
-        });
-      }
-      dispatchInput({ type: "CLEAR_BY_DART" });
-    } else {
-      dispatchGameData({ type: "UNDO" });
-    }
-  };
-
-  const dispatchOkOrNext = () => {
-    const playerScore = playerDATA.score;
-    if (inputMethod === "byDart") {
-      const validationResult = nextValidation(
-        inputByDart,
-        whichDart,
-        playerScore,
-      );
-
-      const {
-        valid,
-        scoreToSubmit,
-        scoreToSubmitWhenInvalid,
-        first,
-        second,
-        third,
-        prevScore,
-        newScore,
-        newIndex,
-      } = validationResult;
-
-      if (valid) {
-        dispatchInput({
-          type: "NEXT",
-          first,
-          second,
-          third,
-          newIndex,
-        });
-
-        dispatchGameData({ type: "UPDATE_BY_DART", scoreToSubmit, newScore });
-      } else {
-        dispatchInput({
-          type: "INVALID",
-          inputMethod,
-        });
-
-        dispatchGameData({
-          type: "UPDATE_BY_DART",
-          scoreToSubmitWhenInvalid,
-          newScore: prevScore,
-        });
-      }
-    } else {
-      const scoreToSubmit = parseInt(inputByRound.join(""));
-      const newScore = playerScore - scoreToSubmit;
-      const isValid =
-        VALIDSCORES.indexOf(scoreToSubmit) !== -1 &&
-        newScore >= 0 &&
-        newScore !== 1;
-      if (isValid) {
-        dispatchGameData({
-          type: "SUBMIT",
-          playerKey,
-          value: scoreToSubmit,
-          method: "SUBMIT",
-        });
-        dispatchInput({ type: "SET_DEFAULT" });
-      } else {
-        dispatchInput({ type: "INVALID", inputMethod });
-      }
-    }
-  };
 
   const typeMethod = useCallback(
     (value) => {
@@ -140,14 +46,26 @@ const CLASSIC_BOTTOM = React.memo((props) => {
     9,
     {
       value: backOrClear,
-      action: dispatchUndoOrClear,
+      action: () =>
+        dispatchUndoOrClear(
+          gameData,
+          inputContext,
+          dispatchGameData,
+          dispatchInput,
+        ),
       icon: backOrClear === "CLEAR" ? "clear" : "replay",
     },
     0,
 
     {
       value: okOrNext,
-      action: dispatchOkOrNext,
+      action: () =>
+        dispatchOkOrNext(
+          gameData,
+          inputContext,
+          dispatchGameData,
+          dispatchInput,
+        ),
       icon: okOrNext === "OK" ? "check" : "dart",
     },
   ];

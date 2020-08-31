@@ -13,7 +13,10 @@ import {
 
 const CHOOSE_PLAYER_MODAL = React.memo(
   ({ p1, p2, handleModal, chooseGuest, chooseProfile, visible }) => {
-    const { theme, animation } = useContext(ThemeContext);
+    const {
+      theme,
+      themeContext: { animation },
+    } = useContext(ThemeContext);
     const {
       userData: { username },
     } = useContext(Authcontext);

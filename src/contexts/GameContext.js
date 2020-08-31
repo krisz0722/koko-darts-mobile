@@ -57,6 +57,7 @@ export const GameContextProvider = (props) => {
             action.value,
             action.method,
             1,
+            action.byDartScore,
           );
         case "START_NEW_GAME":
           return startNewGame(action.value, THEMES);
@@ -73,7 +74,7 @@ export const GameContextProvider = (props) => {
         case "UNDO":
           return undo(state);
         case "BUST":
-          return bust(state);
+          return bust(state, action.inputContext);
         case "FINISH_LEG":
           return finishLeg(
             state,

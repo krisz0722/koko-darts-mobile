@@ -51,7 +51,7 @@ const REGISTER = React.memo(({ navigation }) => {
   const enableSignUp =
     [email, password, username, confirmPassword].filter(
       (item) => item.length < 6,
-    ).length === 0;
+    ).length === 0 && password === confirmPassword;
 
   const keyboardDidShow = (e) => {
     setIsKeyboardUp(true);

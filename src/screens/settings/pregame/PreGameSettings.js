@@ -24,7 +24,10 @@ import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import CHOOSE_PLAYER_MODAL from "../../../components/modals/ChoosePlayerModal";
 
 const PREGAME_SETTINGS = React.memo(({ navigation }) => {
-  const { theme, animation } = useContext(ThemeContext);
+  const {
+    theme,
+    themeContext: { animation },
+  } = useContext(ThemeContext);
   const { dispatchGameData } = useContext(GameContext);
   const isFocused = useIsFocused();
 

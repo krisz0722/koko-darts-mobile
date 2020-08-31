@@ -1,6 +1,13 @@
 import { CHECKOUTS } from "calc/scores";
 
-const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
+const submitUpdateScore = (
+  state,
+  playerKey,
+  scoreToSubmit,
+  type,
+  num,
+  byDartScore = null,
+) => {
   const playerData = state[playerKey];
 
   let {
@@ -19,6 +26,11 @@ const submitUpdateScore = (state, playerKey, scoreToSubmit, type, num) => {
   } = playerData;
 
   const prevScore = score + scoreToSubmit;
+  score = byDartScore ? scoreToSubmit : score;
+
+  console.log("SCORETOSUBMIT", scoreToSubmit);
+  console.log("PREVSCORE", prevScore);
+  console.log("SCORE", score);
 
   const newScore =
     type === "UNDO"

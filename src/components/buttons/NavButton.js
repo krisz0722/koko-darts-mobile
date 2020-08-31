@@ -51,7 +51,10 @@ const NAV_BUTTON = React.memo(
     inGameTheme = null,
     type = null,
   }) => {
-    const { theme, animation } = useContext(ThemeContext);
+    const {
+      theme,
+      themeContext: { animation },
+    } = useContext(ThemeContext);
 
     const themeToUse = inGameTheme ? inGameTheme : theme;
 

@@ -1,6 +1,6 @@
 import React, { useReducer, createContext } from "react";
 import typeByDart from "./actions/inputContext/TypeByDart";
-import ClearByDart from "./actions/inputContext/ClearByDart";
+import ResetInput from "./actions/inputContext/ResetInput";
 import typeByRound from "./actions/inputContext/TypeByRound";
 
 export const InputContext = createContext({});
@@ -24,7 +24,7 @@ export const InputContextProvider = (props) => {
     const newInputMethod = inputMethod === "byDart" ? "byRound" : "byDart";
     switch (action.type) {
       case "CHANGE_INPUT":
-        return ClearByDart(state, initialState, newInputMethod);
+        return ResetInput(state, initialState, newInputMethod);
       case "NEXT":
         const { first, second, third, newIndex } = action;
         return {
@@ -44,8 +44,8 @@ export const InputContextProvider = (props) => {
           inputArray: ["INVALID"],
           inputByRound: ["INVALID"],
         };
-      case "CLEAR_BY_DART":
-        return ClearByDart(state, initialState, inputMethod);
+      case "RESET_INPUT":
+        return ResetInput(state, initialState, inputMethod);
       case "TYPE":
         if (inputMethod === "byDart") {
           return typeByDart(state, action.value);

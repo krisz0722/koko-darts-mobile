@@ -2,7 +2,6 @@ import React, {
   useRef,
   useCallback,
   useMemo,
-  useState,
   useEffect,
   useContext,
 } from "react";
@@ -14,9 +13,7 @@ import { GameContext } from "../contexts/GameContext";
 import SETTINGS_INGAME from "../screens/settings/ingame/SettingsInGame";
 import { useRoute } from "@react-navigation/native";
 import { Authcontext } from "../contexts/AuthContext";
-import { usersCollection } from "../_backend/db/crudOther";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
-import PLAYER_IS_IN_GAME from "../screens/info/InGame";
 import FINISH_LEG from "../screens/endgame/FinishLeg";
 import FINISH_MATCH from "../screens/endgame/FinishMatch";
 import REMATCH_MODAL from "../screens/endgame/Rematch";
@@ -33,20 +30,15 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
       settings: { theme },
       activePlayer,
       inactivePlayer,
-      initializedBy,
     },
   } = useContext(GameContext);
   const {
-    dispatchUserData,
-    userData,
     userData: { username },
   } = useContext(Authcontext);
 
   const params = useRoute().params;
   const { flag } = params;
   const flag2 = useMemo(() => flag, [flag]);
-
-  const [inGame, setInGame] = useState(false);
 
   const appState = useRef(AppState.currentState);
 
@@ -63,21 +55,6 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
       }
     })();
   }, [dispatchGameData, params.gameData, flag2]);
-
-  useEffect(() => {
-    const unsubscribe = usersCollection
-      .where("username", "==", username)
-      .onSnapshot((snapshot) => {
-        const profile = snapshot.docs
-          .find((item) => item.data().username === username)
-          .data();
-        setInGame(profile.inGame && initializedBy !== username);
-      });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [initializedBy, dispatchUserData, username]);
 
   useEffect(() => {
     const _handleAppStateChange = async (nextAppState) => {
@@ -126,49 +103,30 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
 
   return (
     <>
-      {inGame ? (
-        <>
-          {gameData ? (
-            <PLAYER_IS_IN_GAME
-              username={username}
-              gameData={gameData}
-              theme={theme}
-            />
-          ) : (
-            <PLAYER_IS_IN_GAME
-              username={username}
-              lastMatch={true}
-              gameData={userData.matches[0]}
-              theme={theme}
-            />
-          )}
-        </>
-      ) : (
-        <Navigator
-          backBehavior={"initialRoute"}
-          screenOptions={{ swipeEnabled: false }}
-          drawerContent={(props) => (
-            <DRAWER_CONTENT
-              theme={theme}
-              handleLeaveMatch={handleLeaveMatch}
-              gameData={gameData}
-              inactivePlayer={inactivePlayer}
-              {...props}
-            />
-          )}
-          drawerStyle={drawerstyle}
-          drawerPosition={"right"}
-          overlayColor={theme.game[activePlayer + "Overlay"]}
-        >
-          <Screen name="game" component={GAME_CLASSIC} />
-          <Screen name="settings_ingame" component={SETTINGS_INGAME} />
-          <Screen name="stats_ingame" component={STATS_INMATCH} />
-          <Screen name="legover" component={FINISH_LEG} />
-          <Screen name={"matchover"} component={FINISH_MATCH} />
-          <Screen name={"rematch"} component={REMATCH_MODAL} />
-          <Screen name={"loadingscreen"} component={LOADING_SCREEN} />
-        </Navigator>
-      )}
+      <Navigator
+        backBehavior={"initialRoute"}
+        screenOptions={{ swipeEnabled: false }}
+        drawerContent={(props) => (
+          <DRAWER_CONTENT
+            theme={theme}
+            handleLeaveMatch={handleLeaveMatch}
+            gameData={gameData}
+            inactivePlayer={inactivePlayer}
+            {...props}
+          />
+        )}
+        drawerStyle={drawerstyle}
+        drawerPosition={"right"}
+        overlayColor={theme.game[activePlayer + "Overlay"]}
+      >
+        <Screen name="game" component={GAME_CLASSIC} />
+        <Screen name="settings_ingame" component={SETTINGS_INGAME} />
+        <Screen name="stats_ingame" component={STATS_INMATCH} />
+        <Screen name="legover" component={FINISH_LEG} />
+        <Screen name={"matchover"} component={FINISH_MATCH} />
+        <Screen name={"rematch"} component={REMATCH_MODAL} />
+        <Screen name={"loadingscreen"} component={LOADING_SCREEN} />
+      </Navigator>
     </>
   );
 };

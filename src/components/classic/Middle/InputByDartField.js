@@ -6,7 +6,10 @@ import { InputContext } from "../../../contexts/InputContext";
 import { Container, Text_Function } from "./StyledInputByDartField";
 
 const INPUT_BY_DART_FIELD = React.memo(({ activePlayer }) => {
-  const { theme, animation } = useContext(ThemeContext);
+  const {
+    theme,
+    themeContext: { animation },
+  } = useContext(ThemeContext);
 
   const {
     inputContext: { whichDart, inputArray, inputByDart },

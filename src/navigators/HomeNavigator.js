@@ -4,7 +4,6 @@ import SETTINGS from "../screens/settings/home/Settings";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import PROFILE from "../screens/profile/Profile";
 import PREGAME_SETTINGS from "../screens/settings/pregame/PreGameSettings";
-import { ThemeContext } from "../contexts/ThemeContext";
 import STATS from "../screens/stats/Stats";
 import { usersCollection } from "../_backend/db/crudOther";
 import { Authcontext } from "../contexts/AuthContext";
@@ -15,11 +14,10 @@ import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatches
 import { useRoute } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";
 
-const HOMENAVIGATOR = () => {
+const HOMENAVIGATOR = ({ navigation }) => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
   const {
     dispatchUserData,
-    userData,
     userData: { username },
   } = useContext(Authcontext);
 
@@ -27,8 +25,6 @@ const HOMENAVIGATOR = () => {
   const index = route ? route.index : null;
   const appState = useRef(AppState.currentState);
 
-  const { theme } = useContext(ThemeContext);
-  const [inGame, setInGame] = useState(false);
   const [gameData, setGameData] = useState(null);
 
   const isFocused = useIsFocused();
@@ -54,14 +50,17 @@ const HOMENAVIGATOR = () => {
 
           dispatchUserData({ type: "UPDATE_PROFILE", value: profile });
           setGameData(gameData);
-          setInGame(inGame && initializedBy !== username);
+          const navigate = inGame && initializedBy !== username;
+          if (navigate) {
+            navigation.navigate("ingame");
+          }
         }
       });
 
     return () => {
       unsubscribe();
     };
-  }, [dispatchUserData, username]);
+  }, [navigation, dispatchUserData, username]);
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
@@ -88,24 +87,7 @@ const HOMENAVIGATOR = () => {
 
   return (
     <>
-      {inGame ? (
-        <>
-          {gameData ? (
-            <PLAYER_IS_IN_GAME
-              username={username}
-              gameData={gameData}
-              theme={theme}
-            />
-          ) : (
-            <PLAYER_IS_IN_GAME
-              username={username}
-              lastMatch={true}
-              gameData={userData.matches[0]}
-              theme={theme}
-            />
-          )}
-        </>
-      ) : !isFocused ? null : (
+      {!isFocused ? null : (
         <Navigator
           timingConfig={{ duration: 0.1 }}
           tabBarPosition={"bottom"}
@@ -117,6 +99,7 @@ const HOMENAVIGATOR = () => {
           <Screen name="profile" component={PROFILE} />
           <Screen name="stats_saved" component={STATS} />
           <Screen name="pregame" component={PREGAME_SETTINGS} />
+          <Screen name="ingame" component={PLAYER_IS_IN_GAME} />
         </Navigator>
       )}
     </>

@@ -119,7 +119,7 @@ const CLASSIC_STATS = React.memo((props) => {
                 {item.name + " average"}
               </StatText1>
               <StatText2 player={"p2"} theme={theme}>
-                {p2_DATA[item.value]}
+                {p2_DATA[item.value].toFixed(1)}
               </StatText2>
             </StatRow>
           ))}

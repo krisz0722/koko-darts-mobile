@@ -23,6 +23,12 @@ export const Con = styled(View)`
   ${FlexColAround};
 `;
 
+export const Con2 = styled(View)`
+  ${FlexColAround};
+  height: 60%;
+  width: 100%;
+`;
+
 export const Title = styled(Header2)`
   width: 100%;
   height: 10%;
@@ -40,10 +46,4 @@ export const Message = styled(P1_Bold)`
   color: ${({ theme, filled }) => (filled ? theme.text : theme.text)};
   height: 30%;
   width: 90%;
-`;
-
-export const Options = styled(View)`
-  height: 10%;
-  width: 100%;
-  ${FlexRow};
 `;

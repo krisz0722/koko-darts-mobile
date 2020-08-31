@@ -5,6 +5,7 @@ import { GameContext } from "../../../contexts/GameContext";
 import FUNCTION_BUTTON from "../../buttons/FunctionButton";
 import { InputContext } from "../../../contexts/InputContext";
 import { ClassicMiddle } from "./StyledClassicMiddle";
+import ClearByDart from "../../../contexts/actions/gameContext/ClearByDart";
 
 const CLASSIC_MIDDLE = React.memo((props) => {
   const {
@@ -21,6 +22,7 @@ const CLASSIC_MIDDLE = React.memo((props) => {
 
   const {
     dispatchInput,
+    inputContext,
     inputContext: { whichDart, inputByDart, inputMethod },
   } = useContext(InputContext);
 
@@ -35,8 +37,17 @@ const CLASSIC_MIDDLE = React.memo((props) => {
 
   const submitBust = useCallback(() => {
     dispatchInput({ type: "SET_DEFAULT" });
-    dispatchGameData({ type: "BUST" });
-  }, [dispatchInput, dispatchGameData]);
+    if (inputMethod === "byDart") {
+      const newScore = ClearByDart(gameData, inputContext);
+      dispatchGameData({
+        type: "UPDATE_BY_DART",
+        scoreToSubmit: 0,
+        newScore,
+      });
+      dispatchInput({ type: "CHANGE_INPUT" });
+    }
+    dispatchGameData({ type: "BUST", inputContext, dispatchGameData });
+  }, [gameData, inputContext, inputMethod, dispatchInput, dispatchGameData]);
 
   const changeInput = () => {
     const apKey = gameData.activePlayer + "_DATA";

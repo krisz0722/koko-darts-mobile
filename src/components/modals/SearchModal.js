@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Modal, SafeAreaView } from "react-native";
+import { Modal, TouchableOpacity, SafeAreaView } from "react-native";
 import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import LIST_PROFILES from "../lists/ListProfiles";
@@ -14,10 +14,15 @@ import {
   Container,
   SearchBar,
   SearchInput,
+  Error,
+  ErrorMessage,
 } from "./StyledChoosePlayerModal";
 
 const SEARCH_MODAL = React.memo(({ action1, visible }) => {
-  const { theme, animation } = useContext(ThemeContext);
+  const {
+    theme,
+    themeContext: { animation },
+  } = useContext(ThemeContext);
 
   const animationType = animation
     ? theme.name === "default"
@@ -35,7 +40,8 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
   const [filteredProfiles, setFilteredProfiles] = useState(null);
   const [checkedProfiles, setCheckedProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState(false);
+  const [input, setInput] = useState("");
   const [searchActive, setSearchActive] = useState(false);
 
   useEffect(() => {
@@ -108,11 +114,26 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
   };
 
   const handleRegExp = (val) => {
-    if (val === "") {
+    setError(false);
+    try {
+      setInput(val);
+      if (val === "") {
+        setRegexp(new RegExp(".*", "i"));
+      } else {
+        setRegexp(new RegExp(val, "i"));
+      }
+    } catch (err) {
+      setInput("");
       setRegexp(new RegExp(".*", "i"));
-    } else {
-      setRegexp(new RegExp(val, "i"));
+      setError(true);
+      console.log(err);
     }
+  };
+
+  const clear = () => {
+    setRegexp(new RegExp(".*", "i"));
+    setInput("");
+    setError(false);
   };
 
   const handleSearchActive = () => {
@@ -133,6 +154,9 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
     }
   }, [visible, regexp]);
 
+  console.log(error);
+  console.log(regexp);
+
   return (
     <Modal
       animationType={animationType}
@@ -147,6 +171,14 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
           theme={theme}
         >
           <Container>
+            {error ? (
+              <Error>
+                <ErrorMessage>
+                  invalid search value. don't use special characters.
+                </ErrorMessage>
+              </Error>
+            ) : null}
+
             <SearchBar active={searchActive} theme={theme}>
               <Icon
                 color={searchActive ? theme.text : theme.text2}
@@ -159,13 +191,16 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
                 placeholderTextColor={theme.text2}
                 theme={theme}
                 onChangeText={handleRegExp}
+                value={input}
                 placeholder={searchActive ? null : "SEARCH FOR USERS..."}
               />
-              <Icon
-                color={searchActive ? theme.text : theme.text2}
-                name={"clear"}
-                size={25}
-              />
+              <TouchableOpacity onPress={clear}>
+                <Icon
+                  color={searchActive ? theme.text : theme.text2}
+                  name={"clear"}
+                  size={25}
+                />
+              </TouchableOpacity>
             </SearchBar>
 
             <LIST_PROFILES

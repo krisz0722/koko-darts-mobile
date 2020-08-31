@@ -35,7 +35,10 @@ const GAME_CLASSIC = React.memo((props) => {
   } = useContext(GameContext);
   const inGameSettings = gameData.settings;
 
-  const { theme, animation } = useContext(ThemeContext);
+  const {
+    theme,
+    themeContext: { animation },
+  } = useContext(ThemeContext);
 
   const animationToUse = ingame ? inGameSettings.animation : animation;
   const settingsToUse = ingame ? inGameSettings : settings;

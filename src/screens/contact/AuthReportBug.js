@@ -3,7 +3,7 @@ import { SafeAreaView, BackHandler, Keyboard } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import { CommonActions } from "@react-navigation/native";
-import { Con, Title2 } from "./StyledReportBug";
+import { Con, Con2, Title2 } from "./StyledContact";
 import LoginInput from "../../components/buttons/TextInput";
 
 const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
@@ -93,29 +93,31 @@ const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
       <Con isKeyboardUp={isKeyboardUp} filled={filled}>
         <Title2 theme={theme}>report a bug</Title2>
-        <LoginInput
-          //TODO email regexp
-          valid={email.length > 5}
-          input={EMAIL}
-          handleFocus={handleFocus}
-          focused={focus === "email"}
-        />
-        <LoginInput
-          //TODO email regexp
-          valid={message.length > 5}
-          input={INPUT}
-          handleFocus={handleFocus}
-          focused={focus === "message"}
-          multiline={true}
-        />
-        <AUTH_BUTTON
-          disabled={!enableSubmit}
-          type={enableSubmit ? "active" : "basic"}
-          text={"send"}
-          action={() => send()}
-          align={"center"}
-          social={"send"}
-        />
+        <Con2>
+          <LoginInput
+            //TODO email regexp
+            valid={email.length > 5}
+            input={EMAIL}
+            handleFocus={handleFocus}
+            focused={focus === "email"}
+          />
+          <LoginInput
+            //TODO email regexp
+            valid={message.length > 5}
+            input={INPUT}
+            handleFocus={handleFocus}
+            focused={focus === "message"}
+            multiline={true}
+          />
+          <AUTH_BUTTON
+            disabled={!enableSubmit}
+            type={enableSubmit ? "active" : "basic"}
+            text={"send"}
+            action={() => send()}
+            align={"center"}
+            social={"send"}
+          />
+        </Con2>
       </Con>
     </SafeAreaView>
   );

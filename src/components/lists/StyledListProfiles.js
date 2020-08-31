@@ -1,9 +1,10 @@
 import { SafeAreaView } from "react-native";
 import styled from "styled-components";
 import { FlatList } from "react-native";
-import { BorderVertical } from "../../styles/css_mixins";
+import { BorderVertical, FlexCol } from "../../styles/css_mixins";
 
 export const Safe = styled(SafeAreaView)`
+  ${FlexCol};
   height: 50%;
   width: 100%;
   background-color: ${({ theme }) => theme.text2};

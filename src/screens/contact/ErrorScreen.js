@@ -52,12 +52,6 @@ const AUTH_ERROR_SCREEN = React.memo(({ navigation, filled }) => {
   const message = params ? params.message : "NEMJO";
 
   return (
-    // <Modal
-    //   animationType={"fade"}
-    //   transparent={true}
-    //   presentationStyle={"pageSheet"}
-    //   visible={true}
-    // >
     <>
       {background ? (
         <AppBackground
@@ -93,7 +87,6 @@ const AUTH_ERROR_SCREEN = React.memo(({ navigation, filled }) => {
         </Safe>
       </ScreenContainer>
     </>
-    // </Modal>
   );
 });
 

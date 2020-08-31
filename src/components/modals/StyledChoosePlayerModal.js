@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { View, ScrollView } from "react-native";
 import { FlexCol, FlexRowAround, Window } from "../../styles/css_mixins";
-import { Header3 } from "../headers/StyledHeaders";
+import { Header2, Header3 } from "../headers/StyledHeaders";
 import { StyledTextInput } from "../headers/StyledTextInput";
 
 export const ModalContainerSearch = styled(ScrollView)`
@@ -9,6 +9,7 @@ export const ModalContainerSearch = styled(ScrollView)`
 `;
 
 export const SearchInput = styled(StyledTextInput)`
+  ${FlexCol};
   color: ${({ theme, active }) => (active ? theme.text : theme.text2)};
   width: 60%;
 `;
@@ -24,6 +25,14 @@ export const SearchBar = styled(View)`
   border-width: 2;
   padding: 0 1.5%;
   ${FlexRowAround};
+`;
+
+export const Error = styled(View)`
+  height: 15%;
+  ${FlexCol};
+`;
+export const ErrorMessage = styled(Header2)`
+  color: ${({ theme }) => theme.bgRed};
 `;
 
 export const Container = styled(View)`

@@ -12,6 +12,7 @@ import DRAWER_NAVIGATOR from "./DrawerNavigator";
 import AUTH_NAVIGATOR from "./AuthNavigator";
 import HOME_DRAWER_NAVIGATOR from "./HomeDrawerNavigator";
 import { ScreenContainer } from "./StyledNav";
+import PLAYER_IS_IN_GAME from "../screens/info/InGame";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -67,6 +68,7 @@ const APP_NAVIGATOR = () => {
                 component={HOME_DRAWER_NAVIGATOR}
               />
               <Screen name={"drawernavigator"} component={DRAWER_NAVIGATOR} />
+              <Screen name={"ingame"} component={PLAYER_IS_IN_GAME} />
             </Navigator>
           </NavigationContainer>
         </ScreenContainer>

@@ -1,4 +1,4 @@
-import { SCORINGDARTS } from "../../../calc/const";
+import { DOUBLEFIELDS, SCORINGDARTS } from "../../../calc/const";
 
 const nextValidation = (inputByDart, whichDart, playerScore) => {
   let { first, second, third } = inputByDart;
@@ -51,13 +51,31 @@ const nextValidation = (inputByDart, whichDart, playerScore) => {
   const newScore = playerScore - scoreToSubmit;
 
   const checkScoreToSubmit = () =>
-    SCORINGDARTS.find((item) => scoreToSubmit === item.value) !== undefined;
+    SCORINGDARTS.some((item) => scoreToSubmit === item.value);
 
   const checkNewScore = () => {
     return newScore !== 1 && newScore >= 0;
   };
 
-  const valid = checkNewScore() && checkScoreToSubmit();
+  const checkScoresIfLegOver = () => {
+    if (newScore === 0) {
+      const isScoreToSubmitDouble = DOUBLEFIELDS.some(
+        (item) => item.value === scoreToSubmit,
+      );
+      if (isScoreToSubmitDouble) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  console.log(checkScoresIfLegOver());
+
+  const valid =
+    checkNewScore() && checkScoreToSubmit() && checkScoresIfLegOver();
 
   return {
     valid,

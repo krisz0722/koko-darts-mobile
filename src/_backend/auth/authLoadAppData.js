@@ -49,18 +49,22 @@ const loadAppData = async (userData, navigation, reducers) => {
       type: "LOAD_SETTINGS_AFTER_LOGIN",
       value: userSettings,
     });
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "homedrawernavigator" }],
+      }),
+    );
   } else {
     await game({
       type: "CONTINUE_MATCH",
       value: userMatches[0],
     });
+    navigation.navigate("ingame", {
+      gameData: userMatches[0],
+      username: userData.username,
+    });
   }
-  navigation.dispatch(
-    CommonActions.reset({
-      index: 1,
-      routes: [{ name: "homedrawernavigator" }],
-    }),
-  );
 };
 
 export default loadAppData;

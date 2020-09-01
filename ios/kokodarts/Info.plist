@@ -98,6 +98,59 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Saira-Black.ttf</string>
+		<string>Saira-Bold.ttf</string>
+		<string>Saira-ExtraBold.ttf</string>
+		<string>Saira-ExtraLight.ttf</string>
+		<string>Saira-Light.ttf</string>
+		<string>Saira-Medium.ttf</string>
+		<string>Saira-Regular.ttf</string>
+		<string>Saira-SemiBold.ttf</string>
+		<string>Saira-Thin.ttf</string>
+		<string>SairaSemiCondensed-Black.ttf</string>
+		<string>SairaSemiCondensed-Bold.ttf</string>
+		<string>SairaSemiCondensed-ExtraBold.ttf</string>
+		<string>SairaSemiCondensed-ExtraLight.ttf</string>
+		<string>SairaSemiCondensed-Light.ttf</string>
+		<string>SairaSemiCondensed-Medium.ttf</string>
+		<string>SairaSemiCondensed-Regular.ttf</string>
+		<string>SairaSemiCondensed-SemiBold.ttf</string>
+		<string>SairaSemiCondensed-Thin.ttf</string>
+		<string>SairaCondensed-Black.ttf</string>
+		<string>SairaCondensed-Bold.ttf</string>
+		<string>SairaCondensed-ExtraBold.ttf</string>
+		<string>SairaCondensed-ExtraLight.ttf</string>
+		<string>SairaCondensed-Light.ttf</string>
+		<string>SairaCondensed-Medium.ttf</string>
+		<string>SairaCondensed-Regular.ttf</string>
+		<string>SairaCondensed-SemiBold.ttf</string>
+		<string>SairaCondensed-Thin.ttf</string>
+		<string>Roboto-Black.ttf</string>
+		<string>Roboto-BlackItalic.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-BoldItalic.ttf</string>
+		<string>Roboto-Italic.ttf</string>
+		<string>Roboto-Light.ttf</string>
+		<string>Roboto-LightItalic.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+		<string>Roboto-MediumItalic.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Thin.ttf</string>
+		<string>Roboto-ThinItalic.ttf</string>
+		<string>Nunito-Black.ttf</string>
+		<string>Nunito-BlackItalic.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-BoldItalic.ttf</string>
+		<string>Nunito-ExtraBold.ttf</string>
+		<string>Nunito-ExtraBoldItalic.ttf</string>
+		<string>Nunito-ExtraLight.ttf</string>
+		<string>Nunito-ExtraLightItalic.ttf</string>
+		<string>Nunito-Italic.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>Nunito-LightItalic.ttf</string>
+		<string>Nunito-Regular.ttf</string>
+		<string>Nunito-SemiBold.ttf</string>
+		<string>Nunito-SemiBoldItalic.ttf</string>
 	</array>
 </dict>
 </plist>

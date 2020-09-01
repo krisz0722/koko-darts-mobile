@@ -9,6 +9,8 @@ export const AuthcontextProvider = (props) => {
         return { ...action.value };
       case "UPDATE_PROFILE":
         return { ...action.value };
+      case "DELETING_PROFILE":
+        return {};
       default:
         return state;
     }

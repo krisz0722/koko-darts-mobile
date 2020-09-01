@@ -13,15 +13,18 @@ const deleteAccount = async (username, navigation) => {
     console.log("deleting user...", user);
     await user.delete();
     console.log("user has been deleted");
-    navigation.navigate("loadingscreen", { text: "deleting profile data..." });
+    navigation.navigate("authnavigator", {
+      screen: "loadingscreen",
+      params: { text: "deleting profile data..." },
+    });
     await deleteProfile(username);
-    console.log("deleted from database");
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
         routes: [{ name: "authnavigator" }],
       }),
     );
+    console.log("deleted from database");
   } catch (err) {
     return throwError(err.code, "delete", navigation);
   }

@@ -1,16 +1,8 @@
-import React, {
-  useCallback,
-  useReducer,
-  useContext,
-  createContext,
-} from "react";
-import { Authcontext } from "./AuthContext";
+import React, { useCallback, useReducer, createContext } from "react";
 
 export const SettingsContext = createContext("default");
 
 export const SettingsContextProvider = (props) => {
-  const DEFAULT_SETTINGS = useContext(Authcontext).userData.settings;
-
   const settingsReducer = useCallback((state, action) => {
     switch (action.type) {
       case "CHANGE_LAYOUT":
@@ -20,7 +12,7 @@ export const SettingsContextProvider = (props) => {
       case "SAVE_SETTINGS":
         return action.value;
       case "RESET":
-        return action.value;
+        return {};
       case "CHOOSE_OPPONENT":
         return { ...state, p2: action.value };
       case "REMATCH":
@@ -30,10 +22,7 @@ export const SettingsContextProvider = (props) => {
     }
   }, []);
 
-  const [settings, dispatchSettings] = useReducer(
-    settingsReducer,
-    DEFAULT_SETTINGS,
-  );
+  const [settings, dispatchSettings] = useReducer(settingsReducer, {});
 
   console.log("SETTINGSCONTEXT", settings);
 

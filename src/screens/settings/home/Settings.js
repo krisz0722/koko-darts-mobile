@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { SettingsBottom, SettingsBottomButtons } from "./StyledSettings";
 import { SettingsContext } from "../../../contexts/SettingsContext";
 import OPTIONS_LAYOUT from "../OptionsLayout";
@@ -8,10 +8,9 @@ import OPTIONS_SCORE from "../OptionsScore";
 import OPTIONS_LEGORSET from "../OptionsLegOrSet";
 import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import PREVIEW from "../Preview";
-import { useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { Authcontext } from "../../../contexts/AuthContext";
-import updateAuthSettings from "../../../contexts/actions/authContext/UpdateSettings";
+import { updateSettings } from "../../../_backend/db/crudUpdate";
 
 const SETTINGS = React.memo(() => {
   const {
@@ -20,16 +19,13 @@ const SETTINGS = React.memo(() => {
     settings: { p1, p2 },
   } = useContext(SettingsContext);
   const {
-    themeContext,
     themeContext: { background, selectedTheme },
     dispatchTheme,
   } = useContext(ThemeContext);
 
   const {
-    userData,
     userData: { username },
   } = useContext(Authcontext);
-  const USER_SETTINGS = userData.settings;
 
   const [preview, setPreview] = useState(false);
 
@@ -52,51 +48,6 @@ const SETTINGS = React.memo(() => {
     legsPerSet,
     opacity,
   };
-
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (isFocused) {
-    } else {
-      const newSettings = {
-        p1,
-        p2,
-        legOrSet,
-        startingScore,
-        layout,
-        preview,
-        toWin,
-        legsPerSet,
-        opacity,
-        animation,
-        theme: selectedTheme,
-        background,
-      };
-      dispatchSettings({
-        type: "SAVE_SETTINGS",
-        value: newSettings,
-      });
-      updateAuthSettings(userData, newSettings);
-    }
-  }, [
-    background,
-    userData,
-    selectedTheme,
-    username,
-    p1,
-    p2,
-    isFocused,
-    dispatchSettings,
-    legOrSet,
-    startingScore,
-    layout,
-    preview,
-    toWin,
-    legsPerSet,
-    opacity,
-    animation,
-    dispatchTheme,
-  ]);
 
   const togglePreview = useCallback(() => {
     setPreview(!preview);
@@ -156,33 +107,49 @@ const SETTINGS = React.memo(() => {
     [dispatchTheme],
   );
 
-  const reset = useCallback(() => {
-    const {
-      layout,
-      legOrSet,
-      startingScore,
-      animation,
-      opacity,
-      toWin,
-      legsPerSet,
-      theme,
-      background,
-    } = USER_SETTINGS;
+  const reset = useCallback(async () => {
+    try {
+      const newSettings = {
+        p1,
+        p2,
+        legOrSet,
+        startingScore,
+        layout,
+        preview,
+        toWin,
+        legsPerSet,
+        opacity,
+        animation,
+        theme: selectedTheme,
+        background,
+      };
+      await dispatchSettings({
+        type: "SAVE_SETTINGS",
+        value: newSettings,
+      });
+      await updateSettings(username, newSettings);
+    } catch (err) {
+      console.log(err);
+      alert("ERROR WHILE SAVING SETTINGS: ", err);
+    }
+  }, [
+    username,
+    background,
+    selectedTheme,
+    p1,
+    p2,
+    dispatchSettings,
+    legOrSet,
+    startingScore,
+    layout,
+    preview,
+    toWin,
+    legsPerSet,
+    opacity,
+    animation,
+  ]);
 
-    setPreview(false);
-    setLayout(layout);
-    setLegsPerSet(legsPerSet);
-    setStateAnimation(animation);
-    setOpacity(opacity);
-    setTowin(toWin);
-    setLegOrSet(legOrSet);
-    setStartingScore(startingScore);
-    dispatchTheme({
-      type: "LOAD_THEME",
-      value: { ...themeContext, background, selectedTheme: theme },
-    });
-    dispatchSettings({ type: "RESET", value: USER_SETTINGS });
-  }, [USER_SETTINGS, themeContext, dispatchTheme, dispatchSettings]);
+  console.log("RENDERSETTINS");
 
   return (
     <>
@@ -230,7 +197,7 @@ const SETTINGS = React.memo(() => {
           <THEMED_BUTTON
             type={"danger"}
             size={"small"}
-            text={"reset"}
+            text={"save"}
             length={2}
             action={reset}
           />

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useCallback, useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SEARCH_MODAL from "../../components/modals/SearchModal";
@@ -15,6 +15,10 @@ const Friends = () => {
     alert(`Request has been sent to ${item.key}`);
   };
 
+  const handleVisibility = useCallback(() => {
+    setSearchModal(!searchModal);
+  }, [searchModal]);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LIST_FRIENDS />
@@ -28,7 +32,7 @@ const Friends = () => {
         </TouchableOpacity>
       </AddButton>
       <SEARCH_MODAL
-        action1={() => setSearchModal(!searchModal)}
+        action1={handleVisibility}
         action2={handleSendrequest}
         visible={searchModal}
       />

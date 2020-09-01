@@ -6,8 +6,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const Theme_Contrast = {
   name: "contrast",
-  fontFamily: "SairaExtraCondensed-Regular",
-  fontFamilyBold: "SairaExtraCondensed-Bold",
+  fontFamily: "SairaCondensed-Regular",
+  fontFamilyBold: "SairaCondensed-Bold",
   bgOverlay: "rgba(0,15,10,0.9)",
   bgOverlay2: "rgba(0,0,0, 0.8)",
   bgActive: "rgb(255, 255, 255)",

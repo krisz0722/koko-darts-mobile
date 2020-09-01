@@ -58,6 +58,7 @@ export const userModel = (username, email, photo) => ({
     legsPerSet: 3,
     startingScore: 501,
     playerToStartLeg: "p1",
+    playerToStartSet: "p1",
     opacity: true,
     animation: true,
     background: true,

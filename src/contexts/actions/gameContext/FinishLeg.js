@@ -1,7 +1,14 @@
 const finishLeg = (state, nodUsed, nodRequired, settings) => {
   const { activePlayer, inactivePlayer } = state;
 
-  const { legOrSet, toWin, startingScore, legsPerSet } = settings;
+  const {
+    legOrSet,
+    toWin,
+    startingScore,
+    legsPerSet,
+    playerToStartLeg,
+    playerToStartSet,
+  } = settings;
   const apKey = `${activePlayer}_DATA`;
   const apData = state[apKey];
 
@@ -40,6 +47,8 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
 
   const doublePercentage = `${((legsWon / numOfCoDarts) * 100).toFixed(1)}%`;
 
+  const isSetOver = legsWon === legsPerSet;
+
   const isMatchOver = () => {
     switch (legOrSet) {
       case "set":
@@ -50,11 +59,47 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
         break;
     }
   };
+
+  const active = () => {
+    if (isSetOver) {
+      if (playerToStartSet === "p1") {
+        return {
+          ap: "p2",
+          inap: "p1",
+        };
+      } else {
+        return {
+          ap: "p1",
+          inap: "p2",
+        };
+      }
+    } else {
+      if (playerToStartLeg === "p1") {
+        return {
+          ap: "p2",
+          inap: "p1",
+        };
+      } else {
+        return {
+          ap: "p1",
+          inap: "p2",
+        };
+      }
+    }
+  };
+
   return {
     ...state,
+    activePlayer: active().ap,
+    inactivePlayer: active().inap,
+    settings: {
+      ...settings,
+      playerToStartLeg: active().ap,
+      playerToStartSet: isSetOver ? active().ap : playerToStartSet,
+    },
     [inapKey]: {
       ...inapData,
-      legsWon: legsWon === legsPerSet ? 0 : legsWon,
+      legsWon: isSetOver ? 0 : legsWon,
       setsWon: setsWon,
       score: startingScore,
       tsLeg: 0,
@@ -73,6 +118,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
     },
     [apKey]: {
       ...apData,
+      legsWon: isSetOver ? 0 : apData.legsWon,
       score: startingScore,
       tsLeg: 0,
       norLeg: 0,

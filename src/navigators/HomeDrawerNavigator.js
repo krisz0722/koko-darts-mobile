@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Button, View, Text } from "react-native";
+import { Button, View, Text, BackHandler } from "react-native";
 import { GameContext } from "../contexts/GameContext";
 import { Authcontext } from "../contexts/AuthContext";
 import HOME_DRAWER_CONTENT from "./HomeDrawerContent";
@@ -11,6 +11,8 @@ import deleteAccount from "../_backend/auth/authDelete";
 import DELETE_ALERT from "../components/modals/DeleteAlert";
 import LOADING_SCREEN from "../screens/info/LoadingScreen";
 import CONTACT from "../screens/contact/Contact";
+import { SettingsContext } from "../contexts/SettingsContext";
+import EXIT_APP_ALERT from "../components/modals/ExitAppAlert";
 
 const ABOUT = ({ navigation }) => (
   <View>
@@ -22,17 +24,21 @@ const { Navigator, Screen } = createDrawerNavigator();
 
 const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
   const {
+    dispatchGameData,
     gameData: { activePlayer },
   } = useContext(GameContext);
   const {
+    dispatchUserData,
     userData: { username },
   } = useContext(Authcontext);
   const {
     theme,
     themeContext: { animation },
   } = useContext(ThemeContext);
+  const { dispatchSettings } = useContext(SettingsContext);
 
   const [deleteModal, setDeleteModal] = useState(false);
+  const [exitModal, setExitModal] = useState(false);
 
   const drawerstyle = {
     width: "auto",
@@ -43,14 +49,42 @@ const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
     await logOut(navigation);
   }, [navigation]);
 
+  const handleExitApp = () => {
+    BackHandler.exitApp();
+    setExitModal(!exitModal);
+  };
+
+  const backAction = () => {
+    setExitModal(true);
+    return true;
+  };
+
+  const backHandler = BackHandler.addEventListener(
+    "hardwareBackPress",
+    backAction,
+  );
+
   const handleDelete = useCallback(async () => {
     await deleteAccount(username, navigation);
-  }, [username, navigation]);
+    dispatchSettings({ type: "RESET" });
+    dispatchGameData({ type: "RESET" });
+    dispatchUserData({ type: "DELETING_PROFILE" });
+  }, [
+    dispatchSettings,
+    dispatchUserData,
+    dispatchGameData,
+    username,
+    navigation,
+  ]);
 
   const cancelDelete = useCallback(() => {
     navigation.navigate("home");
     setDeleteModal(false);
   }, [navigation]);
+
+  useEffect(() => {
+    return () => backHandler.remove();
+  }, [backHandler]);
 
   return (
     <>
@@ -63,6 +97,16 @@ const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
           visible={deleteModal}
         />
       ) : null}
+      {exitModal ? (
+        <EXIT_APP_ALERT
+          animation={animation}
+          theme={theme}
+          action1={() => setExitModal(!exitModal)}
+          action2={handleExitApp}
+          visible={exitModal}
+        />
+      ) : null}
+
       <>
         <Navigator
           backBehavior={"initialRoute"}

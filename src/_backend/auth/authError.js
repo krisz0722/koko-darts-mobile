@@ -20,6 +20,8 @@ const throwError = (err, type, navigation) => {
 
   const alertMessage = () => {
     switch (err) {
+      case "12501":
+        return "Authentication process has been cancelled by the user";
       case "usernametaken":
         return "The username is taken. Username must be unique. Please choose another username and try again.";
       case "auth/user-not-found":

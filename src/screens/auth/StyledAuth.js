@@ -11,6 +11,7 @@ export const Form = styled(View)`
   ${FlexCol}
   width: 100%;
   height: ${() => Window.height};
+  margin-top: ${({ isKeyboardUp }) => (isKeyboardUp ? "-50%" : 0)};
 `;
 
 export const Form2 = styled(Form)`

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
+import { KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { Form2, Inputs2 } from "./StyledAuth";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import TEXT_INPUT from "../../components/buttons/TextInput";
@@ -8,6 +8,7 @@ import LogIn from "../../_backend/auth/authLogIn";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
+import { ErrorMessage } from "../contact/StyledContact";
 
 const LOGIN = React.memo(({ navigation }) => {
   const { dispatchGameData } = useContext(GameContext);
@@ -26,33 +27,20 @@ const LOGIN = React.memo(({ navigation }) => {
   const [email, setEmail] = useState("test1@gmail.com");
   const [passwordHidden, setPasswordHidden] = useState(false);
   const [focus, setFocus] = useState(undefined);
-  const [isKeyboardUp, setIsKeyboardUp] = useState(false);
+  const [error, setError] = useState(null);
 
-  const enableSignUp =
-    [password, email].filter((item) => item.length < 6).length === 0;
-
-  const keyboardDidShow = () => {
-    setIsKeyboardUp(true);
+  const handlePassword = (val) => {
+    setError(null);
+    setPassword(val);
   };
-
-  const keyboardDidHide = () => {
-    setIsKeyboardUp(false);
-    setFocus(undefined);
+  const handleEmail = (val) => {
+    setError(null);
+    setEmail(val);
   };
-
-  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
-  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
-
-  const handlePassword = (val) => setPassword(val);
-  const handleEmail = (val) => setEmail(val);
   const handleFocus = (val) => {
     setFocus(val);
   };
   const toggleSecureEntry = () => setPasswordHidden(!passwordHidden);
-
-  const pressLogin = () => {
-    LogIn(email, password, email, navigation, reducers);
-  };
 
   const INPUTS = [
     {
@@ -74,6 +62,26 @@ const LOGIN = React.memo(({ navigation }) => {
     },
   ];
 
+  const enabled =
+    [password, email].filter((item) => item.length < 6).length === 0;
+
+  const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
+
+  const validateForm = () => {
+    if (!regexp.test(email)) {
+      setError("the email you provided is invalid");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const pressLogin = () => {
+    if (validateForm()) {
+      LogIn(email, password, email, navigation, reducers);
+    }
+  };
+
   return (
     <>
       <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
@@ -85,7 +93,8 @@ const LOGIN = React.memo(({ navigation }) => {
           }}
           keyboardShouldPersistTaps={"always"}
         >
-          <Form2 theme={theme} isKeyboardUp={isKeyboardUp}>
+          <Form2 theme={theme}>
+            <ErrorMessage>{error}</ErrorMessage>
             <Inputs2>
               {INPUTS.map((item) => {
                 return (
@@ -100,8 +109,8 @@ const LOGIN = React.memo(({ navigation }) => {
                 );
               })}
               <AUTH_BUTTON
-                type={enableSignUp ? "active" : "basic"}
-                disabled={!enableSignUp}
+                type={enabled ? "active" : "basic"}
+                disabled={!enabled}
                 text={"log in"}
                 action={() => pressLogin()}
                 align={"center"}

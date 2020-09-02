@@ -9,6 +9,8 @@ import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import auth from "@react-native-firebase/auth";
+import { ErrorMessage } from "../contact/StyledContact";
+import { checkUsernameAvailability } from "../../_backend/db/crudCheck";
 
 const REGISTER = React.memo(({ navigation }) => {
   const { dispatchSettings } = useContext(SettingsContext);
@@ -32,6 +34,14 @@ const REGISTER = React.memo(({ navigation }) => {
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+
+  const keyboardDidHide = () => {
+    setIsKeyboardUp(false);
+    setFocus(undefined);
+  };
+
+  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   auth().onAuthStateChanged((user) => {
     setUser(user);
@@ -43,33 +53,33 @@ const REGISTER = React.memo(({ navigation }) => {
     }
   }, [user]);
 
-  const pressSignUp = () => {
-    setLoading(true);
-    signUp(email, password, username, navigation, reducers);
-  };
-
   const enableSignUp =
     [email, password, username, confirmPassword].filter(
-      (item) => item.length < 6,
-    ).length === 0 && password === confirmPassword;
+      (item) => item.length < 5,
+    ).length === 0;
 
-  const keyboardDidShow = (e) => {
-    setIsKeyboardUp(true);
+  const handleUsername = (val) => {
+    setError();
+    setUsername(val);
   };
-
-  const keyboardDidHide = (e) => {
-    setIsKeyboardUp(false);
-    setFocus(undefined);
+  const handleEmail = (val) => {
+    setError();
+    setEmail(val);
   };
-
-  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
-  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
-
-  const handleUsername = (val) => setUsername(val);
-  const handleEmail = (val) => setEmail(val);
-  const handlePassword = (val) => setPassword(val);
-  const handleConfirmPassword = (val) => setConfirmPassword(val);
+  const handlePassword = (val) => {
+    setError();
+    setPassword(val);
+  };
+  const handleConfirmPassword = (val) => {
+    setError();
+    setConfirmPassword(val);
+  };
   const handleFocus = (val) => {
+    if (val === "confirmPassword") {
+      setIsKeyboardUp(true);
+    } else {
+      setIsKeyboardUp(false);
+    }
     setFocus(val);
   };
   const toggleSecureEntry = () => setPasswordHidden(!passwordHidden);
@@ -78,7 +88,7 @@ const REGISTER = React.memo(({ navigation }) => {
     {
       name: "username",
       value: username,
-      placeholder: "username",
+      placeholder: "Username",
       type: "username",
       action: handleUsername,
       icon: "person",
@@ -103,7 +113,7 @@ const REGISTER = React.memo(({ navigation }) => {
       iconAction: toggleSecureEntry,
     },
     {
-      name: "confirm",
+      name: "confirmPassword",
       value: confirmPassword,
       placeholder: "Confirm password",
       type: "password",
@@ -112,6 +122,41 @@ const REGISTER = React.memo(({ navigation }) => {
       iconAction: toggleSecureEntry,
     },
   ];
+
+  const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
+
+  const validateForm = async () => {
+    if (!regexp.test(email)) {
+      setError("the email you provided is invalid");
+      return false;
+    } else if (password.length < 6) {
+      setError("password must be at least 6 character long");
+      return false;
+    } else if (username.length < 3) {
+      setError("username must be at least 3 characters long");
+      return false;
+    } else if (username.length > 16) {
+      setError("username can't be longer than 16 characters");
+      return false;
+    } else if (checkUsernameAvailability(username) > 0) {
+      setError(
+        "username must be unique. the username you provided is already taken by another user",
+      );
+      return false;
+    } else if (password !== confirmPassword) {
+      setError("the passwords you provided do not match.");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const pressSignUp = async () => {
+    if (await validateForm()) {
+      setLoading(true);
+      signUp(email, password, username, navigation, reducers);
+    }
+  };
 
   return (
     <>
@@ -125,7 +170,8 @@ const REGISTER = React.memo(({ navigation }) => {
             }}
             keyboardShouldPersistTaps={"always"}
           >
-            <Form theme={theme} isKeyboardUp={isKeyboardUp}>
+            <Form isKeyboardUp={isKeyboardUp} theme={theme}>
+              <ErrorMessage>{error}</ErrorMessage>
               <Inputs>
                 {INPUTS.map((item) => (
                   <TEXT_INPUT

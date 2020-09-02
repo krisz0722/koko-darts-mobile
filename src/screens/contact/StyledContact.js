@@ -25,7 +25,7 @@ export const Con = styled(View)`
 
 export const Con2 = styled(View)`
   ${FlexColAround};
-  height: 60%;
+  height: 80%;
   width: 100%;
 `;
 
@@ -46,4 +46,14 @@ export const Message = styled(P1_Bold)`
   color: ${({ theme, filled }) => (filled ? theme.text : theme.text)};
   height: 30%;
   width: 90%;
+`;
+
+export const Title3 = styled(P1_Bold)`
+  color: ${({ theme }) => theme.text};
+  width: 80%;
+  height: 10%;
+`;
+
+export const ErrorMessage = styled(Title3)`
+  color: ${({ theme }) => theme.bgRed};
 `;

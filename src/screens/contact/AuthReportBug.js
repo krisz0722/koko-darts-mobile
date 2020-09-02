@@ -3,7 +3,7 @@ import { SafeAreaView, BackHandler, Keyboard } from "react-native";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import { CommonActions } from "@react-navigation/native";
-import { Con, Con2, Title2 } from "./StyledContact";
+import { Con, Con2, ErrorMessage, Title2, Title3 } from "./StyledContact";
 import LoginInput from "../../components/buttons/TextInput";
 
 const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
@@ -13,22 +13,23 @@ const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
   const [email, setEmail] = useState("");
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
+  const [error, setError] = useState(null);
 
-  const keyboardDidShow = (e) => {
-    setIsKeyboardUp(true);
-  };
-
-  const keyboardDidHide = (e) => {
+  const keyboardDidHide = () => {
     setIsKeyboardUp(false);
     setFocus(undefined);
   };
 
+  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
+
   const handleFocus = (val) => {
+    if (val === "message") {
+      setIsKeyboardUp(true);
+    } else {
+      setIsKeyboardUp(false);
+    }
     setFocus(val);
   };
-
-  Keyboard.addListener("keyboardDidShow", keyboardDidShow);
-  Keyboard.addListener("keyboardDidHide", keyboardDidHide);
 
   useEffect(() => {
     const backAction = () => {
@@ -51,30 +52,20 @@ const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
     return () => backHandler.remove();
   }, [navigation]);
 
-  const send = () =>
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [
-          {
-            name: "authnavigator",
-          },
-        ],
-      }),
-    );
-
   const handleEmail = (val) => {
     setEmail(val);
+    setError(null);
   };
 
   const handleMessage = (val) => {
     setMessage(val);
+    setError(null);
   };
 
   const INPUT = {
     name: "message",
     value: message,
-    placeholder: "type your message here",
+    placeholder: "Type your message here",
     type: "message",
     action: handleMessage,
   };
@@ -82,27 +73,62 @@ const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
   const EMAIL = {
     name: "email",
     value: email,
-    placeholder: "email",
+    placeholder: "Your E-mail",
     type: "email",
     action: handleEmail,
   };
 
-  const enableSubmit = email.length > 6 && message.length > 0;
+  const enabled = email.length > 5 && message.length >= 10;
+
+  const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
+
+  const validateSubmit = () => {
+    if (!regexp.test(email)) {
+      setError("the e-mail you provided is invalid");
+      return false;
+    } else if (!message.length > 10) {
+      setError("the message has to be at least 10 characters long.");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const send = () => {
+    if (validateSubmit()) {
+      alert("CLOUD FUNCTION - SEND AUTHENTICATION BUG REPORT ");
+      //TODO cloud function - auth bug report
+
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            {
+              name: "authnavigator",
+            },
+          ],
+        }),
+      );
+    }
+
+    alert("CLOUD FUNCTION - SEND AUTHENTICATION BUG REPORT REPLY!!!! ");
+    //TODO cloud function - send auth bug report REPLY!!
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
       <Con isKeyboardUp={isKeyboardUp} filled={filled}>
         <Title2 theme={theme}>report a bug</Title2>
         <Con2>
+          <Title3>{`submit the form or send an e-mail to \n asdasd@dev.com`}</Title3>
+          <ErrorMessage>{error}</ErrorMessage>
           <LoginInput
-            //TODO email regexp
-            valid={email.length > 5}
+            valid={regexp.test(email)}
             input={EMAIL}
             handleFocus={handleFocus}
             focused={focus === "email"}
           />
           <LoginInput
-            //TODO email regexp
             valid={message.length > 5}
             input={INPUT}
             handleFocus={handleFocus}
@@ -110,8 +136,8 @@ const AUTH_CONTACT = React.memo(({ navigation, filled }) => {
             multiline={true}
           />
           <AUTH_BUTTON
-            disabled={!enableSubmit}
-            type={enableSubmit ? "active" : "basic"}
+            disabled={!enabled}
+            type={enabled ? "active" : "basic"}
             text={"send"}
             action={() => send()}
             align={"center"}

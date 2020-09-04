@@ -1,5 +1,5 @@
 import firestore from "@react-native-firebase/firestore";
-import { friendModel } from "./models";
+import { friendModel } from "./modelUser";
 
 const db = firestore();
 export const usersCollection = db.collection("users");

@@ -1,22 +1,8 @@
-import moment from "moment";
+const moment = require("moment");
+const { friendModel } = require("./modelFriend");
 
-export const friendModel = (key, img) => ({
-  key,
-  winsAgainst: 0,
-  lossesAgainst: 0,
-  bestMatchFriend: 0,
-  bestMatchAgainst: 0,
-  totalThrowsAgainst: 0,
-  totalThrowsFriend: 0,
-  totalScoreAgainst: 0,
-  totalScoreFriend: 0,
-  avgAgainst: 0,
-  avgFriend: 0,
-  img,
-});
-
-export const userModel = (username, email, photo) => ({
-  username,
+exports.userModel = (uid, email, photo) => ({
+  uid,
   email,
   registeredOn: moment().format("MMMM Do YYYY, h:mm a"),
   img: photo,
@@ -41,7 +27,7 @@ export const userModel = (username, email, photo) => ({
   friendRequestSent: [],
   settings: {
     p1: {
-      key: username,
+      key: null,
       img: "",
       gamesPlayed: 0,
       winningPercentage: 0,

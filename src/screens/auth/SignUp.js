@@ -5,25 +5,11 @@ import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import signUp from "../../_backend/auth/authSignUpEmail";
-import { Authcontext } from "../../contexts/AuthContext";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { GameContext } from "../../contexts/GameContext";
-import auth from "@react-native-firebase/auth";
 import { ErrorMessage } from "../contact/StyledContact";
 import { checkUsernameAvailability } from "../../_backend/db/crudCheck";
 
 const REGISTER = React.memo(({ navigation }) => {
-  const { dispatchSettings } = useContext(SettingsContext);
-  const { dispatchGameData } = useContext(GameContext);
-  const { dispatchUserData } = useContext(Authcontext);
-  const { dispatchTheme, theme } = useContext(ThemeContext);
-
-  const reducers = {
-    game: dispatchGameData,
-    settings: dispatchSettings,
-    user: dispatchUserData,
-    theme: dispatchTheme,
-  };
+  const { theme } = useContext(ThemeContext);
 
   const [username, setUsername] = useState("test_01");
   const [email, setEmail] = useState("test1@gmail.com");
@@ -32,8 +18,6 @@ const REGISTER = React.memo(({ navigation }) => {
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [focus, setFocus] = useState(undefined);
   const [isKeyboardUp, setIsKeyboardUp] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
   const keyboardDidHide = () => {
@@ -42,16 +26,6 @@ const REGISTER = React.memo(({ navigation }) => {
   };
 
   Keyboard.addListener("keyboardDidHide", keyboardDidHide);
-
-  auth().onAuthStateChanged((user) => {
-    setUser(user);
-  });
-
-  useEffect(() => {
-    if (user) {
-      setLoading(false);
-    }
-  }, [user]);
 
   const enableSignUp =
     [email, password, username, confirmPassword].filter(
@@ -126,6 +100,7 @@ const REGISTER = React.memo(({ navigation }) => {
   const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
 
   const validateForm = async () => {
+    const isUsernameTaken = (await checkUsernameAvailability(username)) > 0;
     if (!regexp.test(email)) {
       setError("the email you provided is invalid");
       return false;
@@ -138,7 +113,7 @@ const REGISTER = React.memo(({ navigation }) => {
     } else if (username.length > 16) {
       setError("username can't be longer than 16 characters");
       return false;
-    } else if (checkUsernameAvailability(username) > 0) {
+    } else if (isUsernameTaken) {
       setError(
         "username must be unique. the username you provided is already taken by another user",
       );
@@ -153,55 +128,50 @@ const REGISTER = React.memo(({ navigation }) => {
 
   const pressSignUp = async () => {
     if (await validateForm()) {
-      setLoading(true);
-      signUp(email, password, username, navigation, reducers);
+      signUp(email, password, username, navigation);
     }
   };
 
   return (
-    <>
-      {user && loading ? null : (
-        <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
-          <KeyboardAvoidingView
-            behavior={"padding"}
-            contentContainerStyle={{
-              flexGrow: 1,
-              justifyContent: "center",
-            }}
-            keyboardShouldPersistTaps={"always"}
-          >
-            <Form isKeyboardUp={isKeyboardUp} theme={theme}>
-              <ErrorMessage>{error}</ErrorMessage>
-              <Inputs>
-                {INPUTS.map((item) => (
-                  <TEXT_INPUT
-                    key={item.name}
-                    valid={item.value.length > 5}
-                    input={item}
-                    handleFocus={handleFocus}
-                    focused={focus === item.name}
-                  />
-                ))}
-                <AUTH_BUTTON
-                  type={enableSignUp ? "active" : "basic"}
-                  disabled={!enableSignUp}
-                  text={"Sign Up"}
-                  social={"exit-to-app"}
-                  action={() => pressSignUp()}
-                  align={"center"}
-                />
-                <AUTH_BUTTON
-                  text={"Already have an account?\ntap here to log in!"}
-                  action={() => navigation.navigate("login")}
-                  type={"ghost"}
-                  align={"center"}
-                />
-              </Inputs>
-            </Form>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
-      )}
-    </>
+    <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={"padding"}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+        }}
+        keyboardShouldPersistTaps={"always"}
+      >
+        <Form isKeyboardUp={isKeyboardUp} theme={theme}>
+          <ErrorMessage>{error}</ErrorMessage>
+          <Inputs>
+            {INPUTS.map((item) => (
+              <TEXT_INPUT
+                key={item.name}
+                valid={item.value.length > 5}
+                input={item}
+                handleFocus={handleFocus}
+                focused={focus === item.name}
+              />
+            ))}
+            <AUTH_BUTTON
+              type={enableSignUp ? "active" : "basic"}
+              disabled={!enableSignUp}
+              text={"Sign Up"}
+              social={"exit-to-app"}
+              action={() => pressSignUp()}
+              align={"center"}
+            />
+            <AUTH_BUTTON
+              text={"Already have an account?\ntap here to log in!"}
+              action={() => navigation.navigate("login")}
+              type={"ghost"}
+              align={"center"}
+            />
+          </Inputs>
+        </Form>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 });
 

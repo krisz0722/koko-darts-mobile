@@ -4,24 +4,14 @@ import { Form2, Inputs2 } from "./StyledAuth";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import LogIn from "../../_backend/auth/authLogIn";
+import LogIn from "../../_auth/authLogIn";
 import { Authcontext } from "../../contexts/AuthContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { GameContext } from "../../contexts/GameContext";
 import { ErrorMessage } from "../contact/StyledContact";
 
 const LOGIN = React.memo(({ navigation }) => {
-  const { dispatchGameData } = useContext(GameContext);
-  const { dispatchSettings } = useContext(SettingsContext);
-  const { dispatchUserData } = useContext(Authcontext);
-  const { dispatchTheme, theme } = useContext(ThemeContext);
-
-  const reducers = {
-    game: dispatchGameData,
-    settings: dispatchSettings,
-    user: dispatchUserData,
-    theme: dispatchTheme,
-  };
+  const { theme } = useContext(ThemeContext);
 
   const [password, setPassword] = useState("111111");
   const [email, setEmail] = useState("test1@gmail.com");
@@ -78,7 +68,7 @@ const LOGIN = React.memo(({ navigation }) => {
 
   const pressLogin = () => {
     if (validateForm()) {
-      LogIn(email, password, email, navigation, reducers);
+      LogIn(email, password, navigation);
     }
   };
 

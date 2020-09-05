@@ -1,7 +1,7 @@
 import {
   updatefriendRequestReceived,
   updatefriendRequestSent,
-} from "../../../_backend/db/crudUpdate";
+} from "../../../_db/crudUpdate";
 
 const updateRequests = (state, checkedProfiles) => {
   const { username, img, friendRequestSent } = state;

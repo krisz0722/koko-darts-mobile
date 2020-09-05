@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { InfoCon, Title } from "./StyledInGame";
-import { usersCollection } from "../../_backend/db/crudOther";
+import { usersCollection } from "../../_db/crudOther";
 import { Authcontext } from "../../contexts/AuthContext";
 import { CommonActions } from "@react-navigation/native";
 import { useIsFocused } from "@react-navigation/native";

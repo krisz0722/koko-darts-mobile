@@ -7,7 +7,7 @@ import { Authcontext } from "../../contexts/AuthContext";
 import HOME_INFO from "./Info";
 import FRIEND_REQUEST from "./FriendRequest";
 import LIST_UNFINISHED_MATCHES from "../../components/lists/ListUnfinishedMatches";
-import { checkOpponentsStatus } from "../../_backend/db/crudCheck";
+import { checkOpponentsStatus } from "../../_db/crudCheck";
 import updateAuthMatchesSave from "../../contexts/actions/authContext/UpdateMatchesSave";
 import { Header1 } from "../../components/headers/StyledHeaders";
 

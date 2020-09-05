@@ -1,4 +1,4 @@
-import { declineFriendRequest } from "../../../_backend/db/crudOther";
+import { declineFriendRequest } from "../../../_db/crudOther";
 
 const declineAuthRequest = (state, sender) => {
   const { username, friendRequestReceived } = state;

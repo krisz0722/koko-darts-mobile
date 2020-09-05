@@ -1,12 +1,10 @@
 import auth from "@react-native-firebase/auth";
-import createProfile from "../db/crudCreate";
-import { checkUsernameAvailability } from "../db/crudCheck";
 import throwError from "./authError";
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 import { GraphRequest, GraphRequestManager } from "react-native-fbsdk";
-import LogIn from "./authLogIn";
+import { firebase } from "@react-native-firebase/functions";
 
-const signUpFacebook = async (navigation, reducers) => {
+const signUpFacebook = async (navigation) => {
   try {
     navigation.navigate("loadingscreen", {
       text: "signing in with facebook...",
@@ -45,20 +43,35 @@ const signUpFacebook = async (navigation, reducers) => {
         console.log("Success fetching data: " + result);
         console.log(result);
         const { name } = result;
-        const userNameTaken = await checkUsernameAvailability(name);
 
         let username;
-        if (userNameTaken > 0) {
-          username = `${name} ${userNameTaken + 1}`;
-        } else {
-          username = name;
+        const getUsernameAvailability = await firebase
+          .functions()
+          .httpsCallable("getUsernameAvailability");
+
+        const usersWiththesameUsername = getUsernameAvailability({
+          name,
+        });
+        const usernameIndex = usersWiththesameUsername.length;
+
+        if (usernameIndex > 0) {
+          username = `${name} ${usernameIndex + 1}`;
+
+          const updateProfileWithUsername = firebase
+            .functions()
+            .httpsCallable("updateProfileWithUsername");
+
+          await updateProfileWithUsername({
+            username,
+          });
         }
-        await createProfile(null, username, "");
-        LogIn(null, null, username, navigation, reducers, facebookCredential);
+        navigation.navigate("loadingscreen", { text: "logging in..." });
+        await auth().signInWithCredential(facebookCredential);
       }
     };
     const infoRequest = new GraphRequest("/me", null, responseInfoCallback);
     await new GraphRequestManager().addRequest(infoRequest).start();
+    navigation.navigate("loadingscreen", { text: "loading profile..." });
   } catch (err) {
     console.log(err.code);
     console.log(err);

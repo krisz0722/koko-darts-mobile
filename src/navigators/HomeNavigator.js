@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import PROFILE from "../screens/profile/Profile";
 import PREGAME_SETTINGS from "../screens/settings/pregame/PreGameSettings";
 import STATS from "../screens/stats/Stats";
-import { usersCollection } from "../_backend/db/crudOther";
+import { usersCollection } from "../_db/crudOther";
 import { Authcontext } from "../contexts/AuthContext";
 import BOTTOM_TABBAR_CONTENT from "./HomeNavigatorContent";
 import PLAYER_IS_IN_GAME from "../screens/info/InGame";

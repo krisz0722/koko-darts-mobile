@@ -4,7 +4,7 @@ import { GameContext } from "../../contexts/GameContext";
 import { Authcontext } from "../../contexts/AuthContext";
 import moment from "moment";
 import updateAuthMatchesRematch from "../../contexts/actions/authContext/UpdateMatchesRematch";
-import { updateStatus } from "../../_backend/db/crudUpdate";
+import { updateStatus } from "../../_db/crudUpdate";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
 import ENDGAME_PLAYER from "./EndGamePlayers";

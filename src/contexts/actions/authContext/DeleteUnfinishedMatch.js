@@ -1,4 +1,4 @@
-import { updateUnfinishedMatches } from "../../../_backend/db/crudUpdateUnfinishedMatches";
+import { updateUnfinishedMatches } from "../../../_db/crudUpdateUnfinishedMatches";
 
 const deleteMatch = (
   gameData,

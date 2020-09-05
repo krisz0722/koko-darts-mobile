@@ -1,5 +1,5 @@
-import { updateProfile } from "../../../_backend/db/crudUpdate";
-import { getProfileByUsername } from "../../../_backend/db/crudGet";
+import { updateProfile } from "../../../_db/crudUpdate";
+import { getProfileByUsername } from "../../../_db/crudGet";
 
 const updateAuthProfile = async (
   p1,

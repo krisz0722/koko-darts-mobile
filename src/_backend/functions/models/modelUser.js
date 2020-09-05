@@ -1,8 +1,9 @@
 const moment = require("moment");
 const { friendModel } = require("./modelFriend");
 
-exports.userModel = (uid, email, photo) => ({
+exports.userModel = (uid, username, email, photo) => ({
   uid,
+  username,
   email,
   registeredOn: moment().format("MMMM Do YYYY, h:mm a"),
   img: photo,

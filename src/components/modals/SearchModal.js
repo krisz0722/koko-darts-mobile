@@ -4,7 +4,7 @@ import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import LIST_PROFILES from "../lists/ListProfiles";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { getUsers } from "../../_backend/db/crudGet";
+import { getUsers } from "../../_db/crudGet";
 import { Authcontext } from "../../contexts/AuthContext";
 import updateRequests from "../../contexts/actions/authContext/UpdateRequests";
 import ACTIVITY_INDICATOR from "./Activityindicator";

@@ -19,7 +19,14 @@ const signUp = async (email, password, username, navigation) => {
     });
 
     //login user
+    navigation.navigate("loadingscreen", { text: "logging in..." });
     await auth().signInWithEmailAndPassword(email, password);
+
+    //loading app data
+    navigation.navigate("loadingscreen", {
+      load: true,
+      text: "loading profile...",
+    });
   } catch (err) {
     console.log(err);
     return throwError(err.code, "signUp", navigation);

@@ -10,7 +10,7 @@ import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import PREVIEW from "../Preview";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { Authcontext } from "../../../contexts/AuthContext";
-import { updateSettings } from "../../../_backend/db/crudUpdate";
+import { updateSettings } from "../../../_db/crudUpdate";
 
 const SETTINGS = React.memo(() => {
   const {

@@ -7,16 +7,53 @@ import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
 import { useIsFocused } from "@react-navigation/native";
 import { Loading, Safe } from "./StyledLoadingScreen";
+import { GameContext } from "../../contexts/GameContext";
+import { SettingsContext } from "../../contexts/SettingsContext";
+import { Authcontext } from "../../contexts/AuthContext";
+import auth from "@react-native-firebase/auth";
+import loadAppData from "../../_auth/authLoadAppData";
 
-const LOADING_SCREEN = React.memo(({ filled }) => {
+const LOADING_SCREEN = React.memo(({ navigation, filled }) => {
   const {
     theme,
+    dispatchTheme,
     themeContext: { background },
   } = useContext(ThemeContext);
-  const params = useRoute().params;
-  const text = params ? params.text : "NEMJO";
+  const { dispatchGameData } = useContext(GameContext);
+  const { dispatchSettings } = useContext(SettingsContext);
+  const { dispatchUserData } = useContext(Authcontext);
+
+  const reducers = {
+    theme: dispatchTheme,
+    game: dispatchGameData,
+    settings: dispatchSettings,
+    user: dispatchUserData,
+  };
 
   const [visible, setVisible] = useState(false);
+
+  const params = useRoute().params;
+  console.log("PARAMS", params);
+
+  useEffect(() => {
+    if (params.load) {
+      (async () => {
+        const user = auth().currentUser;
+        console.log("USUUUUSER", user);
+        await loadAppData(user.uid, navigation, reducers);
+      })();
+    }
+  }, [navigation, params.load, reducers]);
+
+  const text = params ? params.text : "NEMJO";
+
+  // auth().onAuthStateChanged(async (user) => {
+  //   if (user) {
+  //     console.log("UUUUUSEEEER", user);
+  //   } else {
+  //     console.log("logged out!!!!");
+  //   }
+  // });
 
   const isFocused = useIsFocused();
 

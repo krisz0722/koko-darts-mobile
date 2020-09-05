@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { Form, Inputs } from "./StyledAuth";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import signUp from "../../_backend/auth/authSignUpEmail";
+import signUp from "../../_auth/authSignUpEmail";
 import { ErrorMessage } from "../contact/StyledContact";
-import { checkUsernameAvailability } from "../../_backend/db/crudCheck";
+import { firebase } from "@react-native-firebase/functions";
 
 const REGISTER = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -100,7 +100,15 @@ const REGISTER = React.memo(({ navigation }) => {
   const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
 
   const validateForm = async () => {
-    const isUsernameTaken = (await checkUsernameAvailability(username)) > 0;
+    const getUsernameAvailability = await firebase
+      .functions()
+      .httpsCallable("getUsernameAvailability");
+
+    const usersWiththesameUsername = getUsernameAvailability({
+      username,
+    });
+    const usernameIndex = usersWiththesameUsername.length;
+    const isUsernameTaken = usernameIndex > 0;
     if (!regexp.test(email)) {
       setError("the email you provided is invalid");
       return false;

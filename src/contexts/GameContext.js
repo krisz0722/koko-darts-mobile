@@ -135,7 +135,7 @@ export const GameContextProvider = (props) => {
           return state;
       }
     },
-    [THEMES, default_settings],
+    [default_settings],
   );
 
   const [gameData, dispatchGameData] = useReducer(

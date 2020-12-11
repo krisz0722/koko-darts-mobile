@@ -7,6 +7,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import signUp from "../../_auth/authSignUpEmail";
 import { ErrorMessage } from "../contact/StyledContact";
 import { firebase } from "@react-native-firebase/functions";
+const functions = firebase.app().functions("europe-west3");
 
 const REGISTER = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -100,15 +101,22 @@ const REGISTER = React.memo(({ navigation }) => {
   const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
 
   const validateForm = async () => {
-    const getUsernameAvailability = await firebase
-      .functions()
-      .httpsCallable("getUsernameAvailability");
+    const getUsernameAvailability = functions.httpsCallable(
+      "getUsernameAvailability",
+    );
 
-    const usersWiththesameUsername = getUsernameAvailability({
+    const usersWiththesameUsername = await getUsernameAvailability({
       username,
-    });
-    const usernameIndex = usersWiththesameUsername.length;
-    const isUsernameTaken = usernameIndex > 0;
+    })
+      .then((result) => {
+        console.log(result);
+        result.data;
+      })
+      .catch((err) => console.log(err));
+
+    console.log(usersWiththesameUsername);
+
+    const isUsernameTaken = usersWiththesameUsername > 0;
     if (!regexp.test(email)) {
       setError("the email you provided is invalid");
       return false;
@@ -134,11 +142,14 @@ const REGISTER = React.memo(({ navigation }) => {
     }
   };
 
-  const pressSignUp = async () => {
-    if (await validateForm()) {
-      signUp(email, password, username, navigation);
-    }
+  const pressSignUp = () => {
+    // if (validateForm()) {
+    console.log("EMAILESAGS", email);
+    signUp(email, password, username, navigation);
+    // }
   };
+
+  console.log("EMAIL", email);
 
   return (
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>

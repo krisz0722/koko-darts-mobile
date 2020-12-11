@@ -11,11 +11,16 @@ const loadAppData = async (uid, navigation, reducers) => {
   try {
     const getUserData = functions.httpsCallable("getUserData");
 
-    const userData = getUserData({
+    const userData = await getUserData({
       uid,
-    }).then(() => console.log("valami"));
-    console.log("GOT USERDATA");
-    const lastMatch = userData.matches[0];
+    }).then((result) => {
+      console.log(result.code, result.message);
+      return result.data.data;
+    });
+
+    console.log("USERDATA", userData);
+
+    const lastMatch = userData.matches ? userData.matches[0] : null;
     const lastOpponent = lastMatch ? lastMatch.opponent : null;
     const img = auth().currentUser._user.photoURL;
 
@@ -32,6 +37,7 @@ const loadAppData = async (uid, navigation, reducers) => {
     };
     const userSettings = getSettings();
     const userMatches = userData.matches;
+
     await user({
       type: "CREATE_PROFILE",
       value: { ...userData, img },
@@ -71,7 +77,6 @@ const loadAppData = async (uid, navigation, reducers) => {
     }
   } catch (err) {
     console.log(err);
-    console.log(err.code);
     return throwError(err.code, "signUp", navigation);
   }
 };

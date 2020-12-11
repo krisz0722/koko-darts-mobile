@@ -1,22 +1,40 @@
 import auth from "@react-native-firebase/auth";
 import { firebase } from "@react-native-firebase/functions";
 import throwError from "./authError";
+const functions = firebase.app().functions("europe-west3");
 
 const signUp = async (email, password, username, navigation) => {
-  navigation.navigate("loadingscreen", { text: "signing up with email..." });
   try {
+    // navigation.navigate("loadingscreen", { text: "signing up with email..." });
     //sign up user
+    console.log("SERGSDHRJHRTJN", email, username, password);
     await auth().createUserWithEmailAndPassword(email, password);
-    console.log("sign up successful");
+    // const user = auth().currentUser;
+
+    // const { uid, displayName, photoURL } = user;
+    console.log("signed up successfully");
+
+    // const createProfile = functions.httpsCallable("createProfile");
+    //
+    // createProfile({
+    //   uid,
+    //   displayName,
+    //   email,
+    //   photoURL,
+    // })
+    //   .then((result) => result)
+    //   .catch((err) => console.log(err));
 
     //update profile with username
-    const updateProfileWithUsername = await firebase
-      .functions()
-      .httpsCallable("updateProfileWithUsername");
+    const updateProfileWithUsername = functions.httpsCallable(
+      "updateProfileWithUsername",
+    );
 
     updateProfileWithUsername({
       username,
-    });
+    })
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
 
     //login user
     navigation.navigate("loadingscreen", { text: "logging in..." });

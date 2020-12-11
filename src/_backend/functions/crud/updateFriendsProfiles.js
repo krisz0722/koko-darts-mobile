@@ -58,6 +58,9 @@ exports.updateFriendsProfiles = (arr) => {
       });
     return updateProfiles();
   } catch (err) {
-    console.log(err);
+    console.log(
+      "ERROR while updating user's friends profiles after user deletion:",
+      err,
+    );
   }
 };

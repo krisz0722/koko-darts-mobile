@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { View, ScrollView } from "react-native";
 import { FlexCol, FlexRowAround, Window } from "../../styles/css_mixins";
 import { Header2, Header3 } from "../headers/StyledHeaders";

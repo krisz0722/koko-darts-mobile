@@ -1,5 +1,5 @@
 import { Animated } from "react-native";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { Window } from "../../styles/css_mixins";
 
 export const GameWindow = styled(Animated.View)`

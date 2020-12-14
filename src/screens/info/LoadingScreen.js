@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { Modal, ActivityIndicator } from "react-native";
 import { ModalContainerLoading } from "../../components/modals/StyledModal";
 import { useRoute } from "@react-navigation/native";
@@ -11,7 +11,7 @@ import { GameContext } from "../../contexts/GameContext";
 import { SettingsContext } from "../../contexts/SettingsContext";
 import { Authcontext } from "../../contexts/AuthContext";
 import auth from "@react-native-firebase/auth";
-import loadAppData from "../../_auth/authLoadAppData";
+import loadAppData from "../../utils/auth/authLoadAppData";
 
 const LOADING_SCREEN = React.memo(({ navigation, filled }) => {
   const {
@@ -23,37 +23,35 @@ const LOADING_SCREEN = React.memo(({ navigation, filled }) => {
   const { dispatchSettings } = useContext(SettingsContext);
   const { dispatchUserData } = useContext(Authcontext);
 
-  const reducers = {
-    theme: dispatchTheme,
-    game: dispatchGameData,
-    settings: dispatchSettings,
-    user: dispatchUserData,
-  };
-
   const [visible, setVisible] = useState(false);
 
   const params = useRoute().params;
-  console.log("PARAMS", params);
+
+  const reducers = useCallback(
+    () => ({
+      theme: dispatchTheme,
+      game: dispatchGameData,
+      settings: dispatchSettings,
+      user: dispatchUserData,
+    }),
+    [dispatchGameData, dispatchSettings, dispatchTheme, dispatchUserData],
+  );
 
   useEffect(() => {
     if (params.load) {
       (async () => {
-        const user = auth().currentUser;
-        console.log("USUUUUSER", user);
-        await loadAppData(user.uid, navigation, reducers);
+        await loadAppData(params.userData, navigation, reducers);
       })();
     }
-  }, [navigation, params.load, reducers]);
+  }, [params.userData, reducers, navigation, params.load]);
 
   const text = params ? params.text : "NEMJO";
 
-  // auth().onAuthStateChanged(async (user) => {
-  //   if (user) {
-  //     console.log("UUUUUSEEEER", user);
-  //   } else {
-  //     console.log("logged out!!!!");
-  //   }
-  // });
+  auth().onAuthStateChanged(async (user) => {
+    if (user) {
+    } else {
+    }
+  });
 
   const isFocused = useIsFocused();
 

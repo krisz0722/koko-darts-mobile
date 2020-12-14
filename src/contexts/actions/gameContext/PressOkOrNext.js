@@ -1,5 +1,5 @@
 import nextValidation from "../inputContext/nextValidation";
-import { VALIDSCORES } from "../../../calc/scores";
+import { VALIDSCORES } from "../../../utils/calc/scores";
 
 const dispatchOkOrNext = (
   gameData,

@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { Text } from "react-native";
 import { BasicText, BasicTextBold, FlexRow } from "../../styles/css_mixins";
 
 export const TitleBig = styled(Text)`
-  ${BasicTextBold}
+  ${BasicTextBold};
   color: ${({ theme }) => theme.text};
   font-size: 50;
 `;
 
 export const Header1 = styled(Text)`
-  ${BasicTextBold}
+  ${BasicTextBold};
   color: ${({ theme }) => theme.text};
   font-size: ${({ theme }) => theme.fonts.header1};
 `;

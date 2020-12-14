@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { FlexRow, FlexRowEnd, Window } from "../../styles/css_mixins";
 import { Image, View } from "react-native";
 import { P2_Bold } from "../../components/headers/StyledHeaders";

@@ -21,9 +21,9 @@ const OPTIONS_LAYOUT = React.memo((props) => {
       <SETTINGS_HEADER inGameTheme={themeToUse} text={"layout"} />
 
       <Div theme={themeToUse}>
-        {DATA.map((item) => (
+        {DATA.map((item, i) => (
           <OPTION_BUTTON
-            key={item}
+            key={i}
             value={item}
             active={layout === item}
             length={DATA.length}

@@ -1,5 +1,5 @@
 import React from "react";
-import { CHECKOUTS } from "../../../calc/scores";
+import { CHECKOUTS } from "../../../utils/calc/scores";
 import { Checkout_Row, Checkout_Text } from "./StyledClassicCheckoutsDiv";
 
 const PLAYER_CHECKOUTS = React.memo(({ playerData, theme }) => {
@@ -11,13 +11,13 @@ const PLAYER_CHECKOUTS = React.memo(({ playerData, theme }) => {
   return (
     <>
       {checkouts
-        ? checkouts.map((co) => {
+        ? checkouts.map((co, i) => {
             const r1 = co.rounder1.name;
             const r2 = co.rounder2.name;
             const d = co.double.name;
 
             return (
-              <Checkout_Row key={checkouts.indexOf(co)} isCheckout={onCheckout}>
+              <Checkout_Row key={i} isCheckout={onCheckout}>
                 {r1 !== "0" ? (
                   <Checkout_Text theme={theme}>{r1}</Checkout_Text>
                 ) : null}

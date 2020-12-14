@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { Flex, Window } from "../../styles/css_mixins";
 import IconThreeDart from "../../../assets/iconThreeDart";
 import { ThemeContext } from "../../contexts/ThemeContext";

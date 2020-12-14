@@ -24,8 +24,6 @@ export const SettingsContextProvider = (props) => {
 
   const [settings, dispatchSettings] = useReducer(settingsReducer, {});
 
-  console.log("SETTINGSCONTEXT", settings);
-
   return (
     <SettingsContext.Provider value={{ settings, dispatchSettings }}>
       {props.children}

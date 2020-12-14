@@ -4,10 +4,7 @@ import { Form2, Inputs2 } from "./StyledAuth";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import LogIn from "../../_auth/authLogIn";
-import { Authcontext } from "../../contexts/AuthContext";
-import { SettingsContext } from "../../contexts/SettingsContext";
-import { GameContext } from "../../contexts/GameContext";
+import LogIn from "../../utils/auth/authLogIn";
 import { ErrorMessage } from "../contact/StyledContact";
 
 const LOGIN = React.memo(({ navigation }) => {
@@ -66,9 +63,9 @@ const LOGIN = React.memo(({ navigation }) => {
     }
   };
 
-  const pressLogin = () => {
+  const pressLogin = async () => {
     if (validateForm()) {
-      LogIn(email, password, navigation);
+      await LogIn(email, password, navigation);
     }
   };
 
@@ -86,22 +83,21 @@ const LOGIN = React.memo(({ navigation }) => {
           <Form2 theme={theme}>
             <ErrorMessage>{error}</ErrorMessage>
             <Inputs2>
-              {INPUTS.map((item) => {
-                return (
-                  <TEXT_INPUT
-                    key={item.name}
-                    valid={item.value.length > 5}
-                    value={item.value}
-                    input={item}
-                    handleFocus={handleFocus}
-                    focused={focus === item.name}
-                  />
-                );
-              })}
+              {INPUTS.map((item, i) => (
+                <TEXT_INPUT
+                  key={i}
+                  valid={item.value.length > 5}
+                  value={item.value}
+                  input={item}
+                  handleFocus={handleFocus}
+                  focused={focus === item.name}
+                />
+              ))}
               <AUTH_BUTTON
                 type={enabled ? "active" : "basic"}
                 disabled={!enabled}
                 text={"log in"}
+                // action={() => pressLogin()}
                 action={() => pressLogin()}
                 align={"center"}
                 social={"mail"}

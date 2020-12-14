@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import React from "react";
 import { Header3, Header2, Header4 } from "../headers/StyledHeaders";
 

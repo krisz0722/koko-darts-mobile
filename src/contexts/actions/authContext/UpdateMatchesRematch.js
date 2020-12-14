@@ -1,7 +1,13 @@
-import { updateUnfinishedMatches } from "../../../_db/crudUpdateUnfinishedMatches";
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
+import navigatingIn from "../../../utils/navigatingIn";
+import navigatingOut from "../../../utils/navigatingOut";
+import fetchPost from "../../../utils/fetchPost";
 
-const updateAuthMatchesRematch = (rematch, navigation, navigationType) => {
+const updateAuthMatchesRematch = async (
+  rematch,
+  navigation,
+  navigationType,
+) => {
   const {
     username,
     activePlayer,
@@ -42,18 +48,19 @@ const updateAuthMatchesRematch = (rematch, navigation, navigationType) => {
     };
   };
 
-  updateUnfinishedMatches(
-    activePlayer,
-    inactivePlayer,
-    matchToSave(activePlayer),
-    matchToSave(inactivePlayer),
-    "add",
-    key,
-    true,
-    navigation,
-    navigationType,
-    rematch,
-  );
+  navigatingIn(navigation, navigationType);
+
+  await fetchPost("api/updateunfinishedmatches", {
+    p1: activePlayer,
+    p2: inactivePlayer,
+    p1Match: matchToSave(activePlayer),
+    p2Match: matchToSave(inactivePlayer),
+    type: "add",
+    key: key,
+    inGame: true,
+    gameData: rematch,
+  });
+  navigatingOut(navigation, navigationType, rematch);
 };
 
 export default updateAuthMatchesRematch;

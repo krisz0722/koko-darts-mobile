@@ -35,9 +35,9 @@ const PROFILE_TABBAR_CONTENT = React.memo(({ navigation, state }) => {
 
   return (
     <TopNavBar position={"top"} theme={theme}>
-      {TABBAR_ITEMS.map((item) => (
+      {TABBAR_ITEMS.map((item, i) => (
         <NAV_BUTTON
-          key={item.route}
+          key={i}
           length={3}
           direction={"row"}
           text={item.route}

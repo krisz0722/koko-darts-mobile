@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { FlexCol } from "../../styles/css_mixins";
 import { Header2, Header3, Header4 } from "../headers/StyledHeaders";
 
@@ -37,15 +37,6 @@ const LOGIN_BUTTON_TEXT = React.memo(
     theme,
     align = "left",
   }) => {
-    console.log(
-      text,
-      size,
-      type,
-      icon,
-      social,
-      theme.buttonType[type].color,
-      align,
-    );
     switch (size) {
       case "small":
         return (

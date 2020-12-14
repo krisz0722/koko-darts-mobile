@@ -29,9 +29,9 @@ const DRAWER_CONTENT = React.memo(
 
     return (
       <DrawerContent theme={theme} inap={inactivePlayer}>
-        {DRAWER_ITEMS.map((item) => (
+        {DRAWER_ITEMS.map((item, i) => (
           <NAV_BUTTON
-            key={item.route}
+            key={i}
             color={"drawer"}
             height={10}
             length={3}

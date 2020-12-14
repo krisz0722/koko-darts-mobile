@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, TouchableHighlight } from "react-native";
-import styled from "styled-components/native/dist/styled-components.native.esm";
+import styled from "styled-components/native";
 import { BasicTextBold, FlexRowAround } from "../../styles/css_mixins";
 import { useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";

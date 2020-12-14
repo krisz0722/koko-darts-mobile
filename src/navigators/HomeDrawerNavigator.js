@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Button, View, Text, BackHandler } from "react-native";
 import { GameContext } from "../contexts/GameContext";
@@ -6,8 +6,8 @@ import { Authcontext } from "../contexts/AuthContext";
 import HOME_DRAWER_CONTENT from "./HomeDrawerContent";
 import HOMENAVIGATOR from "./HomeNavigator";
 import { ThemeContext } from "../contexts/ThemeContext";
-import logOut from "../_auth/authLogOut";
-import deleteAccount from "../_auth/authDelete";
+import logOut from "../utils/auth/authLogOut";
+import deleteAccount from "../utils/auth/authDelete";
 import DELETE_ALERT from "../components/modals/DeleteAlert";
 import LOADING_SCREEN from "../screens/info/LoadingScreen";
 import CONTACT from "../screens/contact/Contact";
@@ -54,37 +54,18 @@ const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
     setExitModal(!exitModal);
   };
 
-  const backAction = () => {
-    setExitModal(true);
-    return true;
-  };
-
-  const backHandler = BackHandler.addEventListener(
-    "hardwareBackPress",
-    backAction,
-  );
-
   const handleDelete = useCallback(async () => {
-    await deleteAccount(username, navigation);
+    await deleteAccount(navigation);
+    setDeleteModal(false);
     dispatchSettings({ type: "RESET" });
     dispatchGameData({ type: "RESET" });
     dispatchUserData({ type: "DELETING_PROFILE" });
-  }, [
-    dispatchSettings,
-    dispatchUserData,
-    dispatchGameData,
-    username,
-    navigation,
-  ]);
+  }, [dispatchSettings, dispatchUserData, dispatchGameData, navigation]);
 
   const cancelDelete = useCallback(() => {
     navigation.navigate("home");
     setDeleteModal(false);
   }, [navigation]);
-
-  useEffect(() => {
-    return () => backHandler.remove();
-  }, [backHandler]);
 
   return (
     <>

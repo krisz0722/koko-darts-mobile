@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import {
   BorderVertical,
   FlexCol,
@@ -11,8 +11,8 @@ import { Header1, P2 } from "../../components/headers/StyledHeaders";
 export const HeaderCon = styled(View)`
   ${FlexCol};
   height: 12.5%;
-  ${BorderVertical(({ theme }) => theme.borderColor)}
-  border-bottom-width:0;
+  ${BorderVertical(({ theme }) => theme.borderColor)};
+  border-bottom-width: 0;
 `;
 
 export const Info = styled(View)`

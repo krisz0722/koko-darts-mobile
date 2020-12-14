@@ -10,7 +10,7 @@ import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import PREVIEW from "../Preview";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { Authcontext } from "../../../contexts/AuthContext";
-import { updateSettings } from "../../../_db/crudUpdate";
+import fetchPost from "../../../utils/fetchPost";
 
 const SETTINGS = React.memo(() => {
   const {
@@ -127,10 +127,10 @@ const SETTINGS = React.memo(() => {
         type: "SAVE_SETTINGS",
         value: newSettings,
       });
-      await updateSettings(username, newSettings);
+      await fetchPost("api/updatesettings", { username, newSettings });
     } catch (err) {
       console.log(err);
-      alert("ERROR WHILE SAVING SETTINGS: ", err);
+      alert("ERROR WHILE SAVING SETTINGS: " + err);
     }
   }, [
     username,
@@ -148,8 +148,6 @@ const SETTINGS = React.memo(() => {
     opacity,
     animation,
   ]);
-
-  console.log("RENDERSETTINS");
 
   return (
     <>

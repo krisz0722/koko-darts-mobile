@@ -9,22 +9,39 @@ import {
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Authcontext } from "../../contexts/AuthContext";
-import acceptAuthRequest from "../../contexts/actions/authContext/AcceptRequest";
-import declineAuthRequest from "../../contexts/actions/authContext/DeclineRequest";
+import fetchPost from "../../utils/fetchPost";
 
 const FRIEND_REQUEST = React.memo(({}) => {
   const { theme } = useContext(ThemeContext);
   const {
     userData,
+    dispatchUserData,
     userData: { friendRequestReceived },
   } = useContext(Authcontext);
 
+  const sender = friendRequestReceived[0];
+
   const accept = async () => {
-    await acceptAuthRequest(userData, friendRequestReceived[0]);
+    const index = friendRequestReceived.indexOf(sender);
+    friendRequestReceived.splice(index, 1);
+    const updatedUserData = await fetchPost("api/acceptrequest", {
+      acceptor: userData,
+      friendRequestReceived,
+      sender,
+    });
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
   };
 
   const decline = async () => {
-    await declineAuthRequest(userData, friendRequestReceived[0]);
+    const index = friendRequestReceived.indexOf(sender);
+    friendRequestReceived.splice(index, 1);
+
+    const updatedUserData = await fetchPost("api/declinerequest", {
+      acceptor: userData,
+      friendRequestReceived,
+      sender,
+    });
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
   };
 
   return (

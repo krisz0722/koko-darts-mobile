@@ -1,5 +1,6 @@
-import { updateProfile } from "../../../_db/crudUpdate";
-import { getProfileByUsername } from "../../../_db/crudGet";
+import navigatingIn from "../../../utils/navigatingIn";
+import navigatingOut from "../../../utils/navigatingOut";
+import fetchPost from "../../../utils/fetchPost";
 
 const updateAuthProfile = async (
   p1,
@@ -19,7 +20,9 @@ const updateAuthProfile = async (
       key,
       initializedBy,
     } = gameData;
-    const userProfile = await getProfileByUsername(p);
+
+    const userProfile = await fetchPost("api/getuserbyusername", { player: p });
+
     const { matches, unfinishedMatches, friends, userOverall } = userProfile;
     const player = p === p1.key ? p1.key : p2.key;
     const opponent = p === p1.key ? p2.key : p1.key;
@@ -66,7 +69,6 @@ const updateAuthProfile = async (
     };
 
     const updateUserUnfinishedMatches = () => {
-      console.log("UNFINISHED MATCHS BEFORE", unfinishedMatches);
       const newUnfinishedMatches = unfinishedMatches.filter(
         (item) => item.key !== key,
       );
@@ -160,17 +162,19 @@ const updateAuthProfile = async (
         bestMatch,
       };
     };
-    updateProfile(
-      p,
-      updateUserMatches(),
-      updateUserUnfinishedMatches(),
-      updateUserFriends(),
-      updateUserOverall(),
+
+    navigatingIn(navigation, navigationType);
+
+    await fetchPost("api/updateprofile", {
+      username: p,
+      matches: updateUserMatches(),
+      unfinishedMatches: updateUserUnfinishedMatches(),
+      friends: updateUserFriends(),
+      userOverall: updateUserOverall(),
       key,
       inGame,
-      navigation,
-      navigationType,
-    );
+    });
+    navigatingOut(navigation, navigationType);
   };
 
   update(p1);

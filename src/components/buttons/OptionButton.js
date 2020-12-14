@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { View, TouchableHighlight } from "react-native";
 import { FlexCol, FlexRow } from "../../styles/css_mixins";
 import Icon from "react-native-vector-icons/MaterialIcons";

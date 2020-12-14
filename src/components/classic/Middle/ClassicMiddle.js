@@ -108,32 +108,30 @@ const CLASSIC_MIDDLE = React.memo((props) => {
 
   return (
     <ClassicMiddle>
-      {BUTTONS_MIDDLE.map((item) => {
-        return (
-          <React.Fragment key={item.value}>
-            {item.action === null ? (
-              <PLAYER_INPUT_INFO
-                animation={animation}
-                theme={theme}
-                activePlayer={activePlayer}
-                inactivePlayer={inactivePlayer}
-                value={item.value}
-                player={item.value}
-              />
-            ) : (
-              <FUNCTION_BUTTON
-                value={item.value}
-                action={item.action}
-                icon={item.icon}
-                animation={animation}
-                theme={theme}
-                activePlayer={activePlayer}
-                inactivePlayer={inactivePlayer}
-              />
-            )}
-          </React.Fragment>
-        );
-      })}
+      {BUTTONS_MIDDLE.map((item, i) => (
+        <React.Fragment key={i}>
+          {item.action === null ? (
+            <PLAYER_INPUT_INFO
+              animation={animation}
+              theme={theme}
+              activePlayer={activePlayer}
+              inactivePlayer={inactivePlayer}
+              value={item.value}
+              player={item.value}
+            />
+          ) : (
+            <FUNCTION_BUTTON
+              value={item.value}
+              action={item.action}
+              icon={item.icon}
+              animation={animation}
+              theme={theme}
+              activePlayer={activePlayer}
+              inactivePlayer={inactivePlayer}
+            />
+          )}
+        </React.Fragment>
+      ))}
     </ClassicMiddle>
   );
 });

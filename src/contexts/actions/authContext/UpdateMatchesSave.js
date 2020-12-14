@@ -1,12 +1,6 @@
-import { updateUnfinishedMatches } from "../../../_db/crudUpdateUnfinishedMatches";
+import fetchPost from "../../../utils/fetchPost";
 
-const updateAuthMatchesSave = (
-  gameData,
-  username,
-  inGame,
-  navigation,
-  navigationType,
-) => {
+const updateAuthMatchesSave = async (gameData, username, inGame) => {
   const {
     key,
     settings: { p1, p2 },
@@ -21,18 +15,16 @@ const updateAuthMatchesSave = (
     };
   };
 
-  updateUnfinishedMatches(
+  await fetchPost("api/updateunfinishedmatches", {
     p1,
     p2,
-    matchToSave(p1),
-    matchToSave(p2),
-    "save",
+    p1Match: matchToSave(p1),
+    p2Match: matchToSave(p2),
+    type: "save",
     key,
     inGame,
-    navigation,
-    navigationType,
-    gameData,
-  );
+    gameData: null,
+  });
 };
 
 export default updateAuthMatchesSave;

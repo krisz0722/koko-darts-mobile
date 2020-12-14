@@ -23,9 +23,9 @@ const OPTIONS_COLOR = React.memo(({ toggleTheme, ingame = false }) => {
         action={() => alert("action")}
       />
       <Div theme={themeToUse}>
-        {DATA.map((item) => (
+        {DATA.map((item, i) => (
           <OPTION_BUTTON
-            key={item}
+            key={i}
             value={item}
             active={themeToUse.name === item}
             length={DATA.length}

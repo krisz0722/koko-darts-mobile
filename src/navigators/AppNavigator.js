@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components/native";
 import { AppBackground } from "../../App";
 import { ThemeContext } from "../contexts/ThemeContext";
 import transitionContrast from "../styles/navTransitionContrast";

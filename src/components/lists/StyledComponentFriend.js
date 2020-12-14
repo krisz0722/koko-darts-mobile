@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { FlexRowBetween, Window } from "../../styles/css_mixins";
 import { P2 } from "../headers/StyledHeaders";
 

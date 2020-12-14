@@ -1,5 +1,5 @@
 import { Row2 } from "../home/StyledSettings";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { View } from "react-native";
 import { FlexColAround, FlexRow, Window } from "../../../styles/css_mixins";
 import { P2 } from "../../../components/headers/StyledHeaders";

@@ -3,8 +3,8 @@ import ShapeThrow from "../../../assets/shapeThrow";
 import { View_Headers, View_Shape, View_Buttons } from "./StyledWelcome";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
-import signUpGoogle from "../../_auth/authSignInGoogle";
-import signUpFacebook from "../../_auth/authSignUpFacebook";
+import signUpGoogle from "../../utils/auth/authSignInGoogle";
+import signUpFacebook from "../../utils/auth/authSignUpFacebook";
 import { SafeAreaView } from "react-native";
 
 const WELCOME = React.memo(({ navigation }) => {

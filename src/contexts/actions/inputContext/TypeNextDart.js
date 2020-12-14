@@ -1,4 +1,5 @@
-import { SCORINGDARTS } from "calc/const";
+import { SCORINGDARTS } from "../../../utils/calc/const";
+
 const typeNextDart = (state) => {
   let { activePlayer, inputByDart, whichDart, inputByDartArray } = state;
 

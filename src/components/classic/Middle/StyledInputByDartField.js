@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { Animated } from "react-native";
 import { BasicTextBold, FlexRowAround } from "../../../styles/css_mixins";
 
 export const Container = styled(Animated.View)`
-  ${FlexRowAround}
+  ${FlexRowAround};
   width: ${() => 100 / 3 + "%"};
-  padding:2%;
-  height:50%;  
+  padding: 2%;
+  height: 50%;
   background-color: ${({ theme }) => theme.bgGreen};
   border-color: ${({ theme, ap }) => theme.game[ap + "Border"]};
   border-width: ${({ theme }) => theme.borderWidth};

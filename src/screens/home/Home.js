@@ -7,9 +7,9 @@ import { Authcontext } from "../../contexts/AuthContext";
 import HOME_INFO from "./Info";
 import FRIEND_REQUEST from "./FriendRequest";
 import LIST_UNFINISHED_MATCHES from "../../components/lists/ListUnfinishedMatches";
-import { checkOpponentsStatus } from "../../_db/crudCheck";
 import updateAuthMatchesSave from "../../contexts/actions/authContext/UpdateMatchesSave";
 import { Header1 } from "../../components/headers/StyledHeaders";
+import fetchPost from "../../utils/fetchPost";
 
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -31,15 +31,12 @@ const HOME = React.memo(({ navigation }) => {
 
   const handleContinueGame = async () => {
     const gameData = { ...gameToContinue, initializedBy: username };
-    const opponentStatus = await checkOpponentsStatus(gameData.opponent);
+    const opponentStatus = await fetchPost("api/checkopponent", {
+      opponent: gameData.opponent,
+    });
+
     if (!opponentStatus) {
-      await updateAuthMatchesSave(
-        gameData,
-        username,
-        true,
-        navigation,
-        "continue",
-      );
+      await updateAuthMatchesSave(gameData, username, true, "continue");
     } else {
       alert("Your opponent is in another match at the moment");
     }

@@ -4,10 +4,8 @@ import { Form, Inputs } from "./StyledAuth";
 import AUTH_BUTTON from "../../components/buttons/LoginButton";
 import TEXT_INPUT from "../../components/buttons/TextInput";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import signUp from "../../_auth/authSignUpEmail";
+import signUp from "../../utils/auth/authSignUpEmail";
 import { ErrorMessage } from "../contact/StyledContact";
-import { firebase } from "@react-native-firebase/functions";
-const functions = firebase.app().functions("europe-west3");
 
 const REGISTER = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -100,23 +98,23 @@ const REGISTER = React.memo(({ navigation }) => {
 
   const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gim;
 
+  //ide check post
   const validateForm = async () => {
-    const getUsernameAvailability = functions.httpsCallable(
-      "getUsernameAvailability",
-    );
+    const isAvailable = await fetch(
+      // "https://europe-west3-kokodarts-native.cloudfunctions.net/app/api/createprofile",
+      "http://192.168.0.102:5002/api/getusernameavailability",
+      {
+        method: "post",
+        body: JSON.stringify({ username }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      },
+    )
+      .then((response) => response.json())
+      .then((data) => data.data);
 
-    const usersWiththesameUsername = await getUsernameAvailability({
-      username,
-    })
-      .then((result) => {
-        console.log(result);
-        result.data;
-      })
-      .catch((err) => console.log(err));
-
-    console.log(usersWiththesameUsername);
-
-    const isUsernameTaken = usersWiththesameUsername > 0;
     if (!regexp.test(email)) {
       setError("the email you provided is invalid");
       return false;
@@ -129,7 +127,7 @@ const REGISTER = React.memo(({ navigation }) => {
     } else if (username.length > 16) {
       setError("username can't be longer than 16 characters");
       return false;
-    } else if (isUsernameTaken) {
+    } else if (!isAvailable) {
       setError(
         "username must be unique. the username you provided is already taken by another user",
       );
@@ -142,14 +140,12 @@ const REGISTER = React.memo(({ navigation }) => {
     }
   };
 
-  const pressSignUp = () => {
-    // if (validateForm()) {
-    console.log("EMAILESAGS", email);
-    signUp(email, password, username, navigation);
-    // }
+  const pressSignUp = async () => {
+    const validated = await validateForm();
+    if (validated) {
+      await signUp(email, password, username, navigation);
+    }
   };
-
-  console.log("EMAIL", email);
 
   return (
     <SafeAreaView style={{ backgroundColor: "transparent", flex: 1 }}>
@@ -164,9 +160,9 @@ const REGISTER = React.memo(({ navigation }) => {
         <Form isKeyboardUp={isKeyboardUp} theme={theme}>
           <ErrorMessage>{error}</ErrorMessage>
           <Inputs>
-            {INPUTS.map((item) => (
+            {INPUTS.map((item, i) => (
               <TEXT_INPUT
-                key={item.name}
+                key={i}
                 valid={item.value.length > 5}
                 input={item}
                 handleFocus={handleFocus}

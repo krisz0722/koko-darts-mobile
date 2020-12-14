@@ -44,9 +44,9 @@ const OPTIONS_LEGORSET = React.memo((props) => {
         <SETTINGS_HEADER text={"match settings"} />
 
         <Div theme={theme}>
-          {["leg", "set"].map((item) => (
+          {["leg", "set"].map((item, i) => (
             <OPTION_BUTTON
-              key={item}
+              key={i}
               active={legOrSet === item}
               length={data.length}
               action={() => toggleLegOrSet(item)}

@@ -1,4 +1,4 @@
-import { DOUBLEFIELDS, SCORINGDARTS } from "../../../calc/const";
+import { DOUBLEFIELDS, SCORINGDARTS } from "../../../utils/calc/const";
 
 const nextValidation = (inputByDart, whichDart, playerScore) => {
   let { first, second, third } = inputByDart;

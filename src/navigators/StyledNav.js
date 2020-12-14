@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { SafeAreaView, View } from "react-native";
 import {
   BorderVertical,
@@ -24,7 +24,7 @@ export const DrawerContent = styled(View)`
 export const HomeDrawerContent = styled(View)`
   ${FlexCol};
   width: 100%;
-  top: 0%;
+  top: 0;
   background-color: ${({ theme }) => theme.bgOverlay};
 `;
 

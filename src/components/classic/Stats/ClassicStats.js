@@ -71,8 +71,8 @@ const CLASSIC_STATS = React.memo((props) => {
           player={"p1"}
           theme={theme}
         >
-          {DATA_STATS().averages.map((item) => (
-            <StatRow key={item.name}>
+          {DATA_STATS().averages.map((item, i) => (
+            <StatRow key={i}>
               <StatText1 player={"p1"} theme={theme}>
                 {item.name + " average"}
               </StatText1>
@@ -88,8 +88,8 @@ const CLASSIC_STATS = React.memo((props) => {
           player={"p1"}
           theme={theme}
         >
-          {DATA_STATS().totals.map((item) => (
-            <StatRow key={item.name}>
+          {DATA_STATS().totals.map((item, i) => (
+            <StatRow key={i}>
               <StatText3 player={"p1"} theme={theme}>
                 {item.name}
               </StatText3>
@@ -113,8 +113,8 @@ const CLASSIC_STATS = React.memo((props) => {
           player={"p2"}
           theme={theme}
         >
-          {DATA_STATS().averages.map((item) => (
-            <StatRow key={item.name}>
+          {DATA_STATS().averages.map((item, i) => (
+            <StatRow key={i}>
               <StatText1 player={"p2"} theme={theme}>
                 {item.name + " average"}
               </StatText1>
@@ -130,8 +130,8 @@ const CLASSIC_STATS = React.memo((props) => {
           player={"p2"}
           theme={theme}
         >
-          {DATA_STATS().totals.map((item) => (
-            <StatRow key={item.name}>
+          {DATA_STATS().totals.map((item, i) => (
+            <StatRow key={i}>
               <StatText3 player={"p2"} theme={theme}>
                 {item.name}
               </StatText3>

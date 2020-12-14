@@ -1,5 +1,5 @@
 import { Animated } from "react-native";
-import styled from "styled-components/native/dist/styled-components.native.esm";
+import styled from "styled-components/native";
 import { FlexRow } from "../../../styles/css_mixins";
 
 export const ClassicBottom = styled(Animated.View)`

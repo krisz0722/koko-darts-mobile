@@ -1,4 +1,4 @@
-import styled from "styled-components/native/dist/styled-components.native.esm";
+import styled from "styled-components/native";
 import { Animated, View } from "react-native";
 import { FlexColAround, FlexRowBetween } from "../../../styles/css_mixins";
 import { P4 } from "../../headers/StyledHeaders";

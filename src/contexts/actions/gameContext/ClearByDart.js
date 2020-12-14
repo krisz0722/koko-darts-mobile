@@ -1,5 +1,3 @@
-import React from "react";
-
 const ClearByDart = (gameData, inputContext) => {
   const { inputByDart, whichDart } = inputContext;
 

@@ -1,4 +1,4 @@
-import { CHECKOUTS } from "calc/scores";
+import { CHECKOUTS } from "../../../utils/calc/scores";
 
 const submitUpdateScore = (
   state,

@@ -4,11 +4,13 @@ import { GameContext } from "../../contexts/GameContext";
 import { Authcontext } from "../../contexts/AuthContext";
 import moment from "moment";
 import updateAuthMatchesRematch from "../../contexts/actions/authContext/UpdateMatchesRematch";
-import { updateStatus } from "../../_db/crudUpdate";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
 import ENDGAME_PLAYER from "./EndGamePlayers";
 import { RematchCon, Header, BottomButtons2 } from "./StyledEndGame";
+import navigatingIn from "../../utils/navigatingIn";
+import navigatingOut from "../../utils/navigatingOut";
+import fetchPost from "../../utils/fetchPost";
 
 const REMATCH_MODAL = React.memo(({ navigation }) => {
   const {
@@ -39,17 +41,21 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
 
   const quitGame = async () => {
     await dispatchGameData({ type: "LOAD_SETTINGS" });
+    navigatingIn(navigation, "leave");
     if (activePlayer) {
-      await updateStatus(
-        activePlayer.key,
-        inactivePlayer.key,
-        false,
-        navigation,
-        "leave",
-      );
+      await fetchPost("api/updatestatus", {
+        p1: activePlayer.key,
+        p2: inactivePlayer.key,
+        inGAme: false,
+      });
     } else {
-      await updateStatus(p1.key, p2.key, false, navigation, "leave");
+      await fetchPost("api/updatestatus", {
+        p1: p1.key,
+        p2: p2.key,
+        inGAme: false,
+      });
     }
+    navigatingOut(navigation, "leave");
   };
 
   const rematch = async () => {

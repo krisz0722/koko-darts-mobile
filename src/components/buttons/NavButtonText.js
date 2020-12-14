@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { P2, P1 } from "../headers/StyledHeaders";
 
 const textColor = (active, color, theme, inap) => {

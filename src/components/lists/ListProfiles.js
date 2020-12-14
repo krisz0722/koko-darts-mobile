@@ -8,7 +8,7 @@ const LIST_PROFILES = React.memo(({ add, remove, profiles }) => {
   const { theme } = useContext(ThemeContext);
 
   const renderItem = ({ item }) => (
-    <PROFILE_COMPONENT add={add} remove={remove} item={item.data()} />
+    <PROFILE_COMPONENT add={add} remove={remove} item={item} />
   );
 
   return (
@@ -20,7 +20,7 @@ const LIST_PROFILES = React.memo(({ add, remove, profiles }) => {
           <ProfilesContainer
             data={profiles}
             renderItem={renderItem}
-            keyExtractor={(item) => item.data().username}
+            keyExtractor={(item) => item.username}
             theme={theme}
           />
         )}

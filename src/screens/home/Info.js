@@ -79,13 +79,11 @@ const HOME_INFO = React.memo(({ matches, username }) => {
 
           <Info unfinished={false}>
             <InfoStats theme={theme}>
-              {STATS().map((item) => (
-                <React.Fragment key={item}>
-                  <InfoRow>
-                    <InfoText theme={theme}>{item.stat}</InfoText>
-                    <InfoText2>{item.value}</InfoText2>
-                  </InfoRow>
-                </React.Fragment>
+              {STATS().map((item, i) => (
+                <InfoRow key={i}>
+                  <InfoText theme={theme}>{item.stat}</InfoText>
+                  <InfoText2>{item.value}</InfoText2>
+                </InfoRow>
               ))}
             </InfoStats>
           </Info>

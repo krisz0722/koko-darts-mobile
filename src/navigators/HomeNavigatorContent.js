@@ -35,9 +35,9 @@ const BOTTOM_TABBAR_CONTENT = React.memo((props) => {
     <>
       {index === 3 || index === 4 ? null : (
         <NavBar position={"bottom"} theme={theme}>
-          {TABBAR_ITEMS.map((item) => (
+          {TABBAR_ITEMS.map((item, i) => (
             <NAV_BUTTON
-              key={item.route}
+              key={i}
               length={3}
               direction={"column"}
               text={item.route}

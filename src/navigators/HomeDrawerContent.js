@@ -29,9 +29,9 @@ const HOME_DRAWER_CONTENT = React.memo(
 
     return (
       <HomeDrawerContent theme={theme}>
-        {HOME_DRAWER_ITEMS.map((item) => (
+        {HOME_DRAWER_ITEMS.map((item, i) => (
           <NAV_BUTTON
-            key={item.route}
+            key={i}
             color={"light"}
             height={10}
             length={2}

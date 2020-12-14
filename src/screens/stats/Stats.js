@@ -18,7 +18,7 @@ const STATS = React.memo(({ navigation, route }) => {
   return (
     <>
       <STATS_PLAYERS route={route} theme={theme} gameData={gameData} />
-      {STATS_DATA.map((item) => {
+      {STATS_DATA.map((item, i) => {
         const p1 = item.rounding
           ? p1_DATA[item.data].toFixed(item.rounding)
           : p1_DATA[item.data];
@@ -26,7 +26,7 @@ const STATS = React.memo(({ navigation, route }) => {
           ? p2_DATA[item.data].toFixed(item.rounding)
           : p2_DATA[item.data];
         return (
-          <Row>
+          <Row key={i}>
             <StatSide theme={theme}>{p1}</StatSide>
             <Stat theme={theme}>{item.name}</Stat>
             <StatSide theme={theme}>{p2}</StatSide>

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { TouchableWithoutFeedback, View } from "react-native";
 import { FlexRowAround, Window } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";

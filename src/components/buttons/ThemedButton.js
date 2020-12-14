@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { TouchableHighlight } from "react-native";
 import { Window, FlexRowAround } from "../../styles/css_mixins";
 import React, { useContext } from "react";

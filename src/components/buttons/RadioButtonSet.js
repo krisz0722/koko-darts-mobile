@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { View, TouchableHighlight } from "react-native";
 import { FlexAround, FlexRowAround } from "../../styles/css_mixins";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -40,12 +40,12 @@ const RADIO_BUTTON_SET = React.memo(
 
     return (
       <Options direction={direction}>
-        {options.map((item) => (
+        {options.map((item, i) => (
           <Option
+            key={i}
             underlayColor={theme.text}
             direction={direction}
             length={length}
-            key={item}
             onPress={() => action(item)}
             active={activeValue === item}
           >

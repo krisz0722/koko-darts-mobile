@@ -14,11 +14,11 @@ const OPTIONS_SCORE = React.memo((props) => {
     <Row page={page} theme={theme}>
       <SETTINGS_HEADER text={"starting score"} />
       <Div theme={theme}>
-        {DATA.map((item) => (
+        {DATA.map((item, i) => (
           <OPTION_BUTTON
             active={startingScore === item}
             length={DATA.length}
-            key={item}
+            key={i}
             action={() => toggleStartingScore(item)}
             value={item}
           />

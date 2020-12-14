@@ -1,6 +1,6 @@
 import { View } from "react-native";
 
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { FlexRowAround, AlignText } from "../../../styles/css_mixins";
 import { P2 } from "../../headers/StyledHeaders";
 

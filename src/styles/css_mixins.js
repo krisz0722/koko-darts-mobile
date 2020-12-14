@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import { css } from "styled-components/native";
 import { Dimensions } from "react-native";
 
 export const Absolute = css`

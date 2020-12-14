@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { CHECKOUTS } from "../../calc/scores";
+import { CHECKOUTS } from "../../utils/calc/scores";
 import { GameContext } from "../../contexts/GameContext";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
@@ -88,8 +88,9 @@ const FINISH_LEG = React.memo(({ navigation }) => {
 
         <Header theme={theme}>Number of darts used in last round:</Header>
         <BottomButtons2 border={"none"} theme={theme}>
-          {OPTIONS.map((item) => (
+          {OPTIONS.map((item, i) => (
             <OptionButton
+              key={i}
               size={"large"}
               onPress={() => handleLastDartNod(item)}
               length={3}

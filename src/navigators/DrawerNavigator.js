@@ -97,7 +97,7 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
       );
     } catch (err) {
       console.log(err);
-      alert("ERROR WHILE SAVING MATCH: ", err);
+      alert("ERROR WHILE SAVING MATCH: " + err);
     }
   }, [gameData, navigation, username]);
 

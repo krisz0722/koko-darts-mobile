@@ -1,15 +1,18 @@
-import {
-  updatefriendRequestReceived,
-  updatefriendRequestSent,
-} from "../../../_db/crudUpdate";
+import fetchPost from "../../../utils/fetchPost";
 
-const updateRequests = (state, checkedProfiles) => {
-  const { username, img, friendRequestSent } = state;
+const updateRequests = async (state, checkedProfiles) => {
+  const { username, id, img, friendRequestSent } = state;
 
-  updatefriendRequestSent(username, checkedProfiles);
+  await fetchPost("api/updatefriendrequestsent", {
+    uid: id,
+    newRequests: checkedProfiles,
+  });
 
-  checkedProfiles.forEach((usernameRequested) => {
-    updatefriendRequestReceived(usernameRequested, username, img);
+  await fetchPost("api/updatefriendrequestreceived", {
+    checkedProfiles,
+    username,
+    img,
+    id,
   });
   const newfriendRequestSent = checkedProfiles.concat(friendRequestSent);
   return {

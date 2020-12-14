@@ -93,34 +93,30 @@ const CLASSIC_BOTTOM = React.memo((props) => {
 
   return (
     <ClassicBottom>
-      {DATA_BOTTOM.map((item) => {
-        if (typeof item === "number") {
-          return (
+      {DATA_BOTTOM.map((item, i) => (
+        <React.Fragment key={i}>
+          {typeof item === "number" ? (
             <NUM_BUTTON
               activePlayer={activePlayer}
               animation={animation}
               theme={theme}
-              key={item.value}
               value={item}
               inputMethod={inputMethod}
               typeMethod={typeMethod}
             />
-          );
-        } else {
-          return (
+          ) : (
             <FUNCTION_BUTTON
               activePlayer={activePlayer}
               animation={animation}
               theme={theme}
-              key={item.value}
               value={item.value}
               action={item.action}
               icon={item.icon}
               bottom={true}
             />
-          );
-        }
-      })}
+          )}
+        </React.Fragment>
+      ))}
     </ClassicBottom>
   );
 });

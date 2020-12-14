@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { View, TouchableHighlight } from "react-native";
 import { Window, FlexRow } from "../../styles/css_mixins";
 

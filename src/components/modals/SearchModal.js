@@ -4,7 +4,6 @@ import THEMED_BUTTON from "../buttons/ThemedButton";
 import { BottomButtons } from "./StyledModal";
 import LIST_PROFILES from "../lists/ListProfiles";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { getUsers } from "../../_db/crudGet";
 import { Authcontext } from "../../contexts/AuthContext";
 import updateRequests from "../../contexts/actions/authContext/UpdateRequests";
 import ACTIVITY_INDICATOR from "./Activityindicator";
@@ -17,6 +16,7 @@ import {
   Error,
   ErrorMessage,
 } from "./StyledChoosePlayerModal";
+import fetchGet from "../../utils/fetchGet";
 
 const SEARCH_MODAL = React.memo(({ action1, visible }) => {
   const {
@@ -32,6 +32,7 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
 
   const {
     userData,
+    dispatchUserData,
     userData: { username, friends, friendRequestSent, friendRequestReceived },
   } = useContext(Authcontext);
 
@@ -48,15 +49,15 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
     if (visible) {
       (async () => {
         try {
-          const profiles = await getUsers().then((querySnapshot) => {
-            return querySnapshot.docs.filter((item) => {
-              const profileUsername = item.data().username;
+          const profiles = await fetchGet("api/getusers").then((data) =>
+            data.filter((item) => {
+              const profileUsername = item.username;
               const isFriend = () =>
                 friends.find((friend) => friend.key === profileUsername);
 
               const hasfriendRequestSent = () =>
                 friendRequestSent.find(
-                  (request) => request === profileUsername,
+                  (request) => request.username === profileUsername,
                 );
               const hasfriendRequestReceived = () =>
                 friendRequestReceived.find(
@@ -69,43 +70,40 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
                 profileUsername !== username &&
                 profileUsername !== "GUEST"
               );
-            });
-          });
+            }),
+          );
 
           profiles.sort((a, b) => {
-            return b.data().username - a.data().username;
+            return b.username - a.username;
           });
-
           setProfiles(profiles);
           setFilteredProfiles(profiles);
         } catch (err) {
           console.log(err);
-          alert("ERROR WHILE GETTING USERS: ", err);
+          alert("ERROR WHILE GETTING USERS: " + err);
         }
       })();
     }
   }, [visible, friendRequestReceived, friends, friendRequestSent, username]);
 
   const add = (item) => {
-    console.log("CHECKED LIST BEFORE ADD", checkedProfiles);
-    checkedProfiles.push(item.username);
+    const { username, id } = item;
+    checkedProfiles.push({ username, id });
     setCheckedProfiles(checkedProfiles);
-    console.log("CHECKED LIST AFTER ADD", checkedProfiles);
   };
 
   const remove = (item) => {
-    console.log("CHECKED LIST BEFORE REMOVE", checkedProfiles);
     const index = checkedProfiles.indexOf(item);
     checkedProfiles.splice(index, 1);
     setCheckedProfiles(checkedProfiles);
-    console.log("CHECKED LIST AFTER REMOVE", checkedProfiles);
   };
 
   const sendRequest = async () => {
     setLoading(true);
-    await updateRequests(userData, checkedProfiles);
+    const updatedProfile = await updateRequests(userData, checkedProfiles);
     setCheckedProfiles([]);
     setLoading(false);
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedProfile });
   };
 
   const back = () => {
@@ -143,7 +141,7 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
   useEffect(() => {
     if (profiles) {
       const filtered = profiles.filter((item) => {
-        const username = item.data().username;
+        const username = item.username;
         return regexp.test(username);
       });
       setFilteredProfiles(filtered);
@@ -152,10 +150,7 @@ const SEARCH_MODAL = React.memo(({ action1, visible }) => {
     if (!visible) {
       setSearchActive(false);
     }
-  }, [visible, regexp]);
-
-  console.log(error);
-  console.log(regexp);
+  }, [profiles, visible, regexp]);
 
   return (
     <Modal

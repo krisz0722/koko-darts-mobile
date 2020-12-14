@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeContextProvider } from "./src/contexts/ThemeContext";
-import styled from "styled-components/native/dist/styled-components.native.esm";
+import styled from "styled-components/native";
 import { ImageBackground } from "react-native";
 import { Window } from "./src/styles/css_mixins";
 import APP_NAVIGATOR from "./src/navigators/AppNavigator";

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import {
   FlexCol,
   FlexColStart,
@@ -11,7 +11,6 @@ export const SettingsPreGameBottomButtons = styled(View)`
   ${FlexRowAround};
   position:absolute;
   bottom: 0;
-  height: 15%;
   width: 100%;
   height: ${() => Window.height * 0.15}
   border-top-width: ${({ theme }) => theme.borderWidth};

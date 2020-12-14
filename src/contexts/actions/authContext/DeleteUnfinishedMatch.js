@@ -1,6 +1,8 @@
-import { updateUnfinishedMatches } from "../../../_db/crudUpdateUnfinishedMatches";
+import navigatingOut from "../../../utils/navigatingOut";
+import navigatingIn from "../../../utils/navigatingIn";
+import fetchPost from "../../../utils/fetchPost";
 
-const deleteMatch = (
+const deleteMatch = async (
   gameData,
   username,
   inGame,
@@ -12,18 +14,20 @@ const deleteMatch = (
     settings: { p1, p2 },
   } = gameData;
 
-  updateUnfinishedMatches(
+  navigatingIn(navigation, navigationType);
+
+  await fetchPost("api/updateunfinishedmatches", {
     p1,
     p2,
-    null,
-    null,
-    "delete",
+    p1Match: null,
+    p2Match: null,
+    type: "delete",
     key,
     inGame,
-    navigation,
-    navigationType,
-    gameData,
-  );
+    gameData: null,
+  });
+
+  navigatingOut(navigation, navigationType, gameData);
 };
 
 export default deleteMatch;

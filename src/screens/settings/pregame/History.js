@@ -73,9 +73,9 @@ export const HISTORY = React.memo(({ p1, p2 }) => {
       <HistoryContainer>
         {p2.key !== "" ? (
           <>
-            {DATA().map((item) => (
+            {DATA().map((item, i) => (
               <HISTORY_ROW
-                key={item.title}
+                key={i}
                 p1={item.p1}
                 p2={item.p2}
                 title={item.title}

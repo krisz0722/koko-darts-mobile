@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { FlexCol } from "../../styles/css_mixins";
 import { Header1 } from "../../components/headers/StyledHeaders";
 

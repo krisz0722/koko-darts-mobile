@@ -8,12 +8,13 @@ const updateAuthMatchesAdd = async (
   THEMES,
   navigation,
   navigationType,
+  id,
 ) => {
   const { username, settings, date, key } = newMatch;
   const { p1, p2 } = settings;
 
   const matchToSave = (player) => {
-    const opponent = p1.key === player.key ? p2.key : p1.key;
+    const opponent = p1.id === player.id ? p2 : p1;
     return {
       ...GAME_DEFAULT_STATE,
       p1_DATA: {
@@ -39,7 +40,7 @@ const updateAuthMatchesAdd = async (
   };
 
   navigatingIn(navigation, navigationType);
-  await fetchPost("api/updateunfinishedmatches", {
+  const updatedUserData = await fetchPost("api/updateunfinishedmatches", {
     p1,
     p2,
     p1Match: matchToSave(p1),
@@ -48,9 +49,11 @@ const updateAuthMatchesAdd = async (
     key: key,
     inGame: true,
     gameData: null,
+    id,
   });
-
   navigatingOut(navigation, navigationType);
+  console.log("match add", updatedUserData);
+  return updatedUserData;
 };
 
 export default updateAuthMatchesAdd;

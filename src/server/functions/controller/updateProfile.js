@@ -2,24 +2,30 @@ const { usersCollection } = require("../app");
 
 const updateProfile = async (req, res) => {
   const {
-    username,
     matches,
     unfinishedMatches,
     friends,
     userOverall,
     key,
     inGame,
+    id,
   } = req.body;
   try {
-    await usersCollection.doc(username).update({
+    await usersCollection.doc(id).update({
       userOverall,
       matches,
       unfinishedMatches,
       friends,
       inGame,
     });
+    const updatedUserData = await usersCollection
+      .doc(id)
+      .get()
+      .then((data) => data.data());
+
     res.status(200).json({
       message: "profile updated ",
+      data: updatedUserData,
     });
   } catch (err) {
     console.log("error while updating profile: " + err);

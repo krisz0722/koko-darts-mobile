@@ -23,7 +23,7 @@ const updateFriendsProfiles = (arr, id) => {
         const matchesBefore = data["matches"];
 
         const matches = matchesBefore.map((match) => {
-          const toChange = match.opponent === id;
+          const toChange = match.opponent.id === id;
           const newMatch = toChange
             ? {
                 ...match,
@@ -41,7 +41,7 @@ const updateFriendsProfiles = (arr, id) => {
         const unfinishedMatchesBefore = data.unfinishedMatches;
         const unfinishedMatches = unfinishedMatchesBefore.filter(
           (unfinishedMatch) => {
-            return unfinishedMatch.opponent !== id;
+            return unfinishedMatch.opponent.id !== id;
           },
         );
 

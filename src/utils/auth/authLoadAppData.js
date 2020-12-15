@@ -1,5 +1,4 @@
 import { CommonActions } from "@react-navigation/native";
-import auth from "@react-native-firebase/auth";
 import throwError from "./authError";
 
 const loadAppData = async (userData, navigation, reducers) => {
@@ -8,13 +7,14 @@ const loadAppData = async (userData, navigation, reducers) => {
   try {
     const lastMatch = userData.matches ? userData.matches[0] : null;
     const lastOpponent = lastMatch ? lastMatch.opponent : null;
-    const img = auth().currentUser._user.photoURL;
+    console.log("LASTMATCH", lastMatch);
 
+    console.log("lastopponent", lastOpponent);
     const getSettings = () => {
-      const p1 = { ...userData.settings.p1, img };
+      const p1 = { ...userData.settings.p1 };
       if (lastOpponent) {
         const opponentProfile = userData.friends.find(
-          (item) => item.key === lastOpponent,
+          (item) => item.id === lastOpponent.id,
         );
         return { ...userData.settings, p1, p2: opponentProfile };
       } else {
@@ -22,11 +22,12 @@ const loadAppData = async (userData, navigation, reducers) => {
       }
     };
     const userSettings = getSettings();
+    console.log("UESRSETTIGNS", userSettings);
     const userMatches = userData.matches;
 
     await user({
       type: "CREATE_PROFILE",
-      value: { ...userData, img },
+      value: { ...userData },
     });
     await theme({
       type: "LOAD_THEME",

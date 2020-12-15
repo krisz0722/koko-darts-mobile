@@ -54,6 +54,7 @@ export const GameContextProvider = (props) => {
             action.value,
             action.method,
             1,
+            1,
             action.byDartScore,
           );
         case "START_NEW_GAME":
@@ -142,8 +143,6 @@ export const GameContextProvider = (props) => {
     gameReducer,
     initialGameState,
   );
-
-  console.log("GAMEDATA", gameData);
 
   return (
     <GameContext.Provider value={{ gameData, dispatchGameData }}>

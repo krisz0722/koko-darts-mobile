@@ -29,7 +29,7 @@ const MATCH_COMPONENT = ({ item }) => {
     <Match theme={theme} onPress={openMatchStats}>
       <MatchDate theme={theme}>{date}</MatchDate>
 
-      <Name>{opponent}</Name>
+      <Name>{opponent.key}</Name>
       <Result1>{result}</Result1>
 
       <Result2 theme={theme} result={wonOrLost}>

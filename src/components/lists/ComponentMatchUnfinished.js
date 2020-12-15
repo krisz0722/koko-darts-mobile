@@ -10,15 +10,20 @@ import {
   ClearButton,
   Data,
 } from "./StyledComponentMatchUnfinished";
+import { Authcontext } from "../../contexts/AuthContext";
 
 const UNFINISHED_MATCH_COMPONENT = ({
   active,
   handleGameToContinue,
-  username,
-  item,
+  unfinishedMatch,
 }) => {
   const { theme } = useContext(ThemeContext);
-  const gameData = item.item;
+
+  const {
+    dispatchUserData,
+    userData: { id },
+  } = useContext(Authcontext);
+  const gameData = unfinishedMatch;
 
   const {
     date,
@@ -27,33 +32,32 @@ const UNFINISHED_MATCH_COMPONENT = ({
     p1_DATA,
     p2_DATA,
   } = gameData;
-  const userData = username === p1.key ? p1_DATA : p2_DATA;
-  const opponentData = username === p1.key ? p2_DATA : p1_DATA;
+  const userData = id === p1.id ? p1_DATA : p2_DATA;
+  const opponentData = id === p1.id ? p2_DATA : p1_DATA;
   const avg = userData.avgMatch;
   const legs = `${userData.legsWon} - ${opponentData.legsWon}`;
   const sets = `${userData.setsWon} - ${opponentData.setsWon}`;
 
   const setGameToContinue = async () => {
-    const gameToContinue = { ...gameData, initializedBy: username };
+    const gameToContinue = { ...gameData, initializedBy: id };
     handleGameToContinue(gameToContinue);
   };
 
   const deleteUnfinishedMatch = async () => {
-    await deleteMatch(gameData, username, null, null, null);
+    const updatesUserData = await deleteMatch(gameData, id, null, null, null);
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatesUserData });
   };
 
   return (
     <Match
       active={active}
       theme={theme}
-      onPress={() =>
-        setGameToContinue({ ...gameData, initializedBy: username })
-      }
+      onPress={() => setGameToContinue({ ...gameData, initializedBy: id })}
     >
       <MatchDate active={active} theme={theme}>
         {date}
       </MatchDate>
-      <Name active={active}>{`vs. ${opponent}`}</Name>
+      <Name active={active}>{`vs. ${opponent.key}`}</Name>
       {legOrSet === "set" ? (
         <>
           <Data theme={theme} active={active}>

@@ -6,6 +6,7 @@ const submitUpdateScore = (
   scoreToSubmit,
   type,
   num,
+  num2,
   byDartScore = null,
 ) => {
   const playerData = state[playerKey];
@@ -25,7 +26,7 @@ const submitUpdateScore = (
     numOfCoDarts,
   } = playerData;
 
-  const prevScore = score + scoreToSubmit;
+  const prevScore = score;
   score = byDartScore ? scoreToSubmit : score;
 
   const newScore =
@@ -36,12 +37,12 @@ const submitUpdateScore = (
       : score;
 
   const wasOnCheckout = CHECKOUTS.some((co) => co.value === prevScore);
+
   const prevScoreNumOfDarts = wasOnCheckout
     ? CHECKOUTS.find((co) => co.value === prevScore).checkouts[0].nod
     : 0;
 
   const onCheckout = CHECKOUTS.some((co) => co.value === newScore);
-
   tsLeg += scoreToSubmit * num;
   tsMatch += scoreToSubmit * num;
   norLeg += num;
@@ -49,14 +50,18 @@ const submitUpdateScore = (
 
   tsFirstNine = norLeg <= 3 ? tsFirstNine + scoreToSubmit * num : tsFirstNine;
   tsScoring = !wasOnCheckout ? tsScoring + scoreToSubmit * num : tsScoring;
+  // tsScoring = tsScoring + scoreToSubmit * num;
   norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
   norScoring = !wasOnCheckout ? norScoring + num : norScoring;
+  // norScoring = norScoring + num;
 
   const isLegOver = newScore === 0;
   const winner = isLegOver ? state.activePlayer : null;
 
-  dartsUsedInLeg = !isLegOver ? dartsUsedInLeg + 3 : dartsUsedInLeg;
-  dartsUsedInMatch = !isLegOver ? dartsUsedInMatch + 3 : dartsUsedInMatch;
+  // dartsUsedInLeg = !isLegOver ? dartsUsedInLeg + 3 * num : dartsUsedInLeg;
+  dartsUsedInLeg = dartsUsedInLeg + 3 * num;
+  // dartsUsedInMatch = !isLegOver ? dartsUsedInMatch + 3 * num : dartsUsedInMatch;
+  dartsUsedInMatch = dartsUsedInMatch + 3 * num;
 
   const avgLeg = norLeg === 0 ? 0 : tsLeg / (dartsUsedInLeg / 3);
   const avgMatch = norMatch === 0 ? 0 : tsMatch / (dartsUsedInMatch / 3);

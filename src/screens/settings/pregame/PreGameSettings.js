@@ -1,8 +1,8 @@
 import React, {
+  useMemo,
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import moment from "moment";
@@ -22,6 +22,7 @@ import HISTORY from "./History";
 import PLAYERS from "./Players";
 import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import CHOOSE_PLAYER_MODAL from "../../../components/modals/ChoosePlayerModal";
+import fetchPost from "../../../utils/fetchPost";
 
 const PREGAME_SETTINGS = React.memo(({ navigation }) => {
   const {
@@ -38,7 +39,8 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
   } = useContext(SettingsContext);
 
   const {
-    userData: { username, unfinishedMatches, friends },
+    dispatchUserData,
+    userData: { username, id, unfinishedMatches, friends },
   } = useContext(Authcontext);
 
   const [stateLegOrSet, setLegOrSet] = useState(legOrSet);
@@ -52,7 +54,7 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
   useEffect(() => {
     const isEmpty = p2.key === "";
     const hasUnfinished = unfinishedMatches.find(
-      (item) => item.opponent === p2.key,
+      (item) => item.opponent === p2.id,
     );
     if ((isEmpty || hasUnfinished) && isFocused) {
       setModal(true);
@@ -68,15 +70,26 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
     [],
   );
 
-  const newGameSettings = {
-    ...settings,
-    p1: stateP1,
-    p2: stateP2,
-    legOrSet: stateLegOrSet,
-    startingScore: stateStartingScore,
-    toWin: stateToWin,
-    legsPerSet: stateLegsPerSet,
-  };
+  const newGameSettings = useMemo(
+    () => ({
+      ...settings,
+      p1: stateP1,
+      p2: stateP2,
+      legOrSet: stateLegOrSet,
+      startingScore: stateStartingScore,
+      toWin: stateToWin,
+      legsPerSet: stateLegsPerSet,
+    }),
+    [
+      settings,
+      stateP1,
+      stateP2,
+      stateLegOrSet,
+      stateStartingScore,
+      stateToWin,
+      stateLegsPerSet,
+    ],
+  );
 
   useEffect(() => {
     if (isFocused) {
@@ -154,13 +167,23 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
       settings: newGameSettings,
       date,
       key,
+      id,
     };
     await dispatchGameData({
       type: "START_NEW_GAME",
       value: newMatch,
     });
-    await updateAuthMatchesAdd(newMatch, THEMES, navigation, "new");
+    const updatedUserData = await updateAuthMatchesAdd(
+      newMatch,
+      THEMES,
+      navigation,
+      "new",
+      id,
+    ).then((data) => data);
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
   }, [
+    id,
+    dispatchUserData,
     p1.key,
     p2.key,
     THEMES,
@@ -189,11 +212,18 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
     }
   };
 
-  const chooseProfile = (val) => {
-    if (stateP2 === p1) {
-      setP1(val);
+  const chooseProfile = async (val) => {
+    console.log("CHOOSE PROFILE VAL", val);
+    const opponentData = await fetchPost("api/getuserdata", { uid: val.id });
+    const isInGame = opponentData.inGame;
+    if (!isInGame) {
+      if (stateP2 === p1) {
+        setP1(val);
+      } else {
+        setP2(val);
+      }
     } else {
-      setP2(val);
+      alert("IS IN GAME");
     }
   };
 

@@ -18,7 +18,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
       themeContext: { animation },
     } = useContext(ThemeContext);
     const {
-      userData: { username },
+      userData: { id },
     } = useContext(Authcontext);
 
     const animationType = animation
@@ -27,7 +27,7 @@ const CHOOSE_PLAYER_MODAL = React.memo(
         : "slide"
       : "none";
 
-    const opponent = p1.key === username ? p2 : p1;
+    const opponent = p1.id === id ? p2 : p1;
 
     return (
       <Modal

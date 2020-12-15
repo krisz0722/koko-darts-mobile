@@ -4,7 +4,7 @@ const checkOpponentsStatus = async (req, res) => {
   const opponent = req.body.opponent;
   try {
     const opponentProfile = await usersCollection
-      .doc(opponent)
+      .doc(opponent.id)
       .get()
       .then((documentSnapshot) => documentSnapshot.data());
     const status = opponentProfile.inGame;

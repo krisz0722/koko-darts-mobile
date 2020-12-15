@@ -25,7 +25,7 @@ const HOMENAVIGATOR = ({ navigation }) => {
   const { Screen, Navigator } = createMaterialTopTabNavigator();
   const {
     dispatchUserData,
-    userData: { username },
+    userData: { username, id },
   } = useContext(Authcontext);
 
   const route = useRoute().state;
@@ -80,11 +80,11 @@ const HOMENAVIGATOR = ({ navigation }) => {
           gameData.p2_DATA.score !== 0)
       ) {
         navigatingIn(navigation, "leave");
-        await updateAuthMatchesSave(gameData, username, false);
+        await updateAuthMatchesSave(gameData, id, username, false);
         navigatingIn(navigation, "leave", gameData);
       }
     },
-    [navigation, gameData, username],
+    [navigation, id, gameData, username],
   );
 
   useEffect(() => {

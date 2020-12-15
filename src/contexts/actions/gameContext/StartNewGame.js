@@ -1,10 +1,10 @@
 import GAME_DEFAULT_STATE from "../../GameDefaultState";
 
 const startNewGame = (newMatch, THEMES) => {
-  const { date, key, username, settings } = newMatch;
+  const { date, key, id, username, settings } = newMatch;
 
   const { p1, p2 } = settings;
-  const opponent = p1.key === username ? p2.key : p1.key;
+  const opponent = p1.id === id ? p2 : p1;
   const matchToSave = {
     ...GAME_DEFAULT_STATE,
     p1_DATA: {

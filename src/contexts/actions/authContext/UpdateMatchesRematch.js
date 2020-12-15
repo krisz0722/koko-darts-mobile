@@ -7,6 +7,7 @@ const updateAuthMatchesRematch = async (
   rematch,
   navigation,
   navigationType,
+  id,
 ) => {
   const {
     username,
@@ -59,6 +60,7 @@ const updateAuthMatchesRematch = async (
     key: key,
     inGame: true,
     gameData: rematch,
+    id,
   });
   navigatingOut(navigation, navigationType, rematch);
 };

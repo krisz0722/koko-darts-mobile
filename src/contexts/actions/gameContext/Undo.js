@@ -1,6 +1,6 @@
 import submitUpdateScore from "./SubmitUpdateScore";
 
-const undo = (state) => {
+const undo = (state, num2) => {
   const { inactivePlayer } = state;
   const inapKey = `${inactivePlayer}_DATA`;
   const inapData = state[inapKey];
@@ -17,7 +17,7 @@ const undo = (state) => {
         inputByDart: ["CAN'T GO BACK!"],
       };
     default:
-      return submitUpdateScore(state, inapKey, scoreToSubmit, "UNDO", -1);
+      return submitUpdateScore(state, inapKey, scoreToSubmit, "UNDO", -1, num2);
   }
 };
 

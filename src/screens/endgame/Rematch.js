@@ -24,7 +24,8 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
   } = useContext(GameContext);
 
   const {
-    userData: { username },
+    dispatchUserData,
+    userData: { username, id },
   } = useContext(Authcontext);
 
   const [activePlayer, setActivePlayer] = useState(null);
@@ -42,19 +43,22 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
   const quitGame = async () => {
     await dispatchGameData({ type: "LOAD_SETTINGS" });
     navigatingIn(navigation, "leave");
+    let updatedUserData;
     if (activePlayer) {
-      await fetchPost("api/updatestatus", {
+      updatedUserData = await fetchPost("api/updatestatus", {
         p1: activePlayer.key,
         p2: inactivePlayer.key,
-        inGAme: false,
+        inGame: false,
       });
     } else {
-      await fetchPost("api/updatestatus", {
+      updatedUserData = await fetchPost("api/updatestatus", {
         p1: p1.key,
         p2: p2.key,
-        inGAme: false,
+        inGame: false,
       });
     }
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
+    console.log("NA");
     navigatingOut(navigation, "leave");
   };
 
@@ -78,8 +82,13 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
         type: "REMATCH",
         value: rematch,
       });
-
-      await updateAuthMatchesRematch(rematch, navigation, "rematch");
+      const updatedUserData = await updateAuthMatchesRematch(
+        rematch,
+        navigation,
+        "rematch",
+        id,
+      );
+      dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
     }
     return null;
   };

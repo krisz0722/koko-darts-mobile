@@ -14,7 +14,14 @@ import fetchPost from "../../utils/fetchPost";
 const HOME = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   const {
-    userData: { username, matches, unfinishedMatches, friendRequestReceived },
+    dispatchUserData,
+    userData: {
+      id,
+      matches,
+      username,
+      unfinishedMatches,
+      friendRequestReceived,
+    },
   } = useContext(Authcontext);
 
   const [gameToContinue, setGameToContinue] = useState(null);
@@ -29,18 +36,25 @@ const HOME = React.memo(({ navigation }) => {
     });
   };
 
-  const handleContinueGame = async () => {
-    const gameData = { ...gameToContinue, initializedBy: username };
+  const handleContinueGame = useCallback(async () => {
+    const gameData = { ...gameToContinue, initializedBy: id };
     const opponentStatus = await fetchPost("api/checkopponent", {
       opponent: gameData.opponent,
     });
 
     if (!opponentStatus) {
-      await updateAuthMatchesSave(gameData, username, true, "continue");
+      const updatedUserData = await updateAuthMatchesSave(
+        gameData,
+        id,
+        true,
+        navigation,
+        "continue",
+      );
+      dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
     } else {
       alert("Your opponent is in another match at the moment");
     }
-  };
+  }, [dispatchUserData, navigation, gameToContinue, id]);
 
   return (
     <>

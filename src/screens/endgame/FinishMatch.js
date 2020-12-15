@@ -6,6 +6,9 @@ import STATS_FINISH_MATCH from "../stats/StatsFinishMatch";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
 import { Header, BottomButtons2 } from "./StyledEndGame";
+import { Authcontext } from "../../contexts/AuthContext";
+import navigatingIn from "../../utils/navigatingIn";
+import navigatingOut from "../../utils/navigatingOut";
 
 const FINISH_MATCH = React.memo(({ navigation }) => {
   const {
@@ -17,23 +20,50 @@ const FINISH_MATCH = React.memo(({ navigation }) => {
     },
   } = useContext(GameContext);
 
+  const {
+    dispatchUserData,
+    userData: { id },
+  } = useContext(Authcontext);
+
   const winnerName = winner ? gameData.settings[winner].key : "";
+
+  const updateProfiles = async (inGame) => {
+    const p1Updated = await updateAuthProfile(
+      p1,
+      "p1",
+      gameData.p1_DATA,
+      gameData.p2_DATA,
+      gameData,
+      inGame,
+    );
+    const p2Updated = await updateAuthProfile(
+      p2,
+      "p2",
+      gameData.p2_DATA,
+      gameData.p1_DATA,
+      gameData,
+      inGame,
+    );
+    console.log("p1Updated", p1Updated);
+    console.log("p2Updated", p2Updated);
+    const updatedUserData = id === p1.id ? p1Updated : p2Updated;
+    return updatedUserData;
+  };
 
   const quitMatch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH" });
-    await updateAuthProfile(
-      p1.key,
-      p2.key,
-      gameData,
-      false,
-      navigation,
-      "updateProfile",
-    );
+    navigatingIn(navigation, "updateProfile");
+    const updatedUserData = await updateProfiles(false);
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
+    navigatingOut(navigation, "updateProfile");
   };
 
   const initiateRematch = async () => {
     await dispatchGameData({ type: "FINISH_MATCH", isRematch: true });
-    await updateAuthProfile(p1.key, p2.key, gameData, true, navigation, null);
+    navigatingIn(navigation, null);
+    const updatedUserData = await updateProfiles(true);
+    dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
+    navigatingOut(navigation, null);
   };
 
   return (

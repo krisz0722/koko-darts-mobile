@@ -3,6 +3,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import OPPONENT_COMPONENT from "./ComponentOpponent";
 import { Authcontext } from "../../contexts/AuthContext";
 import { Safe, ProfilesContainer } from "./StyledListProfiles";
+import fetchPost from "../../utils/fetchPost";
 
 const LIST_OPPONENTS = React.memo(({ opponent, chooseProfile }) => {
   const { theme } = useContext(ThemeContext);
@@ -11,7 +12,7 @@ const LIST_OPPONENTS = React.memo(({ opponent, chooseProfile }) => {
   } = useContext(Authcontext);
   const FRIENDS_LIST = friends.filter((friend) => {
     const hasUnfinished = unfinishedMatches.find((match) => {
-      return match.opponent === friend.key;
+      return match.opponent.id === friend.id;
     });
     const isGuest = friend.key === "GUEST";
     const isDeleted = friend.key === "DELETED USER";

@@ -33,7 +33,8 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
     },
   } = useContext(GameContext);
   const {
-    userData: { username },
+    dispatchUserData,
+    userData: { id },
   } = useContext(Authcontext);
 
   const params = useRoute().params;
@@ -42,11 +43,10 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
 
   const appState = useRef(AppState.currentState);
 
+  // console.log("PARAMS!", params);
+
   useEffect(() => {
     (async () => {
-      if (flag2 === "new" || flag2 === "continue") {
-      }
-
       if (flag2 === "continue") {
         await dispatchGameData({
           type: "CONTINUE_MATCH",
@@ -61,15 +61,9 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
       appState.current = nextAppState;
       if (
         appState.current === "background" ||
-        (appState.current === "incative" && gameData.initializedBy === username)
+        (appState.current === "inactive" && gameData.initializedBy === id)
       ) {
-        await updateAuthMatchesSave(
-          gameData,
-          username,
-          false,
-          navigation,
-          "leave",
-        );
+        await updateAuthMatchesSave(gameData, id, false, navigation, "leave");
         dispatchGameData({ type: "LOAD_SETTINGS" });
       }
     };
@@ -79,7 +73,7 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange);
     };
-  }, [gameData]);
+  }, [dispatchGameData, id, navigation, gameData]);
 
   const drawerstyle = {
     width: "40%",
@@ -88,18 +82,20 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
 
   const handleLeaveMatch = useCallback(async () => {
     try {
-      await updateAuthMatchesSave(
+      const updatedUserData = await updateAuthMatchesSave(
         gameData,
-        username,
+        id,
         false,
         navigation,
         "leave",
       );
+
+      dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
     } catch (err) {
       console.log(err);
       alert("ERROR WHILE SAVING MATCH: " + err);
     }
-  }, [gameData, navigation, username]);
+  }, [dispatchUserData, id, gameData, navigation]);
 
   return (
     <>

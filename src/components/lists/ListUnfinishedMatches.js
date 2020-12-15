@@ -12,19 +12,18 @@ const ListUnfinishedMatches = React.memo(
     const { theme } = useContext(ThemeContext);
 
     const {
-      userData: { username, unfinishedMatches },
+      userData: { unfinishedMatches },
     } = useContext(Authcontext);
 
-    const renderItem = (item) => {
+    const renderItem = (unfinishedMatch) => {
       const active = gameToContinue
-        ? gameToContinue.key === item.item.key
+        ? gameToContinue.key === unfinishedMatch.item.key
         : false;
       return (
         <UNFINISHED_MATCH_COMPONENT
           active={active}
           handleGameToContinue={handleGameToContinue}
-          username={username}
-          item={item}
+          unfinishedMatch={unfinishedMatch.item}
         />
       );
     };

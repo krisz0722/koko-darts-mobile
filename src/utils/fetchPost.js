@@ -1,4 +1,5 @@
 const fetchPost = async (url, body) => {
+  console.log("URL", url);
   console.log("BODY", body);
 
   const data = await fetch(

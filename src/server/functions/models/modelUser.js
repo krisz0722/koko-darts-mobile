@@ -28,14 +28,16 @@ const userModel = (username, photo, id) => ({
   friendRequestSent: [],
   settings: {
     p1: {
-      key: null,
-      img: "",
+      id: id,
+      key: username,
+      img: photo,
       gamesPlayed: 0,
       winningPercentage: 0,
       overallAvg: 0,
       bestMatch: 0,
     },
     p2: {
+      id: "",
       key: "",
       img: "",
     },

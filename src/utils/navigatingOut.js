@@ -1,6 +1,6 @@
 import { CommonActions } from "@react-navigation/native";
 
-const navigatingOut = (navigation, navigationType, gameData) => {
+const navigatingOut = (navigation, navigationType, gameData = null) => {
   switch (navigationType) {
     case "continue":
       navigation.navigate("drawernavigator", {

@@ -13,7 +13,7 @@ const getProfileByUsername = async (req, res) => {
       data: user,
     });
   } catch (err) {
-    console.log("error while fetching user by email: " + err);
+    console.log("error while fetching user by username: " + err);
     res.status(400).json({ error: err });
   }
 };

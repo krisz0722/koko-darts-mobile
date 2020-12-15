@@ -1,14 +1,14 @@
 const { usersCollection } = require("../app");
 
-const updateUnfinishedMatches = async () => {
-  const { p1, p2, p1Match, p2Match, type, key, inGame } = req.body;
+const updateUnfinishedMatches = async (req, res) => {
+  const { p1, p2, p1Match, p2Match, type, key, inGame, id } = req.body;
 
   const p1Profile = await usersCollection
-    .doc(p1.key)
+    .doc(p1.id)
     .get()
     .then((data) => data.data());
   const p2Profile = await usersCollection
-    .doc(p2.key)
+    .doc(p2.id)
     .get()
     .then((data) => data.data());
 
@@ -38,20 +38,26 @@ const updateUnfinishedMatches = async () => {
   }
 
   try {
-    await usersCollection.doc(p1.key).update({
+    await usersCollection.doc(p1.id).update({
       unfinishedMatches: p1Matches,
       inGame,
       inGameKey: key,
     });
 
-    await usersCollection.doc(p2.key).update({
+    await usersCollection.doc(p2.id).update({
       unfinishedMatches: p2Matches,
       inGame,
       inGameKey: key,
     });
 
+    const updatedUserData = await usersCollection
+      .doc(id)
+      .get()
+      .then((data) => data.data());
+
     res.status(200).json({
       message: "mathces are updated",
+      data: updatedUserData,
     });
   } catch (err) {
     console.log("error while updating matches: " + err);

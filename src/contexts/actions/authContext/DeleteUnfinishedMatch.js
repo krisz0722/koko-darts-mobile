@@ -4,7 +4,7 @@ import fetchPost from "../../../utils/fetchPost";
 
 const deleteMatch = async (
   gameData,
-  username,
+  id,
   inGame,
   navigation,
   navigationType,
@@ -16,7 +16,7 @@ const deleteMatch = async (
 
   navigatingIn(navigation, navigationType);
 
-  await fetchPost("api/updateunfinishedmatches", {
+  const updatedUserData = await fetchPost("api/updateunfinishedmatches", {
     p1,
     p2,
     p1Match: null,
@@ -25,9 +25,11 @@ const deleteMatch = async (
     key,
     inGame,
     gameData: null,
+    id,
   });
-
   navigatingOut(navigation, navigationType, gameData);
+  console.log("delete match", updatedUserData);
+  return updatedUserData;
 };
 
 export default deleteMatch;

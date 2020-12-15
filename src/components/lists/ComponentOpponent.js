@@ -5,7 +5,7 @@ import { Opponent, Name, OpponentAvatar } from "./StyledComponentProfile";
 const OPPONENT_COMPONENT = ({ chooseProfile, opponent, item }) => {
   const { theme } = useContext(ThemeContext);
 
-  const active = opponent ? opponent.key === item.key : false;
+  const active = opponent ? opponent.id === item.id : false;
 
   return (
     <Opponent active={active} onPress={() => chooseProfile(item)} theme={theme}>

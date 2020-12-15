@@ -1,5 +1,5 @@
 import nextValidation from "../inputContext/nextValidation";
-import { VALIDSCORES } from "../../../utils/calc/scores";
+import { CHECKOUTS, VALIDSCORES } from "../../../utils/calc/scores";
 
 const dispatchOkOrNext = (
   gameData,
@@ -67,11 +67,20 @@ const dispatchOkOrNext = (
   } else {
     const scoreToSubmit = parseInt(inputByRound.join(""));
     const newScore = playerScore - scoreToSubmit;
-    const isValid =
-      VALIDSCORES.indexOf(scoreToSubmit) !== -1 &&
-      newScore >= 0 &&
-      newScore !== 1;
-    if (isValid) {
+
+    const isValid = () => {
+      if (newScore === 0) {
+        return CHECKOUTS.some((co) => co.value === scoreToSubmit);
+      } else {
+        return (
+          VALIDSCORES.indexOf(scoreToSubmit) !== -1 &&
+          newScore >= 0 &&
+          newScore !== 1
+        );
+      }
+    };
+
+    if (isValid()) {
       dispatchGameData({
         type: "SUBMIT",
         playerKey,

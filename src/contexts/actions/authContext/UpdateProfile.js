@@ -18,19 +18,24 @@ const updateAuthProfile = async (
     initializedBy,
   } = gameData;
 
+  if (player.id === "ID_GUEST") {
+    return null;
+  }
   const userProfile = await fetchPost("api/getuserdata", { uid: player.id });
-
   const { matches, unfinishedMatches, friends, userOverall } = userProfile;
+
+  const playerGameData = whichPlayer === "p1" ? p1_DATA : p2_DATA;
+  const opponentGameData = whichPlayer === "p1" ? p2_DATA : p1_DATA;
 
   const result =
     legOrSet === "set"
-      ? `${playerData.setsWon} - ${opponentData.setsWon}`
-      : `${playerData.legsWon} - ${opponentData.legsWon}`;
+      ? `${playerGameData.setsWon} - ${opponentGameData.setsWon}`
+      : `${playerGameData.legsWon} - ${opponentGameData.legsWon}`;
 
   const wonOrLost = player.id === gameData.settings[winner].id ? "W" : "L";
 
-  const avgMatchOpponent = opponentData.avgMatch;
-  const avgMatch = playerData.avgMatch;
+  const avgMatchOpponent = opponentGameData.avgMatch;
+  const avgMatch = playerGameData.avgMatch;
 
   const updateUserMatches = () => {
     const matchSummary = {
@@ -87,10 +92,10 @@ const updateAuthProfile = async (
 
     winsAgainst = wonOrLost === "W" ? winsAgainst + 1 : winsAgainst;
     lossesAgainst = wonOrLost === "L" ? lossesAgainst + 1 : lossesAgainst;
-    totalThrowsAgainst += playerData.dartsUsedInMatch;
-    totalScoreAgainst += playerData.tsMatch;
-    totalThrowsFriend += opponentData.dartsUsedInMatch;
-    totalScoreFriend += opponentData.tsMatch;
+    totalThrowsAgainst += playerGameData.dartsUsedInMatch;
+    totalScoreAgainst += playerGameData.tsMatch;
+    totalThrowsFriend += opponentGameData.dartsUsedInMatch;
+    totalScoreFriend += opponentGameData.tsMatch;
     avgAgainst = totalScoreAgainst / (totalThrowsAgainst / 3);
     avgFriend = totalScoreFriend / (totalThrowsFriend / 3);
 
@@ -137,8 +142,8 @@ const updateAuthProfile = async (
     } = userOverall;
 
     totalGames++;
-    totalThrows = totalThrows + playerData.dartsUsedInMatch;
-    totalScore = totalScore + playerData.tsMatch;
+    totalThrows = totalThrows + playerGameData.dartsUsedInMatch;
+    totalScore = totalScore + playerGameData.tsMatch;
     overallAvg = totalScore / (totalThrows / 3);
     wins = wonOrLost === "W" ? wins + 1 : wins;
     losses = wonOrLost === "L" ? losses + 1 : losses;
@@ -158,7 +163,7 @@ const updateAuthProfile = async (
     };
   };
 
-  await fetchPost("api/updateprofile", {
+  return await fetchPost("api/updateprofile", {
     matches: updateUserMatches(),
     unfinishedMatches: updateUserUnfinishedMatches(),
     friends: updateUserFriends(),

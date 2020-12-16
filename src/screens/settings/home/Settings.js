@@ -24,7 +24,7 @@ const SETTINGS = React.memo(() => {
   } = useContext(ThemeContext);
 
   const {
-    userData: { username },
+    userData: { id },
   } = useContext(Authcontext);
 
   const [preview, setPreview] = useState(false);
@@ -127,13 +127,13 @@ const SETTINGS = React.memo(() => {
         type: "SAVE_SETTINGS",
         value: newSettings,
       });
-      await fetchPost("api/updatesettings", { username, newSettings });
+      await fetchPost("api/updatesettings", { id, newSettings });
     } catch (err) {
       console.log(err);
       alert("ERROR WHILE SAVING SETTINGS: " + err);
     }
   }, [
-    username,
+    id,
     background,
     selectedTheme,
     p1,

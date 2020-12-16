@@ -51,7 +51,7 @@ const updateAuthMatchesRematch = async (
 
   navigatingIn(navigation, navigationType);
 
-  await fetchPost("api/updateunfinishedmatches", {
+  const updatedUserData = await fetchPost("api/updateunfinishedmatches", {
     p1: activePlayer,
     p2: inactivePlayer,
     p1Match: matchToSave(activePlayer),
@@ -63,6 +63,7 @@ const updateAuthMatchesRematch = async (
     id,
   });
   navigatingOut(navigation, navigationType, rematch);
+  return updatedUserData;
 };
 
 export default updateAuthMatchesRematch;

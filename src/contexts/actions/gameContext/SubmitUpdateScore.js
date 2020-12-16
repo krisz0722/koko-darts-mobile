@@ -49,18 +49,18 @@ const submitUpdateScore = (
   norMatch += num;
 
   tsFirstNine = norLeg <= 3 ? tsFirstNine + scoreToSubmit * num : tsFirstNine;
-  tsScoring = !wasOnCheckout ? tsScoring + scoreToSubmit * num : tsScoring;
-  // tsScoring = tsScoring + scoreToSubmit * num;
+  tsScoring =
+    !wasOnCheckout && prevScore !== 0
+      ? tsScoring + scoreToSubmit * num
+      : tsScoring;
   norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
-  norScoring = !wasOnCheckout ? norScoring + num : norScoring;
-  // norScoring = norScoring + num;
+  norScoring =
+    !wasOnCheckout && prevScore !== 0 ? norScoring + num : norScoring;
 
   const isLegOver = newScore === 0;
   const winner = isLegOver ? state.activePlayer : null;
 
-  // dartsUsedInLeg = !isLegOver ? dartsUsedInLeg + 3 * num : dartsUsedInLeg;
   dartsUsedInLeg = dartsUsedInLeg + 3 * num;
-  // dartsUsedInMatch = !isLegOver ? dartsUsedInMatch + 3 * num : dartsUsedInMatch;
   dartsUsedInMatch = dartsUsedInMatch + 3 * num;
 
   const avgLeg = norLeg === 0 ? 0 : tsLeg / (dartsUsedInLeg / 3);
@@ -97,9 +97,6 @@ const submitUpdateScore = (
         return null;
     }
   };
-
-  //TS = total score
-  // NOR = num of rounds
 
   return {
     ...state,

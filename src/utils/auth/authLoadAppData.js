@@ -7,12 +7,10 @@ const loadAppData = async (userData, navigation, reducers) => {
   try {
     const lastMatch = userData.matches ? userData.matches[0] : null;
     const lastOpponent = lastMatch ? lastMatch.opponent : null;
-    console.log("LASTMATCH", lastMatch);
 
-    console.log("lastopponent", lastOpponent);
     const getSettings = () => {
       const p1 = { ...userData.settings.p1 };
-      if (lastOpponent) {
+      if (lastOpponent && lastOpponent.key !== "DELETED USER") {
         const opponentProfile = userData.friends.find(
           (item) => item.id === lastOpponent.id,
         );
@@ -22,7 +20,6 @@ const loadAppData = async (userData, navigation, reducers) => {
       }
     };
     const userSettings = getSettings();
-    console.log("UESRSETTIGNS", userSettings);
     const userMatches = userData.matches;
 
     await user({

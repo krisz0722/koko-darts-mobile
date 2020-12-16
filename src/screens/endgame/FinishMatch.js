@@ -31,21 +31,19 @@ const FINISH_MATCH = React.memo(({ navigation }) => {
     const p1Updated = await updateAuthProfile(
       p1,
       "p1",
-      gameData.p1_DATA,
-      gameData.p2_DATA,
+      p1,
+      p2,
       gameData,
       inGame,
     );
     const p2Updated = await updateAuthProfile(
       p2,
       "p2",
-      gameData.p2_DATA,
-      gameData.p1_DATA,
+      p2,
+      p1,
       gameData,
       inGame,
     );
-    console.log("p1Updated", p1Updated);
-    console.log("p2Updated", p2Updated);
     const updatedUserData = id === p1.id ? p1Updated : p2Updated;
     return updatedUserData;
   };

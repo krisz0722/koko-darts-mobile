@@ -33,7 +33,7 @@ const HOME_INFO = React.memo(({ matches, username }) => {
         { stat: "date", value: date },
         {
           stat: "opponent",
-          value: opponent,
+          value: opponent.key,
         },
         {
           stat: "result",

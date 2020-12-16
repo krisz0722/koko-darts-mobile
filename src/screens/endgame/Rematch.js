@@ -46,19 +46,18 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
     let updatedUserData;
     if (activePlayer) {
       updatedUserData = await fetchPost("api/updatestatus", {
-        p1: activePlayer.key,
-        p2: inactivePlayer.key,
+        p1: activePlayer.id,
+        p2: inactivePlayer.id,
         inGame: false,
       });
     } else {
       updatedUserData = await fetchPost("api/updatestatus", {
-        p1: p1.key,
-        p2: p2.key,
+        p1: p1.id,
+        p2: p2.id,
         inGame: false,
       });
     }
     dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
-    console.log("NA");
     navigatingOut(navigation, "leave");
   };
 

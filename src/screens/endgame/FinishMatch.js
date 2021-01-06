@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
-import { GameContext } from "../../contexts/GameContext";
-import updateAuthProfile from "../../contexts/actions/authContext/UpdateProfile";
 import STATS_FINISH_MATCH from "../stats/StatsFinishMatch";
+import { GameContext } from "../../contexts/GameContext";
+import { Authcontext } from "../../contexts/AuthContext";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
 import { Header, BottomButtons2 } from "./StyledEndGame";
-import { Authcontext } from "../../contexts/AuthContext";
+import updateAuthProfile from "../../contexts/actions/authContext/UpdateProfile";
 import navigatingIn from "../../utils/navigatingIn";
 import navigatingOut from "../../utils/navigatingOut";
 

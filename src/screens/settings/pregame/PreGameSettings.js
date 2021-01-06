@@ -60,7 +60,7 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
       setModal(true);
       setP2({ key: "", img: "" });
     }
-  }, [unfinishedMatches, p2.key, isFocused]);
+  }, [unfinishedMatches, p2.id, p2.key, isFocused]);
 
   const THEMES = useMemo(
     () => ({
@@ -213,8 +213,12 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
   };
 
   const chooseProfile = async (val) => {
-    console.log("CHOOSE PROFILE VAL", val);
-    const opponentData = await fetchPost("api/getuserdata", { uid: val.id });
+    const opponentData = await fetchPost("api/getuserdata", {
+      uid: val.id,
+    }).then((data) => {
+      return data;
+    });
+
     const isInGame = opponentData.inGame;
     if (!isInGame) {
       if (stateP2 === p1) {

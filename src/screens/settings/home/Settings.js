@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
-import { SettingsBottom, SettingsBottomButtons } from "./StyledSettings";
-import { SettingsContext } from "../../../contexts/SettingsContext";
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import { Authcontext } from "../../../contexts/AuthContext";
 import OPTIONS_LAYOUT from "../OptionsLayout";
 import OPTIONS_COLOR from "../OptionsColor";
 import OPTIONS_EFFECT from "../OptionsEffects";
@@ -8,8 +8,8 @@ import OPTIONS_SCORE from "../OptionsScore";
 import OPTIONS_LEGORSET from "../OptionsLegOrSet";
 import THEMED_BUTTON from "../../../components/buttons/ThemedButton";
 import PREVIEW from "../Preview";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-import { Authcontext } from "../../../contexts/AuthContext";
+import { SettingsBottom, SettingsBottomButtons } from "./StyledSettings";
+import { SettingsContext } from "../../../contexts/SettingsContext";
 import fetchPost from "../../../utils/fetchPost";
 
 const SETTINGS = React.memo(() => {
@@ -32,7 +32,6 @@ const SETTINGS = React.memo(() => {
   const [legOrSet, setLegOrSet] = useState(settings.legOrSet);
   const [startingScore, setStartingScore] = useState(settings.startingScore);
   const [layout, setLayout] = useState(settings.layout);
-
   const [toWin, setTowin] = useState(settings.toWin);
   const [legsPerSet, setLegsPerSet] = useState(settings.legsPerSet);
   const [opacity, setOpacity] = useState(settings.opacity);
@@ -107,7 +106,7 @@ const SETTINGS = React.memo(() => {
     [dispatchTheme],
   );
 
-  const reset = useCallback(async () => {
+  const save = useCallback(async () => {
     try {
       const newSettings = {
         p1,
@@ -127,7 +126,7 @@ const SETTINGS = React.memo(() => {
         type: "SAVE_SETTINGS",
         value: newSettings,
       });
-      await fetchPost("api/updatesettings", { id, newSettings });
+      await fetchPost("api/updatesettings", { id, settings: newSettings });
     } catch (err) {
       console.log(err);
       alert("ERROR WHILE SAVING SETTINGS: " + err);
@@ -197,7 +196,7 @@ const SETTINGS = React.memo(() => {
             size={"small"}
             text={"save"}
             length={2}
-            action={reset}
+            action={save}
           />
         </SettingsBottomButtons>
       </SettingsBottom>

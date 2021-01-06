@@ -22,7 +22,7 @@ const ABOUT = ({ navigation }) => (
 );
 const { Navigator, Screen } = createDrawerNavigator();
 
-const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
+const HOME_MAIN_NAVIGATOR = React.memo(({ navigation }) => {
   const {
     dispatchGameData,
     gameData: { activePlayer },
@@ -116,4 +116,4 @@ const HOME_DRAWER_NAVIGATOR = React.memo(({ navigation }) => {
   );
 });
 
-export default HOME_DRAWER_NAVIGATOR;
+export default HOME_MAIN_NAVIGATOR;

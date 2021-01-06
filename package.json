@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android && scrcpy",
+    "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "lint": "eslint .",
@@ -13,7 +13,6 @@
     "node-forge": "^0.10.0"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/checkbox": "^0.5.6",
     "@react-native-community/google-signin": "^5.0.0",
     "@react-native-community/masked-view": "^0.1.10",
@@ -21,12 +20,10 @@
     "@react-native-firebase/auth": "^10.2.0",
     "@react-native-firebase/firestore": "^10.2.0",
     "@react-native-firebase/functions": "^10.2.0",
-    "@react-native-firebase/messaging": "^10.2.0",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/material-top-tabs": "^5.3.10",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
-    "axios": "^0.21.0",
     "babel-plugin-macros": "^3.0.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "firebase-tools": "^8.18.1",
@@ -52,6 +49,7 @@
     "trailingComma": "all",
     "tabWidth": 2
   },
+
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/runtime": "^7.12.5",

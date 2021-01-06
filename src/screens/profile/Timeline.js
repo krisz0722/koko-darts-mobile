@@ -7,18 +7,15 @@ import { Header1 } from "../../components/headers/StyledHeaders";
 const Title = styled(Header1)`
   width: 100%;
   height: 100%;
-  padding: 2%;
+  padding: 5%;
+
   ${FlexCol};
 `;
 
 const TIMELINE = () => {
   const { theme } = useContext(ThemeContext);
 
-  return (
-    <Title theme={theme}>
-      {`this feature is not available yet. \n stay tuned`}.
-    </Title>
-  );
+  return <Title theme={theme}>{"this feature is not available yet."}</Title>;
 };
 
 export default TIMELINE;

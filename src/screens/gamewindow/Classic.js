@@ -18,8 +18,8 @@ import { InputContextProvider } from "../../contexts/InputContext";
 import { useNavigation } from "@react-navigation/native";
 import EXIT_APP_ALERT from "../../components/modals/ExitAppAlert";
 
-const GAME_CLASSIC = React.memo((props) => {
-  const { ingame = true, preview, settings = null } = props;
+const GAME_WINDOW = React.memo((props) => {
+  const { ingame = true, preview, settings = null, visible = true } = props;
 
   const {
     gameData,
@@ -132,7 +132,7 @@ const GAME_CLASSIC = React.memo((props) => {
     : 1;
 
   return (
-    <GameWindow preview={preview}>
+    <GameWindow visible={visible} preview={preview}>
       <CLASSIC_TOP
         ingame={ingame}
         animation={animationToUse}
@@ -212,4 +212,4 @@ const GAME_CLASSIC = React.memo((props) => {
   );
 });
 
-export default GAME_CLASSIC;
+export default GAME_WINDOW;

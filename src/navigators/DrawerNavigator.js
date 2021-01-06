@@ -5,24 +5,23 @@ import React, {
   useEffect,
   useContext,
 } from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import GAME_CLASSIC from "../screens/gamewindow/Classic";
 import { AppState } from "react-native";
-import DRAWER_CONTENT from "./DrawerContent";
-import { GameContext } from "../contexts/GameContext";
-import SETTINGS_INGAME from "../screens/settings/ingame/SettingsInGame";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+const { Navigator, Screen } = createDrawerNavigator();
 import { useRoute } from "@react-navigation/native";
+import { GameContext } from "../contexts/GameContext";
 import { Authcontext } from "../contexts/AuthContext";
-import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
+import GAME_WINDOW from "../screens/gamewindow/Classic";
+import DRAWER_CONTENT from "./DrawerContent";
+import SETTINGS_INGAME from "../screens/settings/ingame/SettingsInGame";
 import FINISH_LEG from "../screens/endgame/FinishLeg";
 import FINISH_MATCH from "../screens/endgame/FinishMatch";
-import REMATCH_MODAL from "../screens/endgame/Rematch";
+import REMATCH from "../screens/endgame/Rematch";
 import LOADING_SCREEN from "../screens/info/LoadingScreen";
-import STATS_INMATCH from "../screens/stats/StatsInMatch";
+import STATS_INGAME from "../screens/stats/StatsInMatch";
+import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 
-const { Navigator, Screen } = createDrawerNavigator();
-
-const DRAWER_NAVIGATOR = ({ navigation }) => {
+const IN_GAME_NAVIGATOR = ({ navigation }) => {
   const {
     gameData,
     dispatchGameData,
@@ -42,8 +41,6 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
   const flag2 = useMemo(() => flag, [flag]);
 
   const appState = useRef(AppState.currentState);
-
-  // console.log("PARAMS!", params);
 
   useEffect(() => {
     (async () => {
@@ -115,16 +112,16 @@ const DRAWER_NAVIGATOR = ({ navigation }) => {
         drawerPosition={"right"}
         overlayColor={theme.game[activePlayer + "Overlay"]}
       >
-        <Screen name="game" component={GAME_CLASSIC} />
+        <Screen name="game" component={GAME_WINDOW} />
         <Screen name="settings_ingame" component={SETTINGS_INGAME} />
-        <Screen name="stats_ingame" component={STATS_INMATCH} />
+        <Screen name="stats_ingame" component={STATS_INGAME} />
         <Screen name="legover" component={FINISH_LEG} />
         <Screen name={"matchover"} component={FINISH_MATCH} />
-        <Screen name={"rematch"} component={REMATCH_MODAL} />
+        <Screen name={"rematch"} component={REMATCH} />
         <Screen name={"loadingscreen"} component={LOADING_SCREEN} />
       </Navigator>
     </>
   );
 };
 
-export default DRAWER_NAVIGATOR;
+export default IN_GAME_NAVIGATOR;

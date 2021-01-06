@@ -33,7 +33,10 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
   } = inapData;
 
   legsWon += 1;
-  setsWon = legsWon === legsPerSet ? setsWon + 1 : setsWon;
+
+  if (legOrSet === "set") {
+    setsWon = legsWon === legsPerSet ? setsWon + 1 : setsWon;
+  }
   numOfCoDarts = numOfCoDarts + nodUsed - nodRequired + 1;
   dartsUsedInLeg += nodUsed;
   avgMatch = tsMatch / ((dartsUsedInMatch + nodUsed) / 3);
@@ -47,7 +50,7 @@ const finishLeg = (state, nodUsed, nodRequired, settings) => {
 
   const doublePercentage = `${((legsWon / numOfCoDarts) * 100).toFixed(1)}%`;
 
-  const isSetOver = legsWon === legsPerSet;
+  const isSetOver = legOrSet === "set" && legsWon === legsPerSet;
 
   const isMatchOver = () => {
     switch (legOrSet) {

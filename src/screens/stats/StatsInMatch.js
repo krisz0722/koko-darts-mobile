@@ -8,7 +8,7 @@ import STATS_DATA from "./StatsDataModel";
 import { AppBackground } from "../../../App";
 import { ScreenContainer } from "../../navigators/StyledNav";
 
-const STATS_INMATCH = React.memo(({ navigation, route }) => {
+const STATS_INGAME = React.memo(({ navigation, route }) => {
   let { gameData } = useContext(GameContext);
   let {
     theme,
@@ -63,4 +63,4 @@ const STATS_INMATCH = React.memo(({ navigation, route }) => {
     </>
   );
 });
-export default STATS_INMATCH;
+export default STATS_INGAME;

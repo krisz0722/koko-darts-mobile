@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import THEMED_BUTTON from "../../components/buttons/ThemedButton";
+import PLAYER from "../../components/players/Player";
 import { CHECKOUTS } from "../../utils/calc/scores";
 import { GameContext } from "../../contexts/GameContext";
 import { AppBackground } from "../../../App";
@@ -11,7 +12,6 @@ import {
   BottomButtons2,
   Players,
 } from "./StyledEndGame";
-import PLAYER from "../../components/players/Player";
 
 const FINISH_LEG = React.memo(({ navigation }) => {
   const {

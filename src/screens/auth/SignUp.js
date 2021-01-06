@@ -101,8 +101,7 @@ const REGISTER = React.memo(({ navigation }) => {
   //ide check post
   const validateForm = async () => {
     const isAvailable = await fetch(
-      // "https://europe-west3-kokodarts-native.cloudfunctions.net/app/api/createprofile",
-      "http://192.168.0.102:5002/api/getusernameavailability",
+      "https://europe-west3-kokodarts-native.cloudfunctions.net/app/api/createprofile",
       {
         method: "post",
         body: JSON.stringify({ username }),
@@ -140,10 +139,10 @@ const REGISTER = React.memo(({ navigation }) => {
     }
   };
 
-  const pressSignUp = async () => {
-    const validated = await validateForm();
+  const pressSignUp = () => {
+    const validated = validateForm().then((data) => data);
     if (validated) {
-      await signUp(email, password, username, navigation);
+      signUp(email, password, username, navigation);
     }
   };
 
@@ -174,7 +173,7 @@ const REGISTER = React.memo(({ navigation }) => {
               disabled={!enableSignUp}
               text={"Sign Up"}
               social={"exit-to-app"}
-              action={() => pressSignUp()}
+              action={pressSignUp}
               align={"center"}
             />
             <AUTH_BUTTON

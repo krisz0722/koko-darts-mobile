@@ -15,15 +15,20 @@ const submitUpdateScore = (
     score,
     tsLeg,
     tsMatch,
-    norLeg,
-    norMatch,
     tsFirstNine,
     tsScoring,
+    avgLeg,
+    avgMatch,
+    avgFirstNine,
+    avgScoring,
+    norLeg,
+    norMatch,
     norFirstNine,
     norScoring,
     dartsUsedInLeg,
     dartsUsedInMatch,
     numOfCoDarts,
+    winner,
   } = playerData;
 
   const prevScore = score;
@@ -50,23 +55,28 @@ const submitUpdateScore = (
 
   tsFirstNine = norLeg <= 3 ? tsFirstNine + scoreToSubmit * num : tsFirstNine;
   tsScoring =
-    !wasOnCheckout && prevScore !== 0
+    !wasOnCheckout || (wasOnCheckout && !onCheckout)
       ? tsScoring + scoreToSubmit * num
       : tsScoring;
   norFirstNine = norLeg <= 3 ? norFirstNine + num : norFirstNine;
   norScoring =
-    !wasOnCheckout && prevScore !== 0 ? norScoring + num : norScoring;
-
+    !wasOnCheckout || (wasOnCheckout && !onCheckout)
+      ? norScoring + num
+      : norScoring;
+  //if the leg is over, do not calculate new averages
   const isLegOver = newScore === 0;
-  const winner = isLegOver ? state.activePlayer : null;
 
-  dartsUsedInLeg = dartsUsedInLeg + 3 * num;
-  dartsUsedInMatch = dartsUsedInMatch + 3 * num;
+  winner = isLegOver ? state.activePlayer : null;
 
-  const avgLeg = norLeg === 0 ? 0 : tsLeg / (dartsUsedInLeg / 3);
-  const avgMatch = norMatch === 0 ? 0 : tsMatch / (dartsUsedInMatch / 3);
-  const avgFirstNine = norFirstNine === 0 ? 0 : tsFirstNine / norFirstNine;
-  const avgScoring = norScoring === 0 ? 0 : tsScoring / norScoring;
+  if (!isLegOver && prevScore !== 0) {
+    dartsUsedInLeg = dartsUsedInLeg + 3 * num;
+    dartsUsedInMatch = dartsUsedInMatch + 3 * num;
+    avgLeg = norLeg === 0 ? 0 : tsLeg / (dartsUsedInLeg / 3);
+    avgMatch = norMatch === 0 ? 0 : tsMatch / (dartsUsedInMatch / 3);
+
+    avgFirstNine = norFirstNine === 0 ? 0 : tsFirstNine / norFirstNine;
+    avgScoring = norScoring === 0 ? 0 : tsScoring / norScoring;
+  }
 
   const missedDoubles = () => {
     switch (prevScoreNumOfDarts) {

@@ -25,7 +25,7 @@ const Friends = () => {
       <AddButton>
         <TouchableOpacity theme={theme} onPress={() => setSearchModal(true)}>
           <Icon
-            name={"add-circle"}
+            name={"add-box"}
             color={theme.text}
             size={theme.fonts.iconLarge}
           />

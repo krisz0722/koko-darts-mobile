@@ -2,19 +2,18 @@ import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AppearanceProvider } from "react-native-appearance";
 import { createStackNavigator } from "@react-navigation/stack";
+const { Navigator, Screen } = createStackNavigator();
 import { ThemeProvider } from "styled-components/native";
 import { AppBackground } from "../../App";
 import { ThemeContext } from "../contexts/ThemeContext";
+import IN_GAME_NAVIGATOR from "./DrawerNavigator";
+import AUTH_NAVIGATOR from "./AuthNavigator";
+import HOME_MAIN_NAVIGATOR from "./HomeDrawerNavigator";
+import PLAYER_IS_IN_GAME from "../screens/info/InGame";
+import { ScreenContainer } from "./StyledNav";
 import transitionContrast from "../styles/navTransitionContrast";
 import transitionDefault from "../styles/navTransitionDefault";
 import transitionNone from "../styles/navNoTransition";
-import DRAWER_NAVIGATOR from "./DrawerNavigator";
-import AUTH_NAVIGATOR from "./AuthNavigator";
-import HOME_DRAWER_NAVIGATOR from "./HomeDrawerNavigator";
-import { ScreenContainer } from "./StyledNav";
-import PLAYER_IS_IN_GAME from "../screens/info/InGame";
-
-const { Navigator, Screen } = createStackNavigator();
 
 const APP_NAVIGATOR = () => {
   const {
@@ -65,9 +64,9 @@ const APP_NAVIGATOR = () => {
               <Screen name={"authnavigator"} component={AUTH_NAVIGATOR} />
               <Screen
                 name={"homedrawernavigator"}
-                component={HOME_DRAWER_NAVIGATOR}
+                component={HOME_MAIN_NAVIGATOR}
               />
-              <Screen name={"drawernavigator"} component={DRAWER_NAVIGATOR} />
+              <Screen name={"drawernavigator"} component={IN_GAME_NAVIGATOR} />
               <Screen name={"ingame"} component={PLAYER_IS_IN_GAME} />
             </Navigator>
           </NavigationContainer>

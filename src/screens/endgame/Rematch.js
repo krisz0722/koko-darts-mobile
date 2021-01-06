@@ -12,7 +12,7 @@ import navigatingIn from "../../utils/navigatingIn";
 import navigatingOut from "../../utils/navigatingOut";
 import fetchPost from "../../utils/fetchPost";
 
-const REMATCH_MODAL = React.memo(({ navigation }) => {
+const REMATCH = React.memo(({ navigation }) => {
   const {
     dispatchGameData,
     gameData,
@@ -135,4 +135,4 @@ const REMATCH_MODAL = React.memo(({ navigation }) => {
   );
 });
 
-export default REMATCH_MODAL;
+export default REMATCH;

@@ -31,8 +31,8 @@ const AVATAR = React.memo((props) => {
         outputRange: [Window.height * 0.075, Window.height * 0.05],
       })
     : showStats
-    ? 0.05
-    : 0.075;
+    ? Window.height * 0.05
+    : Window.height * 0.075;
 
   const borderColor = animation
     ? animationValue.interpolate({

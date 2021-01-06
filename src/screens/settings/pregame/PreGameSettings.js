@@ -53,9 +53,9 @@ const PREGAME_SETTINGS = React.memo(({ navigation }) => {
 
   useEffect(() => {
     const isEmpty = p2.key === "";
-    const hasUnfinished = unfinishedMatches.find(
-      (item) => item.opponent === p2.id,
-    );
+    const hasUnfinished = unfinishedMatches.find((item) => {
+      return item.opponent.id === p2.id;
+    });
     if ((isEmpty || hasUnfinished) && isFocused) {
       setModal(true);
       setP2({ key: "", img: "" });

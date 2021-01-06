@@ -52,7 +52,6 @@ const updateAuthMatchesAdd = async (
     id,
   });
   navigatingOut(navigation, navigationType);
-  console.log("match add", updatedUserData);
   return updatedUserData;
 };
 

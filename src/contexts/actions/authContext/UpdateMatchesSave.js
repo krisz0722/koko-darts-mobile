@@ -22,7 +22,6 @@ const updateAuthMatchesSave = async (
       initializedBy: id,
     };
   };
-  console.log("save match id", id);
   navigatingIn(navigation, navigationType, gameData);
 
   const updatedUserData = await fetchPost("api/updateunfinishedmatches", {
@@ -37,7 +36,6 @@ const updateAuthMatchesSave = async (
     id,
   });
   navigatingOut(navigation, navigationType, gameData);
-  console.log("updatematchsave, type save", updatedUserData);
   return updatedUserData;
 };
 

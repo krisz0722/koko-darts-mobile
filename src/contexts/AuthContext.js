@@ -18,8 +18,6 @@ export const AuthcontextProvider = (props) => {
 
   const [userData, dispatchUserData] = useReducer(authReducer, {});
 
-  console.log("CONTEXT", userData);
-
   return (
     <Authcontext.Provider value={{ userData, dispatchUserData }}>
       {props.children}

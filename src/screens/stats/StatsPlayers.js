@@ -10,11 +10,6 @@ const STATS_PLAYERS = React.memo(
     const p1 = settings ? settings.p1 : gameData.p1;
     const p2 = settings ? settings.p2 : gameData.p2;
 
-    console.log("SETTINGS", settings);
-    console.log("GAMEDATA", gameData);
-    console.log("STATS P1", p1);
-    console.log("STATS P2", p2);
-
     return (
       <Players theme={theme}>
         <PLAYER

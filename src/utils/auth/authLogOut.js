@@ -9,9 +9,7 @@ const logOut = async (navigation) => {
   });
 
   try {
-    console.log("logging out...");
     await auth().signOut();
-    console.log("logged out");
 
     navigation.dispatch(
       CommonActions.reset({

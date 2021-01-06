@@ -28,7 +28,6 @@ const deleteMatch = async (
     id,
   });
   navigatingOut(navigation, navigationType, gameData);
-  console.log("delete match", updatedUserData);
   return updatedUserData;
 };
 

@@ -50,7 +50,7 @@ const FRIEND_REQUEST = React.memo(({}) => {
         <FriendAvatar
           theme={theme}
           resizeMode={"cover"}
-          source={friendRequestReceived[0].img}
+          source={{ uri: friendRequestReceived[0].img }}
         />
         <FriendName>{friendRequestReceived[0].username}</FriendName>
       </Friend>

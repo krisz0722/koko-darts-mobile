@@ -21,7 +21,7 @@ import LOADING_SCREEN from "../screens/info/LoadingScreen";
 import STATS_INGAME from "../screens/stats/StatsInMatch";
 import updateAuthMatchesSave from "../contexts/actions/authContext/UpdateMatchesSave";
 
-const IN_GAME_NAVIGATOR = ({ navigation }) => {
+const IN_GAME_NAVIGATOR = React.memo(({ navigation }) => {
   const {
     gameData,
     dispatchGameData,
@@ -60,8 +60,14 @@ const IN_GAME_NAVIGATOR = ({ navigation }) => {
         appState.current === "background" ||
         (appState.current === "inactive" && gameData.initializedBy === id)
       ) {
-        await updateAuthMatchesSave(gameData, id, false, navigation, "leave");
-        dispatchGameData({ type: "LOAD_SETTINGS" });
+        const updatedUserData = await updateAuthMatchesSave(
+          gameData,
+          id,
+          false,
+          navigation,
+          "leave",
+        );
+        dispatchUserData({ type: "UPDATE_PROFILE", value: updatedUserData });
       }
     };
 
@@ -70,7 +76,7 @@ const IN_GAME_NAVIGATOR = ({ navigation }) => {
     return () => {
       AppState.removeEventListener("change", _handleAppStateChange);
     };
-  }, [dispatchGameData, id, navigation, gameData]);
+  }, [dispatchGameData, dispatchUserData, id, navigation, gameData]);
 
   const drawerstyle = {
     width: "40%",
@@ -122,6 +128,6 @@ const IN_GAME_NAVIGATOR = ({ navigation }) => {
       </Navigator>
     </>
   );
-};
+});
 
 export default IN_GAME_NAVIGATOR;

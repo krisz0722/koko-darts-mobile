@@ -14,12 +14,12 @@ import CONTACT from "../screens/contact/Contact";
 import { SettingsContext } from "../contexts/SettingsContext";
 import EXIT_APP_ALERT from "../components/modals/ExitAppAlert";
 
-const ABOUT = ({ navigation }) => (
+const ABOUT = React.memo(({ navigation }) => (
   <View>
     <Text>about</Text>
     <Button title="back" onPress={() => navigation.goBack()} />
   </View>
-);
+));
 const { Navigator, Screen } = createDrawerNavigator();
 
 const HOME_MAIN_NAVIGATOR = React.memo(({ navigation }) => {

@@ -56,10 +56,13 @@ const SETTINGS_INGAME = React.memo(({ navigation }) => {
 
   return (
     <>
-      <AppBackground
-        source={require("../../../../assets/bg.png")}
-        resizeMode="cover"
-      />
+      {background ? (
+        <AppBackground
+          source={require("../../../../assets/bg.png")}
+          resizeMode="cover"
+        />
+      ) : null}
+
       <ScreenContainer theme={theme}>
         <OPTIONS_LAYOUT
           layout={layout}

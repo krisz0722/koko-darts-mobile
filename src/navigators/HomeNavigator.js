@@ -28,6 +28,9 @@ const HOMENAVIGATOR = React.memo(({ navigation }) => {
   } = useContext(Authcontext);
 
   const route = useRoute().state;
+  const params = useRoute().params;
+  const flag = params ? params.flag : null;
+
   const index = route ? route.index : null;
   const appState = useRef(AppState.currentState);
 
@@ -62,6 +65,13 @@ const HOMENAVIGATOR = React.memo(({ navigation }) => {
     }
 
     if (!navigate && !isFocused && initialized && initialized !== id) {
+      console.log(
+        "WE ARE ANVAGITAIN",
+        !navigate,
+        !isFocused,
+        initialized,
+        initialized !== id,
+      );
       navigation.dispatch(
         CommonActions.reset({
           index: 1,

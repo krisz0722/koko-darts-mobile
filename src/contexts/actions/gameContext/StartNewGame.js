@@ -25,7 +25,7 @@ const startNewGame = (newMatch, THEMES) => {
     key,
     opponent,
     date,
-    initializedBy: username,
+    initializedBy: id,
   };
   return matchToSave;
 };

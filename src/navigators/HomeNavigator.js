@@ -33,6 +33,7 @@ const HOMENAVIGATOR = React.memo(({ navigation }) => {
 
   const [gameData, setGameData] = useState(null);
   const [navigate, setNavigate] = useState(null);
+  const [initialized, setInitialized] = useState(null);
 
   const isFocused = useIsFocused();
 
@@ -48,6 +49,7 @@ const HOMENAVIGATOR = React.memo(({ navigation }) => {
         matches.find((item) => item.key === inGameKey);
       setGameData(gameData);
       const initializedBy = gameData ? gameData.initializedBy : null;
+      setInitialized(initializedBy);
       const navigate = inGame && initializedBy !== id;
       setNavigate(navigate);
       dispatchUserData({ type: "UPDATE_PROFILE", value: data });
@@ -59,7 +61,7 @@ const HOMENAVIGATOR = React.memo(({ navigation }) => {
       navigation.navigate("ingame");
     }
 
-    if (!navigate && !isFocused) {
+    if (!navigate && !isFocused && initialized && initialized !== id) {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
@@ -67,7 +69,7 @@ const HOMENAVIGATOR = React.memo(({ navigation }) => {
         }),
       );
     }
-  }, [navigate, isFocused, navigation]);
+  }, [navigate, initialized, id, isFocused, navigation]);
 
   useEffect(() => {
     dbListener();

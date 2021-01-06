@@ -10,7 +10,7 @@ const updateAuthMatchesAdd = async (
   navigationType,
   id,
 ) => {
-  const { username, settings, date, key } = newMatch;
+  const { settings, date, key } = newMatch;
   const { p1, p2 } = settings;
 
   const matchToSave = (player) => {
@@ -35,7 +35,7 @@ const updateAuthMatchesAdd = async (
       key,
       opponent,
       date,
-      initializedBy: username,
+      initializedBy: id,
     };
   };
 

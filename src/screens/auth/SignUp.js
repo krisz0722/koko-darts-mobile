@@ -11,7 +11,7 @@ const REGISTER = React.memo(({ navigation }) => {
   const { theme } = useContext(ThemeContext);
 
   const [username, setUsername] = useState("test_01");
-  const [email, setEmail] = useState("test1@gmail.com");
+  const [email, setEmail] = useState("test5@gmail.com");
   const [password, setPassword] = useState("111111");
   const [confirmPassword, setConfirmPassword] = useState("111111");
   const [passwordHidden, setPasswordHidden] = useState(true);

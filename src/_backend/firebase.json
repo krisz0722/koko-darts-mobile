@@ -1,0 +1,18 @@
+{
+  "emulators": {
+    "firestore": {
+      "host": "localhost",
+      "port": "8082"
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ]
+  }
+}
+
